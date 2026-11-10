@@ -19,15 +19,13 @@
         .hidden { display: none; }
         
         .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .checkbox-container { display: flex; align-items: center; gap: 10px; color: #aaa; margin-bottom: 15px; cursor: pointer;}
-        .checkbox-container input { width: 20px; height: 20px; margin: 0; cursor: pointer;}
-
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         .card { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
         .card h3 { margin-top: 0; color: #00d2ff; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 10px;}
         
-        .company-header { display: flex; align-items: center; gap: 20px; background: #222; padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #00ff88;}
-        .company-logo { width: 80px; height: 80px; border-radius: 10px; object-fit: contain; background: #fff; padding: 5px;}
+        /* Слияние контактов и меты */
+        .company-header { display: flex; align-items: flex-start; gap: 20px; background: #222; padding: 25px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #00ff88;}
+        .company-logo { width: 90px; height: 90px; border-radius: 10px; object-fit: contain; background: #fff; padding: 5px;}
         .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; font-size: 14px; color: #ccc;}
         .meta-item strong { color: #fff; }
 
@@ -37,21 +35,21 @@
         .history-btn { background: transparent; border: 1px solid #00ff88; color: #00ff88; font-size: 14px; padding: 5px 15px; width: auto; margin: 0;}
         .history-btn:hover { background: #00ff88; color: #000;}
 
-        .contact-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: #ccc;}
+        /* Контакты внутри шапки */
+        .contact-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; color: #ccc;}
         .contact-row a { color: #00ff88; text-decoration: none; }
-        
-        .social-links a { display: inline-block; background: #222; padding: 8px 12px; border-radius: 8px; color: #00d2ff; text-decoration: none; border: 1px solid #333; font-weight: bold; font-size: 14px; transition: 0.3s;}
+        .social-links a { display: inline-block; background: #111; padding: 6px 10px; border-radius: 6px; color: #00d2ff; text-decoration: none; border: 1px solid #333; font-weight: bold; font-size: 13px; transition: 0.3s;}
         .social-links a:hover { background: #00d2ff; color: #000; }
 
-        .review-badge { display: inline-block; padding: 5px 10px; border-radius: 6px; font-size: 14px; margin: 4px; font-weight: bold;}
-        .badge-green { background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; }
-        .badge-red { background: rgba(255, 68, 68, 0.1); border: 1px solid #ff4444; color: #ff4444; }
+        /* Отзывы разделенные */
+        .review-badge { display: block; padding: 8px 12px; border-radius: 6px; font-size: 13px; margin-bottom: 8px; line-height: 1.4;}
+        .badge-green { background: rgba(0, 255, 136, 0.05); border: 1px solid #00ff88; color: #00ff88; }
+        .badge-red { background: rgba(255, 68, 68, 0.05); border: 1px solid #ff4444; color: #ff4444; }
 
         .critical-box { border-left: 4px solid #ff4444; padding: 25px; background: rgba(255, 68, 68, 0.05); margin-bottom: 30px; border-radius: 0 10px 10px 0;}
         .lost-revenue { font-size: 28px; font-weight: bold; margin: 15px 0 0 0; color: #fff;}
         .lost-revenue span { color: #ff4444; }
 
-        /* Универсальный Tooltip */
         .has-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #00ff88; display: inline-block; margin-bottom: 8px;}
         .has-tooltip .tooltip-text { visibility: hidden; width: 300px; background-color: #222; color: #fff; border: 1px solid #00ff88; border-radius: 8px; padding: 15px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 14px;}
         .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
@@ -64,21 +62,19 @@
         .fin-table th, .fin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
         .fin-table td { font-weight: bold; color: #fff; font-size: 18px;}
 
-        /* Конкуренты с тултипом */
         .competitor-tag { position: relative; display: inline-flex; flex-direction: column; padding: 10px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; transition: 0.3s; width: calc(25% - 20px); min-width: 150px;}
         .competitor-tag:hover { background: #00ff88; color: #000; border-color: #00ff88;}
         .comp-name { font-size: 14px; font-weight: bold; margin-bottom: 5px; line-height: 1.2;}
         .comp-meta { font-size: 12px; color: #aaa;}
         .competitor-tag:hover .comp-meta { color: #333;}
         
-        /* Всплывающее окно ниши конкурента */
         .competitor-tag .comp-tooltip { visibility: hidden; width: max-content; max-width: 200px; background-color: #111; color: #fff; text-align: center; border: 1px solid #ffaa00; border-radius: 6px; padding: 8px; position: absolute; z-index: 10; bottom: 110%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);}
         .competitor-tag:hover .comp-tooltip { visibility: visible; opacity: 1; }
 
         .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;}
         .media-box { border-radius: 10px; overflow: hidden; border: 1px solid #333; background: #1a1a1a; min-height: 350px;}
         
-        .map-scan-btn { background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;}
+        .map-scan-btn { background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 12px; width: 100%; transition: 0.3s;}
         .map-scan-btn:hover { background: #00ff88; color: #000;}
         
         .vendor-rating { color: #ffaa00; font-weight: bold; margin-left: 10px; font-size: 14px;}
@@ -99,12 +95,8 @@
             </div>
 
             <input type="text" id="url" placeholder="Название бизнеса, бренд или URL" autocomplete="off" required>
-            <input type="email" id="email" placeholder="Ваш Email (опционально)">
             
-            <label class="checkbox-container">
-                <input type="checkbox" id="send-email">
-                Отправить детальный отчет на почту
-            </label>
+            <!-- Почта убрана с главной страницы -->
 
             <select id="lang">
                 <option value="ru-RU">🇷🇺 Русский</option>
@@ -124,19 +116,26 @@
         <div id="report-dashboard" class="hidden">
             <button onclick="resetToHome()" style="background: #333; color: #fff; padding: 10px; margin-bottom: 20px; font-size: 14px; width: auto;">⬅ Новый скан</button>
             
+            <!-- Объединенная Шапка + Контакты -->
             <div class="company-header">
                 <img id="b-logo" class="company-logo" src="" onerror="this.style.display='none'">
                 <div style="width: 100%;">
-                    <h2 style="margin: 0 0 10px 0; color: #00ff88;" id="b-name">Загрузка...</h2>
+                    <h2 style="margin: 0 0 15px 0; color: #00ff88;" id="b-name">Загрузка...</h2>
+                    
                     <div class="meta-grid">
                         <div class="meta-item">🌍 Страна: <strong id="m-country"></strong></div>
                         <div class="meta-item">🏙️ Город: <strong id="m-city"></strong></div>
                         <div class="meta-item">💼 Ниша: <strong id="m-niche"></strong></div>
                         <div class="meta-item">👤 Владелец: <strong id="m-owner"></strong></div>
                         <div class="meta-item">💰 Оборот: <strong id="m-revenue"></strong></div>
-                        <div class="meta-item">📅 Год основания: <strong id="m-year"></strong></div>
+                        <div class="meta-item">📅 Год: <strong id="m-year"></strong></div>
                         <div class="meta-item">⚖️ Суды/Долги: <strong id="m-debts"></strong></div>
                     </div>
+
+                    <hr style="border-color: #333; margin: 15px 0;">
+                    
+                    <!-- Сюда вставятся Контакты и Соцсети -->
+                    <div id="b-contacts-container" style="display:flex; flex-wrap:wrap; gap: 15px; align-items:center;"></div>
                 </div>
             </div>
             
@@ -145,22 +144,28 @@
                 <div class="media-box" id="map" style="width: 100%; height: 350px; background:#111; display:flex; align-items:center; justify-content:center;">Загрузка карты...</div>
             </div>
 
-            <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
-                <h3 style="color: #ffaa00;">🎯 Ближайшие конкуренты (Радиус 3 км)</h3>
-                <div id="b-competitors" style="display: flex; flex-wrap: wrap;"></div>
+            <!-- Разделенная Репутация (на всю ширину) -->
+            <div class="card" style="margin-bottom: 25px;">
+                <h3>⭐️ Репутация и Отзывы</h3>
+                <div style="font-size: 24px; font-weight: bold; color: #00ff88; margin-bottom: 5px;" id="b-rating"></div>
+                <div style="color: #aaa; margin-bottom: 20px;" id="b-reviews"></div>
+                
+                <div class="grid-2" style="margin-bottom: 0;">
+                    <div style="border-right: 1px solid #333; padding-right: 15px;">
+                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:15px;">👍 Позитивный фон</h4>
+                        <div id="b-reviews-pos"></div>
+                    </div>
+                    <div style="padding-left: 15px;">
+                        <h4 style="color:#ff4444; margin-top:0; margin-bottom:15px;">👎 Жалобы клиентов</h4>
+                        <div id="b-reviews-neg"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid-2">
-                <div class="card">
-                    <h3>📊 Основные данные и Соцсети</h3>
-                    <div id="b-contacts-container"></div>
-                </div>
-                <div class="card">
-                    <h3>⭐️ Репутация и Отзывы</h3>
-                    <div style="font-size: 24px; font-weight: bold; color: #00ff88; margin-bottom: 10px;" id="b-rating"></div>
-                    <div style="color: #aaa; margin-bottom: 15px;" id="b-reviews"></div>
-                    <div id="b-reviews-tags"></div>
-                </div>
+            <!-- Конкуренты -->
+            <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
+                <h3 style="color: #ffaa00;">🎯 Конкуренты (Расширенный поиск)</h3>
+                <div id="b-competitors" style="display: flex; flex-wrap: wrap;"></div>
             </div>
 
             <div class="grid-2">
@@ -195,25 +200,37 @@
                 </table>
             </div>
 
-            <!-- IT-ВЕНДОРЫ -->
             <div class="card" style="border-color: #d32f2f;">
                 <h3 style="color: #ff4444;">🛠️ Подрядчики для внедрения (IT-Интеграторы)</h3>
                 <p style="color:#aaa; font-size:14px;">Рейтинговые компании и агентства, способные реализовать предложенную архитектуру:</p>
                 <div id="b-vendors" style="display: grid; gap: 15px; margin-top: 15px;"></div>
+            </div>
+
+            <!-- НОВЫЙ БЛОК: Отправка на почту -->
+            <div class="card" style="border-color: #00d2ff; text-align: center; margin-top: 25px;">
+                <h3 style="color: #00d2ff;">📩 Сохранить копию аудита</h3>
+                <p style="color:#aaa; font-size:14px; margin-bottom:20px;">Введите ваш email, чтобы получить развернутую HTML-версию отчета.</p>
+                <div style="display:flex; gap:10px; justify-content:center; max-width:500px; margin: 0 auto;">
+                    <input type="email" id="report-email" placeholder="Ваш Email" style="margin:0; text-align:center;">
+                    <button onclick="sendReportEmail()" id="send-email-btn" style="margin:0; width:auto; padding: 14px 30px;">Отправить</button>
+                </div>
+                <p id="email-msg" style="font-size:14px; margin-top:15px;"></p>
             </div>
         </div>
     </div>
 
     <script>
         // === ВСТАВЬ СЮДА НОВУЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT ===
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbyanlsnB3mNbTUNI7m5XbkeSjpNh8RGKAS5bGtqJpMFaPRjhjv5QSBX83dTiaVsS-s/exec";
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbwgeMMV-gu9FnNe-oNvqMxj4oDP-9iyiJ33P9nFaejWGcAV8Iu_GklC_9EjZPabHfA/exec";
 
         let geoData = [];
         let googleMap = null;
         let mapInfoWindow = null;
 
         window.onload = async () => {
-            document.getElementById('email').value = localStorage.getItem('b2b_user_email') || '';
+            const savedEmail = localStorage.getItem('b2b_user_email');
+            if(savedEmail) document.getElementById('report-email').value = savedEmail;
+            
             const savedCountry = localStorage.getItem('b2b_country') || '';
             const savedCity = localStorage.getItem('b2b_city') || '';
 
@@ -280,6 +297,7 @@
             document.getElementById('lead-form').classList.remove('hidden');
             document.getElementById('url').value = '';
             document.getElementById('status-msg').innerText = '';
+            document.getElementById('email-msg').innerText = '';
             renderHistory(); 
         }
 
@@ -347,8 +365,6 @@
             const btn = document.getElementById('scan-btn');
             const msg = document.getElementById('status-msg');
             const urlInput = document.getElementById('url').value.trim();
-            const emailInput = document.getElementById('email').value.trim();
-            const sendEmailFlag = document.getElementById('send-email').checked;
             
             const country = document.getElementById('country').value;
             const city = document.getElementById('city').value;
@@ -361,9 +377,7 @@
 
             const payload = { 
                 url: searchQuery, 
-                email: emailInput, 
                 language: document.getElementById('lang').value,
-                sendEmail: sendEmailFlag,
                 country: country,
                 city: city
             };
@@ -373,10 +387,8 @@
                 const result = await response.json();
                 
                 if (result.status === "success") {
-                    localStorage.setItem('b2b_user_email', emailInput);
                     let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     appendToHistory(result.reportData, country, city, now);
-                    
                     window.location.href = `?id=${result.fileId}`;
                 } else {
                     msg.innerText = "Ошибка: " + result.message;
@@ -387,6 +399,47 @@
                 msg.innerText = "Ошибка соединения. Попробуйте снова.";
                 btn.disabled = false;
                 btn.innerText = "Запустить Глубокий Скан";
+            }
+        }
+
+        // ОТПРАВКА НА ПОЧТУ ИЗ ДАШБОРДА
+        async function sendReportEmail() {
+            const emailInput = document.getElementById('report-email').value.trim();
+            const msg = document.getElementById('email-msg');
+            const btn = document.getElementById('send-email-btn');
+            const urlParams = new URLSearchParams(window.location.search);
+            const reportId = urlParams.get('id');
+
+            if(!emailInput || !reportId) {
+                msg.innerText = "Пожалуйста, введите корректный Email.";
+                msg.style.color = "#ff4444";
+                return;
+            }
+
+            btn.innerText = "Отправка...";
+            btn.disabled = true;
+            localStorage.setItem('b2b_user_email', emailInput);
+
+            try {
+                const payload = { action: "sendEmail", fileId: reportId, email: emailInput };
+                const response = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
+                const result = await response.json();
+                
+                if (result.status === "success") {
+                    msg.innerText = "✅ Полный аудит успешно отправлен на вашу почту!";
+                    msg.style.color = "#00ff88";
+                    btn.innerText = "Отправлено";
+                } else {
+                    msg.innerText = "Ошибка отправки: " + result.message;
+                    msg.style.color = "#ff4444";
+                    btn.disabled = false;
+                    btn.innerText = "Отправить";
+                }
+            } catch (err) {
+                msg.innerText = "Ошибка сети.";
+                msg.style.color = "#ff4444";
+                btn.disabled = false;
+                btn.innerText = "Отправить";
             }
         }
 
@@ -430,7 +483,7 @@
                         document.getElementById('map').innerHTML = "Координаты не найдены";
                     }
 
-                    // Контакты и Соцсети
+                    // Контакты и Соцсети (встроены в шапку)
                     let contactsHtml = "";
                     if(data.contacts) {
                         if(data.contacts.address) contactsHtml += `<div class="contact-row">📍 <span>${data.contacts.address}</span></div>`;
@@ -439,26 +492,31 @@
                         if(data.contacts.website && data.contacts.website !== "N/A") contactsHtml += `<div class="contact-row">🌐 <a href="${data.contacts.website.startsWith('http') ? data.contacts.website : 'https://'+data.contacts.website}" target="_blank">${data.contacts.website}</a></div>`;
                     }
                     if(data.socialMedia) {
-                        let smHtml = '<div class="social-links" style="margin-top: 15px; display:flex; gap:10px;">';
-                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${data.socialMedia.facebook}" target="_blank" title="Facebook">📘 Facebook</a>`;
-                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${data.socialMedia.instagram}" target="_blank" title="Instagram">📸 Instagram</a>`;
-                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${data.socialMedia.linkedin}" target="_blank" title="LinkedIn">💼 LinkedIn</a>`;
+                        let smHtml = '<div class="social-links" style="display:flex; gap:10px;">';
+                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${data.socialMedia.facebook}" target="_blank" title="Facebook">Facebook</a>`;
+                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${data.socialMedia.instagram}" target="_blank" title="Instagram">Instagram</a>`;
+                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${data.socialMedia.linkedin}" target="_blank" title="LinkedIn">LinkedIn</a>`;
                         smHtml += '</div>';
                         contactsHtml += smHtml;
                     }
                     document.getElementById('b-contacts-container').innerHTML = contactsHtml || "Нет данных";
 
+                    // Разделенная Репутация
                     document.getElementById('b-rating').innerText = `${data.rating || 'N/A'}`;
                     document.getElementById('b-reviews').innerText = `${data.reviewCount || 0} отзывов`;
                     
-                    let reviewsHtml = "";
+                    let posHtml = "";
                     if(data.reputation && data.reputation.positive) {
-                        data.reputation.positive.forEach(p => reviewsHtml += `<div class="review-badge badge-green">✔️ ${p}</div>`);
+                        data.reputation.positive.forEach(p => posHtml += `<div class="review-badge badge-green">✔️ ${p}</div>`);
                     }
+                    document.getElementById('b-reviews-pos').innerHTML = posHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
+                    
+                    let negHtml = "";
                     if(data.reputation && data.reputation.negative) {
-                        data.reputation.negative.forEach(n => reviewsHtml += `<div class="review-badge badge-red">⚠️ ${n}</div>`);
+                        data.reputation.negative.forEach(n => negHtml += `<div class="review-badge badge-red">⚠️ ${n}</div>`);
                     }
-                    document.getElementById('b-reviews-tags').innerHTML = reviewsHtml;
+                    document.getElementById('b-reviews-neg').innerHTML = negHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
+
                     document.getElementById('b-lost').innerText = data.lostRevenue || "0";
                     
                     const stackUl = document.getElementById('b-stack');
@@ -472,7 +530,7 @@
                     populateList('b-infra', data.infrastructure);
                     populateList('b-bottlenecks', data.bottlenecks);
                     
-                    // Конкуренты (15 шт с Тултипами)
+                    // Конкуренты 
                     const compContainer = document.getElementById('b-competitors');
                     compContainer.innerHTML = '';
                     if(data.competitors && data.competitors.length > 0) {
@@ -539,7 +597,7 @@
                 setTimeout(() => initLiveMap(lat, lng, bizName), 500); 
                 return;
             }
-            document.getElementById("map").innerHTML = ""; // Очищаем текст "Загрузка"
+            document.getElementById("map").innerHTML = ""; 
             const loc = { lat: lat, lng: lng };
             googleMap = new google.maps.Map(document.getElementById("map"), {
                 center: loc,
@@ -550,17 +608,18 @@
             new google.maps.Marker({ position: loc, map: googleMap, title: bizName, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png" });
             mapInfoWindow = new google.maps.InfoWindow();
 
+            // КЛИК ПО ЛЮБЫМ ОБЪЕКТАМ НА КАРТЕ
             googleMap.addListener("click", (event) => {
                 if (event.placeId) {
-                    event.stop();
+                    event.stop(); // Блокируем стандартное окно Гугла
                     const service = new google.maps.places.PlacesService(googleMap);
                     service.getDetails({ placeId: event.placeId }, (place, status) => {
                         if (status === google.maps.places.PlacesServiceStatus.OK) {
                             const content = `
-                                <div style="color:#000; padding:5px;">
+                                <div style="color:#000; padding:10px; font-family: sans-serif; text-align:center;">
                                     <strong style="font-size:16px;">${place.name}</strong><br>
                                     <span style="font-size:12px; color:#555;">${place.formatted_address}</span><br>
-                                    <button class="map-scan-btn" onclick="scanDirect('${place.name}', '', '')">Запустить аудит</button>
+                                    <button class="map-scan-btn" onclick="scanDirect('${place.name.replace(/'/g, "\\'")}', '', '')">Начать сканировать этот бизнес</button>
                                 </div>
                             `;
                             mapInfoWindow.setContent(content);

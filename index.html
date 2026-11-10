@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Nexus - Deep Business Audit</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a0a; color: #e0e0e0; display: flex; justify-content: center; padding: 40px 20px; margin: 0;}
+        .container { background: #151515; padding: 40px; border-radius: 16px; max-width: 1000px; width: 100%; box-shadow: 0 10px 30px rgba(0,255,136,0.1); border: 1px solid #222;}
+        h1, h2, h3 { color: #fff; }
+        h1 { color: #00ff88; text-align: center; margin-bottom: 30px;}
+        
+        input, select, button { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #333; background: #0a0a0a; color: #fff; box-sizing: border-box; font-size: 16px;}
+        input:focus, select:focus { outline: none; border-color: #00ff88; }
+        button { background: #00ff88; color: #000; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; border: none; margin-top: 10px;}
+        button:hover { background: #00cc6a; box-shadow: 0 0 15px rgba(0,255,136,0.4);}
+        button:disabled { background: #555; color: #888; cursor: not-allowed;}
+        
+        .hidden { display: none; }
+        
+        /* Сетка локации */
+        .geo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; color: #aaa; margin-bottom: 15px; cursor: pointer;}
+        .checkbox-container input { width: 20px; height: 20px; margin: 0; cursor: pointer;}
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .card { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        .card h3 { margin-top: 0; color: #00d2ff; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        
+        /* Контакты */
+        .contact-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: #ccc;}
+        .contact-row a { color: #00ff88; text-decoration: none; }
+        .contact-row a:hover { text-decoration: underline; }
+
+        /* Отзывы */
+        .review-badge { display: inline-block; padding: 5px 10px; border-radius: 6px; font-size: 14px; margin: 4px; font-weight: bold;}
+        .badge-green { background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; }
+        .badge-red { background: rgba(255, 68, 68, 0.1); border: 1px solid #ff4444; color: #ff4444; }
+
+        .critical-box { border-left: 4px solid #ff4444; padding: 25px; background: rgba(255, 68, 68, 0.05); margin-bottom: 30px; border-radius: 0 10px 10px 0;}
+        .critical-box h3 { color: #ff4444; margin-top: 0; font-size: 22px;}
+        .lost-revenue { font-size: 28px; font-weight: bold; margin: 15px 0 0 0; color: #fff;}
+        .lost-revenue span { color: #ff4444; }
+
+        /* Tooltips (всплывающие подсказки) */
+        .has-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #00ff88; display: inline-block; margin-bottom: 8px;}
+        .has-tooltip .tooltip-text { visibility: hidden; width: 300px; background-color: #222; color: #fff; text-align: left; border: 1px solid #00ff88; border-radius: 8px; padding: 15px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-weight: normal; line-height: 1.5;}
+        .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+        .list-section ul { padding-left: 20px; margin: 0; color: #ccc;}
+        .list-section li { margin-bottom: 12px; line-height: 1.6;}
+        
+        .arch-step { background: #222; border-left: 3px solid #00ff88; padding: 15px 20px; margin-bottom: 15px; border-radius: 0 8px 8px 0;}
+        .arch-step h4 { color: #00ff88; margin: 0 0 8px 0; font-size: 16px;}
+
+        .fin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .fin-table th, .fin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        .fin-table th { color: #aaa; font-weight: normal; }
+        .fin-table td { font-weight: bold; color: #fff; font-size: 18px;}
+        .fin-table tr:last-child td { border-bottom: none; color: #00ff88; }
+
+        .competitor-tag { display: inline-block; padding: 10px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; font-size: 14px; font-weight: bold; transition: 0.3s;}
+        .competitor-tag:hover { background: #00ff88; color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.5); transform: translateY(-2px);}
+        
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;}
+        .media-box { border-radius: 10px; overflow: hidden; border: 1px solid #333; background: #1a1a1a; display: flex; align-items: center; justify-content: center;}
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app-container">
+        <!-- ФОРМА ВВОДА -->
+        <div id="lead-form">
+            <h1>B2B Nexus - Deep Scanner</h1>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Глубокий ИИ-анализ бизнеса с гео-привязкой.</p>
+            
+            <div class="geo-grid">
+                <select id="country" onchange="loadCities()">
+                    <option value="">🌍 Выберите страну...</option>
+                </select>
+                <select id="city" disabled>
+                    <option value="">🏙️ Сначала выберите страну</option>
+                </select>
+            </div>
+
+            <input type="text" id="url" placeholder="Название бизнеса, бренд или URL" autocomplete="off" required>
+            <input type="email" id="email" placeholder="Ваш Email (для получения отчета)" required>
+            
+            <label class="checkbox-container">
+                <input type="checkbox" id="send-email" checked>
+                Отправить детальный отчет на почту
+            </label>
+
+            <select id="lang">
+                <option value="ru-RU">Русский</option>
+                <option value="en-US">English</option>
+                <option value="de-DE">Deutsch</option>
+            </select>
+            <button onclick="submitLead()" id="scan-btn">Запустить Глубокий Скан</button>
+            <p id="status-msg" style="text-align: center; font-weight: bold; margin-top: 15px;"></p>
+        </div>
+
+        <!-- ДАШБОРД ОТЧЕТА -->
+        <div id="report-dashboard" class="hidden">
+            <button onclick="resetToHome()" style="background: #333; color: #fff; padding: 10px; margin-bottom: 20px; font-size: 14px; width: auto;">⬅ Новый скан</button>
+            
+            <h1 id="b-name" style="border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 30px;">Загрузка...</h1>
+            
+            <!-- Медиа: Фото и Карта -->
+            <div class="media-grid">
+                <div class="media-box" id="b-photo-container" style="min-height: 250px;">
+                    <span style="color:#555;">Фото отсутствует</span>
+                </div>
+                <div class="media-box" id="b-map-container" style="min-height: 250px;">
+                    <span style="color:#555;">Карта недоступна</span>
+                </div>
+            </div>
+
+            <!-- Блок Конкурентов -->
+            <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
+                <h3 style="color: #ffaa00;">🎯 Ближайшие конкуренты (Нажми для аудита)</h3>
+                <div id="b-competitors"></div>
+            </div>
+
+            <!-- Базовые данные и Репутация -->
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📊 Основные данные</h3>
+                    <div id="b-contacts-container"></div>
+                </div>
+                <div class="card">
+                    <h3>⭐️ Репутация и Отзывы</h3>
+                    <div style="font-size: 24px; font-weight: bold; color: #00ff88; margin-bottom: 10px;" id="b-rating"></div>
+                    <div style="color: #aaa; margin-bottom: 15px;" id="b-reviews"></div>
+                    <div id="b-reviews-tags"></div>
+                </div>
+            </div>
+
+            <!-- Стек и Инфраструктура -->
+            <div class="grid-2">
+                <div class="card list-section">
+                    <h3>👨‍💻 Технический стек и Навыки (Наведи мышь)</h3>
+                    <ul id="b-stack"></ul>
+                </div>
+                <div class="card list-section">
+                    <h3>⚙️ Инфраструктура</h3>
+                    <ul id="b-infra"></ul>
+                </div>
+            </div>
+
+            <!-- Узкие места -->
+            <div class="critical-box list-section">
+                <h3>🚨 Критические Узкие Места (Глубокий анализ)</h3>
+                <ul id="b-bottlenecks" style="margin-bottom: 20px;"></ul>
+                <div class="lost-revenue">Расчетная упущенная выгода: <span id="b-lost"></span> / год</div>
+            </div>
+
+            <!-- Архитектура -->
+            <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
+                <h3 style="color: #00ff88;">🚀 10 Шагов Архитектуры Роста (Наведи для инструкции)</h3>
+                <div id="b-architecture"></div>
+            </div>
+
+            <!-- Финансы -->
+            <div class="card">
+                <h3 style="color: #00d2ff;">💰 Новая экономика бизнеса</h3>
+                <table class="fin-table">
+                    <tr><th>Высвобождение времени:</th><td id="fin-time">--</td></tr>
+                    <tr><th>Новый годовой оборот:</th><td id="fin-turnover">--</td></tr>
+                    <tr><th>Рост чистой прибыли:</th><td id="fin-profit">--</td></tr>
+                    <tr><th>Новая рентабельность:</th><td id="fin-margin">--</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === ВСТАВЬ СЮДА СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT ПОСЛЕ НОВОГО ДЕПЛОЯ ===
+        const GAS_URL = "ТВОЯ_ССЫЛКА_ИЗ_APPS_SCRIPT";
+
+        let geoData = [];
+
+        // Загрузка стран мира при старте
+        window.onload = async () => {
+            const savedEmail = localStorage.getItem('b2b_user_email');
+            if(savedEmail) document.getElementById('email').value = savedEmail;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const reportId = urlParams.get('id');
+            if (reportId) {
+                document.getElementById('lead-form').classList.add('hidden');
+                document.getElementById('report-dashboard').classList.remove('hidden');
+                loadReport(reportId);
+            } else {
+                fetchCountries();
+            }
+        };
+
+        async function fetchCountries() {
+            try {
+                const res = await fetch('https://countriesnow.space/api/v0.1/countries');
+                const json = await res.json();
+                geoData = json.data;
+                const countrySelect = document.getElementById('country');
+                geoData.forEach(item => {
+                    let opt = document.createElement('option');
+                    opt.value = item.country;
+                    opt.innerText = item.country;
+                    countrySelect.appendChild(opt);
+                });
+            } catch (e) {
+                console.error("Ошибка загрузки стран:", e);
+            }
+        }
+
+        function loadCities() {
+            const country = document.getElementById('country').value;
+            const citySelect = document.getElementById('city');
+            citySelect.innerHTML = '<option value="">🏙️ Выберите город...</option>';
+            
+            if(!country) {
+                citySelect.disabled = true;
+                return;
+            }
+
+            const countryData = geoData.find(c => c.country === country);
+            if(countryData && countryData.cities) {
+                citySelect.disabled = false;
+                countryData.cities.forEach(city => {
+                    let opt = document.createElement('option');
+                    opt.value = city;
+                    opt.innerText = city;
+                    citySelect.appendChild(opt);
+                });
+            }
+        }
+
+        function resetToHome() {
+            window.history.pushState({}, document.title, window.location.pathname);
+            document.getElementById('report-dashboard').classList.add('hidden');
+            document.getElementById('lead-form').classList.remove('hidden');
+            document.getElementById('url').value = '';
+            document.getElementById('status-msg').innerText = '';
+            fetchCountries();
+        }
+
+        function scanCompetitor(compName) {
+            resetToHome();
+            // Берем текущие страну и город для точного поиска
+            const country = document.getElementById('country').value;
+            const city = document.getElementById('city').value;
+            const locationStr = (city && country) ? `${city}, ${country}` : "";
+            
+            document.getElementById('url').value = locationStr ? `${compName} ${locationStr}` : compName;
+            
+            if(document.getElementById('email').value) {
+                submitLead();
+            }
+        }
+
+        async function submitLead() {
+            const btn = document.getElementById('scan-btn');
+            const msg = document.getElementById('status-msg');
+            const urlInput = document.getElementById('url').value.trim();
+            const emailInput = document.getElementById('email').value.trim();
+            const sendEmailFlag = document.getElementById('send-email').checked;
+            
+            const country = document.getElementById('country').value;
+            const city = document.getElementById('city').value;
+            const locationStr = (city && country) ? `${city}, ${country}` : "";
+            
+            // Объединяем название бизнеса и локацию для точного поиска в картах
+            const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
+
+            btn.innerText = "ИИ проводит глубокий аудит... ожидайте.";
+            btn.disabled = true;
+            msg.innerText = "";
+
+            const payload = { 
+                url: searchQuery, 
+                email: emailInput, 
+                language: document.getElementById('lang').value,
+                sendEmail: sendEmailFlag
+            };
+
+            try {
+                const response = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
+                const result = await response.json();
+                
+                if (result.status === "success") {
+                    localStorage.setItem('b2b_user_email', emailInput);
+                    window.location.href = `index.html?id=${result.fileId}`;
+                } else {
+                    msg.innerText = "Ошибка: " + result.message;
+                    msg.style.color = "#ff4444";
+                    btn.disabled = false;
+                    btn.innerText = "Запустить Глубокий Скан";
+                }
+            } catch (err) {
+                msg.innerText = "Ошибка соединения. Попробуйте снова.";
+                msg.style.color = "#ff4444";
+                btn.disabled = false;
+                btn.innerText = "Запустить Глубокий Скан";
+            }
+        }
+
+        async function loadReport(id) {
+            try {
+                const response = await fetch(`${GAS_URL}?id=${id}`);
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    const data = result.data;
+                    
+                    document.getElementById('b-name').innerText = data.businessName || "Неизвестно";
+                    
+                    // Медиа
+                    if(data.photoUrl) {
+                        document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+                    }
+                    if(data.mapEmbedUrl) {
+                        document.getElementById('b-map-container').innerHTML = `<iframe width="100%" height="100%" style="border:0; min-height:250px;" loading="lazy" allowfullscreen src="${data.mapEmbedUrl}"></iframe>`;
+                    }
+
+                    // Контакты
+                    let contactsHtml = "";
+                    if(data.contacts) {
+                        if(data.contacts.address) contactsHtml += `<div class="contact-row">📍 <span>${data.contacts.address}</span></div>`;
+                        if(data.contacts.phone) contactsHtml += `<div class="contact-row">📞 <span>${data.contacts.phone}</span></div>`;
+                        if(data.contacts.hours) contactsHtml += `<div class="contact-row">🕒 <span>${data.contacts.hours}</span></div>`;
+                        if(data.contacts.website && data.contacts.website !== "N/A") contactsHtml += `<div class="contact-row">🌐 <a href="${data.contacts.website.startsWith('http') ? data.contacts.website : 'https://'+data.contacts.website}" target="_blank">${data.contacts.website}</a></div>`;
+                    }
+                    document.getElementById('b-contacts-container').innerHTML = contactsHtml || "Нет данных";
+
+                    // Репутация
+                    document.getElementById('b-rating').innerText = `${data.rating || 'N/A'}`;
+                    document.getElementById('b-reviews').innerText = `${data.reviewCount || 0} отзывов`;
+                    
+                    let reviewsHtml = "";
+                    if(data.reputation && data.reputation.positive) {
+                        data.reputation.positive.forEach(p => reviewsHtml += `<div class="review-badge badge-green">✔️ ${p}</div>`);
+                    }
+                    if(data.reputation && data.reputation.negative) {
+                        data.reputation.negative.forEach(n => reviewsHtml += `<div class="review-badge badge-red">⚠️ ${n}</div>`);
+                    }
+                    document.getElementById('b-reviews-tags').innerHTML = reviewsHtml;
+
+                    document.getElementById('b-lost').innerText = data.lostRevenue || "0";
+                    
+                    // Стек с тултипами
+                    const stackUl = document.getElementById('b-stack');
+                    stackUl.innerHTML = '';
+                    if(data.techStack) {
+                        data.techStack.forEach(item => {
+                            stackUl.innerHTML += `<li><span class="has-tooltip">${item.name}<span class="tooltip-text">${item.details}</span></span></li>`;
+                        });
+                    }
+
+                    populateList('b-infra', data.infrastructure);
+                    populateList('b-bottlenecks', data.bottlenecks);
+                    
+                    // Конкуренты
+                    const compContainer = document.getElementById('b-competitors');
+                    compContainer.innerHTML = '';
+                    if(data.competitors && data.competitors.length > 0) {
+                        data.competitors.forEach(comp => {
+                            let btn = document.createElement('div');
+                            btn.className = 'competitor-tag';
+                            btn.innerText = comp;
+                            btn.onclick = () => scanCompetitor(comp);
+                            compContainer.appendChild(btn);
+                        });
+                    } else {
+                        compContainer.innerHTML = '<p style="color:#aaa; font-style: italic;">Конкуренты не найдены</p>';
+                    }
+
+                    // Архитектура с тултипами
+                    const archContainer = document.getElementById('b-architecture');
+                    archContainer.innerHTML = '';
+                    if(data.newArchitecture) {
+                        data.newArchitecture.forEach(step => {
+                            archContainer.innerHTML += `
+                            <div class="arch-step">
+                                <h4 class="has-tooltip">${step.title} <span style="font-size:12px; color:#aaa;">(Как внедрить?)</span><span class="tooltip-text">${step.instruction}</span></h4>
+                                <p style="margin: 0; color: #ccc; font-size: 14px;">${step.desc}</p>
+                            </div>`;
+                        });
+                    }
+
+                    if(data.financials) {
+                        document.getElementById('fin-time').innerText = data.financials.timeSaved || "--";
+                        document.getElementById('fin-turnover').innerText = data.financials.newTurnover || "--";
+                        document.getElementById('fin-profit').innerText = data.financials.profitIncrease || "--";
+                        document.getElementById('fin-margin').innerText = data.financials.newMargin || "--";
+                    }
+
+                } else {
+                    document.getElementById('b-name').innerText = "Отчет не найден.";
+                }
+            } catch (error) {
+                document.getElementById('b-name').innerText = "Ошибка загрузки данных.";
+            }
+        }
+
+        function populateList(elementId, arrayData) {
+            const ul = document.getElementById(elementId);
+            ul.innerHTML = ''; 
+            if (arrayData && arrayData.length > 0) {
+                arrayData.forEach(item => {
+                    let li = document.createElement('li');
+                    li.innerText = item;
+                    ul.appendChild(li);
+                });
+            } else {
+                ul.innerHTML = '<li>Нет данных</li>';
+            }
+        }
+    </script>
+</body>
+</html>

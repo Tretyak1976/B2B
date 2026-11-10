@@ -39,11 +39,6 @@
 
         .contact-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; color: #ccc;}
         .contact-row a { color: #00ff88; text-decoration: none; }
-        
-        /* Иконки соцсетей */
-        .social-links a { display: inline-block; background: #222; padding: 8px 12px; border-radius: 8px; color: #00d2ff; text-decoration: none; border: 1px solid #333; font-weight: bold; font-size: 14px; transition: 0.3s;}
-        .social-links a:hover { background: #00d2ff; color: #000; }
-
         .review-badge { display: inline-block; padding: 5px 10px; border-radius: 6px; font-size: 14px; margin: 4px; font-weight: bold;}
         .badge-green { background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88; color: #00ff88; }
         .badge-red { background: rgba(255, 68, 68, 0.1); border: 1px solid #ff4444; color: #ff4444; }
@@ -139,7 +134,6 @@
             
             <div class="media-grid">
                 <div class="media-box" id="b-photo-container"></div>
-                <!-- Контейнер для живой карты -->
                 <div class="media-box" id="map" style="width: 100%; height: 350px;"></div>
             </div>
 
@@ -150,7 +144,7 @@
 
             <div class="grid-2">
                 <div class="card">
-                    <h3>📊 Основные данные и Соцсети</h3>
+                    <h3>📊 Основные данные</h3>
                     <div id="b-contacts-container"></div>
                 </div>
                 <div class="card">
@@ -183,7 +177,7 @@
                 <div id="b-architecture"></div>
             </div>
 
-            <div class="card" style="margin-bottom: 25px;">
+            <div class="card">
                 <h3 style="color: #00d2ff;">💰 Новая экономика бизнеса</h3>
                 <table class="fin-table">
                     <tr><th>Высвобождение времени:</th><td id="fin-time">--</td></tr>
@@ -192,20 +186,12 @@
                     <tr><th>Новая рентабельность:</th><td id="fin-margin">--</td></tr>
                 </table>
             </div>
-
-            <!-- НОВЫЙ БЛОК: IT-ВЕНДОРЫ -->
-            <div class="card" style="border-color: #d32f2f;">
-                <h3 style="color: #ff4444;">🛠️ Подрядчики для внедрения (IT-Интеграторы)</h3>
-                <p style="color:#aaa; font-size:14px;">Компании и агентства, способные реализовать предложенную архитектуру:</p>
-                <div id="b-vendors" style="display: grid; gap: 15px; margin-top: 15px;"></div>
-            </div>
-
         </div>
     </div>
 
     <script>
-        // === ВСТАВЬ СЮДА НОВУЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT ПОСЛЕ ДЕПЛОЯ ===
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbzjtlxBiPXrC274MtGERna4Wiw87XaVZi_-Yxe9b9gZN-asH48ZsWWxM4a1zckzjUo/exec";
+        // === ВСТАВЬ СЮДА НОВУЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT ===
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzgKvYfH5SfZuLvt5ALp4wAXyu6KLly72866iMEQL0M6NNkiS57kuerAUyrPqxg_0w/exec";
 
         let geoData = [];
         let googleMap = null;
@@ -274,6 +260,7 @@
         }
 
         function resetToHome() {
+            // Адаптировано для GitHub Pages
             window.history.pushState({}, document.title, window.location.pathname);
             document.getElementById('report-dashboard').classList.add('hidden');
             document.getElementById('lead-form').classList.remove('hidden');
@@ -284,12 +271,12 @@
 
         function scanDirect(compName, country, city) {
             resetToHome();
-            if(country && country !== "Не указана" && country !== "Н/Д") {
+            if(country) {
                 document.getElementById('country').value = country;
                 localStorage.setItem('b2b_country', country);
                 loadCities();
             }
-            if(city && city !== "Не указан" && city !== "Н/Д") {
+            if(city) {
                 document.getElementById('city').value = city;
                 localStorage.setItem('b2b_city', city);
             }
@@ -297,20 +284,16 @@
             submitLead();
         }
 
-        function appendToHistory(reportData, userCountry, userCity, searchTime) {
+        function appendToHistory(reportData, country, city, searchTime) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
-            let logoSrc = reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A" 
+            let logoSrc = reportData.contacts.website && reportData.contacts.website !== "N/A" 
                 ? `https://logo.clearbit.com/${reportData.contacts.website.replace(/^https?:\/\//, '')}` 
                 : 'https://ui-avatars.com/api/?name=' + reportData.businessName;
             
-            // Если ИИ вернул страну/город, используем их, иначе берем из инпутов
-            let finalCountry = reportData.searchCountry || userCountry || 'Не указана';
-            let finalCity = reportData.searchCity || userCity || 'Не указан';
-
             history.unshift({
                 name: reportData.businessName,
-                country: finalCountry,
-                city: finalCity,
+                country: country || 'Не указана',
+                city: city || 'Не указан',
                 time: searchTime,
                 logo: logoSrc
             });
@@ -363,10 +346,7 @@
                 url: searchQuery, 
                 email: emailInput, 
                 language: document.getElementById('lang').value,
-                sendEmail: sendEmailFlag,
-                // Передаем страну и город напрямую в бэкенд
-                country: country,
-                city: city
+                sendEmail: sendEmailFlag
             };
 
             try {
@@ -378,6 +358,7 @@
                     let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     appendToHistory(result.reportData, country, city, now);
                     
+                    // Адаптировано для GitHub Pages
                     window.location.href = `?id=${result.fileId}`;
                 } else {
                     msg.innerText = "Ошибка: " + result.message;
@@ -401,11 +382,10 @@
                     
                     document.getElementById('b-name').innerText = data.businessName || "Неизвестно";
                     
-                    // Забираем страну и город из данных отчета, либо из кэша
-                    const reportCountry = data.searchCountry || localStorage.getItem('b2b_country') || 'Н/Д';
-                    const reportCity = data.searchCity || localStorage.getItem('b2b_city') || 'Н/Д';
-                    document.getElementById('m-country').innerText = reportCountry;
-                    document.getElementById('m-city').innerText = reportCity;
+                    const country = localStorage.getItem('b2b_country') || 'Н/Д';
+                    const city = localStorage.getItem('b2b_city') || 'Н/Д';
+                    document.getElementById('m-country').innerText = country;
+                    document.getElementById('m-city').innerText = city;
                     
                     if(data.companyMeta) {
                         document.getElementById('m-niche').innerText = data.companyMeta.niche || "Н/Д";
@@ -425,12 +405,10 @@
                         document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
                     }
                     
-                    // Инициализация карты
                     if(data.coordinates) {
                         initLiveMap(data.coordinates.lat, data.coordinates.lng, data.businessName);
                     }
 
-                    // Контакты и Соцсети
                     let contactsHtml = "";
                     if(data.contacts) {
                         if(data.contacts.address) contactsHtml += `<div class="contact-row">📍 <span>${data.contacts.address}</span></div>`;
@@ -438,18 +416,8 @@
                         if(data.contacts.hours) contactsHtml += `<div class="contact-row">🕒 <span>${data.contacts.hours}</span></div>`;
                         if(data.contacts.website && data.contacts.website !== "N/A") contactsHtml += `<div class="contact-row">🌐 <a href="${data.contacts.website.startsWith('http') ? data.contacts.website : 'https://'+data.contacts.website}" target="_blank">${data.contacts.website}</a></div>`;
                     }
-                    // Добавляем соцсети
-                    if(data.socialMedia) {
-                        let smHtml = '<div class="social-links" style="margin-top: 15px; display:flex; gap:10px;">';
-                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${data.socialMedia.facebook}" target="_blank" title="Facebook">📘 Facebook</a>`;
-                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${data.socialMedia.instagram}" target="_blank" title="Instagram">📸 Instagram</a>`;
-                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${data.socialMedia.linkedin}" target="_blank" title="LinkedIn">💼 LinkedIn</a>`;
-                        smHtml += '</div>';
-                        contactsHtml += smHtml;
-                    }
                     document.getElementById('b-contacts-container').innerHTML = contactsHtml || "Нет данных";
 
-                    // Репутация
                     document.getElementById('b-rating').innerText = `${data.rating || 'N/A'}`;
                     document.getElementById('b-reviews').innerText = `${data.reviewCount || 0} отзывов`;
                     
@@ -464,7 +432,6 @@
 
                     document.getElementById('b-lost').innerText = data.lostRevenue || "0";
                     
-                    // Стек
                     const stackUl = document.getElementById('b-stack');
                     stackUl.innerHTML = '';
                     if(data.techStack) {
@@ -476,7 +443,6 @@
                     populateList('b-infra', data.infrastructure);
                     populateList('b-bottlenecks', data.bottlenecks);
                     
-                    // Конкуренты
                     const compContainer = document.getElementById('b-competitors');
                     compContainer.innerHTML = '';
                     if(data.competitors && data.competitors.length > 0) {
@@ -485,14 +451,13 @@
                             btn.className = 'competitor-tag';
                             btn.innerHTML = `<div class="comp-name">${comp.name}</div>
                                              <div class="comp-meta">⭐️ ${comp.rating} | 🏙️ ${comp.city}</div>`;
-                            btn.onclick = () => scanDirect(comp.name, reportCountry, comp.city || reportCity);
+                            btn.onclick = () => scanDirect(comp.name, country, comp.city || city);
                             compContainer.appendChild(btn);
                         });
                     } else {
                         compContainer.innerHTML = '<p style="color:#aaa;">Конкуренты не найдены</p>';
                     }
 
-                    // Архитектура
                     const archContainer = document.getElementById('b-architecture');
                     archContainer.innerHTML = '';
                     if(data.newArchitecture) {
@@ -512,22 +477,6 @@
                         document.getElementById('fin-margin').innerText = data.financials.newMargin || "--";
                     }
 
-                    // IT Вендоры
-                    const vendorsContainer = document.getElementById('b-vendors');
-                    vendorsContainer.innerHTML = '';
-                    if(data.itVendors && data.itVendors.length > 0) {
-                        data.itVendors.forEach(vendor => {
-                            vendorsContainer.innerHTML += `
-                            <div style="background: #222; padding: 15px; border-radius: 8px; border-left: 3px solid #ff4444;">
-                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name}</div>
-                                <div style="font-size: 13px; color: #aaa; margin: 5px 0;">${vendor.description}</div>
-                                <a href="${vendor.website.startsWith('http') ? vendor.website : 'https://'+vendor.website}" target="_blank" style="color: #00ff88; text-decoration: none; font-size: 14px;">🌐 Сайт компании</a>
-                            </div>`;
-                        });
-                    } else {
-                        vendorsContainer.innerHTML = '<p style="color:#aaa;">Подрядчики не найдены.</p>';
-                    }
-
                 } else {
                     document.getElementById('b-name').innerText = "Отчет не найден.";
                 }
@@ -537,13 +486,7 @@
             }
         }
 
-        // Предохранитель для Google Карт (Ждет загрузки API)
         function initLiveMap(lat, lng, bizName) {
-            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                setTimeout(() => initLiveMap(lat, lng, bizName), 500); // Проверяем каждые полсекунды
-                return;
-            }
-
             const loc = { lat: lat, lng: lng };
             googleMap = new google.maps.Map(document.getElementById("map"), {
                 center: loc,

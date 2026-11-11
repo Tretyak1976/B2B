@@ -47,7 +47,6 @@
         .lost-revenue { font-size: 28px; font-weight: bold; margin: 15px 0 0 0; color: #fff;}
         .lost-revenue span { color: #ff4444; }
 
-        /* Новый стиль для карточек Технического Стека и Навыков */
         .stack-item { background: #222; border-left: 3px solid #00d2ff; padding: 10px 14px; margin-bottom: 10px; border-radius: 0 6px 6px 0;}
         .stack-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;}
         .stack-name { font-weight: bold; color: #00ff88; font-size: 15px;}
@@ -169,7 +168,7 @@
             
             <div class="media-grid">
                 <div class="media-box" id="b-photo-container">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">
+                    <img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">
                 </div>
                 <div class="media-box" id="map-container">
                     <div id="map" style="width: 100%; height: 100%; background:#e0e0e0; display:flex; align-items:center; justify-content:center; color:#333;">Загрузка карты...</div>
@@ -266,14 +265,15 @@
     </div>
 
     <script>
-        // === ССЫЛКА НА ТВОЙ GOOGLE APPS SCRIPT ===
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwKXX9kL63pBlKfMyF6gOtqNtphc9v1g_dzU0kp9hWy4jx7lWKBT9RkVGFUmRJehYA/exec";
+        // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНАЯ ССЫЛКА РАЗВЕРТЫВАНИЯ APPS SCRIPT ===
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxOjP-BaXBDco8NCJlwrWc_u_yyVL-pzdiOG7K-FbKiZqcUmFwdUFytBrkx0lcgyqU/exec";
 
         let geoData = [];
         let googleMap = null;
         let mapInfoWindow = null;
         let currentCountry = "";
         let currentCity = "";
+        let scanTimer = null;
 
         window.onload = async () => {
             const savedEmail = localStorage.getItem('b2b_user_email');
@@ -303,7 +303,7 @@
 
         async function fetchCountries() {
             try {
-                const res = await fetch('https://countriesnow.space/api/v0.1/countries');
+                const res = await fetch('[https://countriesnow.space/api/v0.1/countries](https://countriesnow.space/api/v0.1/countries)');
                 const json = await res.json();
                 geoData = json.data;
                 const countryList = document.getElementById('country-list');
@@ -387,8 +387,8 @@
         function appendToHistory(reportData, userCountry, userCity, searchTime) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
             let logoSrc = reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A" 
-                ? `https://logo.clearbit.com/${reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0]}` 
-                : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(reportData.businessName);
+                ? `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0]}` 
+                : '[https://ui-avatars.com/api/?name=](https://ui-avatars.com/api/?name=)' + encodeURIComponent(reportData.businessName);
             
             let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
             let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
@@ -421,7 +421,7 @@
                 histContainer.innerHTML += `
                     <div class="history-item">
                         <div style="display:flex; align-items:center;">
-                            <img src="${item.logo}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}'">
+                            <img src="${item.logo}" onerror="this.src='[https://ui-avatars.com/api/?name=$](https://ui-avatars.com/api/?name=$){encodeURIComponent(item.name)}'">
                             <div>
                                 <div style="font-weight:bold; font-size:15px; color:#fff;">${item.name}</div>
                                 <div style="font-size:12px; color:#888;">${item.time} | 🌍 ${item.country}, 🏙️ ${item.city}</div>
@@ -452,9 +452,16 @@
             const locationStr = locationParts.join(", ");
             const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
 
-            btn.innerText = "ИИ проводит глубокий аудит и сверку с Google Maps...";
             btn.disabled = true;
             msg.innerText = "";
+            
+            let seconds = 0;
+            btn.innerText = "Сверка с Google Maps и запуск ИИ... (0 сек)";
+            if (scanTimer) clearInterval(scanTimer);
+            scanTimer = setInterval(() => {
+                seconds++;
+                btn.innerText = `ИИ формирует глубокий аудит... (${seconds} сек)`;
+            }, 1000);
 
             const payload = { 
                 url: searchQuery, 
@@ -464,21 +471,28 @@
             };
 
             try {
-                const response = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
+                const response = await fetch(GAS_URL, { 
+                    method: "POST", 
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload),
+                    redirect: "follow"
+                });
                 const result = await response.json();
+                clearInterval(scanTimer);
                 
                 if (result.status === "success") {
                     let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     appendToHistory(result.reportData, country, city, now);
                     window.location.href = `?id=${result.fileId}`;
                 } else {
-                    msg.innerText = "Ошибка: " + result.message;
+                    msg.innerText = "Ошибка сервера: " + result.message;
                     msg.style.color = "#ff4444";
                     btn.disabled = false;
                     btn.innerText = "Запустить Глубокий Скан";
                 }
             } catch (err) {
-                msg.innerText = "Ошибка соединения. Попробуйте снова.";
+                clearInterval(scanTimer);
+                msg.innerText = "Ошибка соединения с сервером GAS. Проверьте ссылку развертывания (GAS_URL) и доступ 'Все (Anyone)'.";
                 msg.style.color = "#ff4444";
                 btn.disabled = false;
                 btn.innerText = "Запустить Глубокий Скан";
@@ -504,7 +518,12 @@
 
             try {
                 const payload = { action: "sendEmail", fileId: reportId, email: emailInput };
-                const response = await fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) });
+                const response = await fetch(GAS_URL, { 
+                    method: "POST", 
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload),
+                    redirect: "follow"
+                });
                 const result = await response.json();
                 
                 if (result.status === "success") {
@@ -550,20 +569,20 @@
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
                         let cleanUrl = data.contacts.website.replace(/^https?:\/\//, '').split('/')[0];
-                        document.getElementById('b-logo').src = `https://logo.clearbit.com/${cleanUrl}`;
+                        document.getElementById('b-logo').src = `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){cleanUrl}`;
                         document.getElementById('b-logo').style.display = "block";
                     }
 
                     if(data.photoUrl) {
                         document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
                     } else {
-                        document.getElementById('b-photo-container').innerHTML = `<img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
+                        document.getElementById('b-photo-container').innerHTML = `<img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
                     if(data.coordinates && data.coordinates.lat) {
                         initLiveMap(data.coordinates.lat, data.coordinates.lng, data.businessName);
                     } else if (data.contacts && data.contacts.address && data.contacts.address !== "N/A") {
-                        const embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=${encodeURIComponent(data.businessName + " " + data.contacts.address)}`;
+                        const embedUrl = `[https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$](https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$){encodeURIComponent(data.businessName + " " + data.contacts.address)}`;
                         document.getElementById('map-container').innerHTML = `<iframe width="100%" height="100%" style="border:0;" allowfullscreen src="${embedUrl}"></iframe>`;
                     } else {
                         document.getElementById('map-container').innerHTML = `<div style="background:#111; height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-style:italic;">Локация скрыта</div>`;
@@ -602,7 +621,6 @@
                     document.getElementById('b-reviews-neg').innerHTML = negHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     document.getElementById('b-lost').innerText = data.lostRevenue || "0";
                     
-                    // ИСПРАВЛЕННЫЙ РЕНДЕР ТЕХНИЧЕСКОГО СТЕКА И НАВЫКОВ
                     const stackContainer = document.getElementById('b-stack');
                     stackContainer.innerHTML = '';
                     if(data.techStack && Array.isArray(data.techStack) && data.techStack.length > 0) {
@@ -781,6 +799,6 @@
         }
     </script>
     
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places" async defer></script>
+    <script src="[https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places](https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places)" async defer></script>
 </body>
 </html>

@@ -265,9 +265,8 @@
     </div>
 
     <script>
-        const PROTO = "https:" + "//";
         // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНАЯ ССЫЛКА РАЗВЕРТЫВАНИЯ APPS SCRIPT ===
-        const GAS_URL = PROTO + "https://script.google.com/macros/s/AKfycbwJmnxempU6__QZmhPK_mRXgp4jb6xEH8ArUGbEjCqxEtrgz-Z46hPipbolNI07CnQ/exec";
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzwiU7-IXce-3VyyM0zsK-o29j4kf-RnH0oTM_p2PvMfHve3VDtUGIGBonIgpqt7fQ/exec";
 
         let geoData = [];
         let googleMap = null;
@@ -304,7 +303,7 @@
 
         async function fetchCountries() {
             try {
-                const res = await fetch(PROTO + 'countriesnow.space/api/v0.1/countries');
+                const res = await fetch('[https://countriesnow.space/api/v0.1/countries](https://countriesnow.space/api/v0.1/countries)');
                 const json = await res.json();
                 geoData = json.data;
                 const countryList = document.getElementById('country-list');
@@ -388,11 +387,11 @@
         function appendToHistory(reportData, userCountry, userCity, searchTime) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
             let logoSrc = reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A" 
-                ? (PROTO + "[logo.clearbit.com/](https://logo.clearbit.com/)" + reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0])
-                : (PROTO + "[ui-avatars.com/api/?name=](https://ui-avatars.com/api/?name=)" + encodeURIComponent(reportData.businessName));
+                ? `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0]}` 
+                : '[https://ui-avatars.com/api/?name=](https://ui-avatars.com/api/?name=)' + encodeURIComponent(reportData.businessName);
             
-            let finalCountry = (reportData.companyMeta && reportData.companyMeta.detectedCountry) || reportData.searchCountry || userCountry || 'Не указана';
-            let finalCity = (reportData.companyMeta && reportData.companyMeta.detectedCity) || reportData.searchCity || userCity || 'Не указан';
+            let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
+            let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
 
             history.unshift({
                 name: reportData.businessName,
@@ -419,18 +418,17 @@
                 const safeName = (item.name || "").replace(/'/g, "\\'");
                 const safeCountry = (item.country || "").replace(/'/g, "\\'");
                 const safeCity = (item.city || "").replace(/'/g, "\\'");
-                const fallbackAvatar = PROTO + "[ui-avatars.com/api/?name=](https://ui-avatars.com/api/?name=)" + encodeURIComponent(item.name || "B2B");
-                histContainer.innerHTML += 
-                    '<div class="history-item">' +
-                        '<div style="display:flex; align-items:center;">' +
-                            '<img src="' + item.logo + '" onerror="this.src=\'' + fallbackAvatar + '\'">' +
-                            '<div>' +
-                                '<div style="font-weight:bold; font-size:15px; color:#fff;">' + item.name + '</div>' +
-                                '<div style="font-size:12px; color:#888;">' + item.time + ' | 🌍 ' + item.country + ', 🏙️ ' + item.city + '</div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<button class="history-btn" onclick="scanDirect(\'' + safeName + '\', \'' + safeCountry + '\', \'' + safeCity + '\')">Скан</button>' +
-                    '</div>';
+                histContainer.innerHTML += `
+                    <div class="history-item">
+                        <div style="display:flex; align-items:center;">
+                            <img src="${item.logo}" onerror="this.src='[https://ui-avatars.com/api/?name=$](https://ui-avatars.com/api/?name=$){encodeURIComponent(item.name)}'">
+                            <div>
+                                <div style="font-weight:bold; font-size:15px; color:#fff;">${item.name}</div>
+                                <div style="font-size:12px; color:#888;">${item.time} | 🌍 ${item.country}, 🏙️ ${item.city}</div>
+                            </div>
+                        </div>
+                        <button class="history-btn" onclick="scanDirect('${safeName}', '${safeCountry}', '${safeCity}')">Скан</button>
+                    </div>`;
             });
         }
 
@@ -452,7 +450,7 @@
             if (city && city !== "Не указан" && city !== "Н/Д") locationParts.push(city);
             if (country && country !== "Не указана" && country !== "Н/Д") locationParts.push(country);
             const locationStr = locationParts.join(", ");
-            const searchQuery = locationStr ? (urlInput + " " + locationStr) : urlInput;
+            const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
 
             btn.disabled = true;
             msg.innerText = "";
@@ -462,7 +460,7 @@
             if (scanTimer) clearInterval(scanTimer);
             scanTimer = setInterval(() => {
                 seconds++;
-                btn.innerText = "ИИ формирует глубокий аудит... (" + seconds + " сек)";
+                btn.innerText = `ИИ формирует глубокий аудит... (${seconds} сек)`;
             }, 1000);
 
             const payload = { 
@@ -485,7 +483,7 @@
                 if (result.status === "success") {
                     let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     appendToHistory(result.reportData, country, city, now);
-                    window.location.href = "?id=" + result.fileId;
+                    window.location.href = `?id=${result.fileId}`;
                 } else {
                     msg.innerText = "Ошибка сервера: " + result.message;
                     msg.style.color = "#ff4444";
@@ -548,15 +546,15 @@
 
         async function loadReport(id) {
             try {
-                const response = await fetch(GAS_URL + "?id=" + encodeURIComponent(id));
+                const response = await fetch(`${GAS_URL}?id=${id}`);
                 const result = await response.json();
 
                 if (result.status === "success") {
                     const data = result.data;
                     document.getElementById('b-name').innerText = data.businessName || "Неизвестно";
                     
-                    const reportCountry = (data.companyMeta && data.companyMeta.detectedCountry) || data.searchCountry || currentCountry || 'Н/Д';
-                    const reportCity = (data.companyMeta && data.companyMeta.detectedCity) || data.searchCity || currentCity || 'Н/Д';
+                    const reportCountry = data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Н/Д';
+                    const reportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
                     
                     document.getElementById('m-country').innerText = reportCountry;
                     document.getElementById('m-city').innerText = reportCity;
@@ -571,57 +569,54 @@
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
                         let cleanUrl = data.contacts.website.replace(/^https?:\/\//, '').split('/')[0];
-                        document.getElementById('b-logo').src = PROTO + "[logo.clearbit.com/](https://logo.clearbit.com/)" + cleanUrl;
+                        document.getElementById('b-logo').src = `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){cleanUrl}`;
                         document.getElementById('b-logo').style.display = "block";
                     }
 
-                    if(data.photoUrl && data.photoUrl.indexOf("[") === -1) {
-                        document.getElementById('b-photo-container').innerHTML = '<img src="' + data.photoUrl + '" style="width:100%; height:100%; object-fit:cover;">';
+                    if(data.photoUrl) {
+                        document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
                     } else {
-                        document.getElementById('b-photo-container').innerHTML = '<img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">';
+                        document.getElementById('b-photo-container').innerHTML = `<img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
                     if(data.coordinates && data.coordinates.lat) {
                         initLiveMap(data.coordinates.lat, data.coordinates.lng, data.businessName);
                     } else if (data.contacts && data.contacts.address && data.contacts.address !== "N/A") {
-                        const embedUrl = PROTO + "[www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=](https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=)" + encodeURIComponent(data.businessName + " " + data.contacts.address);
-                        document.getElementById('map-container').innerHTML = '<iframe width="100%" height="100%" style="border:0;" allowfullscreen src="' + embedUrl + '"></iframe>';
+                        const embedUrl = `[https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$](https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$){encodeURIComponent(data.businessName + " " + data.contacts.address)}`;
+                        document.getElementById('map-container').innerHTML = `<iframe width="100%" height="100%" style="border:0;" allowfullscreen src="${embedUrl}"></iframe>`;
                     } else {
-                        document.getElementById('map-container').innerHTML = '<div style="background:#111; height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-style:italic;">Локация скрыта</div>';
+                        document.getElementById('map-container').innerHTML = `<div style="background:#111; height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-style:italic;">Локация скрыта</div>`;
                     }
 
                     let contactsHtml = "";
                     if(data.contacts) {
-                        if(data.contacts.address) contactsHtml += '<div class="contact-row">📍 <span>' + data.contacts.address + '</span></div>';
-                        if(data.contacts.phone) contactsHtml += '<div class="contact-row">📞 <span>' + data.contacts.phone + '</span></div>';
-                        if(data.contacts.hours) contactsHtml += '<div class="contact-row">🕒 <span>' + data.contacts.hours + '</span></div>';
-                        if(data.contacts.website && data.contacts.website !== "N/A") {
-                            const webHref = data.contacts.website.indexOf('http') === 0 ? data.contacts.website : (PROTO + data.contacts.website);
-                            contactsHtml += '<div class="contact-row">🌐 <a href="' + webHref + '" target="_blank">' + data.contacts.website + '</a></div>';
-                        }
+                        if(data.contacts.address) contactsHtml += `<div class="contact-row">📍 <span>${data.contacts.address}</span></div>`;
+                        if(data.contacts.phone) contactsHtml += `<div class="contact-row">📞 <span>${data.contacts.phone}</span></div>`;
+                        if(data.contacts.hours) contactsHtml += `<div class="contact-row">🕒 <span>${data.contacts.hours}</span></div>`;
+                        if(data.contacts.website && data.contacts.website !== "N/A") contactsHtml += `<div class="contact-row">🌐 <a href="${data.contacts.website.startsWith('http') ? data.contacts.website : 'https://'+data.contacts.website}" target="_blank">${data.contacts.website}</a></div>`;
                     }
                     if(data.socialMedia) {
                         let smHtml = '<div class="social-links" style="display:flex; gap:10px;">';
-                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += '<a href="' + data.socialMedia.facebook + '" target="_blank" title="Facebook">Facebook</a>';
-                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += '<a href="' + data.socialMedia.instagram + '" target="_blank" title="Instagram">Instagram</a>';
-                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += '<a href="' + data.socialMedia.linkedin + '" target="_blank" title="LinkedIn">LinkedIn</a>';
+                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${data.socialMedia.facebook}" target="_blank" title="Facebook">Facebook</a>`;
+                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${data.socialMedia.instagram}" target="_blank" title="Instagram">Instagram</a>`;
+                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${data.socialMedia.linkedin}" target="_blank" title="LinkedIn">LinkedIn</a>`;
                         smHtml += '</div>';
                         contactsHtml += smHtml;
                     }
                     document.getElementById('b-contacts-container').innerHTML = contactsHtml || "Нет данных";
 
-                    document.getElementById('b-rating').innerText = data.rating || 'N/A';
-                    document.getElementById('b-reviews').innerText = (data.reviewCount || 0) + ' отзывов';
+                    document.getElementById('b-rating').innerText = `${data.rating || 'N/A'}`;
+                    document.getElementById('b-reviews').innerText = `${data.reviewCount || 0} отзывов`;
                     
                     let posHtml = "";
                     if(data.reputation && data.reputation.positive) {
-                        data.reputation.positive.forEach(p => { posHtml += '<div class="review-badge badge-green">✔️ ' + p + '</div>'; });
+                        data.reputation.positive.forEach(p => posHtml += `<div class="review-badge badge-green">✔️ ${p}</div>`);
                     }
                     document.getElementById('b-reviews-pos').innerHTML = posHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     
                     let negHtml = "";
                     if(data.reputation && data.reputation.negative) {
-                        data.reputation.negative.forEach(n => { negHtml += '<div class="review-badge badge-red">⚠️ ' + n + '</div>'; });
+                        data.reputation.negative.forEach(n => negHtml += `<div class="review-badge badge-red">⚠️ ${n}</div>`);
                     }
                     document.getElementById('b-reviews-neg').innerHTML = negHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     document.getElementById('b-lost').innerText = data.lostRevenue || "0";
@@ -631,19 +626,19 @@
                     if(data.techStack && Array.isArray(data.techStack) && data.techStack.length > 0) {
                         data.techStack.forEach(item => {
                             if (typeof item === 'string') {
-                                stackContainer.innerHTML += '<div class="stack-item"><div class="stack-name">' + item + '</div></div>';
+                                stackContainer.innerHTML += `<div class="stack-item"><div class="stack-name">${item}</div></div>`;
                             } else {
                                 const name = item.name || item.title || "Технология";
                                 const cat = item.category || "Стек / Навык";
                                 const details = item.details || item.description || item.desc || "Профильный инструмент предприятия";
-                                stackContainer.innerHTML += 
-                                    '<div class="stack-item">' +
-                                        '<div class="stack-header">' +
-                                            '<span class="stack-name">' + name + '</span>' +
-                                            '<span class="stack-cat">' + cat + '</span>' +
-                                        '</div>' +
-                                        '<p class="stack-desc">' + details + '</p>' +
-                                    '</div>';
+                                stackContainer.innerHTML += `
+                                <div class="stack-item">
+                                    <div class="stack-header">
+                                        <span class="stack-name">${name}</span>
+                                        <span class="stack-cat">${cat}</span>
+                                    </div>
+                                    <p class="stack-desc">${details}</p>
+                                </div>`;
                             }
                         });
                     } else {
@@ -658,14 +653,15 @@
                     if(data.strategicPartnerships && data.strategicPartnerships.length > 0) {
                         data.strategicPartnerships.forEach(p => {
                             let partnerName = p.name || p.type || "Партнер";
-                            let partnerUrl = p.website && p.website !== "N/A" ? (p.website.indexOf('http') === 0 ? p.website : (PROTO + p.website)) : "#";
+                            let partnerUrl = p.website && p.website !== "N/A" ? (p.website.startsWith('http') ? p.website : 'https://'+p.website) : "#";
                             let pDiv = document.createElement('div');
                             pDiv.className = 'vendor-card partner-card';
-                            pDiv.innerHTML = 
-                                '<div style="font-weight: bold; font-size: 16px; color: #fff;">' + partnerName + '</div>' +
-                                '<div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">' + (p.reason || '') + '</div>' +
-                                '<a href="' + partnerUrl + '" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Сайт партнера</a>' +
-                                '<div class="comp-tooltip">Запустить скан: ' + partnerName + '</div>';
+                            pDiv.innerHTML = `
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerName}</div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${p.reason || ''}</div>
+                                <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Сайт партнера</a>
+                                <div class="comp-tooltip">Запустить скан: ${partnerName}</div>
+                            `;
                             pDiv.onclick = (e) => {
                                 if(e.target.tagName !== 'A') scanDirect(partnerName, '', '');
                             };
@@ -683,10 +679,11 @@
                             let compCountry = comp.country || reportCountry;
                             let btn = document.createElement('div');
                             btn.className = 'click-tag';
-                            btn.innerHTML = 
-                                '<div class="comp-name">' + comp.name + '</div>' +
-                                '<div class="comp-meta">⭐️ ' + (comp.rating || '4.5') + ' | 🏙️ ' + compCity + '</div>' +
-                                '<div class="comp-tooltip">🌍 ' + compCountry + ', ' + compCity + '<br>💼 <b>' + (comp.niche || 'Конкурент') + '</b></div>';
+                            btn.innerHTML = `
+                                <div class="comp-name">${comp.name}</div>
+                                <div class="comp-meta">⭐️ ${comp.rating || '4.5'} | 🏙️ ${compCity}</div>
+                                <div class="comp-tooltip">🌍 ${compCountry}, ${compCity}<br>💼 <b>${comp.niche || 'Конкурент'}</b></div>
+                            `;
                             btn.onclick = () => scanDirect(comp.name, compCountry, compCity);
                             compContainer.appendChild(btn);
                         });
@@ -698,17 +695,17 @@
                     archContainer.innerHTML = '';
                     if(data.newArchitecture) {
                         data.newArchitecture.forEach(step => {
-                            archContainer.innerHTML += 
-                                '<div class="arch-step">' +
-                                    '<h4 class="has-tooltip">' + step.title + ' <span style="font-size:12px; color:#aaa;">(Инструкция)</span><span class="tooltip-text">' + (step.instruction || step.desc) + '</span></h4>' +
-                                    '<p style="margin: 0; color: #ccc; font-size: 14px;">' + step.desc + '</p>' +
-                                '</div>';
+                            archContainer.innerHTML += `
+                            <div class="arch-step">
+                                <h4 class="has-tooltip">${step.title} <span style="font-size:12px; color:#aaa;">(Инструкция)</span><span class="tooltip-text">${step.instruction || step.desc}</span></h4>
+                                <p style="margin: 0; color: #ccc; font-size: 14px;">${step.desc}</p>
+                            </div>`;
                         });
                     }
 
                     if(data.financials) {
                         document.getElementById('fin-time').innerText = data.financials.timeSaved || "--";
-                        document.getElementById('fin-current-turnover').innerText = (data.companyMeta && data.companyMeta.revenue) || "--";
+                        document.getElementById('fin-current-turnover').innerText = data.companyMeta?.revenue || "--";
                         document.getElementById('fin-turnover').innerText = data.financials.newTurnover || "--";
                         document.getElementById('fin-profit').innerText = data.financials.profitIncrease || "--";
                         document.getElementById('fin-margin').innerText = data.financials.newMargin || "--";
@@ -718,14 +715,15 @@
                     vendorsContainer.innerHTML = '';
                     if(data.itVendors && data.itVendors.length > 0) {
                         data.itVendors.forEach(vendor => {
-                            let vendorUrl = vendor.website && vendor.website.indexOf('http') === 0 ? vendor.website : (PROTO + (vendor.website || 'google.com'));
+                            let vendorUrl = vendor.website && vendor.website.startsWith('http') ? vendor.website : 'https://'+(vendor.website || 'google.com');
                             let vDiv = document.createElement('div');
                             vDiv.className = 'vendor-card';
-                            vDiv.innerHTML = 
-                                '<div style="font-weight: bold; font-size: 16px; color: #fff;">' + vendor.name + ' <span class="vendor-rating">⭐️ ' + (vendor.rating || '4.8') + '</span></div>' +
-                                '<div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">' + (vendor.description || vendor.desc || 'Профильный системный интегратор') + '</div>' +
-                                '<a href="' + vendorUrl + '" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>' +
-                                '<div class="comp-tooltip">Запустить скан: ' + vendor.name + '</div>';
+                            vDiv.innerHTML = `
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description || vendor.desc || 'Профильный системный интегратор'}</div>
+                                <a href="${vendorUrl}" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>
+                                <div class="comp-tooltip">Запустить скан: ${vendor.name}</div>
+                            `;
                             vDiv.onclick = (e) => {
                                 if(e.target.tagName !== 'A') scanDirect(vendor.name, '', '');
                             };
@@ -770,12 +768,13 @@
                         if (status === google.maps.places.PlacesServiceStatus.OK) {
                             const safeName = (place.name || "").replace(/'/g, "\\'");
                             const safeAddr = (place.formatted_address || "").replace(/'/g, "\\'");
-                            const content = 
-                                '<div style="color:#000; padding:10px; font-family: sans-serif; text-align:center;">' +
-                                    '<strong style="font-size:16px;">' + place.name + '</strong><br>' +
-                                    '<span style="font-size:12px; color:#555;">' + (place.formatted_address || '') + '</span><br>' +
-                                    '<button class="map-scan-btn" onclick="scanDirect(\'' + safeName + ' ' + safeAddr + '\', \'\', \'\')">Анализировать этот бизнес</button>' +
-                                '</div>';
+                            const content = `
+                                <div style="color:#000; padding:10px; font-family: sans-serif; text-align:center;">
+                                    <strong style="font-size:16px;">${place.name}</strong><br>
+                                    <span style="font-size:12px; color:#555;">${place.formatted_address || ''}</span><br>
+                                    <button class="map-scan-btn" onclick="scanDirect('${safeName} ${safeAddr}', '', '')">Анализировать этот бизнес</button>
+                                </div>
+                            `;
                             mapInfoWindow.setContent(content);
                             mapInfoWindow.setPosition(event.latLng);
                             mapInfoWindow.open(googleMap);

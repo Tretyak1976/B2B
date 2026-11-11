@@ -179,22 +179,22 @@
                 <div class="score-box">
                     <div class="score-label">Цифровая зрелость</div>
                     <div class="score-val" id="sc-digital">--</div>
-                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-digital" style="width: 75%;"></div></div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-digital" style="width: 0%;"></div></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Операции и процессы</div>
                     <div class="score-val" id="sc-ops">--</div>
-                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-ops" style="width: 70%;"></div></div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-ops" style="width: 0%;"></div></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Клиентский опыт</div>
                     <div class="score-val" id="sc-cust">--</div>
-                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-cust" style="width: 82%;"></div></div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-cust" style="width: 0%;"></div></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Потенциал роста</div>
                     <div class="score-val" id="sc-growth">--</div>
-                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-growth" style="width: 88%;"></div></div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" id="bar-growth" style="width: 0%;"></div></div>
                 </div>
             </div>
             
@@ -327,8 +327,8 @@
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
         }
 
-        // === ВСТАВЬ СЮДА НОВЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT, ЕСЛИ СОЗДАВАЛ НОВЫЙ ДЕПЛОЙ ===
-        const GAS_URL = cleanUrl(PROTO + "https://script.google.com/macros/s/AKfycbxCzTOEWp5ly2Kr7XbFCkvT9ZG8b5T1iAYwnIWtg2IEoLqeNZflalUIRnoxWMdNuyM/exec");
+        // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ ТВОЙ АКТУАЛЬНЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT ===
+        const GAS_URL = cleanUrl(PROTO + "script.google" + DOT_COM + "/macros/s/AKfycbxnt4gffWibP4xAYqTJTGA_K_9zPsrr0L9GAiQbwfbL27kf3Q_AnqemLanR-68t9-s/exec");
 
         (function loadMapsScript() {
             const s = document.createElement('script');
@@ -344,7 +344,6 @@
         let currentCountry = "";
         let currentCity = "";
         let scanTimer = null;
-        let activeReportData = null;
 
         window.onload = async () => {
             document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
@@ -507,159 +506,6 @@
             });
         }
 
-        // Автономный генератор отчета на случай перегрузки облачного узла Gemini (503 High Demand)
-        function buildClientFallbackReport(rawName, countryInput, cityInput) {
-            const bizName = rawName || "Анализируемое предприятие";
-            const country = countryInput || "Германия";
-            const city = cityInput || "Клеве";
-            const qLower = bizName.toLowerCase();
-            
-            let niche = "Корпоративный сектор, торговля и сервисные услуги";
-            let baseRev = 4200000;
-            if (qLower.includes("aral") || qLower.includes("shell") || qLower.includes("total") || qLower.includes("tank") || qLower.includes("oil") || qLower.includes("jet")) {
-                niche = "Топливный ритейл, АЗС и придорожный сервис";
-                baseRev = 3250000;
-            } else if (qLower.includes("space") || qLower.includes("microsoft") || qLower.includes("cloud") || qLower.includes("epam") || qLower.includes("google") || qLower.includes("sap")) {
-                niche = "Высокие технологии, облачные вычисления и R&D";
-                baseRev = 1450000000;
-            } else if (qLower.includes("auto") || qLower.includes("motor") || qLower.includes("mazda") || qLower.includes("bmw") || qLower.includes("авто")) {
-                niche = "Автомобильный дилерский центр и технический сервис";
-                baseRev = 16500000;
-            }
-
-            const cur = (country.toLowerCase().includes("герм") || country.toLowerCase().includes("germany")) ? "€" : "$";
-            const fmt = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + cur;
-            const lost = Math.round(baseRev * 0.14);
-            const newTurn = baseRev + lost;
-
-            return {
-                businessName: bizName,
-                searchCountry: country,
-                searchCity: city,
-                companyMeta: {
-                    detectedCountry: country,
-                    detectedCity: city,
-                    niche: niche,
-                    owner: "Частный / Корпоративный капитал (" + bizName + ")",
-                    revenue: fmt(baseRev),
-                    founded: "2004",
-                    legalIssues: "Критичных судебных рисков не выявлено"
-                },
-                executiveScores: { digital: 76, operations: 71, customer: 84, growth: 89 },
-                marketIntelligence: {
-                    positioning: `Предприятие «${bizName}» занимает устойчивую рыночную позицию в сегменте «${niche}» (${city}, ${country}). Главный резерв увеличения чистой прибыли лежит в устранении операционных потерь в часы пик, автоматизации документооборота и интеграции с партнерскими B2B-платформами.`,
-                    quickWins: [
-                        "Автоматизация сквозного учета и устранение ручного ввода данных на кассовых и операционных узлах (эффект за 30 дней)",
-                        "Внедрение триггерных сценариев удержания клиентов и электронных карт лояльности для роста повторных продаж на 18%",
-                        "Подключение динамического прайсинга и автоматического контроля товарных остатков в часы пиковой нагрузки",
-                        "Оптимизация эквайринга, B2B-контрактов и перевод части клиентского потока на терминалы самообслуживания"
-                    ],
-                    industryTrends: [
-                        `Переход лидеров сегмента «${niche}» на облачные микросервисные ERP и предиктивное AI-прогнозирование спроса`,
-                        "Рост доли бесконтактных мобильных платежей, B2B API-интеграций и систем самообслуживания 24/7",
-                        "Консолидация рынка вокруг экосистемных партнерств с логистическими, финтех и энергетическими платформами",
-                        "Ужесточение стандартов кибербезопасности, отказоустойчивости сетей (SD-WAN) и энергоэффективности"
-                    ]
-                },
-                contacts: {
-                    address: `${city}, ${country}`,
-                    phone: "Доступно по запросу",
-                    website: "N/A",
-                    hours: "Пн-Вс: 07:00 – 22:00"
-                },
-                socialMedia: { facebook: "N/A", instagram: "N/A", linkedin: "N/A" },
-                rating: "4.4/5.0",
-                reviewCount: "215",
-                reputation: {
-                    positive: [
-                        "Удобная локация и высокая узнаваемость бренда среди целевой аудитории",
-                        "Стабильное качество базового продукта и соблюдение стандартов отрасли",
-                        "Квалифицированный персонал и налаженная операционная логистика",
-                        "Наличие базы постоянных розничных и корпоративных B2B-клиентов"
-                    ],
-                    negative: [
-                        "Очереди и увеличение времени ожидания обслуживания в часы пиковой нагрузки",
-                        "Недостаточная автоматизация клиентского самообслуживания и онлайн-записи",
-                        "Ручные операции при инвентаризации остатков и сведении отчетности",
-                        "Потери конверсии из-за отсутствия персонализированных триггерных уведомлений"
-                    ]
-                },
-                techStack: [
-                    { name: "SAP S/4HANA Enterprise ERP", details: "Центральная система управления финансами, закупками, складом и цепочками поставок." },
-                    { name: "Salesforce Customer 360 CRM", details: "Единый контур управления клиентской базой, B2B-контрактами и триггерным маркетингом." },
-                    { name: "Cisco Meraki SD-WAN", details: "Защищенная корпоративная сеть с автоматическим переключением на резервный канал 5G." },
-                    { name: "Microsoft Azure Cloud & IoT Hub", details: "Облачная платформа для сбора телеметрии оборудования и хранения аналитических данных." },
-                    { name: "Power BI Executive Analytics", details: "Дашборды контроля выручки, среднего чека и маржинальности в реальном времени." },
-                    { name: "NCR / Gilbarco POS Suite", details: "Промышленный аппаратно-программный кассовый комплекс для высоконагруженных точек." },
-                    { name: "Fortinet FortiGate Next-Gen Firewall", details: "Защита сетевого периметра и шифрование платежного трафика по стандарту PCI DSS." },
-                    { name: "Zebra RFID & Smart Inventory", details: "Терминалы сбора данных и радиочастотной идентификации для мгновенной приемки товаров." },
-                    { name: "Kubernetes & Docker Microservices", details: "Контейнеризация критических сервисов для работы без простоев при пиковых нагрузках." },
-                    { name: "ServiceNow ITSM & Helpdesk", details: "Автоматизированный контроль заявок на обслуживание оборудования и ИТ-инфраструктуры." }
-                ],
-                infrastructure: [
-                    "Отказоустойчивый серверный и облачный контур с автоматическим резервным копированием баз данных",
-                    "Защищенная корпоративная сеть передачи данных с резервированием через высокоскоростные 5G-шлюзы",
-                    "Высокопроизводительные терминалы оплаты с поддержкой бесконтактных и корпоративных карт",
-                    "Система цифрового видеонаблюдения с контролем кассовых зон и аналитикой очередей",
-                    "Складской комплекс с адресным хранением и автоматическим температурным мониторингом",
-                    "Интеллектуальные системы энергосбережения, LED-освещения и резервного электропитания",
-                    "Шлюзы электронного документооборота (EDI) для автоматического обмена накладными с поставщиками",
-                    "Контур защиты персональных и платежных данных в соответствии с требованиями GDPR и PCI DSS",
-                    "Система контроля и управления доступом персонала и автоматического учета рабочего времени",
-                    "Клиентская зона с точками самообслуживания и информационными цифровыми панелями"
-                ],
-                bottlenecks: [
-                    "Задержки синхронизации между кассовыми терминалами и центральной системой складского учета в часы пик",
-                    "Отсутствие предиктивного AI-прогнозирования спроса, вызывающее локальный дефицит ходовых позиций",
-                    "Потеря части трафика из-за очередей и высокой нагрузки на персонал в утренние и вечерние часы",
-                    "Недостаточная доля терминалов самообслуживания (Self-Checkout) для быстрой оплаты без кассира",
-                    "Ручная сверка части первичной документации с поставщиками и корпоративными клиентами",
-                    "Отсутствие гео-таргетированных push-предложений для водителей и клиентов в радиусе локации",
-                    "Повышенные расходы на электроэнергию и сервис оборудования без IoT-датчиков превентивной диагностики",
-                    "Разрозненность данных между программой лояльности, кассовым узлом и аналитикой руководителя",
-                    "Длительное согласование индивидуальных B2B-тарифов из-за отсутствия личного кабинета клиента",
-                    "Риск временной остановки платежей при сбоях у основного интернет-провайдера"
-                ],
-                lostRevenue: fmt(lost),
-                newArchitecture: [
-                    { title: "Внедрение единой облачной шины ERP + POS", desc: "Мгновенная синхронизация продаж, складских остатков и финансовой отчетности.", instruction: "Настроить двусторонний API-обмен между кассовыми терминалами и облачной ERP с задержкой менее 1 секунды." },
-                    { title: "Установка терминалов самообслуживания 24/7", desc: "Разгрузка кассовой зоны и увеличение пропускной способности точки на 35%.", instruction: "Интегрировать уличные и внутренние киоски самообслуживания с поддержкой NFC, QR и топливных/корпоративных карт." },
-                    { title: "Запуск AI-модуля прогнозирования спроса и автозаказа", desc: "Исключение дефицита товаров и сокращение замороженного капитала на складе.", instruction: "Подключить алгоритмы машинного обучения к истории продаж с автоматической отправкой EDI-заявок поставщикам." },
-                    { title: "Развертывание B2B-портала для корпоративных клиентов", desc: "Автоматизация работы с юридическими лицами, автопарками и оптовыми заказчиками.", instruction: "Внедрить личный кабинет клиента с управлением лимитами, аналитикой потребления и автовыгрузкой счетов." },
-                    { title: "IoT-мониторинг оборудования и энергоэффективности", desc: "Предотвращение внеплановых поломок и снижение счетов за электроэнергию на 20%.", instruction: "Установить умные датчики телеметрии на холодильное, насосное и климатическое оборудование с выводом в облако." },
-                    { title: "Компьютерное зрение и контроль очередей", desc: "Сокращение времени ожидания клиента и автоматическое управление сменами персонала.", instruction: "Подключить видеопоток с существующих камер к облачному модулю аналитики трафика и очередей." },
-                    { title: "Мобильная программа лояльности и гео-маркетинг", desc: "Рост частоты повторных визитов и среднего чека за счет персональных акций.", instruction: "Запустить цифровые карты в Apple/Google Wallet с отправкой автоматических push-уведомлений в радиусе 5 км." },
-                    { title: "Переход на отказоустойчивую архитектуру SD-WAN", desc: "Гарантия 100% аптайма платежных терминалов и облачных сервисов.", instruction: "Установить маршрутизаторы Cisco Meraki с автоматическим резервированием через двух независимых операторов 5G." },
-                    { title: "Автоматизация приемки товаров через Smart-ТСД и RFID", desc: "Ускорение инвентаризации в 4 раза и защита от пересортицы.", instruction: "Перевести складской персонал на мобильные терминалы сбора данных с прямой интеграцией в ERP." },
-                    { title: "Управленческий BI-дашборд реального времени для CEO", desc: "Сквозной контроль выручки, маржинальности и KPI каждого подразделения со смартфона.", instruction: "Настроить автоматические панели Power BI с прямым подключением к транзакционной базе данных." }
-                ],
-                strategicPartnerships: [],
-                financials: {
-                    timeSaved: "1 560 часов/год",
-                    newTurnover: fmt(newTurn),
-                    profitIncrease: "+" + fmt(lost),
-                    newMargin: "24.8%",
-                    paybackPeriod: "6.5 месяцев"
-                },
-                itVendors: [
-                    { name: "Accenture Digital & Cloud", rating: "4.9", website: "accenture" + DOT_COM, description: "Комплексная цифровая трансформация, внедрение облачных ERP-систем и построение предиктивной AI-аналитики." },
-                    { name: "T-Systems Enterprise", rating: "4.8", website: "t-systems" + DOT_COM, description: "Построение защищенной сетевой инфраструктуры SD-WAN, облачный хостинг и кибербезопасность европейского уровня." },
-                    { name: "Capgemini Engineering", rating: "4.8", website: "capgemini" + DOT_COM, description: "Интеграция микросервисной архитектуры, автоматизация цепочек поставок и разработка корпоративных B2B-порталов." },
-                    { name: "Bechtle IT Systemhaus", rating: "4.7", website: "bechtle" + DOT_COM, description: "Поставка, настройка и сервисное сопровождение 24/7 серверного, сетевого и кассового оборудования." }
-                ],
-                competitors: [
-                    { name: "Aral Center " + city, rating: "4.5", country: country, city: city, niche: niche, summary: `Крупный игрок в сегменте «${niche}» с высокой пропускной способностью, развитым придорожным сервисом и сильной B2B-программой.` },
-                    { name: "Shell Station Region " + city, rating: "4.4", country: country, city: city, niche: niche, summary: "Прямой конкурент с акцентом на программу лояльности ClubSmart, быстрые электрозарядки и премиальный сегмент." },
-                    { name: "TotalEnergies / Circle K", rating: "4.3", country: country, city: city, niche: niche, summary: "Сильный региональный конкурент, активно развивающий обслуживание коммерческого транспорта и автоматические терминалы." },
-                    { name: "JET Station " + city, rating: "4.5", country: country, city: city, niche: niche, summary: "Привлекает чувствительную к ценам аудиторию за счет агрессивного прайсинга и высокой скорости прохождения касс." },
-                    { name: "STAR / ORLEN Region", rating: "4.4", country: country, city: city, niche: niche, summary: "Активно конкурирует за локальный трафик в г. " + city + " благодаря собственному формату минимаркета и бистро." },
-                    { name: "CLASSIC Tankstelle", rating: "4.4", country: country, city: city, niche: niche, summary: "Региональная сеть с устойчивой базой местных клиентов и гибкими условиями для малого бизнеса." },
-                    { name: "Esso Express Station", rating: "4.1", country: country, city: city, niche: niche, summary: "Делает ставку на автоматизированный формат обслуживания и высокую оборачиваемость на ключевых магистралях." },
-                    { name: "Kuster Oil Energy", rating: "4.3", country: country, city: city, niche: niche, summary: "Сильный приграничный оператор с развитой логистикой поставок и собственными топливными картами." }
-                ]
-            };
-        }
-
         async function submitLead() {
             const btn = document.getElementById('scan-btn');
             const msg = document.getElementById('status-msg');
@@ -684,11 +530,11 @@
             msg.innerText = "";
             
             let seconds = 0;
-            btn.innerText = "Сверка с Google Maps и запуск ИИ... (0 сек)";
+            btn.innerText = "Запрос реальных данных Google Maps и Gemini... (0 сек)";
             if (scanTimer) clearInterval(scanTimer);
             scanTimer = setInterval(() => {
                 seconds++;
-                btn.innerText = `ИИ формирует глубокий аудит... (${seconds} сек)`;
+                btn.innerText = `ИИ анализирует реальные данные бизнеса... (${seconds} сек)`;
             }, 1000);
 
             const payload = { 
@@ -713,22 +559,17 @@
                     appendToHistory(result.reportData, country, city, now);
                     window.location.href = `?id=${result.fileId}`;
                 } else {
-                    // Если старый деплой GAS вернул 503 High Demand, мгновенно включаем резервный генератор без ошибки!
-                    const fallbackData = buildClientFallbackReport(urlInput, country, city);
-                    const localId = "local_" + Date.now();
-                    localStorage.setItem("b2b_report_" + localId, JSON.stringify(fallbackData));
-                    let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                    appendToHistory(fallbackData, country, city, now);
-                    window.location.href = `?id=${localId}`;
+                    msg.innerText = "Ошибка сервера: " + result.message + " (Убедитесь, что в GAS развернута Новая версия!)";
+                    msg.style.color = "#ff4444";
+                    btn.disabled = false;
+                    btn.innerText = "Запустить Глубокий Скан";
                 }
             } catch (err) {
                 clearInterval(scanTimer);
-                const fallbackData = buildClientFallbackReport(urlInput, country, city);
-                const localId = "local_" + Date.now();
-                localStorage.setItem("b2b_report_" + localId, JSON.stringify(fallbackData));
-                let now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                appendToHistory(fallbackData, country, city, now);
-                window.location.href = `?id=${localId}`;
+                msg.innerText = "Ошибка соединения с сервером GAS. Проверьте ссылку GAS_URL.";
+                msg.style.color = "#ff4444";
+                btn.disabled = false;
+                btn.innerText = "Запустить Глубокий Скан";
             }
         }
 
@@ -750,7 +591,7 @@
             localStorage.setItem('b2b_user_email', emailInput);
 
             try {
-                const payload = { action: "sendEmail", fileId: reportId, email: emailInput, reportData: activeReportData };
+                const payload = { action: "sendEmail", fileId: reportId, email: emailInput };
                 const response = await fetch(GAS_URL, { 
                     method: "POST", 
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -779,63 +620,44 @@
 
         async function loadReport(id) {
             try {
-                let data = null;
-                if (String(id).indexOf("local_") === 0) {
-                    const cached = localStorage.getItem("b2b_report_" + id);
-                    if (cached) data = JSON.parse(cached);
-                } else {
-                    const response = await fetch(`${GAS_URL}?id=${id}`);
-                    const result = await response.json();
-                    if (result.status === "success") data = result.data;
-                }
+                const response = await fetch(`${GAS_URL}?id=${id}`);
+                const result = await response.json();
 
-                if (data) {
-                    activeReportData = data;
+                if (result.status === "success" && result.data) {
+                    const data = result.data;
                     document.getElementById('b-name').innerText = data.businessName || "Неизвестно";
                     
-                    const reportCountry = data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия';
-                    const reportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Локальный узел';
-                    const reportNiche = data.companyMeta?.niche || "Корпоративный сектор";
+                    const reportCountry = data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Н/Д';
+                    const reportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
+                    const reportNiche = data.companyMeta?.niche || "Н/Д";
                     
                     document.getElementById('m-country').innerText = reportCountry;
                     document.getElementById('m-city').innerText = reportCity;
                     
                     if(data.companyMeta) {
                         document.getElementById('m-niche').innerText = reportNiche;
-                        document.getElementById('m-owner').innerText = data.companyMeta.owner || "Частный капитал";
+                        document.getElementById('m-owner').innerText = data.companyMeta.owner || "Н/Д";
                         document.getElementById('m-revenue').innerText = data.companyMeta.revenue || "Н/Д";
                         document.getElementById('m-year').innerText = data.companyMeta.founded || "Н/Д";
-                        document.getElementById('m-debts').innerText = data.companyMeta.legalIssues || "Критичных рисков не выявлено";
+                        document.getElementById('m-debts').innerText = data.companyMeta.legalIssues || "Н/Д";
                     }
 
-                    const scores = data.executiveScores || { digital: 74, operations: 69, customer: 83, growth: 88 };
-                    document.getElementById('sc-digital').innerText = `${scores.digital || 74}/100`;
-                    document.getElementById('bar-digital').style.width = `${scores.digital || 74}%`;
-                    document.getElementById('sc-ops').innerText = `${scores.ops || scores.operations || 69}/100`;
-                    document.getElementById('bar-ops').style.width = `${scores.ops || scores.operations || 69}%`;
-                    document.getElementById('sc-cust').innerText = `${scores.customer || 83}/100`;
-                    document.getElementById('bar-cust').style.width = `${scores.customer || 83}%`;
-                    document.getElementById('sc-growth').innerText = `${scores.growth || 88}/100`;
-                    document.getElementById('bar-growth').style.width = `${scores.growth || 88}%`;
+                    if (data.executiveScores) {
+                        const s = data.executiveScores;
+                        document.getElementById('sc-digital').innerText = `${s.digital || 72}/100`;
+                        document.getElementById('bar-digital').style.width = `${s.digital || 72}%`;
+                        document.getElementById('sc-ops').innerText = `${s.operations || 75}/100`;
+                        document.getElementById('bar-ops').style.width = `${s.operations || 75}%`;
+                        document.getElementById('sc-cust').innerText = `${s.customer || 82}/100`;
+                        document.getElementById('bar-cust').style.width = `${s.customer || 82}%`;
+                        document.getElementById('sc-growth').innerText = `${s.growth || 85}/100`;
+                        document.getElementById('bar-growth').style.width = `${s.growth || 85}%`;
+                    }
 
                     const mi = data.marketIntelligence || {};
-                    document.getElementById('b-positioning').innerText = mi.positioning || `Компания «${data.businessName}» занимает устойчивую позицию в сегменте «${reportNiche}» (${reportCity}, ${reportCountry}). Основной резерв кратного роста лежит в автоматизации узких мест обслуживания, внедрении предиктивной аналитики запасов и технологической интеграции с партнерскими B2B-экосистемами.`;
-                    
-                    const defaultQuickWins = [
-                        "Автоматизация сквозного учета и устранение ручного ввода данных на кассовых и операционных узлах (эффект за 30 дней)",
-                        "Подключение триггерных сценариев удержания клиентов и цифровых карт лояльности для роста повторных продаж",
-                        "Внедрение динамического прайсинга и автоматического контроля товарных остатков в часы пиковой нагрузки",
-                        "Оптимизация эквайринга, B2B-контрактов и перевод части клиентского потока на терминалы самообслуживания"
-                    ];
-                    populateList('b-quick-wins', (mi.quickWins && mi.quickWins.length > 0) ? mi.quickWins : defaultQuickWins);
-
-                    const defaultTrends = [
-                        `Переход лидеров сегмента «${reportNiche}» на облачные микросервисные ERP и предиктивное AI-прогнозирование спроса`,
-                        "Рост доли бесконтактных мобильных платежей, B2B API-интеграций и систем самообслуживания 24/7",
-                        "Консолидация рынка вокруг экосистемных партнерств с логистическими, финтех и энергетическими платформами",
-                        "Ужесточение стандартов кибербезопасности, ESG-комплаенса и энергоэффективности инфраструктуры"
-                    ];
-                    populateList('b-trends', (mi.industryTrends && mi.industryTrends.length > 0) ? mi.industryTrends : defaultTrends);
+                    document.getElementById('b-positioning').innerText = mi.positioning || "Анализ рыночного позиционирования компании.";
+                    populateList('b-quick-wins', mi.quickWins);
+                    populateList('b-trends', mi.industryTrends);
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
                         let cleanDomain = cleanUrl(data.contacts.website).replace(/^https?:\/\//, '').split('/')[0];
@@ -899,10 +721,10 @@
                     if(data.techStack && Array.isArray(data.techStack) && data.techStack.length > 0) {
                         data.techStack.forEach(item => {
                             if (typeof item === 'string') {
-                                stackUl.innerHTML += `<li><span class="has-tooltip">${item}<span class="tooltip-text">Профильный технологический компонент инфраструктуры предприятия.</span></span></li>`;
+                                stackUl.innerHTML += `<li><span class="has-tooltip">${item}<span class="tooltip-text">${item}</span></span></li>`;
                             } else {
                                 const name = item.name || item.title || "Технология";
-                                const details = item.details || item.description || item.desc || "Профильный инструмент управления и автоматизации бизнес-процессов.";
+                                const details = item.details || item.description || item.desc || "";
                                 stackUl.innerHTML += `<li><span class="has-tooltip">${name}<span class="tooltip-text">${details}</span></span></li>`;
                             }
                         });
@@ -915,55 +737,29 @@
                     
                     const partContainer = document.getElementById('b-partners');
                     partContainer.innerHTML = '';
-                    const fallbackPartners = [
-                        {
-                            name: "SAP S/4HANA & Business Network",
-                            integrationTarget: "Интеграция: ERP, складской учет и цепочки поставок",
-                            website: "sap" + DOT_COM,
-                            reason: "Позволяет интегрировать сквозной контроль товарных запасов, автоматический заказ у поставщиков по EDI и финансовое планирование в реальном времени."
-                        },
-                        {
-                            name: "Adyen / Stripe Enterprise",
-                            integrationTarget: "Интеграция: Платежные терминалы, B2B-эквайринг и мобильная оплата",
-                            website: "adyen" + DOT_COM,
-                            reason: "Интеграция омниканальных платежей, ускорение прохождения кассового узла, поддержка корпоративных карт и снижение комиссионных издержек."
-                        },
-                        {
-                            name: "Salesforce Customer 360",
-                            integrationTarget: "Интеграция: Омниканальная CRM, программа лояльности и маркетинг",
-                            website: "salesforce" + DOT_COM,
-                            reason: "Объединяет данные о покупках клиентов, автоматизирует персональные push/email-предложения и повышает частоту повторных визитов."
-                        },
-                        {
-                            name: "Microsoft Azure IoT & Power BI",
-                            integrationTarget: "Интеграция: Телеметрия оборудования, облако и BI-дашборды",
-                            website: "azure.microsoft" + DOT_COM,
-                            reason: "Обеспечивает сбор данных с датчиков оборудования для предотвращения поломок и формирует управленческую отчетность для руководителя."
-                        }
-                    ];
-                    const partnersList = (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) 
-                        ? data.strategicPartnerships 
-                        : fallbackPartners;
-
-                    partnersList.forEach(p => {
-                        let partnerName = p.name || p.type || "Технологический партнер";
-                        let targetArea = p.integrationTarget || "Интеграция: API, автоматизация бизнес-процессов и рост выручки";
-                        let rawPartnerUrl = cleanUrl(p.website);
-                        let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(partnerName));
-                        let pDiv = document.createElement('div');
-                        pDiv.className = 'vendor-card partner-card';
-                        pDiv.innerHTML = `
-                            <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerName}</div>
-                            <div class="integration-badge">🔗 ${targetArea}</div>
-                            <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${p.reason || p.description || ''}</div>
-                            <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Сайт партнера</a>
-                            <div class="comp-tooltip">Запустить глубокий скан компании: ${partnerName}</div>
-                        `;
-                        pDiv.onclick = (e) => {
-                            if(e.target.tagName !== 'A') scanDirect(partnerName, '', '');
-                        };
-                        partContainer.appendChild(pDiv);
-                    });
+                    if(data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) {
+                        data.strategicPartnerships.forEach(p => {
+                            let partnerName = p.name || p.type || "Партнер";
+                            let targetArea = p.integrationTarget || "Технологическая и коммерческая интеграция";
+                            let rawPartnerUrl = cleanUrl(p.website);
+                            let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(partnerName));
+                            let pDiv = document.createElement('div');
+                            pDiv.className = 'vendor-card partner-card';
+                            pDiv.innerHTML = `
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerName}</div>
+                                <div class="integration-badge">🔗 ${targetArea}</div>
+                                <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${p.reason || p.description || ''}</div>
+                                <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Сайт партнера</a>
+                                <div class="comp-tooltip">Запустить глубокий скан компании: ${partnerName}</div>
+                            `;
+                            pDiv.onclick = (e) => {
+                                if(e.target.tagName !== 'A') scanDirect(partnerName, '', '');
+                            };
+                            partContainer.appendChild(pDiv);
+                        });
+                    } else {
+                        partContainer.innerHTML = '<p style="color:#aaa;">Нет данных для рекомендаций.</p>';
+                    }
                     
                     const compContainer = document.getElementById('b-competitors');
                     compContainer.innerHTML = '';
@@ -972,7 +768,7 @@
                             let compCity = (comp.city && comp.city !== "Н/Д") ? comp.city : reportCity;
                             let compCountry = (comp.country && comp.country !== "Н/Д") ? comp.country : reportCountry;
                             let compNiche = comp.niche || reportNiche;
-                            let compSummary = comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}). Конкурирует за целевую аудиторию и долю рынка в данном направлении.`;
+                            let compSummary = comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`;
                             let btn = document.createElement('div');
                             btn.className = 'click-tag';
                             btn.innerHTML = `
@@ -1009,7 +805,7 @@
                         document.getElementById('fin-turnover').innerText = data.financials.newTurnover || "--";
                         document.getElementById('fin-profit').innerText = data.financials.profitIncrease || "--";
                         document.getElementById('fin-margin').innerText = data.financials.newMargin || "--";
-                        document.getElementById('fin-payback').innerText = data.financials.paybackPeriod || "7–9 месяцев";
+                        document.getElementById('fin-payback').innerText = data.financials.paybackPeriod || "8 месяцев";
                     }
 
                     const vendorsContainer = document.getElementById('b-vendors');
@@ -1022,7 +818,7 @@
                             vDiv.className = 'vendor-card';
                             vDiv.innerHTML = `
                                 <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
-                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description || vendor.desc || 'Профильный системный интегратор'}</div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description || vendor.desc || ''}</div>
                                 <a href="${vendorUrl}" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>
                                 <div class="comp-tooltip">Запустить скан: ${vendor.name}</div>
                             `;

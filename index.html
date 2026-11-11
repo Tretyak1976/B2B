@@ -47,8 +47,15 @@
         .lost-revenue { font-size: 28px; font-weight: bold; margin: 15px 0 0 0; color: #fff;}
         .lost-revenue span { color: #ff4444; }
 
+        /* Новый стиль для карточек Технического Стека и Навыков */
+        .stack-item { background: #222; border-left: 3px solid #00d2ff; padding: 10px 14px; margin-bottom: 10px; border-radius: 0 6px 6px 0;}
+        .stack-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;}
+        .stack-name { font-weight: bold; color: #00ff88; font-size: 15px;}
+        .stack-cat { background: #111; color: #00d2ff; border: 1px solid #333; padding: 2px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase;}
+        .stack-desc { color: #ccc; font-size: 13px; line-height: 1.4; margin: 0;}
+
         .has-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #00ff88; display: inline-block; margin-bottom: 8px;}
-        .has-tooltip .tooltip-text { visibility: hidden; width: 300px; background-color: #222; color: #fff; border: 1px solid #00ff88; border-radius: 8px; padding: 15px; position: absolute; z-index: 10; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 14px;}
+        .has-tooltip .tooltip-text { visibility: hidden; width: 320px; background-color: #111; color: #fff; border: 1px solid #00ff88; border-radius: 8px; padding: 15px; position: absolute; z-index: 20; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 13px; font-weight: normal; line-height: 1.5; box-shadow: 0 8px 25px rgba(0,0,0,0.8);}
         .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
 
         .list-section ul { padding-left: 20px; margin: 0; color: #ccc;}
@@ -59,12 +66,12 @@
         .fin-table th, .fin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
         .fin-table td { font-weight: bold; color: #fff; font-size: 18px;}
 
-        .click-tag { position: relative; display: inline-flex; flex-direction: column; padding: 10px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; transition: 0.3s; width: calc(25% - 20px); min-width: 150px;}
+        .click-tag { position: relative; display: inline-flex; flex-direction: column; padding: 10px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; transition: 0.3s; width: calc(25% - 20px); min-width: 160px;}
         .click-tag:hover { background: #00ff88; color: #000; border-color: #00ff88;}
         .comp-name { font-size: 14px; font-weight: bold; margin-bottom: 5px; line-height: 1.2;}
         .comp-meta { font-size: 12px; color: #aaa;}
-        .click-tag:hover .comp-meta { color: #333;}
-        .click-tag .comp-tooltip { visibility: hidden; width: max-content; max-width: 220px; background-color: #111; color: #fff; text-align: center; border: 1px solid #ffaa00; border-radius: 6px; padding: 8px; position: absolute; z-index: 10; bottom: 110%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);}
+        .click-tag:hover .comp-meta { color: #222;}
+        .click-tag .comp-tooltip { visibility: hidden; width: max-content; max-width: 240px; background-color: #111; color: #fff; text-align: center; border: 1px solid #ffaa00; border-radius: 6px; padding: 8px 10px; position: absolute; z-index: 15; bottom: 110%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.6);}
         .click-tag:hover .comp-tooltip { visibility: visible; opacity: 1; }
 
         .vendor-card { background: #222; padding: 15px; border-radius: 8px; border-left: 3px solid #ff4444; position: relative; cursor: pointer; transition: 0.3s;}
@@ -95,8 +102,8 @@
         @media print {
             body { background: #fff; color: #000; padding: 0;}
             .container { box-shadow: none; border: none; max-width: 100%;}
-            h1, h2, h3, h4, .meta-item strong, .comp-name, .vendor-rating, .fin-table td, .lost-revenue { color: #000 !important; }
-            .card, .arch-step, .vendor-card, .click-tag { background: #fff; border: 1px solid #ddd; }
+            h1, h2, h3, h4, .meta-item strong, .comp-name, .vendor-rating, .fin-table td, .lost-revenue, .stack-name { color: #000 !important; }
+            .card, .arch-step, .vendor-card, .click-tag, .stack-item { background: #fff; border: 1px solid #ddd; }
             .badge-green { border-color: #00c853; color: #00c853; }
             .badge-red { border-color: #d32f2f; color: #d32f2f; }
             button, .action-toolbar, #lead-form, .has-tooltip .tooltip-text, .comp-tooltip { display: none !important; }
@@ -123,6 +130,9 @@
                 <option value="ru-RU">🇷🇺 Русский</option>
                 <option value="en-US">🇬🇧 English</option>
                 <option value="de-DE">🇩🇪 Deutsch</option>
+                <option value="es-ES">🇪🇸 Español</option>
+                <option value="fr-FR">🇫🇷 Français</option>
+                <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
             </select>
             <button onclick="submitLead()" id="scan-btn">Запустить Глубокий Скан</button>
             <p id="status-msg" style="text-align: center; font-weight: bold; margin-top: 15px;"></p>
@@ -149,7 +159,7 @@
                         <div class="meta-item">👤 Владелец: <strong id="m-owner"></strong></div>
                         <div class="meta-item">💰 Оборот: <strong id="m-revenue"></strong></div>
                         <div class="meta-item">📅 Год: <strong id="m-year"></strong></div>
-                        <div class="meta-item">⚖️ Суды/Долги: <strong id="m-debts"></strong></div>
+                        <div class="meta-item">⚖️ Комплаенс/Риски: <strong id="m-debts"></strong></div>
                     </div>
 
                     <hr style="border-color: #333; margin: 15px 0;">
@@ -159,7 +169,6 @@
             
             <div class="media-grid">
                 <div class="media-box" id="b-photo-container">
-                    <!-- Заглушка, если фото не найдено -->
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">
                 </div>
                 <div class="media-box" id="map-container">
@@ -185,9 +194,9 @@
             </div>
 
             <div class="grid-2">
-                <div class="card list-section">
-                    <h3>👨‍💻 Технический стек и Навыки</h3>
-                    <ul id="b-stack"></ul>
+                <div class="card">
+                    <h3>👨‍💻 Технический стек, Оборудование и Навыки</h3>
+                    <div id="b-stack"></div>
                 </div>
                 <div class="card list-section">
                     <h3>⚙️ Инфраструктура</h3>
@@ -213,11 +222,12 @@
             </div>
 
             <div class="card" style="margin-bottom: 25px;">
-                <h3 style="color: #00d2ff;">💰 Новая экономика бизнеса</h3>
+                <h3 style="color: #00d2ff;">💰 Новая экономика бизнеса (Программный расчет)</h3>
                 <table class="fin-table">
                     <tr><th>Высвобождение времени:</th><td id="fin-time">--</td></tr>
-                    <tr><th>Новый годовой оборот:</th><td id="fin-turnover">--</td></tr>
-                    <tr><th>Рост чистой прибыли (Выгода):</th><td id="fin-profit">--</td></tr>
+                    <tr><th>Текущий годовой оборот:</th><td id="fin-current-turnover">--</td></tr>
+                    <tr><th>Рост чистой прибыли (Возврат упущенной выгоды):</th><td id="fin-profit" style="color:#00ff88;">--</td></tr>
+                    <tr><th>Новый прогнозируемый годовой оборот:</th><td id="fin-turnover">--</td></tr>
                     <tr><th>Новая рентабельность:</th><td id="fin-margin">--</td></tr>
                 </table>
             </div>
@@ -228,7 +238,7 @@
             </div>
 
             <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
-                <h3 style="color: #ffaa00;">🎯 Ближайшие конкуренты</h3>
+                <h3 style="color: #ffaa00;">🎯 Ближайшие и отраслевые конкуренты</h3>
                 <div id="b-competitors" style="display: flex; flex-wrap: wrap;"></div>
             </div>
 
@@ -256,8 +266,8 @@
     </div>
 
     <script>
-        // === ВСТАВЬ СЮДА НОВУЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT ПОСЛЕ ДЕПЛОЯ ===
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwB4-BT_XPDF7EN8nLpO4A_vdp9Vz22SLjkiWixEq6x6OR7-c-BTL-BVmWWCyNkKg/exec";
+        // === ССЫЛКА НА ТВОЙ GOOGLE APPS SCRIPT ===
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxnt4gffWibP4xAYqTJTGA_K_9zPsrr0L9GAiQbwfbL27kf3Q_AnqemLanR-68t9-s/exec";
 
         let geoData = [];
         let googleMap = null;
@@ -356,6 +366,7 @@
             if(countryContext && countryContext !== "Не указана" && countryContext !== "Н/Д") {
                 document.getElementById('country').value = countryContext;
                 localStorage.setItem('b2b_country', countryContext);
+                currentCountry = countryContext;
                 loadCities(); 
             } else {
                 document.getElementById('country').value = "";
@@ -364,6 +375,7 @@
             if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д") {
                 document.getElementById('city').value = cityContext;
                 localStorage.setItem('b2b_city', cityContext);
+                currentCity = cityContext;
             } else {
                 document.getElementById('city').value = "";
             }
@@ -375,8 +387,8 @@
         function appendToHistory(reportData, userCountry, userCity, searchTime) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
             let logoSrc = reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A" 
-                ? `https://logo.clearbit.com/${reportData.contacts.website.replace(/^https?:\/\//, '')}` 
-                : 'https://ui-avatars.com/api/?name=' + reportData.businessName;
+                ? `https://logo.clearbit.com/${reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0]}` 
+                : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(reportData.businessName);
             
             let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
             let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
@@ -403,16 +415,19 @@
             }
 
             history.forEach(item => {
+                const safeName = (item.name || "").replace(/'/g, "\\'");
+                const safeCountry = (item.country || "").replace(/'/g, "\\'");
+                const safeCity = (item.city || "").replace(/'/g, "\\'");
                 histContainer.innerHTML += `
                     <div class="history-item">
                         <div style="display:flex; align-items:center;">
-                            <img src="${item.logo}" onerror="this.src='https://ui-avatars.com/api/?name=${item.name}'">
+                            <img src="${item.logo}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}'">
                             <div>
                                 <div style="font-weight:bold; font-size:15px; color:#fff;">${item.name}</div>
                                 <div style="font-size:12px; color:#888;">${item.time} | 🌍 ${item.country}, 🏙️ ${item.city}</div>
                             </div>
                         </div>
-                        <button class="history-btn" onclick="scanDirect('${item.name.replace(/'/g, "\\'")}', '${item.country}', '${item.city}')">Скан</button>
+                        <button class="history-btn" onclick="scanDirect('${safeName}', '${safeCountry}', '${safeCity}')">Скан</button>
                     </div>`;
             });
         }
@@ -422,12 +437,22 @@
             const msg = document.getElementById('status-msg');
             const urlInput = document.getElementById('url').value.trim();
             
-            const country = document.getElementById('country').value;
-            const city = document.getElementById('city').value;
-            const locationStr = (city && country) ? `${city}, ${country}` : "";
+            if (!urlInput) {
+                msg.innerText = "Введите название бизнеса или URL";
+                msg.style.color = "#ff4444";
+                return;
+            }
+
+            const country = document.getElementById('country').value.trim();
+            const city = document.getElementById('city').value.trim();
+            
+            let locationParts = [];
+            if (city && city !== "Не указан" && city !== "Н/Д") locationParts.push(city);
+            if (country && country !== "Не указана" && country !== "Н/Д") locationParts.push(country);
+            const locationStr = locationParts.join(", ");
             const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
 
-            btn.innerText = "ИИ проводит глубокий аудит... ожидайте.";
+            btn.innerText = "ИИ проводит глубокий аудит и сверку с Google Maps...";
             btn.disabled = true;
             msg.innerText = "";
 
@@ -448,11 +473,13 @@
                     window.location.href = `?id=${result.fileId}`;
                 } else {
                     msg.innerText = "Ошибка: " + result.message;
+                    msg.style.color = "#ff4444";
                     btn.disabled = false;
                     btn.innerText = "Запустить Глубокий Скан";
                 }
             } catch (err) {
                 msg.innerText = "Ошибка соединения. Попробуйте снова.";
+                msg.style.color = "#ff4444";
                 btn.disabled = false;
                 btn.innerText = "Запустить Глубокий Скан";
             }
@@ -522,19 +549,17 @@
                     }
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
-                        let cleanUrl = data.contacts.website.replace(/^https?:\/\//, '');
+                        let cleanUrl = data.contacts.website.replace(/^https?:\/\//, '').split('/')[0];
                         document.getElementById('b-logo').src = `https://logo.clearbit.com/${cleanUrl}`;
                         document.getElementById('b-logo').style.display = "block";
                     }
 
-                    // БЕЗОТКАЗНАЯ ЗАГРУЗКА ФОТО 
                     if(data.photoUrl) {
                         document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
                     } else {
                         document.getElementById('b-photo-container').innerHTML = `<img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
-                    // БЕЗОТКАЗНАЯ ЗАГРУЗКА КАРТЫ
                     if(data.coordinates && data.coordinates.lat) {
                         initLiveMap(data.coordinates.lat, data.coordinates.lng, data.businessName);
                     } else if (data.contacts && data.contacts.address && data.contacts.address !== "N/A") {
@@ -577,12 +602,29 @@
                     document.getElementById('b-reviews-neg').innerHTML = negHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     document.getElementById('b-lost').innerText = data.lostRevenue || "0";
                     
-                    const stackUl = document.getElementById('b-stack');
-                    stackUl.innerHTML = '';
-                    if(data.techStack) {
+                    // ИСПРАВЛЕННЫЙ РЕНДЕР ТЕХНИЧЕСКОГО СТЕКА И НАВЫКОВ
+                    const stackContainer = document.getElementById('b-stack');
+                    stackContainer.innerHTML = '';
+                    if(data.techStack && Array.isArray(data.techStack) && data.techStack.length > 0) {
                         data.techStack.forEach(item => {
-                            stackUl.innerHTML += `<li><span class="has-tooltip">${item.name}<span class="tooltip-text">${item.details}</span></span></li>`;
+                            if (typeof item === 'string') {
+                                stackContainer.innerHTML += `<div class="stack-item"><div class="stack-name">${item}</div></div>`;
+                            } else {
+                                const name = item.name || item.title || "Технология";
+                                const cat = item.category || "Стек / Навык";
+                                const details = item.details || item.description || item.desc || "Профильный инструмент предприятия";
+                                stackContainer.innerHTML += `
+                                <div class="stack-item">
+                                    <div class="stack-header">
+                                        <span class="stack-name">${name}</span>
+                                        <span class="stack-cat">${cat}</span>
+                                    </div>
+                                    <p class="stack-desc">${details}</p>
+                                </div>`;
+                            }
                         });
+                    } else {
+                        stackContainer.innerHTML = '<p style="color:#aaa;">Нет данных</p>';
                     }
 
                     populateList('b-infra', data.infrastructure);
@@ -592,17 +634,18 @@
                     partContainer.innerHTML = '';
                     if(data.strategicPartnerships && data.strategicPartnerships.length > 0) {
                         data.strategicPartnerships.forEach(p => {
+                            let partnerName = p.name || p.type || "Партнер";
                             let partnerUrl = p.website && p.website !== "N/A" ? (p.website.startsWith('http') ? p.website : 'https://'+p.website) : "#";
                             let pDiv = document.createElement('div');
                             pDiv.className = 'vendor-card partner-card';
                             pDiv.innerHTML = `
-                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${p.name}</div>
-                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${p.reason}</div>
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerName}</div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${p.reason || ''}</div>
                                 <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Сайт партнера</a>
-                                <div class="comp-tooltip">Запустить скан: ${p.name}</div>
+                                <div class="comp-tooltip">Запустить скан: ${partnerName}</div>
                             `;
                             pDiv.onclick = (e) => {
-                                if(e.target.tagName !== 'A') scanDirect(p.name, reportCountry, '');
+                                if(e.target.tagName !== 'A') scanDirect(partnerName, '', '');
                             };
                             partContainer.appendChild(pDiv);
                         });
@@ -614,14 +657,16 @@
                     compContainer.innerHTML = '';
                     if(data.competitors && data.competitors.length > 0) {
                         data.competitors.forEach(comp => {
+                            let compCity = comp.city || reportCity;
+                            let compCountry = comp.country || reportCountry;
                             let btn = document.createElement('div');
                             btn.className = 'click-tag';
                             btn.innerHTML = `
                                 <div class="comp-name">${comp.name}</div>
-                                <div class="comp-meta">⭐️ ${comp.rating} | 🏙️ ${comp.city}</div>
-                                <div class="comp-tooltip">Анализ конкурента:<br><b>${comp.niche}</b></div>
+                                <div class="comp-meta">⭐️ ${comp.rating || '4.5'} | 🏙️ ${compCity}</div>
+                                <div class="comp-tooltip">🌍 ${compCountry}, ${compCity}<br>💼 <b>${comp.niche || 'Конкурент'}</b></div>
                             `;
-                            btn.onclick = () => scanDirect(comp.name, reportCountry, comp.city || reportCity);
+                            btn.onclick = () => scanDirect(comp.name, compCountry, compCity);
                             compContainer.appendChild(btn);
                         });
                     } else {
@@ -634,7 +679,7 @@
                         data.newArchitecture.forEach(step => {
                             archContainer.innerHTML += `
                             <div class="arch-step">
-                                <h4 class="has-tooltip">${step.title} <span style="font-size:12px; color:#aaa;">(Инструкция)</span><span class="tooltip-text">${step.instruction}</span></h4>
+                                <h4 class="has-tooltip">${step.title} <span style="font-size:12px; color:#aaa;">(Инструкция)</span><span class="tooltip-text">${step.instruction || step.desc}</span></h4>
                                 <p style="margin: 0; color: #ccc; font-size: 14px;">${step.desc}</p>
                             </div>`;
                         });
@@ -642,6 +687,7 @@
 
                     if(data.financials) {
                         document.getElementById('fin-time').innerText = data.financials.timeSaved || "--";
+                        document.getElementById('fin-current-turnover').innerText = data.companyMeta?.revenue || "--";
                         document.getElementById('fin-turnover').innerText = data.financials.newTurnover || "--";
                         document.getElementById('fin-profit').innerText = data.financials.profitIncrease || "--";
                         document.getElementById('fin-margin').innerText = data.financials.newMargin || "--";
@@ -651,17 +697,17 @@
                     vendorsContainer.innerHTML = '';
                     if(data.itVendors && data.itVendors.length > 0) {
                         data.itVendors.forEach(vendor => {
-                            let vendorUrl = vendor.website.startsWith('http') ? vendor.website : 'https://'+vendor.website;
+                            let vendorUrl = vendor.website && vendor.website.startsWith('http') ? vendor.website : 'https://'+(vendor.website || 'google.com');
                             let vDiv = document.createElement('div');
                             vDiv.className = 'vendor-card';
                             vDiv.innerHTML = `
-                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name} <span class="vendor-rating">⭐️ ${vendor.rating}</span></div>
-                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description}</div>
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description || vendor.desc || 'Профильный системный интегратор'}</div>
                                 <a href="${vendorUrl}" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>
                                 <div class="comp-tooltip">Запустить скан: ${vendor.name}</div>
                             `;
                             vDiv.onclick = (e) => {
-                                if(e.target.tagName !== 'A') scanDirect(vendor.name, reportCountry, '');
+                                if(e.target.tagName !== 'A') scanDirect(vendor.name, '', '');
                             };
                             vendorsContainer.appendChild(vDiv);
                         });
@@ -702,12 +748,13 @@
                     const service = new google.maps.places.PlacesService(googleMap);
                     service.getDetails({ placeId: event.placeId }, (place, status) => {
                         if (status === google.maps.places.PlacesServiceStatus.OK) {
-                            const safeName = place.name.replace(/'/g, "\\'");
+                            const safeName = (place.name || "").replace(/'/g, "\\'");
+                            const safeAddr = (place.formatted_address || "").replace(/'/g, "\\'");
                             const content = `
                                 <div style="color:#000; padding:10px; font-family: sans-serif; text-align:center;">
                                     <strong style="font-size:16px;">${place.name}</strong><br>
                                     <span style="font-size:12px; color:#555;">${place.formatted_address || ''}</span><br>
-                                    <button class="map-scan-btn" onclick="scanDirect('${safeName}', '', '')">Анализировать этот бизнес</button>
+                                    <button class="map-scan-btn" onclick="scanDirect('${safeName} ${safeAddr}', '', '')">Анализировать этот бизнес</button>
                                 </div>
                             `;
                             mapInfoWindow.setContent(content);
@@ -725,7 +772,7 @@
             if (arrayData && arrayData.length > 0) {
                 arrayData.forEach(item => {
                     let li = document.createElement('li');
-                    li.innerText = item;
+                    li.innerText = typeof item === 'object' ? (item.name || item.title || JSON.stringify(item)) : item;
                     ul.appendChild(li);
                 });
             } else {

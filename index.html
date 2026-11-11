@@ -167,9 +167,7 @@
             </div>
             
             <div class="media-grid">
-                <div class="media-box" id="b-photo-container">
-                    <img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">
-                </div>
+                <div class="media-box" id="b-photo-container"></div>
                 <div class="media-box" id="map-container">
                     <div id="map" style="width: 100%; height: 100%; background:#e0e0e0; display:flex; align-items:center; justify-content:center; color:#333;">Загрузка карты...</div>
                 </div>
@@ -265,8 +263,28 @@
     </div>
 
     <script>
-        // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНАЯ ССЫЛКА РАЗВЕРТЫВАНИЯ APPS SCRIPT ===
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbzwiU7-IXce-3VyyM0zsK-o29j4kf-RnH0oTM_p2PvMfHve3VDtUGIGBonIgpqt7fQ/exec";
+        const PROTO = "https:" + "//";
+        const DEFAULT_PHOTO = PROTO + "images.unsplash" + ".com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
+        const CLEARBIT_BASE = PROTO + "logo.clearbit" + ".com/";
+        const AVATAR_BASE = PROTO + "ui-avatars" + ".com/api/?name=";
+
+        // Функция самоочистки на случай, если любая ссылка когда-либо скопируется с дублированием
+        function cleanUrl(u) {
+            if (!u) return "";
+            return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
+        }
+
+        // === ЗАЩИЩЕННАЯ ССЫЛКА НА GOOGLE APPS SCRIPT ===
+        const GAS_URL = cleanUrl(PROTO + "script.google" + ".com/macros/s/AKfycbxnt4gffWibP4xAYqTJTGA_K_9zPsrr0L9GAiQbwfbL27kf3Q_AnqemLanR-68t9-s/exec");
+
+        // Динамическая подгрузка скрипта Google Maps без прямой ссылки в HTML
+        (function loadMapsScript() {
+            const s = document.createElement('script');
+            s.src = PROTO + "maps.googleapis" + ".com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places";
+            s.async = true;
+            s.defer = true;
+            document.head.appendChild(s);
+        })();
 
         let geoData = [];
         let googleMap = null;
@@ -276,6 +294,8 @@
         let scanTimer = null;
 
         window.onload = async () => {
+            document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
+
             const savedEmail = localStorage.getItem('b2b_user_email');
             if(savedEmail) document.getElementById('report-email').value = savedEmail;
             
@@ -303,7 +323,7 @@
 
         async function fetchCountries() {
             try {
-                const res = await fetch('[https://countriesnow.space/api/v0.1/countries](https://countriesnow.space/api/v0.1/countries)');
+                const res = await fetch(PROTO + "countriesnow" + ".space/api/v0.1/countries");
                 const json = await res.json();
                 geoData = json.data;
                 const countryList = document.getElementById('country-list');
@@ -387,8 +407,8 @@
         function appendToHistory(reportData, userCountry, userCity, searchTime) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
             let logoSrc = reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A" 
-                ? `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0]}` 
-                : '[https://ui-avatars.com/api/?name=](https://ui-avatars.com/api/?name=)' + encodeURIComponent(reportData.businessName);
+                ? CLEARBIT_BASE + reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0] 
+                : AVATAR_BASE + encodeURIComponent(reportData.businessName);
             
             let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
             let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
@@ -418,10 +438,12 @@
                 const safeName = (item.name || "").replace(/'/g, "\\'");
                 const safeCountry = (item.country || "").replace(/'/g, "\\'");
                 const safeCity = (item.city || "").replace(/'/g, "\\'");
+                const cleanLogo = cleanUrl(item.logo) || (AVATAR_BASE + encodeURIComponent(item.name));
+                const fallbackAvatar = AVATAR_BASE + encodeURIComponent(item.name);
                 histContainer.innerHTML += `
                     <div class="history-item">
                         <div style="display:flex; align-items:center;">
-                            <img src="${item.logo}" onerror="this.src='[https://ui-avatars.com/api/?name=$](https://ui-avatars.com/api/?name=$){encodeURIComponent(item.name)}'">
+                            <img src="${cleanLogo}" onerror="this.src='${fallbackAvatar}'">
                             <div>
                                 <div style="font-weight:bold; font-size:15px; color:#fff;">${item.name}</div>
                                 <div style="font-size:12px; color:#888;">${item.time} | 🌍 ${item.country}, 🏙️ ${item.city}</div>
@@ -568,21 +590,21 @@
                     }
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
-                        let cleanUrl = data.contacts.website.replace(/^https?:\/\//, '').split('/')[0];
-                        document.getElementById('b-logo').src = `[https://logo.clearbit.com/$](https://logo.clearbit.com/$){cleanUrl}`;
+                        let cleanDomain = cleanUrl(data.contacts.website).replace(/^https?:\/\//, '').split('/')[0];
+                        document.getElementById('b-logo').src = CLEARBIT_BASE + cleanDomain;
                         document.getElementById('b-logo').style.display = "block";
                     }
 
                     if(data.photoUrl) {
-                        document.getElementById('b-photo-container').innerHTML = `<img src="${data.photoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+                        document.getElementById('b-photo-container').innerHTML = `<img src="${cleanUrl(data.photoUrl)}" style="width:100%; height:100%; object-fit:cover;">`;
                     } else {
-                        document.getElementById('b-photo-container').innerHTML = `<img src="[https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop](https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop)" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
+                        document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
                     if(data.coordinates && data.coordinates.lat) {
                         initLiveMap(data.coordinates.lat, data.coordinates.lng, data.businessName);
                     } else if (data.contacts && data.contacts.address && data.contacts.address !== "N/A") {
-                        const embedUrl = `[https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$](https://www.google.com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=$){encodeURIComponent(data.businessName + " " + data.contacts.address)}`;
+                        const embedUrl = PROTO + "www.google" + ".com/maps/embed/v1/place?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&q=" + encodeURIComponent(data.businessName + " " + data.contacts.address);
                         document.getElementById('map-container').innerHTML = `<iframe width="100%" height="100%" style="border:0;" allowfullscreen src="${embedUrl}"></iframe>`;
                     } else {
                         document.getElementById('map-container').innerHTML = `<div style="background:#111; height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-style:italic;">Локация скрыта</div>`;
@@ -593,13 +615,16 @@
                         if(data.contacts.address) contactsHtml += `<div class="contact-row">📍 <span>${data.contacts.address}</span></div>`;
                         if(data.contacts.phone) contactsHtml += `<div class="contact-row">📞 <span>${data.contacts.phone}</span></div>`;
                         if(data.contacts.hours) contactsHtml += `<div class="contact-row">🕒 <span>${data.contacts.hours}</span></div>`;
-                        if(data.contacts.website && data.contacts.website !== "N/A") contactsHtml += `<div class="contact-row">🌐 <a href="${data.contacts.website.startsWith('http') ? data.contacts.website : 'https://'+data.contacts.website}" target="_blank">${data.contacts.website}</a></div>`;
+                        if(data.contacts.website && data.contacts.website !== "N/A") {
+                            const wUrl = cleanUrl(data.contacts.website);
+                            contactsHtml += `<div class="contact-row">🌐 <a href="${wUrl.startsWith('http') ? wUrl : PROTO + wUrl}" target="_blank">${wUrl}</a></div>`;
+                        }
                     }
                     if(data.socialMedia) {
                         let smHtml = '<div class="social-links" style="display:flex; gap:10px;">';
-                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${data.socialMedia.facebook}" target="_blank" title="Facebook">Facebook</a>`;
-                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${data.socialMedia.instagram}" target="_blank" title="Instagram">Instagram</a>`;
-                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${data.socialMedia.linkedin}" target="_blank" title="LinkedIn">LinkedIn</a>`;
+                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.facebook)}" target="_blank" title="Facebook">Facebook</a>`;
+                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.instagram)}" target="_blank" title="Instagram">Instagram</a>`;
+                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.linkedin)}" target="_blank" title="LinkedIn">LinkedIn</a>`;
                         smHtml += '</div>';
                         contactsHtml += smHtml;
                     }
@@ -653,7 +678,8 @@
                     if(data.strategicPartnerships && data.strategicPartnerships.length > 0) {
                         data.strategicPartnerships.forEach(p => {
                             let partnerName = p.name || p.type || "Партнер";
-                            let partnerUrl = p.website && p.website !== "N/A" ? (p.website.startsWith('http') ? p.website : 'https://'+p.website) : "#";
+                            let rawPartnerUrl = cleanUrl(p.website);
+                            let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : "#";
                             let pDiv = document.createElement('div');
                             pDiv.className = 'vendor-card partner-card';
                             pDiv.innerHTML = `
@@ -715,7 +741,8 @@
                     vendorsContainer.innerHTML = '';
                     if(data.itVendors && data.itVendors.length > 0) {
                         data.itVendors.forEach(vendor => {
-                            let vendorUrl = vendor.website && vendor.website.startsWith('http') ? vendor.website : 'https://'+(vendor.website || 'google.com');
+                            let rawVendorUrl = cleanUrl(vendor.website);
+                            let vendorUrl = rawVendorUrl && rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + (rawVendorUrl || 'google.com');
                             let vDiv = document.createElement('div');
                             vDiv.className = 'vendor-card';
                             vDiv.innerHTML = `
@@ -798,7 +825,5 @@
             }
         }
     </script>
-    
-    <script src="[https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places](https://maps.googleapis.com/maps/api/js?key=AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs&libraries=places)" async defer></script>
 </body>
 </html>

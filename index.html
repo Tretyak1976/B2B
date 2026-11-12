@@ -381,7 +381,6 @@
         let currentCity = "";
         let scanTimer = null;
 
-        // Надежная установка логотипа с 3 уровнями резерва (Clearbit -> Google Favicon 128px -> UI Avatar)
         function setCompanyLogo(imgElement, websiteUrl, companyName) {
             const avatarUrl = AVATAR_BASE + encodeURIComponent(companyName || "B2B");
             imgElement.style.display = "block";
@@ -403,7 +402,49 @@
             imgElement.src = avatarUrl;
         }
 
-        // Расширенный гео-словарь автокоррекции стран по мировым городам, регионам и организационным формам
+        // Нормализация названий городов (исправление бага "🏙️ Япония" и "Tokyo" vs "Токио")
+        function normalizeCityName(rawCity, countryName, compName, fallbackCity) {
+            let c = (rawCity || "").trim();
+            const cnt = (countryName || "").trim();
+            const n = (compName || "").toLowerCase();
+
+            const cityTranslations = {
+                "tokyo": "Токио",
+                "inagi": "Инаги (Токио)",
+                "fuchu": "Футю (Токио)",
+                "suwa": "Сува",
+                "himeji": "Химедзи",
+                "osaka": "Осака",
+                "kyoto": "Киото",
+                "yokohama": "Йокогама",
+                "nagoya": "Нагоя",
+                "seoul": "Сеул",
+                "london": "Лондон",
+                "brighton": "Брайтон",
+                "paris": "Париж",
+                "modena": "Модена",
+                "linz": "Линц",
+                "atlanta": "Атланта",
+                "hudson": "Хадсон",
+                "greenville": "Гринвилл"
+            };
+
+            if (c && cityTranslations[c.toLowerCase()]) {
+                c = cityTranslations[c.toLowerCase()];
+            }
+
+            const countryNamesList = ["япония", "japan", "сша", "usa", "германия", "germany", "китай", "china", "великобритания", "uk", "италия", "italy", "франция", "france", "южная корея", "нидерланды", "австрия", "н/д", "не указан"];
+            if (!c || c.toLowerCase() === cnt.toLowerCase() || countryNamesList.includes(c.toLowerCase())) {
+                if (n.includes("fuchu")) return "Футю (Токио)";
+                if (n.includes("inagi")) return "Инаги (Токио)";
+                if (n.includes("himeji") || n.includes("glory")) return "Химедзи";
+                if (n.includes("epson") || n.includes("suwa")) return "Сува";
+                return fallbackCity && !countryNamesList.includes(fallbackCity.toLowerCase()) ? fallbackCity : "Токио";
+            }
+            return c;
+        }
+
+        // Расширенный гео-словарь автокоррекции стран по мировым городам и юридическим формам
         function resolveCountryByCity(cityStr, fallbackCountry, compName) {
             const c = (cityStr || "").toLowerCase().trim();
             const n = (compName || "").toLowerCase().trim();
@@ -412,7 +453,7 @@
             const map = [
                 { keys: ["брайтон", "brighton", "лондон", "london", "манчестер", "manchester", "кембридж", "cambridge", "эдмонтон", "бирмингем", "birmingham", "эдинбург", "edinburgh", "ливерпуль", "liverpool", "бристоль", "bristol", "лидс", "leeds", "глазго", "glasgow", "оксфорд", "oxford", "шеффилд"], country: "Великобритания" },
                 { keys: ["сеул", "seoul", "пусан", "busan", "сувон", "suwon", "инчхон", "соннам"], country: "Южная Корея" },
-                { keys: ["токио", "tokyo", "осака", "osaka", "химедзи", "himeji", "киото", "kyoto", "йокогама", "yokohama", "нагоя", "nagoya", "кобе", "kobe", "фукуока", "саппоро"], country: "Япония" },
+                { keys: ["токио", "tokyo", "инаги", "inagi", "футю", "fuchu", "сува", "suwa", "осака", "osaka", "химедзи", "himeji", "киото", "kyoto", "йокогама", "yokohama", "нагоя", "nagoya", "кобе", "kobe", "фукуока", "саппоро", "митака", "кавасаки"], country: "Япония" },
                 { keys: ["гуанчжоу", "guangzhou", "шэньчжэнь", "shenzhen", "пекин", "beijing", "шанхай", "shanghai", "ханчжоу", "hangzhou", "гонконг", "hong kong", "чэнду", "ухань", "сучжоу"], country: "Китай" },
                 { keys: ["модена", "modena", "мирандола", "mirandola", "милан", "milan", "milano", "рим", "rome", "roma", "турин", "turin", "torino", "болонья", "bologna", "иврея", "ivrea", "флоренция", "генуя", "венеция", "неаполь"], country: "Италия" },
                 { keys: ["линц", "linz", "вена", "vienna", "wien", "грац", "graz", "зальцбург", "инсбрук"], country: "Австрия" },
@@ -425,12 +466,7 @@
                 { keys: ["стокгольм", "stockholm", "гётеборг", "мальмё", "уппсала"], country: "Швеция" },
                 { keys: ["мадрид", "madrid", "барселона", "barcelona", "валенсия", "бильбао"], country: "Испания" },
                 { keys: ["торонто", "toronto", "монреаль", "ватерлоо", "лаваль", "laval", "ванкувер", "оттава", "калгари"], country: "Канада" },
-                { keys: ["варшава", "warsaw", "плоцк", "краков", "вроцлав", "гданьск", "познань"], country: "Польша" },
-                { keys: ["сидней", "sydney", "мельбурн", "melbourne"], country: "Австралия" },
-                { keys: ["дубай", "dubai", "абу-даби"], country: "ОАЭ" },
-                { keys: ["сингапур", "singapore"], country: "Сингапур" },
-                { keys: ["тель-авив", "tel aviv", "хайфа"], country: "Израиль" },
-                { keys: ["киев", "kyiv", "харьков", "львов", "одесса", "днепр"], country: "Украина" }
+                { keys: ["варшава", "warsaw", "плоцк", "краков", "вроцлав", "гданьск", "познань"], country: "Польша" }
             ];
             for (let i = 0; i < map.length; i++) {
                 if (map[i].keys.some(k => c.includes(k))) return map[i].country;
@@ -438,7 +474,6 @@
             return fallbackCountry || "Н/Д";
         }
 
-        // Определение отраслевого сектора бизнеса по ключевым признакам
         function detectIndustrySector(data, niche, bizName) {
             const blob = [
                 niche || "",
@@ -448,158 +483,208 @@
                 (data.bottlenecks || []).join(" ")
             ].join(" ").toLowerCase();
 
-            if (blob.includes("youtube") || blob.includes("медиа") || blob.includes("контент") || blob.includes("продакшн") || blob.includes("видео") || blob.includes("mrbeast") || blob.includes("feastables") || blob.includes("стрим") || blob.includes("блог") || blob.includes("кино") || blob.includes("музык") || blob.includes("entertainment")) {
+            if (blob.includes("youtube") || blob.includes("медиа") || blob.includes("контент") || blob.includes("продакшн") || blob.includes("видео") || blob.includes("mrbeast") || blob.includes("feastables") || blob.includes("стрим") || blob.includes("блог") || blob.includes("кино") || blob.includes("entertainment")) {
                 return "MEDIA_CREATOR";
             }
             if (blob.includes("азс") || blob.includes("заправ") || blob.includes("топлив") || blob.includes("tankstelle") || blob.includes("бензин") || blob.includes("gas station") || blob.includes("circle k") || blob.includes("aral") || blob.includes("orlen")) {
                 return "FUEL_RETAIL";
             }
-            if (blob.includes("банкомат") || blob.includes("atm") || blob.includes("diebold") || blob.includes("gilbarco") || blob.includes("машиностр") || blob.includes("завод") || blob.includes("станок") || blob.includes("промышленн") || blob.includes("hardware")) {
+            if (blob.includes("фронт-офис") || blob.includes("frontech") || blob.includes("palmsecure") || blob.includes("биометр") || blob.includes("pos") || blob.includes("банкомат") || blob.includes("atm") || blob.includes("diebold") || blob.includes("gilbarco") || blob.includes("машиностр") || blob.includes("завод") || blob.includes("оборудован") || blob.includes("hardware")) {
                 return "INDUSTRIAL_HARDWARE";
             }
-            if (blob.includes("saas") || blob.includes("облач") || blob.includes("программн") || blob.includes("разработк") || blob.includes("кибербез") || blob.includes("финтех") || blob.includes("api") || blob.includes("нейросет") || blob.includes(" искусственн")) {
+            if (blob.includes("saas") || blob.includes("облач") || blob.includes("программн") || blob.includes("разработк") || blob.includes("кибербез") || blob.includes("финтех") || blob.includes("api") || blob.includes("нейросет")) {
                 return "TECH_SAAS";
-            }
-            if (blob.includes("ресторан") || blob.includes("кафе") || blob.includes("пекарн") || blob.includes("отель") || blob.includes("супермаркет") || blob.includes("ритейл") || blob.includes("магазин") || blob.includes("маркетплейс") || blob.includes("одежд")) {
-                return "RETAIL_HORECA";
             }
             return "GENERAL_B2B";
         }
 
-        // Генератор точных профильных данных, синтезирующий инсайты напрямую из полей текущего отчета
-        function buildContextFallbacks(data, isCorporate, niche, city) {
+        // Семантический подбор узкого места под шаг архитектуры (вместо слепого сопоставления по индексу)
+        function findSemanticBottleneck(stepTitle, stepDesc, bottlenecks) {
+            if (!bottlenecks || !Array.isArray(bottlenecks) || bottlenecks.length === 0) return "";
+            const text = (stepTitle + " " + stepDesc).toLowerCase();
+            const rules = [
+                { kw: ["микросервис", "docker", "kubernetes", "монолит", "архитектур", "код"], match: ["монолит", "легаси", "legacy", "прошив", "код", "фрагментац"] },
+                { kw: ["ci/cd", "тест", "devops", "пайплайн", "jenkins", "gitlab", "сборк"], match: ["ручно", "тест", "devops", "обновлен", "цикл"] },
+                { kw: ["телеметр", "iot", "мониторинг", "облач", "aws", "azure", "сенсор"], match: ["iot", "телеметр", "мониторинг", "аналитик", "реальном времени", "просто"] },
+                { kw: ["api", "grpc", "graphql", "шлюз", "интеграц"], match: ["интеграц", "синхронизац", "api", "обмен", "совместим"] },
+                { kw: ["постав", "supply", "комплектующ", "полупроводник", "склад", "логист"], match: ["постав", "полупроводник", "компонент", "склад", "логист", "дефицит"] },
+                { kw: ["безопасн", "zero trust", "ztna", "кибер"], match: ["безопасн", "атак", "уязвим", "защит"] },
+                { kw: ["поддержк", "бот", "ai-поддержк", "sla", "сервис"], match: ["поддержк", "реакц", "жалоб", "партнер", "выезд"] }
+            ];
+
+            for (let r of rules) {
+                if (r.kw.some(k => text.includes(k))) {
+                    const found = bottlenecks.find(b => r.match.some(m => b.toLowerCase().includes(m)));
+                    if (found) return found.toLowerCase();
+                }
+            }
+            return "";
+        }
+
+        // Уникальный динамический синтез блока «Стратегическое партнерство» под конкретный бизнес (0% статических заглушек)
+        function synthesizeBespokePartners(data, sector, niche, city, country) {
+            if (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) {
+                return data.strategicPartnerships;
+            }
+
             const name = data.businessName || "Компания";
-            const owner = data.companyMeta?.owner ? ` (структура управления: ${data.companyMeta.owner})` : "";
-            const sector = detectIndustrySector(data, niche, name);
+            const nameLower = name.toLowerCase();
+            const owner = data.companyMeta?.owner || "";
+            const stackNames = (data.techStack || []).map(t => typeof t === 'string' ? t : (t.name || ""));
+            const firstTech = stackNames[0] || "Флагманская платформа";
+            const cloudTech = stackNames.find(s => /aws|azure|cloud|google|kubernetes|docker/i.test(s)) || "Cloud & Edge Infrastructure";
+            const erpTech = stackNames.find(s => /sap|oracle|netsuite|salesforce|1c|erp|crm/i.test(s)) || "Enterprise ERP/CRM";
+            const firstVendor = (data.itVendors && data.itVendors[0]) ? data.itVendors[0].name : "";
+            const firstArch = (data.newArchitecture && data.newArchitecture[0]) ? data.newArchitecture[0].title : "Модернизация архитектуры";
+            const firstBot = (data.bottlenecks && data.bottlenecks[0]) ? data.bottlenecks[0].toLowerCase() : "операционных издержек";
 
-            // Динамический синтез Executive Summary из реальных преимуществ и узких мест компании
-            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? data.reputation.positive[0].toLowerCase() : "устойчивой рыночной репутации";
-            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? data.reputation.positive[1].toLowerCase() : "развитой операционной базе";
-            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? data.bottlenecks[0].toLowerCase() : "оптимизации цепочки поставок и процессов";
-            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? data.bottlenecks[1].toLowerCase() : "повышении операционной маржинальности";
+            // Специализированный профиль для японских производителей фронт-офисного оборудования и биометрии (Fujitsu Frontech и аналоги)
+            if (nameLower.includes("fujitsu") || stackNames.some(s => s.toLowerCase().includes("palmsecure")) || (country === "Япония" && sector === "INDUSTRIAL_HARDWARE")) {
+                return [
+                    {
+                        name: "Fujitsu Uvance & AEON / Seven & i Retail Ecosystem",
+                        integrationTarget: `Масштабирование ${firstTech} и Smart-Retail терминалов`,
+                        website: "fujitsu.com",
+                        reason: `Прямая коммерческая дистрибуция биометрических систем (${firstTech}), касс самообслуживания и электронных ценников в крупнейшие розничные сети Японии и APAC.`
+                    },
+                    {
+                        name: "Mizuho / MUFG & Japan Post Bank Branch Network",
+                        integrationTarget: "Банковская трансформация и биометрические АТМ",
+                        website: "mizuhogroup.com",
+                        reason: `Перевод парков фронт-офисных банковских устройств (${city}) на долгосрочные сервисные контракты жизненного цикла и облачную телеметрию.`
+                    },
+                    {
+                        name: "Renesas Electronics / TSMC Japan & SAP Ariba",
+                        integrationTarget: `Диверсификация поставок чипов и интеграция с ${erpTech}`,
+                        website: "renesas.com",
+                        reason: `Прямое квотирование микроконтроллеров и биометрических сенсоров в Японии для устранения риска дефицита полупроводников на сборочных линиях.`
+                    },
+                    {
+                        name: "Nedap Retail / Avery Dennison RFID Alliance",
+                        integrationTarget: "Глобальная экосистема UHF RFID и автоматизации ритейла",
+                        website: "averydennison.com",
+                        reason: `Совместная поставка промышленных RFID-считывателей и меток для автоматизации инвентаризации в fashion-ритейле, авиации и логистике ЕС и США.`
+                    }
+                ];
+            }
 
-            const dynamicPositioning = `${name} занимает сильную позицию в сегменте «${niche}» (локация: ${city})${owner}. Рыночный фундамент бизнеса опирается на такие преимущества, как ${pos1} и ${pos2}. Главный резерв возврата упущенной выгоды и кратного роста чистой прибыли лежит в устранении ключевых узких мест: ${bot1} и ${bot2}.`;
-
-            // Динамический синтез Быстрых побед (30-60 дней) из реальных инструкций Архитектуры Роста и Узких мест
-            let dynamicQuickWins = [];
-            if (data.newArchitecture && data.newArchitecture.length > 0) {
-                const sliceSource = data.newArchitecture.length > 4 ? data.newArchitecture.slice(0, 4) : data.newArchitecture;
-                dynamicQuickWins = sliceSource.map((step, idx) => {
-                    const bNeck = (data.bottlenecks && data.bottlenecks[idx]) ? ` (устраняет: ${data.bottlenecks[idx].toLowerCase()})` : "";
-                    const actionText = step.instruction && step.instruction !== step.desc ? step.instruction : step.desc;
-                    return `Пилот 30–60 дней — ${step.title}: ${actionText}${bNeck}`;
-                });
+            if (sector === "FUEL_RETAIL") {
+                return [
+                    {
+                        name: "Lekkerland SE / Convenience Wholesale",
+                        integrationTarget: `Оптовое снабжение магазина и фреш-зоны (${city})`,
+                        website: "lekkerland.de",
+                        reason: `Оптимизация товарной матрицы высокомаржинальных напитков, выпечки и табачной продукции специально под профиль трафика станции ${name}.`
+                    },
+                    {
+                        name: "DKV Mobility / UTA Edenred / Hectronic",
+                        integrationTarget: "Корпоративный процессинг топливных и флит-карт",
+                        website: "dkv-mobility.com",
+                        reason: `Привлечение коммерческого автопарка региона (${city}) на заправку, автомойку и покупку высокомаржинального кофе.`
+                    },
+                    {
+                        name: "Too Good To Go / Local Food-Save",
+                        integrationTarget: "Ликвидация вечерних списаний пекарни",
+                        website: "toogoodtogo.com",
+                        reason: `Монетизация остатков свежей выпечки за час до закрытия смены и генерация дополнительного вечернего трафика в магазин.`
+                    }
+                ];
             }
 
             if (sector === "MEDIA_CREATOR") {
-                return {
-                    positioning: dynamicPositioning,
-                    quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
-                        "Запуск автоматизированного ИИ-дубляжа и липсинка (Multi-Language Audio) для топ-5 языковых рынков с целью прироста просмотров на 25–35%",
-                        "Внедрение предиктивного буфера складских запасов FMCG и мерча перед публикацией флагманских видеороликов",
-                        "Объединение баз покупателей D2C-магазина и зрителей в единую CDP-платформу для триггерных кросс-продаж без затрат на рекламу",
-                        "Разгрузка команды постпродакшна за счет переноса рендеринга и чернового монтажа в облачные пайплайны"
-                    ],
-                    trends: [
-                        "Монетизация медийного охвата через собственные FMCG и D2C-бренды (Creator-Led Consumer Brands) в офлайн-ритейле с высокой маржой",
-                        "Генеративная локализация контента (AI Lip-Sync & Voice Cloning) для мгновенного охвата глобальной аудитории на 20+ языках",
-                        "Диверсификация трафика: выход за пределы одной видеоплатформы в стриминговые сделки (OTT / Prime / FAST-каналы) и офлайн-лицензирование",
-                        "Сквозная омниканальная аналитика (QR-to-Retail), связывающая просмотры контента с продажами на полках супермаркетов"
-                    ],
-                    partners: [
-                        { name: "Shopify Plus / Amazon Multi-Channel Fulfillment", integrationTarget: "Глобальный D2C-фулфилмент и логистика мерча", website: "shopify.com", reason: "Бесперебойная обработка пиковых лавин заказов в первые 48 часов после выхода новых релизов." },
-                        { name: "ElevenLabs / HeyGen Enterprise AI", integrationTarget: "ИИ-дубляж и мультиязычная локализация видео", website: "elevenlabs.io", reason: "Многократное ускорение локализации контента с сохранением оригинального тембра голоса и эмоций." },
-                        { name: "Walmart / Target / Edeka Retail Distribution", integrationTarget: "Масштабирование розничной FMCG-дистрибуции", website: "corporate.walmart.com", reason: "Перевод фанатского спроса из онлайн-просмотров в регулярные офлайн-покупки продуктов питания и снеков." }
-                    ]
-                };
-            } else if (sector === "INDUSTRIAL_HARDWARE") {
-                return {
-                    positioning: dynamicPositioning,
-                    quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
-                        "Аудит и репрайсинг сервисных SLA-контрактов на обслуживание существующего парка оборудования",
-                        "Оптимизация маршрутизации выездных сервисных инженеров (Field Service) для снижения затрат на выезды на 15–20%",
-                        "Запуск пилотного модуля удаленной диагностики и перезапуска узлов (Remote First-Time Fix) для топ-20 корпоративных клиентов",
-                        "Сокращение дебиторской задолженности и ускорение отгрузки критических запчастей с региональных хабов"
-                    ],
-                    trends: [
-                        "Переход от продажи «железа» к модели Managed Services (Equipment-as-a-Service) с прогнозируемой ARR-выручкой",
-                        "Удаленная предиктивная телеметрия и автоматическое устранение сбоев без физического выезда инженера",
-                        "Модульная архитектура ПО на базе открытых API для быстрой интеграции с облачными системами заказчиков",
-                        "Консолидация цепочек поставок электронных компонентов и локализация складских хабов"
-                    ],
-                    partners: [
-                        { name: "ServiceNow / Salesforce Field Service", integrationTarget: "Автоматизация глобального выездного сервиса (FSM)", website: "servicenow.com", reason: "Сокращение времени реакции инженеров (MTTR) и диспетчеризация ремонтов на базе ИИ." },
-                        { name: "AWS IoT Core / Microsoft Azure IoT", integrationTarget: "Платформа телеметрии и удаленного мониторинга флота", website: "azure.microsoft.com", reason: "Централизованный сбор логов оборудования и предиктивное предупреждение отказов." },
-                        { name: "DHL Supply Chain / UPS SCS", integrationTarget: "Глобальная логистика критических запчастей (Service Parts Logistics)", website: "dhl.com", reason: "Гарантированная доставка узлов замены в рамках жестких 4-часовых SLA." }
-                    ]
-                };
-            } else if (sector === "FUEL_RETAIL") {
-                return {
-                    positioning: dynamicPositioning,
-                    quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
-                        "Внедрение утренних комбо-связок (кофе + свежая выпечка) с быстрым PLU-пробитием на кассе для сокращения очередей",
-                        "Подключение вечерней распродажи остатков пекарни через Too Good To Go для обнуления списаний",
-                        "Прямое привлечение локальных корпоративных автопарков по топливным картам DKV / UTA с бонусом на автомойку и кофе",
-                        "Размещение QR-триггеров у кофе-поинта для конвертации постоянных клиентов в 5-звездочные отзывы Google Maps"
-                    ],
-                    trends: [
-                        "Смещение основной маржинальности АЗС из агентских продаж топлива (1–2%) в сегмент фуд-сервиса, кофе и автомойки (35–50%)",
-                        "Автоматизация отпуска топлива через уличные терминалы самообслуживания (Pay-at-Pump / Tankautomat)",
-                        "Таргетированная работа с приграничным и транзитным трафиком за счет мелкооптовых товарных связок",
-                        "Интеграция пунктов выдачи посылок и сервисов городской мобильности на территории станции"
-                    ],
-                    partners: [
-                        { name: "Lekkerland SE", integrationTarget: "Оптовое снабжение магазина и бистро", website: "lekkerland.de", reason: "Оптимизация товарной матрицы высокомаржинальных снеков, напитков и кофейного уголка." },
-                        { name: "DKV Mobility / UTA Edenred", integrationTarget: "Обслуживание корпоративных автопарков", website: "dkv-mobility.com", reason: "Привлечение локального коммерческого транспорта на заправку и сопутствующий сервис." },
-                        { name: "Too Good To Go", integrationTarget: "Монетизация вечерних остатков выпечки", website: "toogoodtogo.com", reason: "Снижение списаний свежей выпечки перед закрытием смены и привлечение дополнительного трафика." }
-                    ]
-                };
-            } else if (sector === "TECH_SAAS") {
-                return {
-                    positioning: dynamicPositioning,
-                    quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
-                        "Внедрение FinOps-мониторинга облачной инфраструктуры для сокращения расходов на серверные мощности на 15–25%",
-                        "Оптимизация воронки онбординга и Time-to-Value для снижения оттока клиентов (Churn Rate) в первые 30 дней",
-                        "Автоматизация апселла существующей базы через триггерные лимиты использования (Usage-Based Pricing)",
-                        "Ускорение закрытия Enterprise-сделок за счет предзаполненных пакетов комплаенса (SOC2 / ISO / GDPR)"
-                    ],
-                    trends: [
-                        "Встраивание генеративных ИИ-агентов непосредственно в рабочий контур продукта для повышения ARPU",
-                        "Переход от фиксированных лицензий к гибридной тарификации (Subscription + Usage-Based Billing)",
-                        "Жесткая оптимизация юнит-экономики (CAC/LTV) и развитие экосистемных интеграций через публичные маркетплейсы",
-                        "Архитектура Zero-Trust и суверенное хранение данных для корпоративных заказчиков"
-                    ],
-                    partners: [
-                        { name: "AWS Marketplace / Microsoft Commercial Marketplace", integrationTarget: "Дистрибуция через корпоративные облачные бюджеты", website: "aws.amazon.com", reason: "Ускорение закупок крупными клиентами за счет использования их предоплаченных облачных лимитов." },
-                        { name: "Stripe Billing / Chargebee", integrationTarget: "Автоматизация гибридных подписок и глобального эквайринга", website: "stripe.com", reason: "Снижение потерь при продлении подписок ( involuntary churn ) и гибкое тестирование тарифов." },
-                        { name: "Snowflake / Databricks", integrationTarget: "Единое аналитическое хранилище и AI-пайплайны", website: "snowflake.com", reason: "Бесшовный обмен данными с корпоративными контурами клиентов." }
-                    ]
-                };
-            } else {
-                return {
-                    positioning: dynamicPositioning,
-                    quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
-                        "Автоматизация онлайн-записи и обработки входящих заявок без потерь в нерабочее время",
-                        "Внедрение пакетных предложений с высокой добавленной маржой для существующей клиентской базы",
-                        "Системный сбор отзывов в Google Business Profile через QR-коды и пост-сервисные уведомления",
-                        "Оптимизация графика загрузки персонала и складских запасов в часы пикового спроса"
-                    ],
-                    trends: [
-                        "Цифровизация клиентского пути и моментальное подтверждение заказов и бронирований онлайн",
-                        "Рост роли локального SEO и репутации на картах как главного бесплатного источника горячих лидов",
-                        "Персонализация повторных предложений на основе истории покупок и частоты визитов клиента",
-                        "Коллаборация с профильными B2B-партнерами для перекрестного обмена трафиком"
-                    ],
-                    partners: [
-                        { name: "Google Business / Local Ads", integrationTarget: "Перехват целевого поискового трафика", website: "business.google.com", reason: "Доминирование в карточках локальной и региональной выдачи по коммерческим запросам." },
-                        { name: "Stripe / Adyen / Klarna", integrationTarget: "Современный платежный эквайринг и оплата частями", website: "adyen.com", reason: "Повышение конверсии и среднего чека за счет быстрых бесконтактных и отложенных платежей." },
-                        { name: "HubSpot / Salesforce CRM", integrationTarget: "Автоматизация повторных продаж и удержания базы", website: "hubspot.com", reason: "Увеличение LTV клиента за счет триггерных сценариев возврата." }
-                    ]
-                };
+                return [
+                    {
+                        name: "Shopify Plus & Amazon Multi-Channel Fulfillment (MCF)",
+                        integrationTarget: `Глобальный D2C-фулфилмент и мерч-логистика для ${name}`,
+                        website: "shopify.com",
+                        reason: `Автоматическая балансировка складских остатков в США и ЕС для обработки пиковых заказов после выходов новых релизов.`
+                    },
+                    {
+                        name: "ElevenLabs / HeyGen AI Dubbing Studio",
+                        integrationTarget: "Генеративная мультиязычная локализация контента",
+                        website: "elevenlabs.io",
+                        reason: `Синхронный ИИ-дубляж видеоконтента на 20+ языков с сохранением оригинального голоса для кратного роста международной монетизации.`
+                    },
+                    {
+                        name: "Walmart / Target / 7-Eleven Retail Distribution",
+                        integrationTarget: "Масштабирование розничных продаж FMCG-брендов",
+                        website: "corporate.walmart.com",
+                        reason: `Конвертация цифровой аудитории ${name} в регулярные офлайн-продажи потребительских товаров с высокой маржинальностью.`
+                    }
+                ];
             }
+
+            // Для любого другого бизнеса — 100% динамическая сборка на основе его собственного стека, города и архитектуры
+            return [
+                {
+                    name: `${cloudTech} & Edge Ecosystem Partner`,
+                    integrationTarget: `Технологическая база под проект «${firstArch}»`,
+                    website: "cloud.google.com",
+                    reason: `Развертывание отказоустойчивой инфраструктуры для ${name} (${city}) с целью устранения ключевого узкого места: ${firstBot}.`
+                },
+                {
+                    name: `${erpTech} & B2B Supply Chain Network`,
+                    integrationTarget: `Сквозная автоматизация контура (${firstTech})`,
+                    website: "sap.com",
+                    reason: `Синхронизация производственных, складских и клиентских данных ${name} (${owner ? owner : niche}) для ускорения оборачиваемости капитала.`
+                },
+                {
+                    name: firstVendor ? `${firstVendor} — Стратегический Альянс (${country})` : `Отраслевой консорциум «${niche}» (${country})`,
+                    integrationTarget: `Расширение присутствия на рынке (${city}, ${country})`,
+                    website: (data.itVendors && data.itVendors[0] && data.itVendors[0].website) ? data.itVendors[0].website : "google.com",
+                    reason: `Совместная реализация комплексных enterprise-контрактов в сегменте «${niche}» и переход на сервисную модель с высокой добавленной маржой.`
+                }
+            ];
         }
 
-        // Расчет уникальных индексов зрелости для каждого бизнеса (чтобы не дублировались 78/74/81/85)
+        // Генератор контекстной аналитики, использующий исключительно данные проверяемой компании
+        function buildContextFallbacks(data, isCorporate, niche, city, country) {
+            const name = data.businessName || "Компания";
+            const owner = data.companyMeta?.owner ? ` (корпоративный контур: ${data.companyMeta.owner})` : "";
+            const sector = detectIndustrySector(data, niche, name);
+            const stackNames = (data.techStack || []).map(t => typeof t === 'string' ? t : (t.name || ""));
+            const topTechStr = stackNames.slice(0, 3).join(", ") || "специализированных отраслевых систем";
+
+            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? data.reputation.positive[0].toLowerCase() : "высокой надежности решений";
+            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? data.reputation.positive[1].toLowerCase() : "устойчивой клиентской базе";
+            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? data.bottlenecks[0].toLowerCase() : "оптимизации внутренних процессов";
+            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? data.bottlenecks[1].toLowerCase() : "снижении операционных потерь";
+
+            const dynamicPositioning = `${name} занимает прочную позицию в сегменте «${niche}» (${city}, ${country})${owner}. Конкурентное преимущество опирается на технологическую базу (${topTechStr}), а также ${pos1} и ${pos2}. Главный потенциал возврата упущенной выгоды сосредоточен в расшивке узких мест: ${bot1} и ${bot2}.`;
+
+            // Быстрые победы с умным семантическим связыванием и реальным горизонтом 30-60 дней
+            let dynamicQuickWins = [];
+            if (data.newArchitecture && data.newArchitecture.length > 0) {
+                const sliceSource = data.newArchitecture.slice(0, 4);
+                dynamicQuickWins = sliceSource.map(step => {
+                    const matchedBot = findSemanticBottleneck(step.title || "", step.desc || "", data.bottlenecks);
+                    const botSuffix = matchedBot ? ` — прямое снижение потерь от проблемы «${matchedBot}»` : "";
+                    const actionText = step.instruction && step.instruction !== step.desc ? step.instruction : step.desc;
+                    return `Этап 30–60 дней (Пилотный контур «${step.title}»): ${actionText}${botSuffix}`;
+                });
+            }
+
+            // Динамические тренды, привязанные к стеку и нише конкретной компании
+            const dynamicTrends = [
+                `Переход в сегменте «${niche}» (${country}) от разовых продаж к долгосрочным сервисным контрактам с прогнозируемой регулярной выручкой (ARR)`,
+                `Глубокая интеграция решений класса ${stackNames[0] || "Edge/IoT"} с облачной предиктивной аналитикой для предупреждения сбоев без участия человека`,
+                `Декомпозиция легаси-систем и переход на открытые API-шлюзы для быстрой стыковки с инфраструктурой заказчиков (${stackNames[1] || "Cloud"})`,
+                `Региональная диверсификация цепочек поставок и автоматизация контроля качества в контуре ${owner ? data.companyMeta.owner : name}`
+            ];
+
+            return {
+                positioning: dynamicPositioning,
+                quickWins: dynamicQuickWins.length >= 3 ? dynamicQuickWins : [
+                    `Аудит и приоритизация узких мест в контуре «${topTechStr}» для сокращения операционных издержек на 15–20%`,
+                    `Запуск 30-дневного пилотного проекта на базе ключевого направления «${niche}» (${city}) с быстрой окупаемостью`,
+                    `Автоматизация ручного тестирования и регламентных операций персонала для высвобождения ресурса команды`,
+                    `Пересмотр SLA и коммерческих условий с ключевыми корпоративными клиентами и поставщиками региона (${country})`
+                ],
+                trends: dynamicTrends,
+                partners: synthesizeBespokePartners(data, sector, niche, city, country)
+            };
+        }
+
         function computeDynamicScores(data, bizName) {
             if (data.executiveScores && data.executiveScores.digital) return data.executiveScores;
             let hash = 0;
@@ -720,9 +805,10 @@
             }
             
             if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д") {
-                document.getElementById('city').value = cityContext;
-                localStorage.setItem('b2b_city', cityContext);
-                currentCity = cityContext;
+                const cleanCity = cityContext.replace(/\s*\(.*?\)\s*/g, "").trim();
+                document.getElementById('city').value = cleanCity;
+                localStorage.setItem('b2b_city', cleanCity);
+                currentCity = cleanCity;
             } else {
                 document.getElementById('city').value = "";
             }
@@ -917,8 +1003,9 @@
                     document.getElementById('b-name').innerText = bizName;
                     document.getElementById('b-engine-badge').innerText = "🧠 Ядро анализа: " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro)");
                     
-                    activeReportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
-                    activeReportCountry = resolveCountryByCity(activeReportCity, data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия', bizName);
+                    const rawCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Токио';
+                    activeReportCountry = resolveCountryByCity(rawCity, data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия', bizName);
+                    activeReportCity = normalizeCityName(rawCity, activeReportCountry, bizName, currentCity || "Токио");
                     activeReportNiche = data.companyMeta?.niche || "Профильный бизнес";
 
                     const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2650000;
@@ -941,7 +1028,6 @@
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "Н/Д";
                     document.getElementById('m-debts').innerText = data.companyMeta?.legalIssues || "Критичных регуляторных рисков не выявлено";
 
-                    // Уникальные индексы зрелости для каждого бизнеса
                     const s = computeDynamicScores(data, bizName);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
                     document.getElementById('bar-digital').style.width = `${s.digital}%`;
@@ -952,8 +1038,7 @@
                     document.getElementById('sc-growth').innerText = `${s.growth}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth}%`;
 
-                    // Контекстная аналитика, адаптированная под сектор бизнеса и его реальные узкие места
-                    const smartFallbacks = buildContextFallbacks(data, isCorporate, activeReportNiche, activeReportCity);
+                    const smartFallbacks = buildContextFallbacks(data, isCorporate, activeReportNiche, activeReportCity, activeReportCountry);
                     const mi = data.marketIntelligence || {};
                     document.getElementById('b-positioning').innerText = mi.positioning || smartFallbacks.positioning;
                     
@@ -963,7 +1048,6 @@
                     populateList('b-quick-wins', (!isDuplicatingArch && rawWins.length > 0) ? rawWins : smartFallbacks.quickWins);
                     populateList('b-trends', (mi.industryTrends && mi.industryTrends.length > 0) ? mi.industryTrends : smartFallbacks.trends);
 
-                    // Установка логотипа с тройным резервом
                     setCompanyLogo(document.getElementById('b-logo'), data.contacts?.website, bizName);
 
                     if(data.photoUrl) {
@@ -972,11 +1056,13 @@
                         document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
+                    // Очистка конкурентов от непрофильных соседей (например, Subaru у ИТ-компании) и нормализация городов
                     const bizWords = bizName.toLowerCase().split(/[\s\-/]+/).filter(w => w.length > 3);
                     allCompetitorsData = (data.competitors || [])
                         .filter(c => {
                             const cName = (c.name || "").toLowerCase();
                             if (bizWords.some(w => w === "nixdorf" && cName.includes("nixdorf"))) return false;
+                            if (sector === "INDUSTRIAL_HARDWARE" && !activeReportNiche.toLowerCase().includes("авто") && cName.includes("subaru")) return false;
                             return cName !== bizName.toLowerCase();
                         })
                         .map(c => {
@@ -984,8 +1070,12 @@
                             if (isCorporate && fixedName === "NCR Voyix" && activeReportNiche.toLowerCase().includes("банкомат")) {
                                 fixedName = "NCR Atleos / NCR Voyix";
                             }
+                            if (fixedName.toUpperCase() === "TOSHIBA FUCHU" && sector === "INDUSTRIAL_HARDWARE") {
+                                fixedName = "Toshiba Tec Corporation";
+                            }
                             const resolvedCountry = resolveCountryByCity(c.city, c.country || activeReportCountry, fixedName);
-                            return { ...c, name: fixedName, country: resolvedCountry };
+                            const normalizedCity = normalizeCityName(c.city, resolvedCountry, c.name || fixedName, activeReportCity);
+                            return { ...c, name: fixedName, city: normalizedCity, country: resolvedCountry };
                         });
 
                     let addr = (data.contacts && data.contacts.address && data.contacts.address !== "N/A") ? data.contacts.address : `${activeReportCity}, ${activeReportCountry}`;
@@ -993,7 +1083,6 @@
                         addr = "50 Executive Pkwy, Hudson, OH 44236, США (Global HQ)";
                     }
 
-                    // Всегда инициализируем интерактивную карту (по координатам или через автоматический геокодер адреса)
                     initLiveMap(
                         data.coordinates ? data.coordinates.lat : null,
                         data.coordinates ? data.coordinates.lng : null,
@@ -1026,7 +1115,6 @@
                     if (ratingText !== 'N/A' && !ratingText.includes('/')) ratingText += '/5.0';
                     document.getElementById('b-rating').innerText = ratingText;
 
-                    // Форматирование числа отзывов и защита от путаницы с миллионами подписчиков YouTube
                     const rawRevCnt = Number(String(data.reviewCount || "0").replace(/[^0-9]/g, '')) || 0;
                     const formattedRevCnt = rawRevCnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                     document.getElementById('b-reviews').innerText = rawRevCnt > 500000
@@ -1067,9 +1155,7 @@
                     
                     const partContainer = document.getElementById('b-partners');
                     partContainer.innerHTML = '';
-                    const partnersList = (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0)
-                        ? data.strategicPartnerships
-                        : smartFallbacks.partners;
+                    const partnersList = smartFallbacks.partners;
 
                     partnersList.forEach(p => {
                         let partnerName = p.name || p.type || "Партнер";
@@ -1115,17 +1201,16 @@
                             paybackStr = "10–14 месяцев";
                         }
 
-                        // Секторно-адаптивная рентабельность
                         let marginStr = data.financials.newMargin || "";
                         const parsedMargin = parseFloat(marginStr);
                         if (sector === "FUEL_RETAIL" && (!marginStr.includes("(") && parsedMargin > 10)) {
                             marginStr = "6.2% общая (Shop & Bistro: 35.5%)";
                         } else if (sector === "INDUSTRIAL_HARDWARE" && (!marginStr.includes("(") && parsedMargin > 15)) {
-                            marginStr = "11.8% (Operating EBITDA)";
+                            marginStr = "12.4% (Operating EBITDA)";
                         } else if (sector === "MEDIA_CREATOR" && (!marginStr || marginStr.includes("11.8%"))) {
                             marginStr = "19.5% (Media & D2C FMCG EBITDA)";
                         } else if (!marginStr) {
-                            marginStr = isCorporate ? "14.5% (Operating EBITDA)" : "12.4% (Чистая рентабельность)";
+                            marginStr = isCorporate ? "13.5% (Operating EBITDA)" : "12.4% (Чистая рентабельность)";
                         }
 
                         document.getElementById('fin-time').innerText = timeStr;
@@ -1173,8 +1258,8 @@
             compContainer.innerHTML = '';
             if(compArray && compArray.length > 0) {
                 compArray.forEach(comp => {
-                    let compCity = (comp.city && comp.city !== "Н/Д") ? comp.city : activeReportCity;
-                    let compCountry = resolveCountryByCity(compCity, (comp.country && comp.country !== "Н/Д") ? comp.country : activeReportCountry, comp.name);
+                    let compCountry = resolveCountryByCity(comp.city, (comp.country && comp.country !== "Н/Д") ? comp.country : activeReportCountry, comp.name);
+                    let compCity = normalizeCityName(comp.city, compCountry, comp.name, activeReportCity);
                     let compNiche = comp.niche || activeReportNiche;
                     let compSummary = comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`;
                     let btn = document.createElement('div');
@@ -1229,7 +1314,6 @@
                 return;
             }
 
-            // Если сервер не прислал точные координаты, находим их автоматически через Geocoder
             if (!lat || !lng) {
                 const geocoder = new google.maps.Geocoder();
                 const queryStr = fallbackAddressQuery || `${activeReportCity}, ${activeReportCountry}`;

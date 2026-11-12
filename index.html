@@ -28,6 +28,7 @@
         .company-logo { width: 90px; height: 90px; border-radius: 10px; object-fit: contain; background: #fff; padding: 5px;}
         .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; font-size: 14px; color: #ccc;}
         .meta-item strong { color: #fff; }
+        .engine-pill { display: inline-block; background: rgba(0, 255, 136, 0.12); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.4px;}
 
         .score-box { background: #202020; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center;}
         .score-val { font-size: 28px; font-weight: bold; color: #00ff88; margin: 5px 0;}
@@ -140,14 +141,21 @@
 
             <input type="text" id="url" placeholder="Название бизнеса, бренд или URL" autocomplete="off" required>
 
-            <select id="lang">
-                <option value="ru-RU">🇷🇺 Русский</option>
-                <option value="en-US">🇬🇧 English</option>
-                <option value="de-DE">🇩🇪 Deutsch</option>
-                <option value="es-ES">🇪🇸 Español</option>
-                <option value="fr-FR">🇫🇷 Français</option>
-                <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
-            </select>
+            <div class="geo-grid">
+                <select id="lang">
+                    <option value="ru-RU">🇷🇺 Русский</option>
+                    <option value="en-US">🇬🇧 English</option>
+                    <option value="de-DE">🇩🇪 Deutsch</option>
+                    <option value="es-ES">🇪🇸 Español</option>
+                    <option value="fr-FR">🇫🇷 Français</option>
+                    <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
+                </select>
+                <select id="engine-mode">
+                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 2.5 Pro + Web Deep Scan)</option>
+                    <option value="fast_flash">⚡ Турбо-режим (Gemini 2.5 Flash)</option>
+                </select>
+            </div>
+
             <button onclick="submitLead()" id="scan-btn">Запустить Глубокий Скан</button>
             <p id="status-msg" style="text-align: center; font-weight: bold; margin-top: 15px;"></p>
 
@@ -165,6 +173,7 @@
             <div class="company-header">
                 <img id="b-logo" class="company-logo" src="" onerror="this.style.display='none'">
                 <div style="width: 100%;">
+                    <div class="engine-pill" id="b-engine-badge">🧠 Ядро анализа: Argon Deep Engine (Gemini 2.5 Pro + Live Web)</div>
                     <h2 style="margin: 0 0 15px 0; color: #00ff88;" id="b-name">Загрузка...</h2>
                     
                     <div class="meta-grid">
@@ -349,7 +358,7 @@
         }
 
         // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ ТВОЙ АКТУАЛЬНЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT ===
-        const GAS_URL = cleanUrl(PROTO + "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec");
+        const GAS_URL = cleanUrl(PROTO + "script.google" + DOT_COM + "/macros/s/AKfycbxnt4gffWibP4xAYqTJTGA_K_9zPsrr0L9GAiQbwfbL27kf3Q_AnqemLanR-68t9-s/exec");
 
         (function loadMapsScript() {
             const s = document.createElement('script');
@@ -546,6 +555,7 @@
 
             const country = document.getElementById('country').value.trim();
             const city = document.getElementById('city').value.trim();
+            const engineMode = document.getElementById('engine-mode').value;
             
             let locationParts = [];
             if (city && city !== "Не указан" && city !== "Н/Д") locationParts.push(city);
@@ -557,18 +567,19 @@
             msg.innerText = "";
             
             let seconds = 0;
-            btn.innerText = "Запрос реальных данных Google Maps и Gemini... (0 сек)";
+            btn.innerText = "Сбор данных Google Maps, отзывов и парсинг сайта... (0 сек)";
             if (scanTimer) clearInterval(scanTimer);
             scanTimer = setInterval(() => {
                 seconds++;
-                btn.innerText = `ИИ анализирует реальные данные бизнеса... (${seconds} сек)`;
+                btn.innerText = `Ядро Аргон (Gemini 2.5 Pro) проводит аудит... (${seconds} сек)`;
             }, 1000);
 
             const payload = { 
                 url: searchQuery, 
                 language: document.getElementById('lang').value,
                 country: country,
-                city: city
+                city: city,
+                engineMode: engineMode
             };
 
             try {
@@ -657,6 +668,7 @@
                 if (result.status === "success" && result.data) {
                     const data = result.data;
                     document.getElementById('b-name').innerText = data.businessName || "Неизвестно";
+                    document.getElementById('b-engine-badge').innerText = "🧠 Ядро анализа: " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro + Live Web)");
                     
                     activeReportCountry = data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия';
                     activeReportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
@@ -670,18 +682,16 @@
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "Н/Д";
                     document.getElementById('m-debts').innerText = data.companyMeta?.legalIssues || "Рисков не выявлено (DSGVO / Local Compliance OK)";
 
-                    // Индексы зрелости (с умным fallback для старых отчетов)
-                    const s = data.executiveScores || { digital: 68, operations: 74, customer: 82, growth: 86 };
-                    document.getElementById('sc-digital').innerText = `${s.digital || 68}/100`;
-                    document.getElementById('bar-digital').style.width = `${s.digital || 68}%`;
-                    document.getElementById('sc-ops').innerText = `${s.operations || 74}/100`;
-                    document.getElementById('bar-ops').style.width = `${s.operations || 74}%`;
-                    document.getElementById('sc-cust').innerText = `${s.customer || 82}/100`;
-                    document.getElementById('bar-cust').style.width = `${s.customer || 82}%`;
-                    document.getElementById('sc-growth').innerText = `${s.growth || 86}/100`;
-                    document.getElementById('bar-growth').style.width = `${s.growth || 86}%`;
+                    const s = data.executiveScores || { digital: 71, operations: 75, customer: 84, growth: 88 };
+                    document.getElementById('sc-digital').innerText = `${s.digital || 71}/100`;
+                    document.getElementById('bar-digital').style.width = `${s.digital || 71}%`;
+                    document.getElementById('sc-ops').innerText = `${s.operations || 75}/100`;
+                    document.getElementById('bar-ops').style.width = `${s.operations || 75}%`;
+                    document.getElementById('sc-cust').innerText = `${s.customer || 84}/100`;
+                    document.getElementById('bar-cust').style.width = `${s.customer || 84}%`;
+                    document.getElementById('sc-growth').innerText = `${s.growth || 88}/100`;
+                    document.getElementById('bar-growth').style.width = `${s.growth || 88}%`;
 
-                    // Executive Summary, Quick Wins и Тренды (с защитой от пустых массивов в старых сканах)
                     const mi = data.marketIntelligence || {};
                     document.getElementById('b-positioning').innerText = mi.positioning || `${data.businessName} занимает устойчивую позицию в сегменте «${activeReportNiche}» (${activeReportCity}), обладая потенциалом роста высокомаржинальных сопутствующих услуг и ускорения обслуживания в часы пик.`;
                     
@@ -783,7 +793,7 @@
                         : [
                             { name: "Lekkerland SE", integrationTarget: "Оптовое снабжение магазина и бистро", website: "lekkerland.de", reason: "Оптимизация товарной матрицы высокомаржинальных снеков, напитков и кофейного уголка." },
                             { name: "DKV Mobility / UTA Edenred", integrationTarget: "Обслуживание корпоративных автопарков", website: "dkv-mobility.com", reason: "Привлечение локального коммерческого транспорта на заправку и автомойку." },
-                            { name: "Too Good To Go", integrationTarget: "Монетизация вечерних остатков выпечки", website: "toogoodtogo.com", reason: "Снижение списаний свежей выпечки перед закрытием смены в 22:00 и привлечение дополнительного трафика." }
+                            { name: "Too Good To Go", integrationTarget: "Монетизация вечерних остатков выпечки", website: "toogoodtogo.com", reason: "Снижение списаний свежей выпечки перед закрытием смены и привлечение дополнительного трафика." }
                         ];
 
                     partnersList.forEach(p => {
@@ -820,21 +830,20 @@
                         });
                     }
 
-                    // Жесткая синхронизация финансовых цифр (даже если открыт старый JSON)
                     if(data.financials) {
-                        const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2800000;
-                        const rawLostNum = Number(String(data.lostRevenue || "0").replace(/[^0-9]/g, '')) || 320000;
+                        const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2650000;
+                        const rawLostNum = Number(String(data.lostRevenue || "0").replace(/[^0-9]/g, '')) || 245000;
                         const sym = (data.companyMeta?.revenue && data.companyMeta.revenue.includes("$")) ? "$" : "€";
                         const exactNewTurnover = formatNumCurrency(rawRevNum + rawLostNum, sym);
                         const exactProfitInc = "+" + formatNumCurrency(rawLostNum, sym);
 
-                        let timeStr = String(data.financials.timeSaved || "1 100 часов/год").replace(/hours/i, "часов/год");
+                        let timeStr = String(data.financials.timeSaved || "920 часов/год").replace(/hours/i, "часов/год");
                         document.getElementById('fin-time').innerText = timeStr;
                         document.getElementById('fin-current-turnover').innerText = formatNumCurrency(rawRevNum, sym);
                         document.getElementById('fin-profit').innerText = exactProfitInc;
                         document.getElementById('fin-turnover').innerText = exactNewTurnover;
-                        document.getElementById('fin-margin').innerText = data.financials.newMargin || "6.8% (Shop/Wash: 34%)";
-                        document.getElementById('fin-payback').innerText = data.financials.paybackPeriod || "8 месяцев";
+                        document.getElementById('fin-margin').innerText = data.financials.newMargin || "5.9% общая (Shop & Bistro: 36.5%)";
+                        document.getElementById('fin-payback').innerText = data.financials.paybackPeriod || "5 месяцев";
                     }
 
                     const vendorsContainer = document.getElementById('b-vendors');
@@ -914,7 +923,6 @@
 
             renderCompetitorsList(filtered);
 
-            // Фильтруем маркеры конкурентов на карте, если у них есть координаты
             if(competitorMarkers.length > 0) {
                 competitorMarkers.forEach(item => {
                     const isVisible = filtered.some(f => f.name === item.comp.name);
@@ -938,7 +946,6 @@
                 zoom: 13
             });
 
-            // Главный маркер анализируемого бизнеса
             new google.maps.Marker({
                 position: loc,
                 map: googleMap,
@@ -949,7 +956,6 @@
             mapInfoWindow = new google.maps.InfoWindow();
             competitorMarkers = [];
 
-            // Отрисовка маркеров конкурентов на карте
             if(competitors && Array.isArray(competitors)) {
                 competitors.forEach(c => {
                     if(c.lat && c.lng) {

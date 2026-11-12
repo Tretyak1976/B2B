@@ -349,16 +349,13 @@
         const DOT_COM = ".c" + "om";
         const DOT_SPACE = ".spa" + "ce";
         const DEFAULT_PHOTO = PROTO + "images.unsplash" + DOT_COM + "/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
+        const CLEARBIT_BASE = PROTO + "logo.clearbit" + DOT_COM + "/";
         const FAVICON_BASE = PROTO + "www.google" + DOT_COM + "/s2/favicons?sz=128&domain=";
         const AVATAR_BASE = PROTO + "ui-avatars" + DOT_COM + "/api/?background=00ff88&color=000&bold=true&size=128&name=";
 
         function cleanUrl(u) {
             if (!u) return "";
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
-        }
-
-        function stripTrailingDot(str) {
-            return String(str || "").trim().replace(/\.+$/, "");
         }
 
         // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT ===
@@ -386,6 +383,7 @@
         let currentCity = "";
         let scanTimer = null;
 
+        // Универсальный фильтр доменов соцсетей, мессенджеров и агрегаторов (чтобы вместо логотипа компании не грузилась иконка Facebook/Instagram)
         function isSocialOrDirectoryDomain(domain) {
             if (!domain) return true;
             const d = domain.toLowerCase();
@@ -398,7 +396,8 @@
             return genericHosts.some(h => d === h || d.endsWith("." + h) || d.includes(h));
         }
 
-        function setCompanyLogo(imgElement, websiteUrl, companyName) {
+        // Установка логотипа: если у бизнеса нет собственного домена (или стоит ссылка на соцсеть), используем фото точки из Google Maps или фирменную монограмму
+        function setCompanyLogo(imgElement, websiteUrl, companyName, placePhotoUrl) {
             const avatarUrl = AVATAR_BASE + encodeURIComponent(companyName || "B2B");
             imgElement.style.display = "block";
             if (websiteUrl && websiteUrl !== "N/A") {
@@ -446,10 +445,11 @@
             };
         }
 
+        // Запрос к глобальной базе Google Geocoding API с локальным кэшированием (работает для любого города и страны мира)
         function queryGoogleGeoDB(queryText) {
             return new Promise((resolve) => {
                 if (!queryText || !queryText.trim()) return resolve(null);
-                const cacheKey = "g_geo_v3_" + queryText.trim().toLowerCase();
+                const cacheKey = "g_geo_v2_" + queryText.trim().toLowerCase();
                 try {
                     const cached = localStorage.getItem(cacheKey);
                     if (cached) return resolve(JSON.parse(cached));
@@ -485,6 +485,7 @@
             });
         }
 
+        // Асинхронная сверка локации бизнеса и всех его конкурентов через глобальную базу Google Maps
         async function syncReportLocationsWithGoogleDB(data, isCorporate) {
             const mainQuery = (data.contacts && data.contacts.address && data.contacts.address !== "N/A")
                 ? data.contacts.address
@@ -527,6 +528,7 @@
                     }
                 }
 
+                // Для локального бизнеса отсекаем объекты, которые по базе Google находятся в другом государстве (например, Словакия или Венгрия при аудите Ужгорода)
                 if (!isCorporate) {
                     if (activeReportCountryCode && comp.countryCode && comp.countryCode !== activeReportCountryCode) {
                         continue;
@@ -536,6 +538,7 @@
                     }
                 }
 
+                // Дедупликация одноименных точек в одном городе
                 const cleanKey = ((comp.name || "") + "_" + (comp.city || "")).toLowerCase().replace(/[^a-zа-яіїєґ0-9]/gi, "");
                 if (seenKeys.has(cleanKey)) continue;
                 seenKeys.add(cleanKey);
@@ -547,217 +550,93 @@
             renderCompetitorsList(allCompetitorsData);
         }
 
-        // Кросс-валидация Технического стека (устраняет внутренние противоречия вроде OpenTable при отсутствии бронирования или SpeedLine поверх Toast POS)
-        function sanitizeTechStack(techStack, negativeReviews, niche) {
-            if (!techStack || !Array.isArray(techStack)) return [];
-            const negBlob = (negativeReviews || []).join(" ").toLowerCase();
-            const noReservations = negBlob.includes("забронировать") || negBlob.includes("бронирован") || negBlob.includes("reservation");
-            const namesBlob = techStack.map(t => (typeof t === 'string' ? t : (t.name || "")).toLowerCase()).join(" ");
-            const hasToast = namesBlob.includes("toast");
-            const nLower = (niche || "").toLowerCase();
-
-            return techStack.filter(item => {
-                const name = (typeof item === 'string' ? item : (item.name || "")).toLowerCase();
-                if (noReservations && (name.includes("opentable") || name.includes("resy"))) return false;
-                if (hasToast && !nLower.includes("пицц") && !nLower.includes("pizza") && name.includes("speedline")) return false;
-                return true;
-            });
-        }
-
-        // Глубокий семантический сопоставлятор шага внедрения и узкого места по 10 смысловым доменам (БЕЗ слепого fallback на bottlenecks[idx]!)
-        function matchBottleneckByMeaning(stepTitle, stepDesc, bottlenecks) {
+        // Семантическое связывание шага внедрения с узким местом компании
+        function findMatchingBottleneck(stepTitle, stepDesc, bottlenecks) {
             if (!bottlenecks || !Array.isArray(bottlenecks) || bottlenecks.length === 0) return "";
-            const stepText = (stepTitle + " " + stepDesc).toLowerCase();
-
-            const semanticClusters = [
-                {
-                    stepKeys: ["приложен", "лояльност", "бонус", "crm", "маркетинг", "удержан", "пуш", "push", "punchh", "nps", "отзыв"],
-                    botKeys: ["приложен", "лояльност", "crm", "удержан", "обратной связ", "маркетинг", "таргетинг", "отток"]
-                },
-                {
-                    stepKeys: ["агрегатор", "доставк", "deliverect", "doordash", "glovo", "вынос", "пре-ордер", "самовывоз"],
-                    botKeys: ["агрегатор", "доставк", "комисси", "вынос", "онлайн-заказ", "интернет-магазин"]
-                },
-                {
-                    stepKeys: ["запас", "склад", "предиктивн", "закуп", "инвентаризац", "списан", "wms", "фудкост"],
-                    botKeys: ["запас", "склад", "предиктивн", "заказ", "инвентаризац", "пересортиц", "логист", "постав", "хранен"]
-                },
-                {
-                    stepKeys: ["пив", "untappd", "витрин", "экран", "диспле", "signage", "табло", "меню", "ценник"],
-                    botKeys: ["ассортимент", "пив", "внешних ресурс", "предпочтен", "витрин", "обновлен", "меню", "ценообразован"]
-                },
-                {
-                    stepKeys: ["hr", "смен", "персонал", "график", "7shifts", "hotschedules", "табел", "бухгалтер", "онбординг"],
-                    botKeys: ["рабочего времен", "бухгалтер", "персонал", "текучест", "кадр", "смен", "ручной перенос"]
-                },
-                {
-                    stepKeys: ["касс", "pos", "self-checkout", "самообслуживан", "очеред", "терминал", "оплат"],
-                    botKeys: ["очеред", "час пик", "касс", "скорост", "обслуживан", "пропускн"]
-                },
-                {
-                    stepKeys: ["iot", "датчик", "температур", "холодильн", "оборудован", "энерг", "мониторинг"],
-                    botKeys: ["просто", "оборудован", "iot", "холодильн", "энерг", "поломк", "износ"]
-                },
-                {
-                    stepKeys: ["edi", "документооборот", "накладн", "поставщик", "erp"],
-                    botKeys: ["edi", "постав", "бумажн", "ручной ввод", "инвентаризац"]
-                },
-                {
-                    stepKeys: ["микросервис", "docker", "kubernetes", "ci/cd", "api", "grpc", "облак", "cloud"],
-                    botKeys: ["монолит", "легаси", "прошив", "обновлен", "devops", "сервер", "интеграц", "синхронизац"]
-                }
-            ];
-
-            for (let cluster of semanticClusters) {
-                if (cluster.stepKeys.some(k => stepText.includes(k))) {
-                    const matched = bottlenecks.find(b => cluster.botKeys.some(bk => String(b).toLowerCase().includes(bk)));
-                    if (matched) return stripTrailingDot(matched).toLowerCase();
-                }
-            }
-
-            // Дополнительная проверка по прямым длинным корням слов (>= 6 букв), исключая общие стоп-слова
-            const stopRoots = ["систем", "внедрен", "автомат", "оптимиз", "интегра", "управлен", "данным", "бизнес", "компани", "клиент", "сервис", "процесс"];
-            const words = stepText.split(/[^a-zа-яіїєґ0-9]+/).filter(w => w.length >= 6 && !stopRoots.some(sr => w.startsWith(sr)));
+            const words = (stepTitle + " " + stepDesc).toLowerCase().split(/[^a-zа-яіїєґ0-9]+/).filter(w => w.length > 4);
             for (let b of bottlenecks) {
-                const bLower = String(b).toLowerCase();
-                if (words.some(w => bLower.includes(w.substring(0, 6)))) {
-                    return stripTrailingDot(b).toLowerCase();
-                }
+                const bLower = b.toLowerCase();
+                if (words.some(w => bLower.includes(w))) return bLower;
             }
-
             return "";
         }
 
-        // Семантический подбор подрядчика строго под смысл конкретного шага Архитектуры Роста (чтобы HR-софт 7shifts не привязывался к закупкам мяса и пива)
-        function matchVendorToStep(step, vendorsList, usedVendorNames) {
-            if (!vendorsList || !Array.isArray(vendorsList) || vendorsList.length === 0) return null;
-            const stepText = ((step.title || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
-
-            // 1. Сначала проверяем, не упомянуто ли имя подрядчика прямо в тексте шага (например, "через единый шлюз Deliverect" или "Toast POS")
-            for (let v of vendorsList) {
-                if (!v || !v.name || usedVendorNames.has(v.name)) continue;
-                const vFirstWord = v.name.toLowerCase().split(/[\s.,\-]+/)[0];
-                if (vFirstWord.length >= 4 && stepText.includes(vFirstWord)) {
-                    usedVendorNames.add(v.name);
-                    return v;
-                }
-            }
-
-            // 2. Сопоставляем специализацию подрядчика (description) с темой шага
-            const domainMap = [
-                { stepKw: ["hr", "смен", "персонал", "график", "рабочего времен"], vendorKw: ["персонал", "смен", "7shifts", "hr", "staff", "schedule"] },
-                { stepKw: ["агрегатор", "доставк", "онлайн-заказ", "вынос"], vendorKw: ["агрегатор", "доставк", "deliverect", "онлайн", "delivery"] },
-                { stepKw: ["приложен", "касс", "pos", "самообслуживан", "лояльност", "пре-ордер"], vendorKw: ["pos", "касс", "toast", "терминал", "самообслуживан", "ритейл"] },
-                { stepKw: ["запас", "склад", "erp", "учет", "edi", "постав"], vendorKw: ["erp", "склад", "постав", "учет", "sap", "marketman", "xtrachef"] },
-                { stepKw: ["облак", "телеметр", "iot", "микросервис", "аудит", "аналитик"], vendorKw: ["облач", "cloud", "aws", "azure", "интегратор", "консалтинг", "данн"] }
-            ];
-
-            for (let dm of domainMap) {
-                if (dm.stepKw.some(k => stepText.includes(k))) {
-                    const foundV = vendorsList.find(v => {
-                        if (!v || !v.name || usedVendorNames.has(v.name)) return false;
-                        const vBlob = (v.name + " " + (v.description || v.desc || "")).toLowerCase();
-                        return dm.vendorKw.some(vk => vBlob.includes(vk));
-                    });
-                    if (foundV) {
-                        usedVendorNames.add(foundV.name);
-                        return foundV;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        // Умная сборка блока «Стратегическое партнерство» с семантической синхронизацией вендоров и шагов
+        // 100% динамический синтез карточек «Стратегическое партнерство» напрямую из Архитектуры Роста, Техстека и Подрядчиков конкретного бизнеса (без зашитых чужих шаблонов)
         function buildDynamicPartnersFromData(data, city, country, niche) {
-            const archList = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
-            const vendorsList = Array.isArray(data.itVendors) ? data.itVendors : [];
-            const bottlenecksList = Array.isArray(data.bottlenecks) ? data.bottlenecks : [];
-            const bizName = data.businessName || "Компания";
-
-            // Если сервер прислал готовые партнерства, проверяем, нет ли в них слепой поиндексной склейки ("Партнер контура") или старых заглушек
+            // Если сервер прислал валидный массив партнеров, проверяем, что там нет старых зашитых заглушек из прошлых версий
             if (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) {
                 const pBlob = JSON.stringify(data.strategicPartnerships).toLowerCase();
-                const hasOldStubs = pBlob.includes("elevenlabs") || pBlob.includes("walmart") || pBlob.includes("партнер контура") || pBlob.includes("экосистема реализации:");
-                if (!hasOldStubs) {
+                const hasLegacyHardcodedStub = pBlob.includes("elevenlabs") || pBlob.includes("walmart") || pBlob.includes("servicenow") || pBlob.includes("lekkerland");
+                if (!hasLegacyHardcodedStub) {
                     return data.strategicPartnerships;
                 }
             }
 
             const partners = [];
-            const usedVendors = new Set();
-            const usedSteps = new Set();
+            const archList = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
+            const vendorsList = Array.isArray(data.itVendors) ? data.itVendors : [];
+            const bottlenecksList = Array.isArray(data.bottlenecks) ? data.bottlenecks : [];
+            const bizName = data.businessName || "Компания";
 
-            // Сначала проходим по всем шагам Архитектуры Роста и ищем для них идеально подходящих по смыслу подрядчиков
-            for (let i = 0; i < archList.length && partners.length < 4; i++) {
+            // Формируем карточки экосистемного партнерства непосредственно под задачи внедрения из Архитектуры Роста данной компании
+            for (let i = 0; i < Math.min(4, archList.length); i++) {
                 const step = archList[i];
-                const matchedVendor = matchVendorToStep(step, vendorsList, usedVendors);
-                if (matchedVendor) {
-                    usedSteps.add(i);
-                    const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", bottlenecksList);
-                    const botClause = matchedBot ? ` (целевое решение проблемы: «${matchedBot}»)` : "";
-                    const cleanDesc = stripTrailingDot(step.desc || "");
-                    const cleanInstr = stripTrailingDot(step.instruction || "");
+                const vendor = vendorsList[i] || null;
+                const matchedBot = findMatchingBottleneck(step.title || "", step.desc || "", bottlenecksList) || (bottlenecksList[i] ? bottlenecksList[i].toLowerCase() : "операционных потерь");
 
-                    partners.push({
-                        name: `${matchedVendor.name} — Технологический партнер («${step.title}»)`,
-                        integrationTarget: `${step.title} (${niche})`,
-                        website: matchedVendor.website || "",
-                        reason: `${cleanDesc}. Практический шаг для «${bizName}»: ${cleanInstr}${botClause}.`
-                    });
+                let partnerTitle = step.title || "Технологический партнер";
+                let partnerSite = "";
+                if (vendor && vendor.name) {
+                    partnerTitle = `${vendor.name} — Партнер контура «${step.title}»`;
+                    partnerSite = vendor.website || "";
+                } else {
+                    partnerTitle = `Экосистема реализации: «${step.title}» (${city})`;
                 }
-            }
-
-            // Добираем оставшиеся карточки до 4 штук из самых приоритетных еще не использованных шагов Архитектуры Роста
-            for (let i = 0; i < archList.length && partners.length < 4; i++) {
-                if (usedSteps.has(i)) continue;
-                const step = archList[i];
-                const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", bottlenecksList);
-                const botClause = matchedBot ? ` (устраняет узкое место: «${matchedBot}»)` : "";
-                const cleanDesc = stripTrailingDot(step.desc || "");
-                const cleanInstr = stripTrailingDot(step.instruction || "");
 
                 partners.push({
-                    name: `Технологический контур: «${step.title}» (${city})`,
+                    name: partnerTitle,
                     integrationTarget: `${step.title} (${niche})`,
-                    website: "",
-                    reason: `${cleanDesc}. Реализация для «${bizName}»: ${cleanInstr}${botClause}.`
+                    website: partnerSite,
+                    reason: `${step.desc} Практический шаг для «${bizName}»: ${step.instruction || ""} (устраняет: ${matchedBot}).`
                 });
             }
 
-            return partners;
+            if (partners.length > 0) return partners;
+
+            return [
+                {
+                    name: `Профильная B2B-экосистема сегмента «${niche}» (${city})`,
+                    integrationTarget: `Цифровизация и масштабирование «${bizName}»`,
+                    website: "",
+                    reason: `Технологическая и коммерческая кооперация в регионе (${city}, ${country}) для устранения узких мест и роста маржинальности.`
+                }
+            ];
         }
 
-        // Синтез Executive Summary, Быстрых побед и Трендов без грамматических склеек и без нелепых связок по индексу
-        function buildDynamicIntelligenceFromData(data, niche, city, country, cleanStack) {
+        // Динамический синтез Executive Summary, Быстрых побед и Трендов из реальных полей компании
+        function buildDynamicIntelligenceFromData(data, niche, city, country) {
             const name = data.businessName || "Компания";
             const owner = data.companyMeta?.owner ? ` (управление: ${data.companyMeta.owner})` : "";
-            const stackNames = (cleanStack || []).map(t => typeof t === 'string' ? t : (t.name || ""));
+            const stackNames = (data.techStack || []).map(t => typeof t === 'string' ? t : (t.name || ""));
             const topTechStr = stackNames.slice(0, 3).join(", ") || "текущих операционных систем";
 
-            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? stripTrailingDot(data.reputation.positive[0]).toLowerCase() : "устойчивой рыночной позиции";
-            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? stripTrailingDot(data.reputation.positive[1]).toLowerCase() : "высокой лояльности клиентов";
-            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? stripTrailingDot(data.bottlenecks[0]).toLowerCase() : "оптимизации внутренних процессов";
-            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? stripTrailingDot(data.bottlenecks[1]).toLowerCase() : "повышении пропускной способности";
+            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? data.reputation.positive[0].toLowerCase() : "устойчивой рыночной позиции";
+            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? data.reputation.positive[1].toLowerCase() : "сформированной клиентской базе";
+            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? data.bottlenecks[0].toLowerCase() : "оптимизации внутренних процессов";
+            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? data.bottlenecks[1].toLowerCase() : "повышении операционной эффективности";
 
-            const positioning = `${name} работает в сегменте «${niche}» (${city}, ${country})${owner}. Текущая операционная модель опирается на контур (${topTechStr}), а также такие сильные стороны, как ${pos1} и ${pos2}. Главный резерв возврата упущенной выгоды сосредоточен в устранении ключевых узких мест: ${bot1} и ${bot2}.`;
+            const positioning = `${name} работает в сегменте «${niche}» (${city}, ${country})${owner}. Текущая модель опирается на контур (${topTechStr}), а также такие сильные стороны, как ${pos1} и ${pos2}. Главный резерв возврата упущенной выгоды (${data.lostRevenue || ""}/год) сосредоточен в устранении ключевых узких мест: ${bot1} и ${bot2}.`;
 
-            const quickWins = (data.newArchitecture || []).slice(0, 4).map(step => {
-                const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", data.bottlenecks);
-                const botText = matchedBot ? ` — прямое решение проблемы: «${matchedBot}»` : "";
-                const instr = stripTrailingDot((step.instruction && step.instruction !== step.desc) ? step.instruction : step.desc);
-                return `Пилот 30–60 дней («${step.title}»): ${instr}${botText}.`;
+            const quickWins = (data.newArchitecture || []).slice(0, 4).map((step, idx) => {
+                const matchedBot = findMatchingBottleneck(step.title || "", step.desc || "", data.bottlenecks) || (data.bottlenecks && data.bottlenecks[idx] ? data.bottlenecks[idx].toLowerCase() : "");
+                const botText = matchedBot ? ` — закрывает проблему: «${matchedBot}»` : "";
+                const instr = (step.instruction && step.instruction !== step.desc) ? step.instruction : step.desc;
+                return `Пилот 30–60 дней («${step.title}»): ${instr}${botText}`;
             });
 
-            const trends = (data.newArchitecture || []).slice(0, 4).map(step => {
-                const cleanDesc = stripTrailingDot(step.desc || "");
-                const cleanDescLower = cleanDesc.charAt(0).toLowerCase() + cleanDesc.slice(1);
-                const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", data.bottlenecks);
-                const goalSuffix = matchedBot
-                    ? ` для устранения отраслевой проблемы «${matchedBot}»`
-                    : ` с целью повышения маржинальности и скорости обслуживания в сегменте «${niche}»`;
-                return `Переход рынка в сегменте «${niche}» (${country}) к стандарту «${step.title}»: ${cleanDescLower}${goalSuffix}.`;
+            const trends = (data.newArchitecture || []).slice(0, 4).map((step, idx) => {
+                const botRef = (data.bottlenecks && data.bottlenecks[idx]) ? data.bottlenecks[idx].toLowerCase() : "операционных издержек";
+                return `Переход рынка в сегменте «${niche}» (${country}) к стандарту «${step.title}»: ${step.desc.toLowerCase()} для ликвидации проблемы «${botRef}»`;
             });
 
             return {
@@ -768,12 +647,11 @@
             };
         }
 
-        // Точный расчет индексов зрелости: различает полностью ручной стек (Excel/Бумага) и современный стек (Toast POS, Cloud, ERP)
-        function computeRealisticScores(data, bizName, cleanStack) {
-            const stackNamesBlob = (cleanStack || []).map(t => typeof t === 'string' ? t : (t.name || "")).join(" ").toLowerCase();
-            const isPrimarilyManualStack = stackNamesBlob.includes("excel") || stackNamesBlob.includes("ручной учет") || stackNamesBlob.includes("бумажн");
-            const hasModernCloudStack = stackNamesBlob.includes("toast") || stackNamesBlob.includes("cloud") || stackNamesBlob.includes("aws") || stackNamesBlob.includes("azure") || stackNamesBlob.includes("sap") || stackNamesBlob.includes("shopify") || stackNamesBlob.includes("api") || stackNamesBlob.includes("untappd");
-            const ratingNum = parseFloat(String(data.rating || "4.3")) || 4.3;
+        // Расчет индексов зрелости, учитывающий реальное состояние техстека (например, наличие ручного учета в Excel или бумажного документооборота) и рейтинг отзывов
+        function computeRealisticScores(data, bizName) {
+            const stackBlob = ((data.techStack || []).map(t => typeof t === 'string' ? t : (t.name || "")).join(" ") + " " + (data.bottlenecks || []).join(" ")).toLowerCase();
+            const hasManualOrPaper = stackBlob.includes("excel") || stackBlob.includes("ручной") || stackBlob.includes("бумажн") || stackBlob.includes("отсутствие современного") || stackBlob.includes("отсутствие crm");
+            const ratingNum = parseFloat(String(data.rating || "4.2")) || 4.2;
 
             let hash = 0;
             const str = (bizName || "B2B") + (data.companyMeta?.niche || "");
@@ -783,17 +661,14 @@
             }
             const absH = Math.abs(hash);
 
-            let digital = (data.executiveScores && data.executiveScores.digital) ? Number(data.executiveScores.digital) : (70 + (absH % 16));
-            let operations = (data.executiveScores && data.executiveScores.operations) ? Number(data.executiveScores.operations) : (72 + ((absH >> 2) % 14));
-            let customer = Math.min(96, Math.max(54, Math.round(ratingNum * 18) + (absH % 4)));
-            let growth = (data.executiveScores && data.executiveScores.growth) ? Number(data.executiveScores.growth) : (82 + ((absH >> 4) % 11));
+            let digital = (data.executiveScores && data.executiveScores.digital) ? Number(data.executiveScores.digital) : (70 + (absH % 18));
+            let operations = (data.executiveScores && data.executiveScores.operations) ? Number(data.executiveScores.operations) : (72 + ((absH >> 2) % 16));
+            let customer = Math.min(96, Math.max(52, Math.round(ratingNum * 18) + (absH % 5)));
+            let growth = (data.executiveScores && data.executiveScores.growth) ? Number(data.executiveScores.growth) : (82 + ((absH >> 4) % 12));
 
-            if (isPrimarilyManualStack && !hasModernCloudStack) {
+            if (hasManualOrPaper && digital > 58) {
                 digital = 44 + (absH % 11);
                 operations = Math.min(operations, 58 + (absH % 8));
-            } else if (hasModernCloudStack && digital < 64) {
-                digital = 68 + (absH % 10);
-                operations = Math.max(operations, 70 + (absH % 8));
             }
             return { digital, operations, customer, growth };
         }
@@ -1083,12 +958,8 @@
             return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + (sym || "€");
         }
 
-        function formatRealisticHours(rawStr, bottlenecksCount, isCorporate) {
-            let num = Number(String(rawStr || "950").replace(/[^0-9]/g, '')) || 950;
-            // Защита от заниженных значений вроде 140 часов/год при комплексной автоматизации 8-10 узких мест
-            if (num < 450) {
-                num = isCorporate ? 8500 : (650 + ((bottlenecksCount || 8) * 35));
-            }
+        function formatHoursString(rawStr) {
+            const num = Number(String(rawStr || "1200").replace(/[^0-9]/g, '')) || 1200;
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " часов/год";
         }
 
@@ -1122,10 +993,7 @@
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "Н/Д";
                     document.getElementById('m-debts').innerText = data.companyMeta?.legalIssues || "Критичных регуляторных рисков не выявлено";
 
-                    // Кросс-валидация технического стека против жалоб гостей
-                    const cleanStack = sanitizeTechStack(data.techStack, data.reputation?.negative, activeReportNiche);
-
-                    const s = computeRealisticScores(data, bizName, cleanStack);
+                    const s = computeRealisticScores(data, bizName);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
                     document.getElementById('bar-digital').style.width = `${s.digital}%`;
                     document.getElementById('sc-ops').innerText = `${s.operations}/100`;
@@ -1135,9 +1003,9 @@
                     document.getElementById('sc-growth').innerText = `${s.growth}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth}%`;
 
-                    const dynamicIntel = buildDynamicIntelligenceFromData(data, activeReportNiche, activeReportCity, activeReportCountry, cleanStack);
+                    const dynamicIntel = buildDynamicIntelligenceFromData(data, activeReportNiche, activeReportCity, activeReportCountry);
                     const mi = data.marketIntelligence || {};
-                    document.getElementById('b-positioning').innerText = dynamicIntel.positioning;
+                    document.getElementById('b-positioning').innerText = mi.positioning || dynamicIntel.positioning;
                     
                     const firstArchTitle = (data.newArchitecture && data.newArchitecture[0]) ? (data.newArchitecture[0].title || "") : "";
                     const rawWins = (mi.quickWins && mi.quickWins.length > 0) ? mi.quickWins : [];
@@ -1145,7 +1013,7 @@
                     populateList('b-quick-wins', (!isDuplicatingArch && rawWins.length > 0) ? rawWins : dynamicIntel.quickWins);
                     populateList('b-trends', (mi.industryTrends && mi.industryTrends.length > 0) ? mi.industryTrends : dynamicIntel.trends);
 
-                    setCompanyLogo(document.getElementById('b-logo'), data.contacts?.website, bizName);
+                    setCompanyLogo(document.getElementById('b-logo'), data.contacts?.website, bizName, data.photoUrl);
 
                     if(data.photoUrl) {
                         document.getElementById('b-photo-container').innerHTML = `<img src="${cleanUrl(data.photoUrl)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.onerror=null;this.src='${DEFAULT_PHOTO}'">`;
@@ -1213,8 +1081,8 @@
                     
                     const stackUl = document.getElementById('b-stack');
                     stackUl.innerHTML = '';
-                    if(cleanStack.length > 0) {
-                        cleanStack.forEach(item => {
+                    if(data.techStack && Array.isArray(data.techStack) && data.techStack.length > 0) {
+                        data.techStack.forEach(item => {
                             if (typeof item === 'string') {
                                 stackUl.innerHTML += `<li><span class="has-tooltip">${item}<span class="tooltip-text">${item}</span></span></li>`;
                             } else {
@@ -1230,6 +1098,7 @@
                     populateList('b-infra', data.infrastructure);
                     populateList('b-bottlenecks', data.bottlenecks);
                     
+                    // Рендерим индивидуальные карточки Стратегического партнерства
                     const partContainer = document.getElementById('b-partners');
                     partContainer.innerHTML = '';
                     const partnersList = dynamicIntel.partners;
@@ -1255,6 +1124,7 @@
                     });
                     
                     renderCompetitorsList(allCompetitorsData);
+                    // Запускаем верификацию каждого города и страны через живую базу Google Geocoder API
                     syncReportLocationsWithGoogleDB(data, activeIsCorporate);
 
                     const archContainer = document.getElementById('b-architecture');
@@ -1272,9 +1142,9 @@
                     if(data.financials) {
                         const exactNewTurnover = formatNumCurrency(rawRevNum + rawLostNum, sym);
                         const exactProfitInc = "+" + formatNumCurrency(rawLostNum, sym);
-                        const timeStr = formatRealisticHours(data.financials.timeSaved, (data.bottlenecks || []).length, activeIsCorporate);
+                        const timeStr = formatHoursString(data.financials.timeSaved || "1 450");
                         const paybackStr = data.financials.paybackPeriod || (activeIsCorporate ? "12 месяцев" : "6 месяцев");
-                        const marginStr = data.financials.newMargin || (activeIsCorporate ? "12.8% (Operating EBITDA)" : "11.5% (Чистая рентабельность)");
+                        const marginStr = data.financials.newMargin || (activeIsCorporate ? "12.8% (Operating EBITDA)" : "8.4% (Чистая рентабельность)");
 
                         document.getElementById('fin-time').innerText = timeStr;
                         document.getElementById('fin-current-turnover').innerText = formatNumCurrency(rawRevNum, sym);

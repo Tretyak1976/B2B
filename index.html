@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B2B Nexus - Global Deep Business Audit</title>
+    <title>B2B Nexus - Deep Business Audit</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a0a; color: #e0e0e0; display: flex; justify-content: center; padding: 40px 20px; margin: 0;}
         .container { background: #151515; padding: 40px; border-radius: 16px; max-width: 1100px; width: 100%; box-shadow: 0 10px 30px rgba(0,255,136,0.1); border: 1px solid #222;}
@@ -71,7 +71,7 @@
         .filter-btn { background: #222; color: #ccc; border: 1px solid #444; padding: 7px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; width: auto; margin: 0; font-weight: 600; transition: 0.2s;}
         .filter-btn.active, .filter-btn:hover { background: #ffaa00; color: #000; border-color: #ffaa00; box-shadow: none;}
 
-        .click-tag { position: relative; display: inline-flex; flex-direction: column; padding: 12px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; transition: 0.3s; width: calc(25% - 10px); min-width: 175px; box-sizing: border-box;}
+        .click-tag { position: relative; display: inline-flex; flex-direction: column; padding: 12px 15px; margin: 5px; background: #222; border: 1px solid #444; border-radius: 8px; cursor: pointer; color: #00ff88; transition: 0.3s; width: calc(25% - 20px); min-width: 175px; box-sizing: border-box;}
         .click-tag:hover { background: #00ff88; color: #000; border-color: #00ff88;}
         .comp-name { font-size: 14px; font-weight: bold; margin-bottom: 6px; line-height: 1.25;}
         .comp-meta { font-size: 12px; color: #bbb; line-height: 1.4;}
@@ -85,9 +85,8 @@
         .vendor-card.partner-card:hover { border-left: 5px solid #00d2ff; box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2); }
         
         .integration-badge { display: inline-block; background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-top: 5px; margin-bottom: 6px;}
-        .geo-badge-inline { display: inline-block; background: #161616; color: #00ff88; border: 1px solid #333; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: normal; margin-top: 4px; margin-bottom: 4px;}
         
-        .vendor-card .comp-tooltip { visibility: hidden; width: max-content; max-width: 300px; background-color: #111; border: 1px solid #00ff88; color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 10; bottom: 88%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; font-weight: bold; pointer-events: none;}
+        .vendor-card .comp-tooltip { visibility: hidden; width: max-content; background-color: #333; color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 10; bottom: 85%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 13px; font-weight: bold;}
         .vendor-card:hover .comp-tooltip { visibility: visible; opacity: 1; }
         
         .vendor-site-btn { display: inline-block; background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; z-index: 2; position: relative; margin-top: 10px; margin-right: 10px;}
@@ -101,7 +100,7 @@
         .map-scan-btn { background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 12px; width: 100%; transition: 0.3s;}
         .map-scan-btn:hover { background: #00ff88; color: #000;}
         
-        .vendor-rating { color: #ffaa00; font-weight: bold; margin-left: 8px; font-size: 14px;}
+        .vendor-rating { color: #ffaa00; font-weight: bold; margin-left: 10px; font-size: 14px;}
         
         .action-toolbar { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap;}
         .tool-btn { background: #333; color: #fff; border: 1px solid #444; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: normal; transition: 0.3s; margin:0; width: auto;}
@@ -300,21 +299,21 @@
             <div class="grid-2">
                 <div class="card" style="border-color: #00d2ff;">
                     <h3 style="color: #00d2ff;">🤝 Стратегическое партнерство (Экосистема)</h3>
-                    <p style="color:#aaa; font-size:13px; margin-top:0;">Нажмите на карточку партнера, чтобы запустить его полный аудит с учетом страны и города:</p>
+                    <p style="color:#aaa; font-size:13px; margin-top:0;">Платформы и технологические альянсы под задачи данного бизнеса:</p>
                     <div id="b-partners" style="display: grid; gap: 15px; margin-top: 15px;"></div>
                 </div>
                 <div class="card" style="border-color: #ff4444;">
                     <h3 style="color: #ff4444;">🛠️ Подрядчики и Интеграторы</h3>
-                    <p style="color:#aaa; font-size:13px; margin-top:0;">Нажмите на карточку подрядчика для запуска глубокого скана его бизнеса в Google Maps:</p>
+                    <p style="color:#aaa; font-size:13px; margin-top:0;">Профильные сервисные и технологические компании для внедрения:</p>
                     <div id="b-vendors" style="display: grid; gap: 15px; margin-top: 15px;"></div>
                 </div>
             </div>
 
-            <!-- 11. БЛОК КОНКУРЕНТОВ (ДО 30 ПОЗИЦИЙ) С ФИЛЬТРАЦИЕЙ -->
+            <!-- 11. БЛОК КОНКУРЕНТОВ С ФИЛЬТРАЦИЕЙ -->
             <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
-                <h3 style="color: #ffaa00;">🎯 Ближайшие и отраслевые конкуренты — до 30 позиций (Наведи для досье, нажми для аудита)</h3>
+                <h3 style="color: #ffaa00;">🎯 Ближайшие и отраслевые конкуренты (Наведи для досье, нажми для аудита)</h3>
                 <div class="filter-bar">
-                    <button class="filter-btn active" onclick="filterCompetitors('all', this)">Все конкуренты (<span id="comp-count-badge">0</span>)</button>
+                    <button class="filter-btn active" onclick="filterCompetitors('all', this)">Все конкуренты</button>
                     <button class="filter-btn" onclick="filterCompetitors('local', this)">🏙️ Только в этом городе / стране</button>
                     <button class="filter-btn" onclick="filterCompetitors('top', this)">⭐️ Лидеры рейтинга (4.4+)</button>
                 </div>
@@ -358,52 +357,8 @@
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
         }
 
-        // Очистка любых случайных восточных иероглифов при не-китайском языке интерфейса
-        function stripForeignSymbols(str) {
-            if (!str) return "";
-            const langVal = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
-            if (langVal.indexOf("zh") === 0) return String(str);
-            return String(str).replace(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]+/g, "").replace(/\s{2,}/g, " ").trim();
-        }
-
         function stripTrailingDot(str) {
-            return stripForeignSymbols(str).replace(/\.+$/, "");
-        }
-
-        // Понижение только первой буквы фразы с сохранением заглавных букв в именах собственных и аббревиатурах
-        function lowerFirstCharOnly(str) {
-            const s = stripTrailingDot(str);
-            if (!s) return "";
-            if (s.length > 1 && s[0] === s[0].toUpperCase() && s[1] === s[1].toUpperCase()) return s;
-            return s.charAt(0).toLowerCase() + s.slice(1);
-        }
-
-        // Извлечение чистого названия компании для точного поиска в Google Maps при клике на Партнера или Подрядчика
-        function extractCleanCompanyName(rawTitle) {
-            if (!rawTitle) return "";
-            let s = stripForeignSymbols(rawTitle);
-            const quoteMatch = s.match(/«([^»]+)»/);
-            if (s.startsWith("Технологический контур:") || s.startsWith("Экосистема реализации:")) {
-                return quoteMatch ? quoteMatch[1].trim() : s.replace(/^[^:]+:\s*/, "").trim();
-            }
-            return s.split(" — ")[0].split(" - ")[0].replace(/\s*\(🌍.*?\)\s*/g, "").trim();
-        }
-
-        // Универсальная проверка: не является ли кандидат филиалом той же самой сети (для любого бренда в мире)
-        function isSameBrandChain(compName, mainBusinessName) {
-            if (!compName || !mainBusinessName) return false;
-            const cLower = String(compName).toLowerCase().trim();
-            const bLower = String(mainBusinessName).toLowerCase().trim();
-            if (cLower === bLower) return true;
-
-            const genericWords = ["tankstelle", "station", "supermarket", "маркет", "супермаркет", "магазин", "store", "shop", "market", "hotel", "cafe", "bar", "restaurant", "joint", "company", "limited", "gmbh", "corp", "inc", "group", "center", "центр"];
-            const bTokens = bLower.split(/[\s\-.,/()]+/).filter(w => w.length >= 4 && !genericWords.includes(w));
-            if (bTokens.length > 0) {
-                const mainBrand = bTokens[0];
-                const cTokens = cLower.split(/[\s\-.,/()]+/);
-                if (cTokens[0] === mainBrand) return true;
-            }
-            return false;
+            return String(str || "").trim().replace(/\.+$/, "");
         }
 
         // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT ===
@@ -461,6 +416,7 @@
             imgElement.src = avatarUrl;
         }
 
+        // Извлечение официального города и страны из ответа базы данных Google Maps (address_components)
         function parseGoogleAddressComponents(components) {
             let city = "";
             let admin2 = "";
@@ -490,29 +446,10 @@
             };
         }
 
-        // Универсальная проверка письменности (кириллица vs латиница) для отсечения приграничных зарубежных городов без ручных списков
-        function hasScriptMismatchForLocalBusiness(compCity, reportCity, reportCountry, isCorporate) {
-            if (isCorporate) return false;
-            const cCity = String(compCity || "").trim();
-            const rCity = String(reportCity || "").trim();
-            const reportUsesCyrillic = /[а-яіїєґ]/i.test(rCity) || /[а-яіїєґ]/i.test(reportCountry);
-            const compCityIsLatinOnly = cCity.length > 2 && /^[a-zA-Z\u00C0-\u017F\s\-,.]+$/.test(cCity);
-            return reportUsesCyrillic && compCityIsLatinOnly;
-        }
-
-        function sanitizeCityField(rawCity, countryStr, fallbackCity) {
-            const c = stripForeignSymbols(rawCity);
-            const cnt = stripForeignSymbols(countryStr);
-            if (!c || c === "Н/Д" || c === "Не указан" || c.toLowerCase() === cnt.toLowerCase()) {
-                return (fallbackCity && fallbackCity !== "Н/Д" && fallbackCity.toLowerCase() !== cnt.toLowerCase()) ? fallbackCity : "Центральный офис";
-            }
-            return c;
-        }
-
         function queryGoogleGeoDB(queryText) {
             return new Promise((resolve) => {
                 if (!queryText || !queryText.trim()) return resolve(null);
-                const cacheKey = "g_geo_v5_" + queryText.trim().toLowerCase();
+                const cacheKey = "g_geo_v3_" + queryText.trim().toLowerCase();
                 try {
                     const cached = localStorage.getItem(cacheKey);
                     if (cached) return resolve(JSON.parse(cached));
@@ -520,8 +457,8 @@
 
                 function attemptGeocode(tries) {
                     if (typeof google === "undefined" || typeof google.maps === "undefined" || !google.maps.Geocoder) {
-                        if (tries > 10) return resolve(null);
-                        return setTimeout(() => attemptGeocode(tries + 1), 300);
+                        if (tries > 15) return resolve(null);
+                        return setTimeout(() => attemptGeocode(tries + 1), 350);
                     }
                     const geocoder = new google.maps.Geocoder();
                     geocoder.geocode({ address: queryText }, (results, status) => {
@@ -560,7 +497,7 @@
                     document.getElementById('m-country').innerText = activeReportCountry;
                 }
                 if (mainGeo.city) {
-                    activeReportCity = sanitizeCityField(mainGeo.city, activeReportCountry, activeReportCity);
+                    activeReportCity = mainGeo.city;
                     document.getElementById('m-city').innerText = activeReportCity;
                 }
                 if (mainGeo.countryCode) {
@@ -572,12 +509,9 @@
 
             const verifiedCompetitors = [];
             const seenKeys = new Set();
-            const bizName = data.businessName || "";
 
             for (let i = 0; i < allCompetitorsData.length; i++) {
                 const comp = { ...allCompetitorsData[i] };
-                if (isSameBrandChain(comp.name, bizName)) continue;
-
                 const compQuery = (comp.city && comp.city !== "Н/Д")
                     ? `${comp.name} ${comp.city}`
                     : `${comp.name} ${activeReportCity}`;
@@ -593,12 +527,6 @@
                     }
                 }
 
-                comp.city = sanitizeCityField(comp.city, comp.country || activeReportCountry, activeReportCity);
-
-                if (hasScriptMismatchForLocalBusiness(comp.city, activeReportCity, activeReportCountry, isCorporate)) {
-                    continue;
-                }
-
                 if (!isCorporate) {
                     if (activeReportCountryCode && comp.countryCode && comp.countryCode !== activeReportCountryCode) {
                         continue;
@@ -608,138 +536,120 @@
                     }
                 }
 
-                const cleanKey = ((comp.name || "").split("(")[0].trim() + "_" + (comp.city || "")).toLowerCase().replace(/[^a-zа-яіїєґ0-9]/gi, "");
+                const cleanKey = ((comp.name || "") + "_" + (comp.city || "")).toLowerCase().replace(/[^a-zа-яіїєґ0-9]/gi, "");
                 if (seenKeys.has(cleanKey)) continue;
                 seenKeys.add(cleanKey);
 
                 verifiedCompetitors.push(comp);
             }
 
-            allCompetitorsData = verifiedCompetitors.slice(0, 30);
+            allCompetitorsData = verifiedCompetitors;
             renderCompetitorsList(allCompetitorsData);
         }
 
-        // Универсальная кросс-валидация Технического стека и Инфраструктуры против жалоб клиентов
-        function sanitizeTechStack(techStack, negativeReviews) {
+        // Кросс-валидация Технического стека (устраняет внутренние противоречия вроде OpenTable при отсутствии бронирования или SpeedLine поверх Toast POS)
+        function sanitizeTechStack(techStack, negativeReviews, niche) {
             if (!techStack || !Array.isArray(techStack)) return [];
             const negBlob = (negativeReviews || []).join(" ").toLowerCase();
             const noReservations = negBlob.includes("забронировать") || negBlob.includes("бронирован") || negBlob.includes("reservation");
+            const namesBlob = techStack.map(t => (typeof t === 'string' ? t : (t.name || "")).toLowerCase()).join(" ");
+            const hasToast = namesBlob.includes("toast");
+            const nLower = (niche || "").toLowerCase();
 
             return techStack.filter(item => {
-                const name = stripForeignSymbols(typeof item === 'string' ? item : (item.name || "")).toLowerCase();
-                if (noReservations && (name.includes("booking widget") || name.includes("reservation") || name.includes("table"))) return false;
+                const name = (typeof item === 'string' ? item : (item.name || "")).toLowerCase();
+                if (noReservations && (name.includes("opentable") || name.includes("resy"))) return false;
+                if (hasToast && !nLower.includes("пицц") && !nLower.includes("pizza") && name.includes("speedline")) return false;
                 return true;
             });
         }
 
-        function sanitizeInfrastructure(infraList, negativeReviews) {
-            if (!infraList || !Array.isArray(infraList)) return [];
-            const negBlob = (negativeReviews || []).join(" ").toLowerCase();
-            const hasPriceTagIssues = negBlob.includes("ценник") || negBlob.includes("price tag");
-            return infraList.filter(item => {
-                const s = String(item || "").toLowerCase();
-                if (hasPriceTagIssues && (s.includes("электронные ценники") || s.includes("electronic shelf label"))) return false;
-                return true;
-            });
-        }
-
-        // Универсальный семантический сопоставлятор шага Архитектуры Роста и Узкого места по функциональным контурам бизнеса
+        // Глубокий семантический сопоставлятор шага внедрения и узкого места по 10 смысловым доменам (БЕЗ слепого fallback на bottlenecks[idx]!)
         function matchBottleneckByMeaning(stepTitle, stepDesc, bottlenecks) {
             if (!bottlenecks || !Array.isArray(bottlenecks) || bottlenecks.length === 0) return "";
             const stepText = (stepTitle + " " + stepDesc).toLowerCase();
 
             const semanticClusters = [
                 {
-                    stepKeys: ["ux/ui", "мобильной верси", "скорост", "загрузк", "headless", "amp", "cdn", "фронтенд", "веб-интерфейс"],
-                    botKeys: ["отказов на мобильной", "долгой загрузки", "мобильной верси", "сайта", "интерфейс"]
+                    stepKeys: ["приложен", "лояльност", "бонус", "crm", "маркетинг", "удержан", "пуш", "push", "punchh", "nps", "отзыв"],
+                    botKeys: ["приложен", "лояльност", "crm", "удержан", "обратной связ", "маркетинг", "таргетинг", "отток"]
                 },
                 {
-                    stepKeys: ["энергоэффектив", "холодильн", "компрессор", "температур", "освещен", "климат", "iot", "датчик", "фритюр"],
-                    botKeys: ["электроэнерг", "энергопотреблен", "холодильн", "изношен", "компрессор", "просто", "оборудован", "поломк"]
+                    stepKeys: ["агрегатор", "доставк", "deliverect", "doordash", "glovo", "вынос", "пре-ордер", "самовывоз"],
+                    botKeys: ["агрегатор", "доставк", "комисси", "вынос", "онлайн-заказ", "интернет-магазин"]
                 },
                 {
-                    stepKeys: ["checkout", "smart pos", "pos-терминал", "кассовых", "самообслуживан", "nfc", "очередей", "касс"],
-                    botKeys: ["нагрузка на кассовые", "скорость обслуживания на кассах", "касс", "очеред", "час пик", "выходные дни", "пропускн"]
+                    stepKeys: ["запас", "склад", "предиктивн", "закуп", "инвентаризац", "списан", "wms", "фудкост"],
+                    botKeys: ["запас", "склад", "предиктивн", "заказ", "инвентаризац", "пересортиц", "логист", "постав", "хранен"]
                 },
                 {
-                    stepKeys: ["crm", "лояльност", "бонус", "профиль покупателя", "триггер", "маркетинг", "удержан", "пуш", "push", "nps"],
-                    botKeys: ["crm", "лояльност", "персонализац", "рекламных кампаний", "купон", "дисконтн", "удержан", "обратной связ", "таргетинг", "отток"]
+                    stepKeys: ["пив", "untappd", "витрин", "экран", "диспле", "signage", "табло", "меню", "ценник"],
+                    botKeys: ["ассортимент", "пив", "внешних ресурс", "предпочтен", "витрин", "обновлен", "меню", "ценообразован"]
                 },
                 {
-                    stepKeys: ["inventory sync", "rfid", "синхронизация складских остатков", "реальном времени", "инвентаризац"],
-                    botKeys: ["разрыв между цифровыми остатками", "реальным наличием", "расхождения остатков", "пересортиц", "инвентаризац"]
+                    stepKeys: ["hr", "смен", "персонал", "график", "7shifts", "hotschedules", "табел", "бухгалтер", "онбординг"],
+                    botKeys: ["рабочего времен", "бухгалтер", "персонал", "текучест", "кадр", "смен", "ручной перенос"]
                 },
                 {
-                    stepKeys: ["click & collect", "выдачи интернет-заказов", "бронирован", "агрегатор", "доставк", "вынос", "пре-ордер", "самовывоз", "e-commerce", "интернет-магазин"],
-                    botKeys: ["бронирования товаров", "самовывоз", "интернет-магазин", "омниканальн", "агрегатор", "доставк", "комисси", "вынос", "онлайн-заказ"]
+                    stepKeys: ["касс", "pos", "self-checkout", "самообслуживан", "очеред", "терминал", "оплат"],
+                    botKeys: ["очеред", "час пик", "касс", "скорост", "обслуживан", "пропускн"]
                 },
                 {
-                    stepKeys: ["прогнозирование спроса", "машинного обучения", "цепочки поставок", "автозаказ", "предиктивн", "закуп", "списан", "wms"],
-                    botKeys: ["предиктивной аналитики спроса", "прогнозирования спроса", "товарных запасов", "поставщик", "автозаказ", "логистик", "перемещении товаров"]
+                    stepKeys: ["iot", "датчик", "температур", "холодильн", "оборудован", "энерг", "мониторинг"],
+                    botKeys: ["просто", "оборудован", "iot", "холодильн", "энерг", "поломк", "износ"]
                 },
                 {
-                    stepKeys: ["документооборот", "чат-бот", "поддержк", "возврат", "облачную erp", "erp", "edi", "накладн"],
-                    botKeys: ["возвратов и рекламаций", "устаревшего документооборота", "службы поддержки", "ручном вводе", "ручной ввод", "бумажн", "edi", "человеческого фактора"]
+                    stepKeys: ["edi", "документооборот", "накладн", "поставщик", "erp"],
+                    botKeys: ["edi", "постав", "бумажн", "ручной ввод", "инвентаризац"]
                 },
                 {
-                    stepKeys: ["обучение персонала", "цифровой грамотности", "hr", "смен", "график", "табел", "онбординг"],
-                    botKeys: ["квалификация линейного персонала", "рабочего времен", "бухгалтер", "персонал", "текучест", "кадр", "смен", "ручной перенос"]
-                },
-                {
-                    stepKeys: ["сетевой инфраструктур", "гигабитную сеть", "оптоволокон", "кибербезопасн", "zero trust", "бэкап", "микросервис", "ci/cd"],
-                    botKeys: ["локальных серверов", "кибератакам", "сбоям питания", "обрывами связи", "монолит", "легаси", "прошив", "обновлен"]
+                    stepKeys: ["микросервис", "docker", "kubernetes", "ci/cd", "api", "grpc", "облак", "cloud"],
+                    botKeys: ["монолит", "легаси", "прошив", "обновлен", "devops", "сервер", "интеграц", "синхронизац"]
                 }
             ];
 
             for (let cluster of semanticClusters) {
                 if (cluster.stepKeys.some(k => stepText.includes(k))) {
                     const matched = bottlenecks.find(b => cluster.botKeys.some(bk => String(b).toLowerCase().includes(bk)));
-                    if (matched) return lowerFirstCharOnly(matched);
+                    if (matched) return stripTrailingDot(matched).toLowerCase();
+                }
+            }
+
+            // Дополнительная проверка по прямым длинным корням слов (>= 6 букв), исключая общие стоп-слова
+            const stopRoots = ["систем", "внедрен", "автомат", "оптимиз", "интегра", "управлен", "данным", "бизнес", "компани", "клиент", "сервис", "процесс"];
+            const words = stepText.split(/[^a-zа-яіїєґ0-9]+/).filter(w => w.length >= 6 && !stopRoots.some(sr => w.startsWith(sr)));
+            for (let b of bottlenecks) {
+                const bLower = String(b).toLowerCase();
+                if (words.some(w => bLower.includes(w.substring(0, 6)))) {
+                    return stripTrailingDot(b).toLowerCase();
                 }
             }
 
             return "";
         }
 
-        // Универсальный подбор подрядчика по его технологической специализации
+        // Семантический подбор подрядчика строго под смысл конкретного шага Архитектуры Роста (чтобы HR-софт 7shifts не привязывался к закупкам мяса и пива)
         function matchVendorToStep(step, vendorsList, usedVendorNames) {
             if (!vendorsList || !Array.isArray(vendorsList) || vendorsList.length === 0) return null;
             const stepText = ((step.title || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
 
+            // 1. Сначала проверяем, не упомянуто ли имя подрядчика прямо в тексте шага (например, "через единый шлюз Deliverect" или "Toast POS")
             for (let v of vendorsList) {
                 if (!v || !v.name || usedVendorNames.has(v.name)) continue;
-                const cleanV = extractCleanCompanyName(v.name).toLowerCase().split(/[\s.,\-]+/)[0];
-                if (cleanV.length >= 4 && stepText.includes(cleanV)) {
+                const vFirstWord = v.name.toLowerCase().split(/[\s.,\-]+/)[0];
+                if (vFirstWord.length >= 4 && stepText.includes(vFirstWord)) {
                     usedVendorNames.add(v.name);
                     return v;
                 }
             }
 
+            // 2. Сопоставляем специализацию подрядчика (description) с темой шага
             const domainMap = [
-                {
-                    stepKw: ["crm", "лояльност", "профиль покупателя", "маркетинг", "приложен", "seo", "привлечен"],
-                    vendorKw: ["crm", "маркетинг", "seo", "клиентским опытом", "продвижен", "digital"]
-                },
-                {
-                    stepKw: ["inventory sync", "erp", "учет", "склад", "постав", "автозаказ", "edi", "логист", "wms"],
-                    vendorKw: ["erp", "склад", "логист", "учет", "цепоч", "supply chain"]
-                },
-                {
-                    stepKw: ["checkout", "smart pos", "кассовых", "pos-терминал", "самообслуживан", "эквайринг", "очередей"],
-                    vendorKw: ["платежн", "транзакц", "pos", "кассового", "терминал", "самообслуживан", "эквайринг"]
-                },
-                {
-                    stepKw: ["облач", "микросервис", "энтерпрайз", "iot", "прогнозирование спроса", "видеонаблюден", "ai"],
-                    vendorKw: ["облач", "энтерпрайз", "cloud", "разработчик", "ai", "iot", "интегратор"]
-                },
-                {
-                    stepKw: ["hr", "смен", "персонал", "график", "рабочего времен"],
-                    vendorKw: ["персонал", "смен", "hr", "staff", "schedule"]
-                },
-                {
-                    stepKw: ["агрегатор", "доставк", "вынос", "click & collect"],
-                    vendorKw: ["агрегатор", "доставк", "delivery", "омниканальн"]
-                }
+                { stepKw: ["hr", "смен", "персонал", "график", "рабочего времен"], vendorKw: ["персонал", "смен", "7shifts", "hr", "staff", "schedule"] },
+                { stepKw: ["агрегатор", "доставк", "онлайн-заказ", "вынос"], vendorKw: ["агрегатор", "доставк", "deliverect", "онлайн", "delivery"] },
+                { stepKw: ["приложен", "касс", "pos", "самообслуживан", "лояльност", "пре-ордер"], vendorKw: ["pos", "касс", "toast", "терминал", "самообслуживан", "ритейл"] },
+                { stepKw: ["запас", "склад", "erp", "учет", "edi", "постав"], vendorKw: ["erp", "склад", "постав", "учет", "sap", "marketman", "xtrachef"] },
+                { stepKw: ["облак", "телеметр", "iot", "микросервис", "аудит", "аналитик"], vendorKw: ["облач", "cloud", "aws", "azure", "интегратор", "консалтинг", "данн"] }
             ];
 
             for (let dm of domainMap) {
@@ -759,22 +669,19 @@
             return null;
         }
 
+        // Умная сборка блока «Стратегическое партнерство» с семантической синхронизацией вендоров и шагов
         function buildDynamicPartnersFromData(data, city, country, niche) {
             const archList = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
             const vendorsList = Array.isArray(data.itVendors) ? data.itVendors : [];
             const bottlenecksList = Array.isArray(data.bottlenecks) ? data.bottlenecks : [];
             const bizName = data.businessName || "Компания";
 
+            // Если сервер прислал готовые партнерства, проверяем, нет ли в них слепой поиндексной склейки ("Партнер контура") или старых заглушек
             if (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) {
                 const pBlob = JSON.stringify(data.strategicPartnerships).toLowerCase();
-                const hasOldFormula = pBlob.includes("партнер контура") || pBlob.includes("технологический партнер («");
-                if (!hasOldFormula) {
-                    return data.strategicPartnerships.map(p => ({
-                        ...p,
-                        cleanName: extractCleanCompanyName(p.cleanName || p.name),
-                        country: p.country || country,
-                        city: sanitizeCityField(p.city, p.country || country, city)
-                    }));
+                const hasOldStubs = pBlob.includes("elevenlabs") || pBlob.includes("walmart") || pBlob.includes("партнер контура") || pBlob.includes("экосистема реализации:");
+                if (!hasOldStubs) {
+                    return data.strategicPartnerships;
                 }
             }
 
@@ -782,6 +689,7 @@
             const usedVendors = new Set();
             const usedSteps = new Set();
 
+            // Сначала проходим по всем шагам Архитектуры Роста и ищем для них идеально подходящих по смыслу подрядчиков
             for (let i = 0; i < archList.length && partners.length < 4; i++) {
                 const step = archList[i];
                 const matchedVendor = matchVendorToStep(step, vendorsList, usedVendors);
@@ -791,15 +699,9 @@
                     const botClause = matchedBot ? ` (целевое решение проблемы: «${matchedBot}»)` : "";
                     const cleanDesc = stripTrailingDot(step.desc || "");
                     const cleanInstr = stripTrailingDot(step.instruction || "");
-                    const vCleanName = extractCleanCompanyName(matchedVendor.cleanName || matchedVendor.name);
-                    const vCountry = matchedVendor.country || country;
-                    const vCity = sanitizeCityField(matchedVendor.city, vCountry, city);
 
                     partners.push({
-                        name: `${vCleanName} — Партнер («${step.title}»)`,
-                        cleanName: vCleanName,
-                        country: vCountry,
-                        city: vCity,
+                        name: `${matchedVendor.name} — Технологический партнер («${step.title}»)`,
                         integrationTarget: `${step.title} (${niche})`,
                         website: matchedVendor.website || "",
                         reason: `${cleanDesc}. Практический шаг для «${bizName}»: ${cleanInstr}${botClause}.`
@@ -807,6 +709,7 @@
                 }
             }
 
+            // Добираем оставшиеся карточки до 4 штук из самых приоритетных еще не использованных шагов Архитектуры Роста
             for (let i = 0; i < archList.length && partners.length < 4; i++) {
                 if (usedSteps.has(i)) continue;
                 const step = archList[i];
@@ -816,10 +719,7 @@
                 const cleanInstr = stripTrailingDot(step.instruction || "");
 
                 partners.push({
-                    name: `${step.title}`,
-                    cleanName: `${step.title} ${niche}`,
-                    country: country,
-                    city: city,
+                    name: `Технологический контур: «${step.title}» (${city})`,
                     integrationTarget: `${step.title} (${niche})`,
                     website: "",
                     reason: `${cleanDesc}. Реализация для «${bizName}»: ${cleanInstr}${botClause}.`
@@ -829,16 +729,17 @@
             return partners;
         }
 
+        // Синтез Executive Summary, Быстрых побед и Трендов без грамматических склеек и без нелепых связок по индексу
         function buildDynamicIntelligenceFromData(data, niche, city, country, cleanStack) {
             const name = data.businessName || "Компания";
             const owner = data.companyMeta?.owner ? ` (управление: ${data.companyMeta.owner})` : "";
-            const stackNames = (cleanStack || []).map(t => stripForeignSymbols(typeof t === 'string' ? t : (t.name || "")));
+            const stackNames = (cleanStack || []).map(t => typeof t === 'string' ? t : (t.name || ""));
             const topTechStr = stackNames.slice(0, 3).join(", ") || "текущих операционных систем";
 
-            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? lowerFirstCharOnly(data.reputation.positive[0]) : "устойчивой рыночной позиции";
-            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? lowerFirstCharOnly(data.reputation.positive[1]) : "высокой лояльности клиентов";
-            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? lowerFirstCharOnly(data.bottlenecks[0]) : "оптимизации внутренних процессов";
-            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? lowerFirstCharOnly(data.bottlenecks[1]) : "повышении пропускной способности";
+            const pos1 = (data.reputation && data.reputation.positive && data.reputation.positive[0]) ? stripTrailingDot(data.reputation.positive[0]).toLowerCase() : "устойчивой рыночной позиции";
+            const pos2 = (data.reputation && data.reputation.positive && data.reputation.positive[1]) ? stripTrailingDot(data.reputation.positive[1]).toLowerCase() : "высокой лояльности клиентов";
+            const bot1 = (data.bottlenecks && data.bottlenecks[0]) ? stripTrailingDot(data.bottlenecks[0]).toLowerCase() : "оптимизации внутренних процессов";
+            const bot2 = (data.bottlenecks && data.bottlenecks[1]) ? stripTrailingDot(data.bottlenecks[1]).toLowerCase() : "повышении пропускной способности";
 
             const positioning = `${name} работает в сегменте «${niche}» (${city}, ${country})${owner}. Текущая операционная модель опирается на контур (${topTechStr}), а также такие сильные стороны, как ${pos1} и ${pos2}. Главный резерв возврата упущенной выгоды сосредоточен в устранении ключевых узких мест: ${bot1} и ${bot2}.`;
 
@@ -846,16 +747,17 @@
                 const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", data.bottlenecks);
                 const botText = matchedBot ? ` — прямое решение проблемы: «${matchedBot}»` : "";
                 const instr = stripTrailingDot((step.instruction && step.instruction !== step.desc) ? step.instruction : step.desc);
-                return `Пилот 30–60 дней («${stripForeignSymbols(step.title)}»): ${instr}${botText}.`;
+                return `Пилот 30–60 дней («${step.title}»): ${instr}${botText}.`;
             });
 
             const trends = (data.newArchitecture || []).slice(0, 4).map(step => {
-                const cleanDescLower = lowerFirstCharOnly(step.desc || "");
+                const cleanDesc = stripTrailingDot(step.desc || "");
+                const cleanDescLower = cleanDesc.charAt(0).toLowerCase() + cleanDesc.slice(1);
                 const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", data.bottlenecks);
                 const goalSuffix = matchedBot
                     ? ` для устранения отраслевой проблемы «${matchedBot}»`
-                    : ` с целью повышения маржинальности и операционной эффективности в сегменте «${niche}»`;
-                return `Переход рынка в сегменте «${niche}» (${country}) к стандарту «${stripForeignSymbols(step.title)}»: ${cleanDescLower}${goalSuffix}.`;
+                    : ` с целью повышения маржинальности и скорости обслуживания в сегменте «${niche}»`;
+                return `Переход рынка в сегменте «${niche}» (${country}) к стандарту «${step.title}»: ${cleanDescLower}${goalSuffix}.`;
             });
 
             return {
@@ -866,10 +768,11 @@
             };
         }
 
+        // Точный расчет индексов зрелости: различает полностью ручной стек (Excel/Бумага) и современный стек (Toast POS, Cloud, ERP)
         function computeRealisticScores(data, bizName, cleanStack) {
             const stackNamesBlob = (cleanStack || []).map(t => typeof t === 'string' ? t : (t.name || "")).join(" ").toLowerCase();
-            const isPrimarilyManualStack = stackNamesBlob.includes("excel") || stackNamesBlob.includes("ручной учет") || stackNamesBlob.includes("бумажн") || stackNamesBlob.includes("старого образца");
-            const hasModernCloudStack = stackNamesBlob.includes("cloud") || stackNamesBlob.includes("aws") || stackNamesBlob.includes("azure") || stackNamesBlob.includes("sap") || stackNamesBlob.includes("erp") || stackNamesBlob.includes("crm") || stackNamesBlob.includes("api");
+            const isPrimarilyManualStack = stackNamesBlob.includes("excel") || stackNamesBlob.includes("ручной учет") || stackNamesBlob.includes("бумажн");
+            const hasModernCloudStack = stackNamesBlob.includes("toast") || stackNamesBlob.includes("cloud") || stackNamesBlob.includes("aws") || stackNamesBlob.includes("azure") || stackNamesBlob.includes("sap") || stackNamesBlob.includes("shopify") || stackNamesBlob.includes("api") || stackNamesBlob.includes("untappd");
             const ratingNum = parseFloat(String(data.rating || "4.3")) || 4.3;
 
             let hash = 0;
@@ -995,7 +898,7 @@
                 document.getElementById('country').value = "";
             }
             
-            if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д" && cityContext !== "Центральный офис") {
+            if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д") {
                 const cleanCity = cityContext.replace(/\s*\(.*?\)\s*/g, "").trim();
                 document.getElementById('city').value = cleanCity;
                 localStorage.setItem('b2b_city', cleanCity);
@@ -1004,14 +907,14 @@
                 document.getElementById('city').value = "";
             }
             
-            document.getElementById('url').value = extractCleanCompanyName(compName);
+            document.getElementById('url').value = compName;
             submitLead();
         }
 
         function appendToHistory(reportData, userCountry, userCity, searchTime, fileId) {
             let history = JSON.parse(localStorage.getItem('b2b_history')) || [];
+            let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
             let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
-            let finalCity = sanitizeCityField(reportData.companyMeta?.detectedCity || reportData.searchCity || userCity, finalCountry, userCity || 'Не указан');
 
             let cleanDomain = (reportData.contacts && reportData.contacts.website && reportData.contacts.website !== "N/A")
                 ? cleanUrl(reportData.contacts.website).replace(/^https?:\/\//, '').split('/')[0]
@@ -1078,7 +981,7 @@
             const engineMode = document.getElementById('engine-mode').value;
             
             let locationParts = [];
-            if (city && city !== "Не указан" && city !== "Н/Д" && city !== "Центральный офис") locationParts.push(city);
+            if (city && city !== "Не указан" && city !== "Н/Д") locationParts.push(city);
             if (country && country !== "Не указана" && country !== "Н/Д") locationParts.push(country);
             const locationStr = locationParts.join(", ");
             const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
@@ -1182,6 +1085,7 @@
 
         function formatRealisticHours(rawStr, bottlenecksCount, isCorporate) {
             let num = Number(String(rawStr || "950").replace(/[^0-9]/g, '')) || 950;
+            // Защита от заниженных значений вроде 140 часов/год при комплексной автоматизации 8-10 узких мест
             if (num < 450) {
                 num = isCorporate ? 8500 : (650 + ((bottlenecksCount || 8) * 35));
             }
@@ -1195,14 +1099,14 @@
 
                 if (result.status === "success" && result.data) {
                     const data = result.data;
-                    const bizName = stripForeignSymbols(data.businessName || "Неизвестно");
+                    const bizName = data.businessName || "Неизвестно";
                     document.getElementById('b-name').innerText = bizName;
                     document.getElementById('b-engine-badge').innerText = "🧠 Ядро анализа: " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro)");
                     
-                    activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Н/Д');
-                    activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || 'Н/Д');
+                    activeReportCountry = data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Н/Д';
+                    activeReportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
                     activeReportCountryCode = data.companyMeta?.countryCode || "";
-                    activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || "Профильный бизнес");
+                    activeReportNiche = data.companyMeta?.niche || "Профильный бизнес";
 
                     const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2400000;
                     const rawLostNum = Number(String(data.lostRevenue || "0").replace(/[^0-9]/g, '')) || Math.round(rawRevNum * 0.095);
@@ -1213,13 +1117,13 @@
                     document.getElementById('m-country').innerText = activeReportCountry;
                     document.getElementById('m-city').innerText = activeReportCity;
                     document.getElementById('m-niche').innerText = activeReportNiche;
-                    document.getElementById('m-owner').innerText = stripForeignSymbols(data.companyMeta?.owner || (activeIsCorporate ? "Корпоративная структура" : "Локальный оператор / Владелец"));
+                    document.getElementById('m-owner').innerText = data.companyMeta?.owner || (activeIsCorporate ? "Корпоративная структура" : "Локальный оператор / Владелец");
                     document.getElementById('m-revenue').innerText = formatNumCurrency(rawRevNum, sym);
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "Н/Д";
-                    document.getElementById('m-debts').innerText = stripForeignSymbols(data.companyMeta?.legalIssues || "Критичных регуляторных рисков не выявлено");
+                    document.getElementById('m-debts').innerText = data.companyMeta?.legalIssues || "Критичных регуляторных рисков не выявлено";
 
-                    const cleanStack = sanitizeTechStack(data.techStack, data.reputation?.negative);
-                    const cleanInfra = sanitizeInfrastructure(data.infrastructure, data.reputation?.negative);
+                    // Кросс-валидация технического стека против жалоб гостей
+                    const cleanStack = sanitizeTechStack(data.techStack, data.reputation?.negative, activeReportNiche);
 
                     const s = computeRealisticScores(data, bizName, cleanStack);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
@@ -1249,24 +1153,10 @@
                         document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
-                    const seenInitKeys = new Set();
-                    allCompetitorsData = (data.competitors || [])
-                        .map(c => {
-                            const cCountry = (c.country && c.country !== "Н/Д") ? stripForeignSymbols(c.country) : activeReportCountry;
-                            const cCity = sanitizeCityField(c.city, cCountry, activeReportCity);
-                            return { ...c, name: stripForeignSymbols(c.name), country: cCountry, city: cCity };
-                        })
-                        .filter(c => {
-                            if (isSameBrandChain(c.name, bizName)) return false;
-                            if (hasScriptMismatchForLocalBusiness(c.city, activeReportCity, activeReportCountry, activeIsCorporate)) return false;
-
-                            const baseRoot = (c.name || "").split("(")[0].trim().toLowerCase().replace(/[^a-zа-яіїєґ0-9]/gi, "");
-                            const fullKey = baseRoot + "_" + c.city.toLowerCase();
-                            if (seenInitKeys.has(fullKey)) return false;
-                            seenInitKeys.add(fullKey);
-                            return true;
-                        })
-                        .slice(0, 30);
+                    allCompetitorsData = (data.competitors || []).filter(c => {
+                        const cName = (c.name || "").toLowerCase();
+                        return cName !== bizName.toLowerCase();
+                    });
 
                     const addr = (data.contacts && data.contacts.address && data.contacts.address !== "N/A") ? data.contacts.address : `${activeReportCity}, ${activeReportCountry}`;
 
@@ -1310,13 +1200,13 @@
                     
                     let posHtml = "";
                     if(data.reputation && data.reputation.positive) {
-                        data.reputation.positive.forEach(p => posHtml += `<div class="review-badge badge-green">✔️ ${stripForeignSymbols(p)}</div>`);
+                        data.reputation.positive.forEach(p => posHtml += `<div class="review-badge badge-green">✔️ ${p}</div>`);
                     }
                     document.getElementById('b-reviews-pos').innerHTML = posHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     
                     let negHtml = "";
                     if(data.reputation && data.reputation.negative) {
-                        data.reputation.negative.forEach(n => negHtml += `<div class="review-badge badge-red">⚠️ ${stripForeignSymbols(n)}</div>`);
+                        data.reputation.negative.forEach(n => negHtml += `<div class="review-badge badge-red">⚠️ ${n}</div>`);
                     }
                     document.getElementById('b-reviews-neg').innerHTML = negHtml || '<p style="color:#aaa; font-size:14px;">Нет данных</p>';
                     document.getElementById('b-lost').innerText = formatNumCurrency(rawLostNum, sym);
@@ -1326,11 +1216,10 @@
                     if(cleanStack.length > 0) {
                         cleanStack.forEach(item => {
                             if (typeof item === 'string') {
-                                const cleanItem = stripForeignSymbols(item);
-                                stackUl.innerHTML += `<li><span class="has-tooltip">${cleanItem}<span class="tooltip-text">${cleanItem}</span></span></li>`;
+                                stackUl.innerHTML += `<li><span class="has-tooltip">${item}<span class="tooltip-text">${item}</span></span></li>`;
                             } else {
-                                const name = stripForeignSymbols(item.name || item.title || "Технология");
-                                const details = stripForeignSymbols(item.details || item.description || item.desc || name);
+                                const name = item.name || item.title || "Технология";
+                                const details = item.details || item.description || item.desc || name;
                                 stackUl.innerHTML += `<li><span class="has-tooltip">${name}<span class="tooltip-text">${details}</span></span></li>`;
                             }
                         });
@@ -1338,39 +1227,29 @@
                         stackUl.innerHTML = '<li>Нет данных</li>';
                     }
 
-                    populateList('b-infra', cleanInfra);
+                    populateList('b-infra', data.infrastructure);
                     populateList('b-bottlenecks', data.bottlenecks);
                     
-                    // Рендер Стратегического партнерства с выводом Страны и Города
                     const partContainer = document.getElementById('b-partners');
                     partContainer.innerHTML = '';
                     const partnersList = dynamicIntel.partners;
 
                     partnersList.forEach(p => {
-                        let partnerDisplayName = stripForeignSymbols(p.name || p.type || "Партнер");
-                        let cleanScanName = extractCleanCompanyName(p.cleanName || partnerDisplayName);
-                        let pCountry = (p.country && p.country !== "Н/Д") ? stripForeignSymbols(p.country) : activeReportCountry;
-                        let pCity = sanitizeCityField(p.city, pCountry, activeReportCity);
-                        let targetArea = stripForeignSymbols(p.integrationTarget || "Технологическая и коммерческая интеграция");
+                        let partnerName = p.name || p.type || "Партнер";
+                        let targetArea = p.integrationTarget || "Технологическая и коммерческая интеграция";
                         let rawPartnerUrl = cleanUrl(p.website);
-                        let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(cleanScanName + " " + pCity + " " + pCountry));
-
-                        const safeScanName = cleanScanName.replace(/'/g, "\\'");
-                        const safePCountry = pCountry.replace(/'/g, "\\'");
-                        const safePCity = pCity.replace(/'/g, "\\'");
-
+                        let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(partnerName));
                         let pDiv = document.createElement('div');
                         pDiv.className = 'vendor-card partner-card';
                         pDiv.innerHTML = `
-                            <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerDisplayName}</div>
-                            <div class="geo-badge-inline">🌍 ${pCountry}, 🏙️ ${pCity}</div><br>
+                            <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerName}</div>
                             <div class="integration-badge">🔗 ${targetArea}</div>
-                            <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(p.reason || p.description || '')}</div>
+                            <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${p.reason || p.description || ''}</div>
                             <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Найти решение</a>
-                            <div class="comp-tooltip">🔍 Запустить скан: ${cleanScanName} (${pCountry}, ${pCity})</div>
+                            <div class="comp-tooltip">Запустить глубокий скан: ${partnerName}</div>
                         `;
                         pDiv.onclick = (e) => {
-                            if(e.target.tagName !== 'A') scanDirect(safeScanName, safePCountry, safePCity);
+                            if(e.target.tagName !== 'A') scanDirect(partnerName, activeReportCountry, activeReportCity);
                         };
                         partContainer.appendChild(pDiv);
                     });
@@ -1384,8 +1263,8 @@
                         data.newArchitecture.forEach(step => {
                             archContainer.innerHTML += `
                             <div class="arch-step">
-                                <h4 class="has-tooltip" style="margin:0 0 6px 0; color:#00ff88;">${stripForeignSymbols(step.title)} <span style="font-size:12px; color:#aaa; font-weight:normal;">(Инструкция)</span><span class="tooltip-text">${stripForeignSymbols(step.instruction || step.desc)}</span></h4>
-                                <p style="margin: 0; color: #ccc; font-size: 14px;">${stripForeignSymbols(step.desc)}</p>
+                                <h4 class="has-tooltip" style="margin:0 0 6px 0; color:#00ff88;">${step.title} <span style="font-size:12px; color:#aaa; font-weight:normal;">(Инструкция)</span><span class="tooltip-text">${step.instruction || step.desc}</span></h4>
+                                <p style="margin: 0; color: #ccc; font-size: 14px;">${step.desc}</p>
                             </div>`;
                         });
                     }
@@ -1394,8 +1273,8 @@
                         const exactNewTurnover = formatNumCurrency(rawRevNum + rawLostNum, sym);
                         const exactProfitInc = "+" + formatNumCurrency(rawLostNum, sym);
                         const timeStr = formatRealisticHours(data.financials.timeSaved, (data.bottlenecks || []).length, activeIsCorporate);
-                        const paybackStr = stripForeignSymbols(data.financials.paybackPeriod || (activeIsCorporate ? "12 месяцев" : "6 месяцев"));
-                        const marginStr = stripForeignSymbols(data.financials.newMargin || (activeIsCorporate ? "12.8% (Operating EBITDA)" : "8.5% (Чистая рентабельность)"));
+                        const paybackStr = data.financials.paybackPeriod || (activeIsCorporate ? "12 месяцев" : "6 месяцев");
+                        const marginStr = data.financials.newMargin || (activeIsCorporate ? "12.8% (Operating EBITDA)" : "11.5% (Чистая рентабельность)");
 
                         document.getElementById('fin-time').innerText = timeStr;
                         document.getElementById('fin-current-turnover').innerText = formatNumCurrency(rawRevNum, sym);
@@ -1405,32 +1284,22 @@
                         document.getElementById('fin-payback').innerText = paybackStr;
                     }
 
-                    // Рендер Подрядчиков и Интеграторов с выводом Страны и Города
                     const vendorsContainer = document.getElementById('b-vendors');
                     vendorsContainer.innerHTML = '';
                     if(data.itVendors && data.itVendors.length > 0) {
                         data.itVendors.forEach(vendor => {
-                            let cleanVendorName = extractCleanCompanyName(vendor.cleanName || vendor.name);
-                            let vCountry = (vendor.country && vendor.country !== "Н/Д") ? stripForeignSymbols(vendor.country) : activeReportCountry;
-                            let vCity = sanitizeCityField(vendor.city, vCountry, activeReportCity);
                             let rawVendorUrl = cleanUrl(vendor.website);
-                            let vendorUrl = rawVendorUrl && rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + (rawVendorUrl || ('www.google' + DOT_COM + '/search?q=' + encodeURIComponent(cleanVendorName + ' ' + vCity)));
-
-                            const safeVName = cleanVendorName.replace(/'/g, "\\'");
-                            const safeVCountry = vCountry.replace(/'/g, "\\'");
-                            const safeVCity = vCity.replace(/'/g, "\\'");
-
+                            let vendorUrl = rawVendorUrl && rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + (rawVendorUrl || ('www.google' + DOT_COM));
                             let vDiv = document.createElement('div');
                             vDiv.className = 'vendor-card';
                             vDiv.innerHTML = `
-                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${cleanVendorName} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
-                                <div class="geo-badge-inline">🌍 ${vCountry}, 🏙️ ${vCity}</div>
-                                <div style="font-size: 13px; color: #aaa; margin: 6px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(vendor.description || vendor.desc || '')}</div>
+                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${vendor.name} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
+                                <div style="font-size: 13px; color: #aaa; margin: 5px 0 10px 0;">${vendor.description || vendor.desc || ''}</div>
                                 <a href="${vendorUrl}" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>
-                                <div class="comp-tooltip">🔍 Запустить скан: ${cleanVendorName} (${vCountry}, ${vCity})</div>
+                                <div class="comp-tooltip">Запустить скан: ${vendor.name}</div>
                             `;
                             vDiv.onclick = (e) => {
-                                if(e.target.tagName !== 'A') scanDirect(safeVName, safeVCountry, safeVCity);
+                                if(e.target.tagName !== 'A') scanDirect(vendor.name, '', '');
                             };
                             vendorsContainer.appendChild(vDiv);
                         });
@@ -1449,20 +1318,17 @@
 
         function renderCompetitorsList(compArray) {
             const compContainer = document.getElementById('b-competitors');
-            const countBadge = document.getElementById('comp-count-badge');
             compContainer.innerHTML = '';
-            if (countBadge) countBadge.innerText = compArray ? compArray.length : 0;
-
             if(compArray && compArray.length > 0) {
                 compArray.forEach(comp => {
-                    let compCountry = (comp.country && comp.country !== "Н/Д") ? stripForeignSymbols(comp.country) : activeReportCountry;
-                    let compCity = sanitizeCityField(comp.city, compCountry, activeReportCity);
-                    let compNiche = stripForeignSymbols(comp.niche || activeReportNiche);
-                    let compSummary = stripForeignSymbols(comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`);
+                    let compCountry = (comp.country && comp.country !== "Н/Д") ? comp.country : activeReportCountry;
+                    let compCity = (comp.city && comp.city !== "Н/Д") ? comp.city : activeReportCity;
+                    let compNiche = comp.niche || activeReportNiche;
+                    let compSummary = comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`;
                     let btn = document.createElement('div');
                     btn.className = 'click-tag';
                     btn.innerHTML = `
-                        <div class="comp-name">${stripForeignSymbols(comp.name)}</div>
+                        <div class="comp-name">${comp.name}</div>
                         <div class="comp-meta">⭐️ ${comp.rating || '4.4'} | 🌍 ${compCountry}, 🏙️ ${compCity}</div>
                         <div class="comp-tooltip">
                             <div style="color:#ffaa00; font-weight:bold; margin-bottom:4px;">💼 Ниша: ${compNiche}</div>
@@ -1617,8 +1483,7 @@
             if (arrayData && arrayData.length > 0) {
                 arrayData.forEach(item => {
                     let li = document.createElement('li');
-                    const rawText = typeof item === 'object' ? (item.name || item.title || JSON.stringify(item)) : item;
-                    li.innerText = stripForeignSymbols(rawText);
+                    li.innerText = typeof item === 'object' ? (item.name || item.title || JSON.stringify(item)) : item;
                     ul.appendChild(li);
                 });
             } else {

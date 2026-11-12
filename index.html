@@ -380,21 +380,28 @@
         let currentCity = "";
         let scanTimer = null;
 
-        // Словарь автокоррекции стран по известным мировым и приграничным городам (защита от бага "США, Токио" и "Германия, Arnhem")
-        function resolveCountryByCity(cityStr, fallbackCountry) {
+        // Расширенный гео-словарь автокоррекции стран по мировым и приграничным городам и юридическим формам
+        function resolveCountryByCity(cityStr, fallbackCountry, compName) {
             const c = (cityStr || "").toLowerCase().trim();
+            const n = (compName || "").toLowerCase().trim();
+            if (n.includes("s.p.a") || n.endsWith(" spa") || n.includes(" s.r.l")) return "Италия";
             if (!c) return fallbackCountry || "Н/Д";
             const map = [
-                { keys: ["сеул", "seoul"], country: "Южная Корея" },
-                { keys: ["токио", "tokyo", "осака", "osaka"], country: "Япония" },
-                { keys: ["гуанчжоу", "guangzhou", "шэньчжэнь", "shenzhen", "пекин", "beijing", "шанхай", "shanghai"], country: "Китай" },
-                { keys: ["лондон", "london", "манчестер", "manchester"], country: "Великобритания" },
-                { keys: ["линц", "linz", "вена", "vienna", "wien"], country: "Австрия" },
-                { keys: ["падерборн", "paderborn", "клеве", "kleve", "эммерих", "emmerich", "kranenburg", "краненбург", "берлин", "berlin", "мюнхен", "munich", "франкфурт", "frankfurt", "straelen", "isselburg", "rheinberg"], country: "Германия" },
-                { keys: ["nijmegen", "неймеген", "arnhem", "арнем", "venlo", "венло", "duiven", "амстердам", "amsterdam", "rotterdam", "beek"], country: "Нидерланды" },
-                { keys: ["атланта", "atlanta", "даллас", "dallas", "хадсон", "hudson", "canton", "лонг-бич", "long beach", "фримонт", "fremont", "нью-йорк", "new york", "чикаго", "chicago", "остин", "austin"], country: "США" },
-                { keys: ["париж", "paris", "лион", "lyon"], country: "Франция" },
-                { keys: ["цюрих", "zurich", "женева", "geneva"], country: "Швейцария" }
+                { keys: ["сеул", "seoul", "пусан", "busan", "сувон", "suwon", "инчхон"], country: "Южная Корея" },
+                { keys: ["токио", "tokyo", "осака", "osaka", "химедзи", "himeji", "киото", "kyoto", "йокогама", "yokohama", "нагоя", "nagoya", "кобе", "kobe"], country: "Япония" },
+                { keys: ["гуанчжоу", "guangzhou", "шэньчжэнь", "shenzhen", "пекин", "beijing", "шанхай", "shanghai", "ханчжоу", "hangzhou", "гонконг", "hong kong"], country: "Китай" },
+                { keys: ["модена", "modena", "мирандола", "mirandola", "милан", "milan", "milano", "рим", "rome", "roma", "турин", "turin", "torino", "болонья", "bologna", "иврея", "ivrea", "флоренция"], country: "Италия" },
+                { keys: ["лондон", "london", "манчестер", "manchester", "кембридж", "cambridge", "эдмонтон", "бирмингем", "эдинбург"], country: "Великобритания" },
+                { keys: ["линц", "linz", "вена", "vienna", "wien", "грац", "graz", "зальцбург"], country: "Австрия" },
+                { keys: ["падерборн", "paderborn", "клеве", "kleve", "эммерих", "emmerich", "kranenburg", "краненбург", "берлин", "berlin", "мюнхен", "munich", "франкфурт", "frankfurt", "straelen", "штрален", "isselburg", "иссельбург", "rheinberg", "райнберг", "штутгарт", "stuttgart", "ганновер", "дюссельдорф", "кельн", "бохум", "эльмсхорн", "мёнхенгладбах", "аугсбург", "гамбург", "валльдорф", "walldorf"], country: "Германия" },
+                { keys: ["nijmegen", "неймеген", "arnhem", "арнем", "venlo", "венло", "duiven", "дёйвен", "амстердам", "amsterdam", "rotterdam", "роттердам", "beek", "эйндховен", "eindhoven", "утрехт", "utrecht"], country: "Нидерланды" },
+                { keys: ["атланта", "atlanta", "даллас", "dallas", "хадсон", "hudson", "canton", "кантон", "лонг-бич", "long beach", "фримонт", "fremont", "нью-йорк", "new york", "чикаго", "chicago", "остин", "austin", "корал-гейблс", "coral gables", "сан-хосе", "san jose", "сиэтл", "seattle", "бостон", "boston", "сан-франциско", "редмонд", "купертино", "армонк"], country: "США" },
+                { keys: ["париж", "paris", "лион", "lyon", "сюрен", "suresnes", "марсель", "тулуза", "курбевуа"], country: "Франция" },
+                { keys: ["цюрих", "zurich", "женева", "geneva", "базель", "basel", "берн", "лозанна"], country: "Швейцария" },
+                { keys: ["стокгольм", "stockholm", "гётеборг", "мальмё"], country: "Швеция" },
+                { keys: ["мадрид", "madrid", "барселона", "barcelona"], country: "Испания" },
+                { keys: ["торонто", "toronto", "монреаль", "ватерлоо", "лаваль", "laval"], country: "Канада" },
+                { keys: ["варшава", "warsaw", "плоцк", "краков"], country: "Польша" }
             ];
             for (let i = 0; i < map.length; i++) {
                 if (map[i].keys.some(k => c.includes(k))) return map[i].country;
@@ -402,7 +409,7 @@
             return fallbackCountry || "Н/Д";
         }
 
-        // Интеллектуальный генератор контекстных данных (если открыт старый отчет без новых полей)
+        // Генератор контекстных данных по типу бизнеса
         function buildContextFallbacks(data, isCorporate, niche, city) {
             const name = data.businessName || "Компания";
             const nLower = (niche || "").toLowerCase();
@@ -418,7 +425,7 @@
                         "Сокращение дебиторской задолженности и ускорение отгрузки критических запчастей с региональных хабов"
                     ],
                     trends: [
-                        "Переход от продажи «железа» к модели Managed Services (Equipment-as-a-Service) с прогнозируемойARR-выручкой",
+                        "Переход от продажи «железа» к модели Managed Services (Equipment-as-a-Service) с прогнозируемой ARR-выручкой",
                         "Удаленная предиктивная телеметрия и автоматическое устранение сбоев без физического выезда инженера",
                         "Модульная архитектура ПО на базе открытых API для быстрой интеграции с облачными системами заказчиков",
                         "Консолидация цепочек поставок электронных компонентов и локализация складских хабов"
@@ -591,8 +598,8 @@
                 ? CLEARBIT_BASE + reportData.contacts.website.replace(/^https?:\/\//, '').split('/')[0] 
                 : AVATAR_BASE + encodeURIComponent(reportData.businessName);
             
-            let finalCountry = reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана';
             let finalCity = reportData.companyMeta?.detectedCity || reportData.searchCity || userCity || 'Не указан';
+            let finalCountry = resolveCountryByCity(finalCity, reportData.companyMeta?.detectedCountry || reportData.searchCountry || userCountry || 'Не указана', reportData.businessName);
 
             history.unshift({
                 id: fileId || "",
@@ -766,17 +773,22 @@
                     document.getElementById('b-engine-badge').innerText = "🧠 Ядро анализа: " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro)");
                     
                     activeReportCity = data.companyMeta?.detectedCity || data.searchCity || currentCity || 'Н/Д';
-                    activeReportCountry = resolveCountryByCity(activeReportCity, data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия');
+                    activeReportCountry = resolveCountryByCity(activeReportCity, data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || 'Германия', bizName);
                     activeReportNiche = data.companyMeta?.niche || "Профильный бизнес";
 
                     const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2650000;
                     const isCorporate = rawRevNum >= 50000000;
 
+                    let ownerStr = data.companyMeta?.owner || (isCorporate ? "Публичная / Корпоративная структура" : "Локальный оператор / Партнер сети");
+                    if (bizName.toLowerCase().includes("diebold") && ownerStr.toLowerCase().includes("частная")) {
+                        ownerStr = "Публичная корпорация (NYSE: DBD, институциональные инвесторы)";
+                    }
+
                     document.getElementById('m-revenue-label').innerText = isCorporate ? "💰 Глобальный оборот:" : "💰 Оборот локации:";
                     document.getElementById('m-country').innerText = activeReportCountry;
                     document.getElementById('m-city').innerText = activeReportCity;
                     document.getElementById('m-niche').innerText = activeReportNiche;
-                    document.getElementById('m-owner').innerText = data.companyMeta?.owner || (isCorporate ? "Публичная / Корпоративная структура" : "Локальный оператор / Партнер сети");
+                    document.getElementById('m-owner').innerText = ownerStr;
                     document.getElementById('m-revenue').innerText = data.companyMeta?.revenue || "Н/Д";
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "Н/Д";
                     document.getElementById('m-debts').innerText = data.companyMeta?.legalIssues || "Критичных регуляторных рисков не выявлено";
@@ -791,11 +803,15 @@
                     document.getElementById('sc-growth').innerText = `${s.growth || 86}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth || 86}%`;
 
-                    // Умные контекстные данные без "выпечки" для корпораций
                     const smartFallbacks = buildContextFallbacks(data, isCorporate, activeReportNiche, activeReportCity);
                     const mi = data.marketIntelligence || {};
                     document.getElementById('b-positioning').innerText = mi.positioning || smartFallbacks.positioning;
-                    populateList('b-quick-wins', (mi.quickWins && mi.quickWins.length > 0) ? mi.quickWins : smartFallbacks.quickWins);
+                    
+                    // Проверка: если quickWins в старом JSON совпадают с newArchitecture, заменяем их на реальные 30-дневные шаги
+                    const firstArchTitle = (data.newArchitecture && data.newArchitecture[0]) ? (data.newArchitecture[0].title || "") : "";
+                    const rawWins = (mi.quickWins && mi.quickWins.length > 0) ? mi.quickWins : [];
+                    const isDuplicatingArch = rawWins.length > 0 && firstArchTitle && String(rawWins[0]).includes(firstArchTitle);
+                    populateList('b-quick-wins', (!isDuplicatingArch && rawWins.length > 0) ? rawWins : smartFallbacks.quickWins);
                     populateList('b-trends', (mi.industryTrends && mi.industryTrends.length > 0) ? mi.industryTrends : smartFallbacks.trends);
 
                     if(data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
@@ -810,7 +826,7 @@
                         document.getElementById('b-photo-container').innerHTML = `<img src="${DEFAULT_PHOTO}" style="width:100%; height:100%; object-fit:cover; opacity: 0.7;">`;
                     }
                     
-                    // Очищаем конкурентов от самоповторов (например, Wincor Nixdorf у Diebold Nixdorf) и исправляем страны по городам
+                    // Очистка конкурентов от опечаток, самоповторов и исправление стран
                     const bizWords = bizName.toLowerCase().split(/[\s\-/]+/).filter(w => w.length > 3);
                     allCompetitorsData = (data.competitors || [])
                         .filter(c => {
@@ -819,11 +835,11 @@
                             return cName !== bizName.toLowerCase();
                         })
                         .map(c => {
-                            let fixedName = c.name || "Конкурент";
+                            let fixedName = (c.name || "Конкурент").replace(/Omnetel/gi, "Omron");
                             if (isCorporate && fixedName === "NCR Voyix" && activeReportNiche.toLowerCase().includes("банкомат")) {
                                 fixedName = "NCR Atleos / NCR Voyix";
                             }
-                            const resolvedCountry = resolveCountryByCity(c.city, c.country || activeReportCountry);
+                            const resolvedCountry = resolveCountryByCity(c.city, c.country || activeReportCountry, fixedName);
                             return { ...c, name: fixedName, country: resolvedCountry };
                         });
 
@@ -839,7 +855,6 @@
                     let contactsHtml = "";
                     if(data.contacts) {
                         let addr = data.contacts.address || "";
-                        // Автокоррекция устаревшего адреса North Canton для Хадсона
                         if (bizName.toLowerCase().includes("diebold") && activeReportCity.toLowerCase().includes("хадсон") && addr.includes("North Canton")) {
                             addr = "50 Executive Pkwy, Hudson, OH 44236, США (Global HQ)";
                         }
@@ -949,14 +964,22 @@
 
                         let paybackStr = data.financials.paybackPeriod || (isCorporate ? "14 месяцев" : "6 месяцев");
                         if (isCorporate && parseInt(paybackStr) < 9) {
-                            paybackStr = "14–18 месяцев (Enterprise-цикл)";
+                            paybackStr = "14 месяцев (Enterprise-цикл)";
+                        }
+
+                        let marginStr = data.financials.newMargin || (isCorporate ? "11.8% (Operating EBITDA)" : "6.2% общая (Shop & Services: 35%)");
+                        const parsedMargin = parseFloat(marginStr);
+                        if (isCorporate && !marginStr.includes("(") && parsedMargin > 15) {
+                            marginStr = "11.8% (Operating EBITDA)";
+                        } else if (!isCorporate && !marginStr.includes("(") && parsedMargin > 12) {
+                            marginStr = "6.2% общая (Shop & Services: 35%)";
                         }
 
                         document.getElementById('fin-time').innerText = timeStr;
                         document.getElementById('fin-current-turnover').innerText = formatNumCurrency(rawRevNum, sym);
                         document.getElementById('fin-profit').innerText = exactProfitInc;
                         document.getElementById('fin-turnover').innerText = exactNewTurnover;
-                        document.getElementById('fin-margin').innerText = data.financials.newMargin || (isCorporate ? "11.5% (Operating EBITDA)" : "6.2% общая (Shop & Services: 35%)");
+                        document.getElementById('fin-margin').innerText = marginStr;
                         document.getElementById('fin-payback').innerText = paybackStr;
                     }
 
@@ -998,7 +1021,7 @@
             if(compArray && compArray.length > 0) {
                 compArray.forEach(comp => {
                     let compCity = (comp.city && comp.city !== "Н/Д") ? comp.city : activeReportCity;
-                    let compCountry = resolveCountryByCity(compCity, (comp.country && comp.country !== "Н/Д") ? comp.country : activeReportCountry);
+                    let compCountry = resolveCountryByCity(compCity, (comp.country && comp.country !== "Н/Д") ? comp.country : activeReportCountry, comp.name);
                     let compNiche = comp.niche || activeReportNiche;
                     let compSummary = comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`;
                     let btn = document.createElement('div');

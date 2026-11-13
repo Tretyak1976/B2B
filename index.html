@@ -387,7 +387,7 @@
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
         }
 
-        const GAS_URL = cleanUrl(PROTO + "script.google" + DOT_COM + "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec");
+        const GAS_URL = cleanUrl(PROTO + "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec");
 
         (function loadMapsScript() {
             const s = document.createElement('script');

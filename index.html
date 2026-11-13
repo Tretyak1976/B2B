@@ -30,11 +30,20 @@
         .meta-item strong { color: #fff; }
         .engine-pill { display: inline-block; background: rgba(0, 255, 136, 0.12); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.4px;}
 
-        .score-box { background: #202020; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center;}
+        .contacts-structured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; width: 100%; margin-top: 10px;}
+        .contact-pill { background: #181818; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; font-size: 13px; color: #ddd; display: flex; align-items: center; gap: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+        .contact-pill a { color: #00ff88; text-decoration: none; font-weight: 600; overflow: hidden; text-overflow: ellipsis;}
+        .contact-pill a:hover { text-decoration: underline; }
+        .header-positioning-box { color: #ddd; font-size: 14px; line-height: 1.6; background: #181818; padding: 14px 16px; border-radius: 8px; border-left: 3px solid #00d2ff; margin-top: 15px;}
+
+        .score-box { position: relative; background: #202020; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center; cursor: help; transition: 0.25s;}
+        .score-box:hover { border-color: #00ff88; background: #252525; }
         .score-val { font-size: 28px; font-weight: bold; color: #00ff88; margin: 5px 0;}
         .score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px;}
         .score-bar-bg { width: 100%; height: 6px; background: #111; border-radius: 3px; margin-top: 8px; overflow: hidden;}
         .score-bar-fill { height: 100%; background: linear-gradient(90deg, #00d2ff, #00ff88); border-radius: 3px; transition: width 0.6s ease;}
+        .score-box .score-tooltip { visibility: hidden; width: 290px; background-color: #111; color: #fff; text-align: left; border: 1px solid #00ff88; border-radius: 8px; padding: 14px; position: absolute; z-index: 30; bottom: 112%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.25s; font-size: 12.5px; line-height: 1.5; box-shadow: 0 10px 28px rgba(0,0,0,0.9); pointer-events: none;}
+        .score-box:hover .score-tooltip { visibility: visible; opacity: 1; }
 
         .history-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;}
         .history-item { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; padding: 10px 15px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #222;}
@@ -42,9 +51,8 @@
         .history-btn { background: transparent; border: 1px solid #00ff88; color: #00ff88; font-size: 14px; padding: 5px 15px; width: auto; margin: 0;}
         .history-btn:hover { background: #00ff88; color: #000;}
 
-        .contact-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; color: #ccc;}
-        .contact-row a { color: #00ff88; text-decoration: none; word-break: break-all;}
-        .social-links a { display: inline-block; background: #111; padding: 6px 10px; border-radius: 6px; color: #00d2ff; text-decoration: none; border: 1px solid #333; font-weight: bold; font-size: 13px; transition: 0.3s;}
+        .social-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;}
+        .social-links a { display: inline-block; background: #111; padding: 6px 12px; border-radius: 6px; color: #00d2ff; text-decoration: none; border: 1px solid #333; font-weight: bold; font-size: 12px; transition: 0.3s;}
         .social-links a:hover { background: #00d2ff; color: #000; }
 
         .review-badge { display: block; padding: 8px 12px; border-radius: 6px; font-size: 13px; margin-bottom: 8px; line-height: 1.4;}
@@ -52,17 +60,23 @@
         .badge-red { background: rgba(255, 68, 68, 0.05); border: 1px solid #ff4444; color: #ff4444; }
 
         .critical-box { border-left: 4px solid #ff4444; padding: 25px; background: rgba(255, 68, 68, 0.05); margin-bottom: 25px; border-radius: 0 10px 10px 0;}
-        .lost-revenue { font-size: 28px; font-weight: bold; margin: 15px 0 0 0; color: #fff;}
+        .bottleneck-subcard { background: rgba(15, 15, 15, 0.75); border: 1px solid #3a2020; border-radius: 8px; padding: 16px;}
+        .bottleneck-subcard h4 { margin-top: 0; margin-bottom: 12px; font-size: 15px; color: #ff6b6b; border-bottom: 1px solid #3a2020; padding-bottom: 8px;}
+        .lost-revenue { font-size: 26px; font-weight: bold; margin: 18px 0 0 0; color: #fff; text-align: right;}
         .lost-revenue span { color: #ff4444; }
 
         .has-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #00ff88; display: inline-block; margin-bottom: 8px;}
-        .has-tooltip .tooltip-text { visibility: hidden; width: 300px; background-color: #222; color: #fff; border: 1px solid #00ff88; border-radius: 8px; padding: 14px; position: absolute; z-index: 20; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 13px; font-weight: normal; line-height: 1.5; box-shadow: 0 8px 25px rgba(0,0,0,0.85); pointer-events: none;}
+        .has-tooltip .tooltip-text { visibility: hidden; width: 310px; background-color: #222; color: #fff; border: 1px solid #00ff88; border-radius: 8px; padding: 14px; position: absolute; z-index: 20; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 13px; font-weight: normal; line-height: 1.5; box-shadow: 0 8px 25px rgba(0,0,0,0.85); pointer-events: none;}
         .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
 
         .list-section ul { padding-left: 20px; margin: 0; color: #ccc;}
-        .list-section li { margin-bottom: 12px; line-height: 1.6;}
+        .list-section li { margin-bottom: 10px; line-height: 1.55;}
         
         .arch-step { background: #222; border-left: 3px solid #00ff88; padding: 15px 20px; margin-bottom: 15px; border-radius: 0 8px 8px 0;}
+        .arch-header-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 6px;}
+        .arch-num-badge { background: #00ff88; color: #000; font-weight: bold; font-size: 12px; padding: 2px 8px; border-radius: 4px; margin-right: 8px;}
+        .liquidity-badge { background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;}
+
         .fin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .fin-table th, .fin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
         .fin-table td { font-weight: bold; color: #fff; font-size: 18px;}
@@ -76,21 +90,22 @@
         .comp-name { font-size: 14px; font-weight: bold; margin-bottom: 6px; line-height: 1.25;}
         .comp-meta { font-size: 12px; color: #bbb; line-height: 1.4;}
         .click-tag:hover .comp-meta { color: #111; font-weight: 600;}
-        .click-tag .comp-tooltip { visibility: hidden; width: 270px; background-color: #111; color: #fff; text-align: left; border: 1px solid #ffaa00; border-radius: 8px; padding: 12px; position: absolute; z-index: 25; bottom: 112%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; line-height: 1.45; box-shadow: 0 8px 25px rgba(0,0,0,0.85); pointer-events: none;}
+        .click-tag .comp-tooltip { visibility: hidden; width: 290px; background-color: #111; color: #fff; text-align: left; border: 1px solid #ffaa00; border-radius: 8px; padding: 13px; position: absolute; z-index: 25; bottom: 112%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; line-height: 1.5; box-shadow: 0 8px 25px rgba(0,0,0,0.9); pointer-events: none;}
         .click-tag:hover .comp-tooltip { visibility: visible; opacity: 1; }
 
-        .vendor-card { background: #222; padding: 16px; border-radius: 8px; border-left: 3px solid #ff4444; position: relative; cursor: pointer; transition: 0.3s;}
-        .vendor-card:hover { background: #2a2a2a; border-left: 5px solid #ff4444; box-shadow: 0 5px 15px rgba(255, 68, 68, 0.2);}
+        .vendor-card { background: #222; padding: 16px; border-radius: 8px; border-left: 3px solid #ff4444; position: relative; transition: 0.3s;}
         .vendor-card.partner-card { border-left: 3px solid #00d2ff; }
-        .vendor-card.partner-card:hover { border-left: 5px solid #00d2ff; box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2); }
         
-        .integration-badge { display: inline-block; background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-top: 5px; margin-bottom: 6px;}
-        .geo-badge-inline { display: inline-block; background: #161616; color: #00ff88; border: 1px solid #333; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: normal; margin-top: 4px; margin-bottom: 4px;}
+        /* Интерактивный заголовок компании для точечного запуска B2B Scan */
+        .scan-company-title { position: relative; display: inline-block; font-weight: bold; font-size: 16px; color: #00ff88; cursor: pointer; border-bottom: 1px dashed #00ff88; padding-bottom: 2px; transition: 0.2s;}
+        .scan-company-title:hover { color: #00d2ff; border-bottom-color: #00d2ff;}
+        .scan-company-title .title-scan-tooltip { visibility: hidden; width: max-content; max-width: 310px; background-color: #111; border: 1px solid #00ff88; color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 35; bottom: 125%; left: 0; opacity: 0; transition: opacity 0.25s; font-size: 12px; font-weight: bold; box-shadow: 0 8px 20px rgba(0,0,0,0.9); pointer-events: none;}
+        .scan-company-title:hover .title-scan-tooltip { visibility: visible; opacity: 1; }
+
+        .integration-badge { display: inline-block; background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-top: 6px; margin-bottom: 6px;}
+        .geo-badge-inline { display: inline-block; background: #161616; color: #ddd; border: 1px solid #333; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: normal; margin-left: 6px;}
         
-        .vendor-card .comp-tooltip { visibility: hidden; width: max-content; max-width: 300px; background-color: #111; border: 1px solid #00ff88; color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 10; bottom: 88%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; font-weight: bold; pointer-events: none;}
-        .vendor-card:hover .comp-tooltip { visibility: visible; opacity: 1; }
-        
-        .vendor-site-btn { display: inline-block; background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; z-index: 2; position: relative; margin-top: 10px; margin-right: 10px;}
+        .vendor-site-btn { display: inline-block; background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; margin-top: 8px;}
         .vendor-site-btn:hover { background: #00ff88; color: #000; }
         .vendor-site-btn.partner-btn { color: #00d2ff; border-color: #00d2ff; }
         .vendor-site-btn.partner-btn:hover { background: #00d2ff; color: #000; }
@@ -112,7 +127,7 @@
             .company-header { flex-direction: column; }
             .grid-2, .grid-4, .media-grid, .geo-grid, .meta-grid { grid-template-columns: 1fr; }
             .click-tag { width: 100%; margin: 5px 0; }
-            .has-tooltip .tooltip-text, .click-tag .comp-tooltip { left: 0; transform: none; width: 250px; }
+            .has-tooltip .tooltip-text, .click-tag .comp-tooltip, .score-box .score-tooltip { left: 0; transform: none; width: 250px; }
         }
 
         @media print {
@@ -122,7 +137,7 @@
             .card, .arch-step, .vendor-card, .click-tag, .score-box { background: #fff; border: 1px solid #ddd; }
             .badge-green { border-color: #00c853; color: #00c853; }
             .badge-red { border-color: #d32f2f; color: #d32f2f; }
-            button, .action-toolbar, .filter-bar, #lead-form, .has-tooltip .tooltip-text, .comp-tooltip { display: none !important; }
+            button, .action-toolbar, .filter-bar, #lead-form, .has-tooltip .tooltip-text, .comp-tooltip, .score-tooltip, .title-scan-tooltip { display: none !important; }
         }
     </style>
 </head>
@@ -152,7 +167,7 @@
                     <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
                 </select>
                 <select id="engine-mode">
-                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 2.5 Pro + Google Geo DB)</option>
+                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 2.5 Pro + 100% Failover)</option>
                     <option value="fast_flash">⚡ Турбо-режим (Gemini 2.5 Flash)</option>
                 </select>
             </div>
@@ -170,7 +185,7 @@
         <div id="report-dashboard" class="hidden">
             <button onclick="resetToHome()" style="background: #333; color: #fff; padding: 10px 18px; margin-bottom: 20px; font-size: 14px; width: auto;">⬅ Новый скан</button>
             
-            <!-- 1. ШАПКА КОМПАНИИ -->
+            <!-- 1. ШАПКА КОМПАНИИ + СТРУКТУРИРОВАННЫЕ КОНТАКТЫ GOOGLE MAPS + EXECUTIVE ПОЗИЦИОНИРОВАНИЕ -->
             <div class="company-header">
                 <img id="b-logo" class="company-logo" src="" alt="Logo">
                 <div style="width: 100%;">
@@ -184,35 +199,41 @@
                         <div class="meta-item">👤 Владелец / Структура: <strong id="m-owner"></strong></div>
                         <div class="meta-item"><span id="m-revenue-label">💰 Годовой оборот:</span> <strong id="m-revenue"></strong></div>
                         <div class="meta-item">📅 Год основания: <strong id="m-year"></strong></div>
-                        <div class="meta-item">⚖️ Комплаенс/Риски: <strong id="m-debts"></strong></div>
+                        <div class="meta-item" style="grid-column: 1 / -1;">⚖️ Комплаенс и регуляторный статус: <strong id="m-debts"></strong></div>
                     </div>
 
                     <hr style="border-color: #333; margin: 15px 0;">
-                    <div id="b-contacts-container" style="display:flex; flex-wrap:wrap; gap: 15px; align-items:center;"></div>
+                    <div id="b-contacts-container"></div>
+                    <!-- Верхний аналитический блок перенесен прямо в шапку под контакты -->
+                    <div id="b-positioning" class="header-positioning-box"></div>
                 </div>
             </div>
 
-            <!-- 2. ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА (0-100) -->
+            <!-- 2. ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА (0-100) С ВСПЛЫВАЮЩИМИ ОКНАМИ ОПИСАНИЯ -->
             <div class="grid-4">
                 <div class="score-box">
                     <div class="score-label">Цифровая зрелость</div>
                     <div class="score-val" id="sc-digital">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-digital" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-digital"></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Операции и процессы</div>
                     <div class="score-val" id="sc-ops">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-ops" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-ops"></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Клиентский опыт</div>
                     <div class="score-val" id="sc-cust">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-cust" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-cust"></div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">Потенциал роста</div>
                     <div class="score-val" id="sc-growth">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-growth" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-growth"></div>
                 </div>
             </div>
             
@@ -224,25 +245,9 @@
                 </div>
             </div>
 
-            <!-- 4. EXECUTIVE SUMMARY: АНАЛИЗ НИШИ, БЫСТРЫЕ ПОБЕДЫ И ТРЕНДЫ -->
-            <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
-                <h3 style="color: #00ff88;">🧭 Глубокий анализ ниши и Точки кратного роста (Executive Summary)</h3>
-                <p id="b-positioning" style="color: #ddd; font-size: 15px; line-height: 1.6; background: #222; padding: 15px; border-radius: 8px; border-left: 3px solid #00d2ff; margin-bottom: 20px;"></p>
-                <div class="grid-2" style="margin-bottom: 0;">
-                    <div class="list-section" style="border-right: 1px solid #333; padding-right: 15px;">
-                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:12px;">⚡ Быстрые победы (Quick Wins за 30–60 дней)</h4>
-                        <ul id="b-quick-wins"></ul>
-                    </div>
-                    <div class="list-section" style="padding-left: 15px;">
-                        <h4 style="color:#00d2ff; margin-top:0; margin-bottom:12px;">📈 Ключевые тренды ниши и куда движется рынок</h4>
-                        <ul id="b-trends"></ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. РЕПУТАЦИЯ И ОТЗЫВЫ КЛИЕНТОВ -->
+            <!-- 4. РЕПУТАЦИЯ И ОТЗЫВЫ КЛИЕНТОВ (ПОДНЯТО НАД БЛОКОМ ГЛУБОКОГО АНАЛИЗА НИШИ) -->
             <div class="card" style="margin-bottom: 25px;">
-                <h3>⭐️ Репутация и Отзывы</h3>
+                <h3>⭐️ Репутация и Отзывы (Данные Google Maps)</h3>
                 <div style="font-size: 24px; font-weight: bold; color: #00ff88; margin-bottom: 5px;" id="b-rating"></div>
                 <div style="color: #aaa; margin-bottom: 20px;" id="b-reviews"></div>
                 
@@ -254,6 +259,21 @@
                     <div style="padding-left: 15px;">
                         <h4 style="color:#ff4444; margin-top:0; margin-bottom:15px;">👎 Жалобы клиентов</h4>
                         <div id="b-reviews-neg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. ГЛУБОКИЙ АНАЛИЗ НИШИ: БЫСТРЫЕ ПОБЕДЫ И ТРЕНДЫ -->
+            <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
+                <h3 style="color: #00ff88;">🧭 Глубокий анализ ниши и Точки кратного роста</h3>
+                <div class="grid-2" style="margin-bottom: 0;">
+                    <div class="list-section" style="border-right: 1px solid #333; padding-right: 15px;">
+                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:12px;">⚡ Быстрые победы (Quick Wins за 30–60 дней)</h4>
+                        <ul id="b-quick-wins"></ul>
+                    </div>
+                    <div class="list-section" style="padding-left: 15px;">
+                        <h4 style="color:#00d2ff; margin-top:0; margin-bottom:12px;">📈 Ключевые тренды ниши и куда движется рынок</h4>
+                        <ul id="b-trends"></ul>
                     </div>
                 </div>
             </div>
@@ -270,16 +290,25 @@
                 </div>
             </div>
 
-            <!-- 7. КРИТИЧЕСКИЕ УЗКИЕ МЕСТА И ПОТЕРИ -->
+            <!-- 7. КРИТИЧЕСКИЕ УЗКИЕ МЕСТА: РАЗДЕЛЕНО НА IT-КОНТУР И ФИЗИЧЕСКИЙ КОНТУР -->
             <div class="critical-box list-section">
-                <h3>🚨 Критические Узкие Места (Операционные потери)</h3>
-                <ul id="b-bottlenecks" style="margin-bottom: 20px;"></ul>
+                <h3 style="color:#ff4444; margin-top:0;">🚨 Критические Узкие Места (Декомпозиция операционных и IT-потерь)</h3>
+                <div class="grid-2" style="margin-bottom: 15px;">
+                    <div class="bottleneck-subcard">
+                        <h4>💻 Цифровые и IT-узкие места (Программный и аналитический контур)</h4>
+                        <ul id="b-bottlenecks-it"></ul>
+                    </div>
+                    <div class="bottleneck-subcard">
+                        <h4>⚙️ Физические и операционные узкие места (Инфраструктура и сервис)</h4>
+                        <ul id="b-bottlenecks-phys"></ul>
+                    </div>
+                </div>
                 <div class="lost-revenue">Расчетная упущенная выгода: <span id="b-lost"></span> / год</div>
             </div>
 
-            <!-- 8. АРХИТЕКТУРА РОСТА (ПЛАН ВНЕДРЕНИЯ) -->
+            <!-- 8. АРХИТЕКТУРА РОСТА (С НУМЕРАЦИЕЙ И ПРОЦЕНТОМ ЛИКВИДНОСТИ ВНЕДРЕНИЯ) -->
             <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
-                <h3 style="color: #00ff88;">🚀 Архитектура Роста (План внедрения — наведи для инструкции)</h3>
+                <h3 style="color: #00ff88;">🚀 Архитектура Роста (План внедрения и индекс ликвидности — наведи для инструкции)</h3>
                 <div id="b-architecture"></div>
             </div>
 
@@ -296,21 +325,21 @@
                 </table>
             </div>
 
-            <!-- 10. СТРАТЕГИЧЕСКОЕ ПАРТНЕРСТВО И IT-ИНТЕГРАТОРЫ -->
+            <!-- 10. СТРАТЕГИЧЕСКОЕ ПАРТНЕРСТВО И ПОДРЯДЧИКИ (РЕАЛЬНЫЕ ГОРОДА ШТАБ-КВАРТИР + B2B SCAN ПО НАЗВАНИЮ) -->
             <div class="grid-2">
                 <div class="card" style="border-color: #00d2ff;">
                     <h3 style="color: #00d2ff;">🤝 Стратегическое партнерство (Экосистема)</h3>
-                    <p style="color:#aaa; font-size:13px; margin-top:0;">Нажмите на карточку партнера, чтобы запустить его полный аудит с учетом страны и города:</p>
+                    <p style="color:#aaa; font-size:13px; margin-top:0;">Наведите курсор на название компании и нажмите <b>B2B Scan</b> для запуска ее аудита:</p>
                     <div id="b-partners" style="display: grid; gap: 15px; margin-top: 15px;"></div>
                 </div>
                 <div class="card" style="border-color: #ff4444;">
-                    <h3 style="color: #ff4444;">🛠️ Подрядчики и Интеграторы</h3>
-                    <p style="color:#aaa; font-size:13px; margin-top:0;">Нажмите на карточку подрядчика для запуска глубокого скана его бизнеса в Google Maps:</p>
+                    <h3 style="color: #ff4444;">🛠️ Подрядчики и Интеграторы (Расширенный пул)</h3>
+                    <p style="color:#aaa; font-size:13px; margin-top:0;">Наведите курсор на название интегратора и нажмите <b>B2B Scan</b> для запуска его аудита:</p>
                     <div id="b-vendors" style="display: grid; gap: 15px; margin-top: 15px;"></div>
                 </div>
             </div>
 
-            <!-- 11. БЛОК КОНКУРЕНТОВ (ДО 30 ПОЗИЦИЙ) С ФИЛЬТРАЦИЕЙ -->
+            <!-- 11. БЛОК КОНКУРЕНТОВ (ДО 30 ПОЗИЦИЙ) С РАЗВЕРНУТЫМ ДОСЬЕ -->
             <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
                 <h3 style="color: #ffaa00;">🎯 Ближайшие и отраслевые конкуренты — до 30 позиций (Наведи для досье, нажми для аудита)</h3>
                 <div class="filter-bar">
@@ -358,7 +387,6 @@
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
         }
 
-        // Очистка любых случайных восточных иероглифов при не-китайском языке интерфейса
         function stripForeignSymbols(str) {
             if (!str) return "";
             const langVal = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
@@ -370,7 +398,6 @@
             return stripForeignSymbols(str).replace(/\.+$/, "");
         }
 
-        // Понижение только первой буквы фразы с сохранением заглавных букв в именах собственных и аббревиатурах
         function lowerFirstCharOnly(str) {
             const s = stripTrailingDot(str);
             if (!s) return "";
@@ -378,7 +405,6 @@
             return s.charAt(0).toLowerCase() + s.slice(1);
         }
 
-        // Извлечение чистого названия компании для точного поиска в Google Maps при клике на Партнера или Подрядчика
         function extractCleanCompanyName(rawTitle) {
             if (!rawTitle) return "";
             let s = stripForeignSymbols(rawTitle);
@@ -389,7 +415,6 @@
             return s.split(" — ")[0].split(" - ")[0].replace(/\s*\(🌍.*?\)\s*/g, "").trim();
         }
 
-        // Универсальная проверка: не является ли кандидат филиалом той же самой сети (для любого бренда в мире)
         function isSameBrandChain(compName, mainBusinessName) {
             if (!compName || !mainBusinessName) return false;
             const cLower = String(compName).toLowerCase().trim();
@@ -490,7 +515,6 @@
             };
         }
 
-        // Универсальная проверка письменности (кириллица vs латиница) для отсечения приграничных зарубежных городов без ручных списков
         function hasScriptMismatchForLocalBusiness(compCity, reportCity, reportCountry, isCorporate) {
             if (isCorporate) return false;
             const cCity = String(compCity || "").trim();
@@ -512,7 +536,7 @@
         function queryGoogleGeoDB(queryText) {
             return new Promise((resolve) => {
                 if (!queryText || !queryText.trim()) return resolve(null);
-                const cacheKey = "g_geo_v5_" + queryText.trim().toLowerCase();
+                const cacheKey = "g_geo_v6_" + queryText.trim().toLowerCase();
                 try {
                     const cached = localStorage.getItem(cacheKey);
                     if (cached) return resolve(JSON.parse(cached));
@@ -546,6 +570,43 @@
                 }
                 attemptGeocode(0);
             });
+        }
+        // Асинхронная верификация реальной страны и города штаб-квартиры для каждого Партнера и Подрядчика через базу Google Maps
+        async function verifyPartnerAndVendorGeoViaGoogle() {
+            const geoNodes = document.querySelectorAll('[data-geo-lookup]');
+            for (let i = 0; i < geoNodes.length; i++) {
+                const node = geoNodes[i];
+                const companyName = node.getAttribute('data-company-name') || "";
+                const currentCountry = node.getAttribute('data-company-country') || "";
+                const currentCity = node.getAttribute('data-company-city') || "";
+                if (!companyName) continue;
+
+                // Если у внешнего вендора ошибочно подставлен малый город объекта скана или город не указан, запрашиваем реальный офис в Google DB
+                const needsLookup = !currentCity || currentCity === "Центральный офис" || currentCity.toLowerCase() === activeReportCity.toLowerCase();
+                const searchStr = needsLookup ? `${companyName} headquarters office` : `${companyName} ${currentCity} ${currentCountry}`;
+                const gInfo = await queryGoogleGeoDB(searchStr);
+
+                if (gInfo && gInfo.country && gInfo.city) {
+                    const realCountry = gInfo.country;
+                    const realCity = sanitizeCityField(gInfo.city, realCountry, currentCity);
+                    node.setAttribute('data-company-country', realCountry);
+                    node.setAttribute('data-company-city', realCity);
+
+                    const badgeEl = node.querySelector('.geo-badge-inline');
+                    if (badgeEl) badgeEl.innerText = `🌍 ${realCountry}, 🏙️ ${realCity}`;
+
+                    const tipEl = node.querySelector('.title-scan-tooltip');
+                    if (tipEl) tipEl.innerText = `🔍 Нажмите B2B Scan: ${companyName} (${realCountry}, ${realCity})`;
+
+                    const titleEl = node.querySelector('.scan-company-title');
+                    if (titleEl) {
+                        titleEl.onclick = (e) => {
+                            e.stopPropagation();
+                            scanDirect(companyName, realCountry, realCity);
+                        };
+                    }
+                }
+            }
         }
 
         async function syncReportLocationsWithGoogleDB(data, isCorporate) {
@@ -619,7 +680,6 @@
             renderCompetitorsList(allCompetitorsData);
         }
 
-        // Универсальная кросс-валидация Технического стека и Инфраструктуры против жалоб клиентов
         function sanitizeTechStack(techStack, negativeReviews) {
             if (!techStack || !Array.isArray(techStack)) return [];
             const negBlob = (negativeReviews || []).join(" ").toLowerCase();
@@ -643,7 +703,150 @@
             });
         }
 
-        // Универсальный семантический сопоставлятор шага Архитектуры Роста и Узкого места по функциональным контурам бизнеса
+        // Разделение всех узких мест на 2 специализированных блока: Цифровые/IT и Физические/Операционные
+        function splitBottlenecksIntoItAndPhys(data) {
+            if (data.bottlenecksIt && Array.isArray(data.bottlenecksIt) && data.bottlenecksIt.length > 0 &&
+                data.bottlenecksPhys && Array.isArray(data.bottlenecksPhys) && data.bottlenecksPhys.length > 0) {
+                return {
+                    itList: data.bottlenecksIt.map(stripForeignSymbols),
+                    physList: data.bottlenecksPhys.map(stripForeignSymbols)
+                };
+            }
+
+            const rawList = Array.isArray(data.bottlenecks) ? data.bottlenecks.map(stripForeignSymbols) : [];
+            const itKeywords = [
+                "по", "программ", "erp", "crm", "edi", "сайт", "приложен", "онлайн", "интернет",
+                "цифров", "данн", "аналитик", "сервер", "кибер", "интеграц", "api", "облач",
+                "учет", "агрегатор", "таргетинг", "автозаказ", "синхронизац", "прошив", "код", "ux", "ui"
+            ];
+
+            const itList = [];
+            const physList = [];
+
+            rawList.forEach(item => {
+                const lower = item.toLowerCase();
+                const isIt = itKeywords.some(kw => lower.includes(kw));
+                if (isIt) {
+                    itList.push(item);
+                } else {
+                    physList.push(item);
+                }
+            });
+
+            // Если один из списков оказался коротким, дополняем его профильными выводами из жалоб клиентов и инфраструктуры
+            const negReviews = (data.reputation && Array.isArray(data.reputation.negative)) ? data.reputation.negative : [];
+            negReviews.forEach(neg => {
+                const cleanNeg = stripForeignSymbols(neg);
+                if (physList.length < 5 && !physList.some(p => p.toLowerCase() === cleanNeg.toLowerCase())) {
+                    physList.push(`Операционный фактор потерь трафика: ${lowerFirstCharOnly(cleanNeg)}`);
+                }
+            });
+
+            if (itList.length < 4) {
+                itList.push("Отсутствие сквозной предиктивной аналитики спроса и автоматической синхронизации остатков в реальном времени");
+            }
+            if (physList.length < 4) {
+                physList.push("Пиковые перегрузки физических узлов обслуживания и нехватка пропускной способности в часы максимального трафика");
+            }
+
+            return { itList, physList };
+        }
+
+        // Расчет процента ликвидности внедрения (ROI Liquidity %) для каждого шага Архитектуры Роста
+        function computeStepLiquidity(step, index) {
+            if (step.liquidityPercent && Number(step.liquidityPercent) >= 60) {
+                return Math.min(99, Math.round(Number(step.liquidityPercent)));
+            }
+            const text = ((step.title || "") + " " + (step.desc || "")).toLowerCase();
+            let base = 94 - (index * 2);
+            if (text.includes("касс") || text.includes("pos") || text.includes("checkout") || text.includes("очеред")) base = Math.max(base, 95);
+            if (text.includes("crm") || text.includes("лояльност") || text.includes("inventory") || text.includes("остатк")) base = Math.max(base, 92);
+            if (text.includes("доставк") || text.includes("click") || text.includes("e-commerce")) base = Math.max(base, 90);
+            return Math.min(98, Math.max(76, base));
+        }
+
+        // Генерация подробных всплывающих описаний для 4 карточек Индекса Зрелости
+        function populateScoreTooltips(scores, bizName, cleanStack, bottlenecks) {
+            const topStack = (cleanStack || []).slice(0, 3).map(t => typeof t === 'string' ? t : (t.name || "")).join(", ") || "базовых систем";
+            const firstBot = (bottlenecks && bottlenecks[0]) ? lowerFirstCharOnly(bottlenecks[0]) : "ручных операционных процессов";
+
+            document.getElementById('tip-digital').innerHTML = `
+                <div style="color:#00ff88; font-weight:bold; margin-bottom:5px;">💻 Цифровая зрелость: ${scores.digital}/100</div>
+                Оценивает уровень автоматизации «${bizName}», глубину интеграции стека (${topStack}), скорость обмена данными и отсутствие ручного ввода. Резерв роста (+${100 - scores.digital} п.) лежит в устранении проблемы: ${firstBot}.
+            `;
+            document.getElementById('tip-ops').innerHTML = `
+                <div style="color:#00d2ff; font-weight:bold; margin-bottom:5px;">⚙️ Операции и процессы: ${scores.operations}/100</div>
+                Отражает пропускную способность бизнеса в часы пик, скорость логистики, оборачиваемость запасов и эффективность работы персонала без простоев и очередей.
+            `;
+            document.getElementById('tip-cust').innerHTML = `
+                <div style="color:#00ff88; font-weight:bold; margin-bottom:5px;">⭐️ Клиентский опыт (CX): ${scores.customer}/100</div>
+                Рассчитан на базе реального рейтинга в Google Maps, тональности отзывов клиентов, удобства заказа, скорости обслуживания и удержания повторных покупателей (LTV).
+            `;
+            document.getElementById('tip-growth').innerHTML = `
+                <div style="color:#ffaa00; font-weight:bold; margin-bottom:5px;">🚀 Потенциал роста: ${scores.growth}/100</div>
+                Показывает емкость возврата упущенной выручки за ближайшие 6–12 месяцев при внедрении предложенной Архитектуры Роста и партнерской экосистемы.
+            `;
+        }
+
+        // Формирование чистого блока Контактов из Google Maps без дублирования ссылок и параметров отслеживания
+        function renderStructuredContacts(data, addr) {
+            const container = document.getElementById('b-contacts-container');
+            let pillsHtml = '<div class="contacts-structured-grid">';
+            const seenUrls = new Set();
+
+            if (addr && addr !== "N/A") {
+                pillsHtml += `<div class="contact-pill" title="${addr}">📍 <span>${addr}</span></div>`;
+            }
+            if (data.contacts && data.contacts.phone && data.contacts.phone !== "N/A") {
+                pillsHtml += `<div class="contact-pill">📞 <span>${stripForeignSymbols(data.contacts.phone)}</span></div>`;
+            }
+            if (data.contacts && data.contacts.hours && data.contacts.hours !== "N/A") {
+                const cleanHours = stripForeignSymbols(data.contacts.hours);
+                pillsHtml += `<div class="contact-pill" title="${cleanHours}">🕒 <span>${cleanHours}</span></div>`;
+            }
+
+            if (data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
+                const rawWUrl = cleanUrl(data.contacts.website);
+                const fullWUrl = rawWUrl.startsWith('http') ? rawWUrl : PROTO + rawWUrl;
+                // Очищаем отображаемый домен от длинных UTM-хвостов
+                const cleanDisplayUrl = fullWUrl.split('?')[0].replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+                const hostOnly = cleanDisplayUrl.split('/')[0].toLowerCase();
+                seenUrls.add(hostOnly);
+                if (!isSocialOrDirectoryDomain(hostOnly)) {
+                    pillsHtml += `<div class="contact-pill">🌐 <a href="${fullWUrl}" target="_blank" rel="noopener">${cleanDisplayUrl}</a></div>`;
+                }
+            }
+            pillsHtml += '</div>';
+
+            let socialsHtml = '';
+            const sm = data.socialMedia || {};
+            const socialItems = [];
+            if (sm.facebook && sm.facebook !== "N/A") socialItems.push({ label: "Facebook", url: cleanUrl(sm.facebook) });
+            if (sm.instagram && sm.instagram !== "N/A") socialItems.push({ label: "Instagram", url: cleanUrl(sm.instagram) });
+            if (sm.linkedin && sm.linkedin !== "N/A") socialItems.push({ label: "LinkedIn", url: cleanUrl(sm.linkedin) });
+
+            // Если в поле website была ссылка на Facebook/Instagram, которой еще нет в кнопках соцсетей, добавляем ее без дубля
+            if (data.contacts && data.contacts.website && data.contacts.website !== "N/A") {
+                const wClean = cleanUrl(data.contacts.website);
+                if (wClean.includes("facebook.com") && !socialItems.some(s => s.label === "Facebook")) {
+                    socialItems.push({ label: "Facebook (Официальная страница)", url: wClean });
+                } else if (wClean.includes("instagram.com") && !socialItems.some(s => s.label === "Instagram")) {
+                    socialItems.push({ label: "Instagram (Официальный профиль)", url: wClean });
+                }
+            }
+
+            if (socialItems.length > 0) {
+                socialsHtml = '<div class="social-links">';
+                socialItems.forEach(s => {
+                    const href = s.url.startsWith('http') ? s.url : PROTO + s.url;
+                    socialsHtml += `<a href="${href}" target="_blank" rel="noopener">🔗 ${s.label}</a>`;
+                });
+                socialsHtml += '</div>';
+            }
+
+            container.innerHTML = pillsHtml + socialsHtml;
+        }
+
         function matchBottleneckByMeaning(stepTitle, stepDesc, bottlenecks) {
             if (!bottlenecks || !Array.isArray(bottlenecks) || bottlenecks.length === 0) return "";
             const stepText = (stepTitle + " " + stepDesc).toLowerCase();
@@ -701,135 +904,108 @@
             return "";
         }
 
-        // Универсальный подбор подрядчика по его технологической специализации
-        function matchVendorToStep(step, vendorsList, usedVendorNames) {
-            if (!vendorsList || !Array.isArray(vendorsList) || vendorsList.length === 0) return null;
-            const stepText = ((step.title || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
+        // Расширение списка Подрядчиков и Интеграторов до 7-8 профильных компаний (с реальными странами, городами и сайтами)
+        function ensureRichVendorsPool(rawVendors, cleanStack, archList, niche, reportCountry, reportCity) {
+            const result = [];
+            const seenNames = new Set();
 
-            for (let v of vendorsList) {
-                if (!v || !v.name || usedVendorNames.has(v.name)) continue;
-                const cleanV = extractCleanCompanyName(v.name).toLowerCase().split(/[\s.,\-]+/)[0];
-                if (cleanV.length >= 4 && stepText.includes(cleanV)) {
-                    usedVendorNames.add(v.name);
-                    return v;
-                }
-            }
-
-            const domainMap = [
-                {
-                    stepKw: ["crm", "лояльност", "профиль покупателя", "маркетинг", "приложен", "seo", "привлечен"],
-                    vendorKw: ["crm", "маркетинг", "seo", "клиентским опытом", "продвижен", "digital"]
-                },
-                {
-                    stepKw: ["inventory sync", "erp", "учет", "склад", "постав", "автозаказ", "edi", "логист", "wms"],
-                    vendorKw: ["erp", "склад", "логист", "учет", "цепоч", "supply chain"]
-                },
-                {
-                    stepKw: ["checkout", "smart pos", "кассовых", "pos-терминал", "самообслуживан", "эквайринг", "очередей"],
-                    vendorKw: ["платежн", "транзакц", "pos", "кассового", "терминал", "самообслуживан", "эквайринг"]
-                },
-                {
-                    stepKw: ["облач", "микросервис", "энтерпрайз", "iot", "прогнозирование спроса", "видеонаблюден", "ai"],
-                    vendorKw: ["облач", "энтерпрайз", "cloud", "разработчик", "ai", "iot", "интегратор"]
-                },
-                {
-                    stepKw: ["hr", "смен", "персонал", "график", "рабочего времен"],
-                    vendorKw: ["персонал", "смен", "hr", "staff", "schedule"]
-                },
-                {
-                    stepKw: ["агрегатор", "доставк", "вынос", "click & collect"],
-                    vendorKw: ["агрегатор", "доставк", "delivery", "омниканальн"]
-                }
-            ];
-
-            for (let dm of domainMap) {
-                if (dm.stepKw.some(k => stepText.includes(k))) {
-                    const foundV = vendorsList.find(v => {
-                        if (!v || !v.name || usedVendorNames.has(v.name)) return false;
-                        const vBlob = (v.name + " " + (v.description || v.desc || "")).toLowerCase();
-                        return dm.vendorKw.some(vk => vBlob.includes(vk));
+            if (Array.isArray(rawVendors)) {
+                rawVendors.forEach(v => {
+                    if (!v || !v.name) return;
+                    const cleanName = extractCleanCompanyName(v.cleanName || v.name);
+                    const key = cleanName.toLowerCase();
+                    if (seenNames.has(key)) return;
+                    seenNames.add(key);
+                    result.push({
+                        name: cleanName,
+                        cleanName: cleanName,
+                        country: (v.country && v.country !== "Н/Д") ? stripForeignSymbols(v.country) : reportCountry,
+                        city: (v.city && v.city !== "Н/Д") ? stripForeignSymbols(v.city) : "Центральный офис",
+                        rating: v.rating || "4.8",
+                        website: v.website && v.website !== "N/A" ? cleanUrl(v.website) : "",
+                        description: stripForeignSymbols(v.description || v.desc || `Профильный технологический интегратор решений в сегменте «${niche}».`)
                     });
-                    if (foundV) {
-                        usedVendorNames.add(foundV.name);
-                        return foundV;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        function buildDynamicPartnersFromData(data, city, country, niche) {
-            const archList = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
-            const vendorsList = Array.isArray(data.itVendors) ? data.itVendors : [];
-            const bottlenecksList = Array.isArray(data.bottlenecks) ? data.bottlenecks : [];
-            const bizName = data.businessName || "Компания";
-
-            if (data.strategicPartnerships && Array.isArray(data.strategicPartnerships) && data.strategicPartnerships.length > 0) {
-                const pBlob = JSON.stringify(data.strategicPartnerships).toLowerCase();
-                const hasOldFormula = pBlob.includes("партнер контура") || pBlob.includes("технологический партнер («");
-                if (!hasOldFormula) {
-                    return data.strategicPartnerships.map(p => ({
-                        ...p,
-                        cleanName: extractCleanCompanyName(p.cleanName || p.name),
-                        country: p.country || country,
-                        city: sanitizeCityField(p.city, p.country || country, city)
-                    }));
-                }
-            }
-
-            const partners = [];
-            const usedVendors = new Set();
-            const usedSteps = new Set();
-
-            for (let i = 0; i < archList.length && partners.length < 4; i++) {
-                const step = archList[i];
-                const matchedVendor = matchVendorToStep(step, vendorsList, usedVendors);
-                if (matchedVendor) {
-                    usedSteps.add(i);
-                    const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", bottlenecksList);
-                    const botClause = matchedBot ? ` (целевое решение проблемы: «${matchedBot}»)` : "";
-                    const cleanDesc = stripTrailingDot(step.desc || "");
-                    const cleanInstr = stripTrailingDot(step.instruction || "");
-                    const vCleanName = extractCleanCompanyName(matchedVendor.cleanName || matchedVendor.name);
-                    const vCountry = matchedVendor.country || country;
-                    const vCity = sanitizeCityField(matchedVendor.city, vCountry, city);
-
-                    partners.push({
-                        name: `${vCleanName} — Партнер («${step.title}»)`,
-                        cleanName: vCleanName,
-                        country: vCountry,
-                        city: vCity,
-                        integrationTarget: `${step.title} (${niche})`,
-                        website: matchedVendor.website || "",
-                        reason: `${cleanDesc}. Практический шаг для «${bizName}»: ${cleanInstr}${botClause}.`
-                    });
-                }
-            }
-
-            for (let i = 0; i < archList.length && partners.length < 4; i++) {
-                if (usedSteps.has(i)) continue;
-                const step = archList[i];
-                const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", bottlenecksList);
-                const botClause = matchedBot ? ` (устраняет узкое место: «${matchedBot}»)` : "";
-                const cleanDesc = stripTrailingDot(step.desc || "");
-                const cleanInstr = stripTrailingDot(step.instruction || "");
-
-                partners.push({
-                    name: `${step.title}`,
-                    cleanName: `${step.title} ${niche}`,
-                    country: country,
-                    city: city,
-                    integrationTarget: `${step.title} (${niche})`,
-                    website: "",
-                    reason: `${cleanDesc}. Реализация для «${bizName}»: ${cleanInstr}${botClause}.`
                 });
             }
 
-            return partners;
+            // Если сервер вернул меньше 7 интеграторов, добираем их из реальных вендоров Технологического Стека проверяемой компании
+            const stackItems = Array.isArray(cleanStack) ? cleanStack : [];
+            for (let i = 0; i < stackItems.length && result.length < 7; i++) {
+                const st = stackItems[i];
+                const rawStName = stripForeignSymbols(typeof st === 'string' ? st : (st.name || ""));
+                const stDetails = stripForeignSymbols(typeof st === 'object' ? (st.details || st.description || "") : "");
+                if (!rawStName) continue;
+
+                // Отсекаем абстрактные названия оборудования, оставляя реальные технологические бренды и платформы
+                const genericTerms = ["локальн", "базов", "система", "кассовая", "терминалы", "весы", "камеры", "wi-fi", "excel", "бумажн", "сервер", "холодильн", "тележки"];
+                if (genericTerms.some(g => rawStName.toLowerCase().includes(g))) continue;
+
+                const cleanBrand = rawStName.split(/[\s/()]+/)[0].trim();
+                if (cleanBrand.length < 3 || seenNames.has(cleanBrand.toLowerCase())) continue;
+                seenNames.add(cleanBrand.toLowerCase());
+
+                result.push({
+                    name: rawStName,
+                    cleanName: rawStName,
+                    country: reportCountry,
+                    city: "Центральный офис",
+                    rating: "4.8",
+                    website: "",
+                    description: stDetails ? `Официальный вендор и интегратор контура «${rawStName}»: ${lowerFirstCharOnly(stDetails)}.` : `Профильный технологический вендор и интегратор платформы «${rawStName}» для сегмента «${niche}».`
+                });
+            }
+
+            return result.slice(0, 8);
         }
 
-        function buildDynamicIntelligenceFromData(data, niche, city, country, cleanStack) {
+        // Формирование чистого списка Стратегических Партнеров (в первой строке — только имя компании, без приписок "Партнер контура")
+        function buildCleanPartnersList(data, vendorsPool, city, country, niche) {
+            const result = [];
+            const seen = new Set();
+
+            if (data.strategicPartnerships && Array.isArray(data.strategicPartnerships)) {
+                data.strategicPartnerships.forEach(p => {
+                    if (!p || !p.name) return;
+                    const cName = extractCleanCompanyName(p.cleanName || p.name);
+                    if (!cName || cName.toLowerCase().includes("технологический контур") || cName.toLowerCase().includes("экосистема реализации")) return;
+                    if (seen.has(cName.toLowerCase())) return;
+                    seen.add(cName.toLowerCase());
+
+                    result.push({
+                        cleanName: cName,
+                        country: (p.country && p.country !== "Н/Д") ? stripForeignSymbols(p.country) : country,
+                        city: (p.city && p.city !== "Н/Д") ? stripForeignSymbols(p.city) : "Центральный офис",
+                        integrationTarget: stripForeignSymbols(p.integrationTarget || `Стратегическая кооперация (${niche})`),
+                        website: p.website && p.website !== "N/A" ? cleanUrl(p.website) : "",
+                        reason: stripForeignSymbols(p.reason || p.description || "")
+                    });
+                });
+            }
+
+            // Если в старом отчете партнерства были синтетическими заголовками, формируем реальные компании-партнеры из пула вендоров и стека
+            const archList = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
+            for (let i = 0; i < vendorsPool.length && result.length < 4; i++) {
+                const v = vendorsPool[i];
+                if (seen.has(v.cleanName.toLowerCase())) continue;
+                seen.add(v.cleanName.toLowerCase());
+                const step = archList[i] || { title: "Технологическая модернизация", desc: v.description, instruction: "Интеграция в корпоративный контур" };
+                const matchedBot = matchBottleneckByMeaning(step.title || "", step.desc || "", data.bottlenecks);
+                const botClause = matchedBot ? ` (решает узкое место: «${matchedBot}»)` : "";
+
+                result.push({
+                    cleanName: v.cleanName,
+                    country: v.country,
+                    city: v.city,
+                    integrationTarget: `${stripForeignSymbols(step.title)} (${niche})`,
+                    website: v.website || "",
+                    reason: `${stripTrailingDot(step.desc)}. Практическая синергия для «${data.businessName || "компании"}»: ${stripTrailingDot(step.instruction || v.description)}${botClause}.`
+                });
+            }
+
+            return result.slice(0, 4);
+        }
+
+        function buildDynamicIntelligenceFromData(data, niche, city, country, cleanStack, richVendors) {
             const name = data.businessName || "Компания";
             const owner = data.companyMeta?.owner ? ` (управление: ${data.companyMeta.owner})` : "";
             const stackNames = (cleanStack || []).map(t => stripForeignSymbols(typeof t === 'string' ? t : (t.name || "")));
@@ -862,8 +1038,27 @@
                 positioning: positioning,
                 quickWins: quickWins.length > 0 ? quickWins : ["Аудит и устранение главных операционных узких мест локации", "Автоматизация учета и клиентской воронки"],
                 trends: trends.length > 0 ? trends : [`Цифровизация процессов и автоматизация учета в сегменте «${niche}» (${country})`],
-                partners: buildDynamicPartnersFromData(data, city, country, niche)
+                partners: buildCleanPartnersList(data, richVendors, city, country, niche)
             };
+        }
+
+        // Генерация подробного аналитического досье конкурента при наведении (без дублирования адреса)
+        function buildDetailedCompetitorDossier(comp, compNiche, compCity, compCountry) {
+            let rawSum = stripForeignSymbols(comp.summary || comp.description || "");
+            // Удаляем дублирующийся адрес и шаблонную фразу "Действующий объект в категории..."
+            rawSum = rawSum.replace(/Адрес:.*$/i, "").replace(/Действующий объект в категории «[^»]+»\s*(\(Отзывов:\s*\d+\))?\.?/i, "").trim();
+
+            const ratingNum = parseFloat(comp.rating || "4.3") || 4.3;
+            const standingText = ratingNum >= 4.5
+                ? `Высокорейтинговый лидер клиентской лояльности (${ratingNum}★) в г. ${compCity}, формирующий планку качества обслуживания и скорости сервиса.`
+                : ratingNum >= 4.1
+                ? `Устойчивый рыночный игрок (${ratingNum}★) в локации ${compCity}, конкурирующий за основной поток целевого трафика и средний чек.`
+                : `Действующий участник рынка (${ratingNum}★) в г. ${compCity} с потенциалом перехвата его клиентской базы за счет более быстрого сервиса и цифровизации.`;
+
+            if (rawSum && rawSum.length > 25) {
+                return `${stripTrailingDot(rawSum)}. ${standingText}`;
+            }
+            return `Профильное предприятие в сегменте «${compNiche}» (${compCity}, ${compCountry}), работающее с пересекающейся целевой аудиторией региона. ${standingText}`;
         }
 
         function computeRealisticScores(data, bizName, cleanStack) {
@@ -1091,7 +1286,7 @@
             if (scanTimer) clearInterval(scanTimer);
             scanTimer = setInterval(() => {
                 seconds++;
-                btn.innerText = `Ядро Аргон (Gemini 2.5 Pro) проводит аудит... (${seconds} сек)`;
+                btn.innerText = `Ядро Аргон проводит глубокий аудит бизнеса... (${seconds} сек)`;
             }, 1000);
 
             const payload = { 
@@ -1117,7 +1312,7 @@
                     appendToHistory(result.reportData, country, city, now, result.fileId);
                     window.location.href = `?id=${result.fileId}`;
                 } else {
-                    msg.innerText = "Ошибка сервера: " + result.message + " (Убедитесь, что в GAS развернута Новая версия!)";
+                    msg.innerText = "Ошибка сервера: " + result.message;
                     msg.style.color = "#ff4444";
                     btn.disabled = false;
                     btn.innerText = "Запустить Глубокий Скан";
@@ -1220,6 +1415,7 @@
 
                     const cleanStack = sanitizeTechStack(data.techStack, data.reputation?.negative);
                     const cleanInfra = sanitizeInfrastructure(data.infrastructure, data.reputation?.negative);
+                    const richVendors = ensureRichVendorsPool(data.itVendors, cleanStack, data.newArchitecture, activeReportNiche, activeReportCountry, activeReportCity);
 
                     const s = computeRealisticScores(data, bizName, cleanStack);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
@@ -1230,8 +1426,9 @@
                     document.getElementById('bar-cust').style.width = `${s.customer}%`;
                     document.getElementById('sc-growth').innerText = `${s.growth}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth}%`;
+                    populateScoreTooltips(s, bizName, cleanStack, data.bottlenecks);
 
-                    const dynamicIntel = buildDynamicIntelligenceFromData(data, activeReportNiche, activeReportCity, activeReportCountry, cleanStack);
+                    const dynamicIntel = buildDynamicIntelligenceFromData(data, activeReportNiche, activeReportCity, activeReportCountry, cleanStack, richVendors);
                     const mi = data.marketIntelligence || {};
                     document.getElementById('b-positioning').innerText = dynamicIntel.positioning;
                     
@@ -1278,25 +1475,8 @@
                         `${bizName} ${addr}`
                     );
 
-                    let contactsHtml = "";
-                    if(data.contacts) {
-                        if(addr) contactsHtml += `<div class="contact-row">📍 <span>${addr}</span></div>`;
-                        if(data.contacts.phone && data.contacts.phone !== "N/A") contactsHtml += `<div class="contact-row">📞 <span>${data.contacts.phone}</span></div>`;
-                        if(data.contacts.hours && data.contacts.hours !== "N/A") contactsHtml += `<div class="contact-row">🕒 <span>${data.contacts.hours}</span></div>`;
-                        if(data.contacts.website && data.contacts.website !== "N/A") {
-                            const wUrl = cleanUrl(data.contacts.website);
-                            contactsHtml += `<div class="contact-row">🌐 <a href="${wUrl.startsWith('http') ? wUrl : PROTO + wUrl}" target="_blank">${wUrl}</a></div>`;
-                        }
-                    }
-                    if(data.socialMedia) {
-                        let smHtml = '<div class="social-links" style="display:flex; gap:10px;">';
-                        if(data.socialMedia.facebook && data.socialMedia.facebook !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.facebook)}" target="_blank" title="Facebook">Facebook</a>`;
-                        if(data.socialMedia.instagram && data.socialMedia.instagram !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.instagram)}" target="_blank" title="Instagram">Instagram</a>`;
-                        if(data.socialMedia.linkedin && data.socialMedia.linkedin !== "N/A") smHtml += `<a href="${cleanUrl(data.socialMedia.linkedin)}" target="_blank" title="LinkedIn">LinkedIn</a>`;
-                        smHtml += '</div>';
-                        contactsHtml += smHtml;
-                    }
-                    document.getElementById('b-contacts-container').innerHTML = contactsHtml || "Нет данных";
+                    // Рендер структурированных контактов из Google Maps без дублей
+                    renderStructuredContacts(data, addr);
 
                     let ratingText = String(data.rating || 'N/A');
                     if (ratingText !== 'N/A' && !ratingText.includes('/')) ratingText += '/5.0';
@@ -1339,21 +1519,26 @@
                     }
 
                     populateList('b-infra', cleanInfra);
-                    populateList('b-bottlenecks', data.bottlenecks);
+
+                    // Рендер двух разделенных блоков Критических узких мест (IT-контур и Физический контур)
+                    const splitBots = splitBottlenecksIntoItAndPhys(data);
+                    populateList('b-bottlenecks-it', splitBots.itList);
+                    populateList('b-bottlenecks-phys', splitBots.physList);
                     
-                    // Рендер Стратегического партнерства с выводом Страны и Города
+                    // Рендер Стратегического партнерства (1-я строка: только Название компании + Страна и Город; скан только по клику на название)
                     const partContainer = document.getElementById('b-partners');
                     partContainer.innerHTML = '';
                     const partnersList = dynamicIntel.partners;
 
                     partnersList.forEach(p => {
-                        let partnerDisplayName = stripForeignSymbols(p.name || p.type || "Партнер");
-                        let cleanScanName = extractCleanCompanyName(p.cleanName || partnerDisplayName);
+                        let cleanScanName = extractCleanCompanyName(p.cleanName || p.name || "Партнер");
                         let pCountry = (p.country && p.country !== "Н/Д") ? stripForeignSymbols(p.country) : activeReportCountry;
-                        let pCity = sanitizeCityField(p.city, pCountry, activeReportCity);
+                        let pCity = sanitizeCityField(p.city, pCountry, "Центральный офис");
                         let targetArea = stripForeignSymbols(p.integrationTarget || "Технологическая и коммерческая интеграция");
                         let rawPartnerUrl = cleanUrl(p.website);
-                        let partnerUrl = rawPartnerUrl && rawPartnerUrl !== "N/A" ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(cleanScanName + " " + pCity + " " + pCountry));
+                        let partnerUrl = (rawPartnerUrl && rawPartnerUrl !== "N/A" && !rawPartnerUrl.includes("google.com"))
+                            ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl)
+                            : (PROTO + "www.google" + DOT_COM + "/search?btnI=1&q=" + encodeURIComponent(cleanScanName + " official website"));
 
                         const safeScanName = cleanScanName.replace(/'/g, "\\'");
                         const safePCountry = pCountry.replace(/'/g, "\\'");
@@ -1361,30 +1546,43 @@
 
                         let pDiv = document.createElement('div');
                         pDiv.className = 'vendor-card partner-card';
+                        pDiv.setAttribute('data-geo-lookup', 'true');
+                        pDiv.setAttribute('data-company-name', cleanScanName);
+                        pDiv.setAttribute('data-company-country', pCountry);
+                        pDiv.setAttribute('data-company-city', pCity);
+
                         pDiv.innerHTML = `
-                            <div style="font-weight: bold; font-size: 16px; color: #fff;">${partnerDisplayName}</div>
-                            <div class="geo-badge-inline">🌍 ${pCountry}, 🏙️ ${pCity}</div><br>
+                            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                                <span class="scan-company-title" onclick="scanDirect('${safeScanName}', '${safePCountry}', '${safePCity}')">
+                                    ${cleanScanName}
+                                    <span class="title-scan-tooltip">🔍 Нажмите B2B Scan: ${cleanScanName} (${pCountry}, ${pCity})</span>
+                                </span>
+                                <span class="geo-badge-inline">🌍 ${pCountry}, 🏙️ ${pCity}</span>
+                            </div>
                             <div class="integration-badge">🔗 ${targetArea}</div>
                             <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(p.reason || p.description || '')}</div>
-                            <a href="${partnerUrl}" target="_blank" class="vendor-site-btn partner-btn" onclick="event.stopPropagation()">🌐 Найти решение</a>
-                            <div class="comp-tooltip">🔍 Запустить скан: ${cleanScanName} (${pCountry}, ${pCity})</div>
+                            <a href="${partnerUrl}" target="_blank" rel="noopener" class="vendor-site-btn partner-btn">🌐 Перейти на сайт компании</a>
                         `;
-                        pDiv.onclick = (e) => {
-                            if(e.target.tagName !== 'A') scanDirect(safeScanName, safePCountry, safePCity);
-                        };
                         partContainer.appendChild(pDiv);
                     });
                     
-                    renderCompetitorsList(allCompetitorsData);
-                    syncReportLocationsWithGoogleDB(data, activeIsCorporate);
-
+                    // Рендер Архитектуры Роста с нумерацией (#01, #02...) и Процентом Ликвидности внедрения
                     const archContainer = document.getElementById('b-architecture');
                     archContainer.innerHTML = '';
-                    if(data.newArchitecture) {
-                        data.newArchitecture.forEach(step => {
+                    if(data.newArchitecture && Array.isArray(data.newArchitecture)) {
+                        data.newArchitecture.forEach((step, idx) => {
+                            const numStr = String(idx + 1).padStart(2, '0');
+                            const liqPct = computeStepLiquidity(step, idx);
                             archContainer.innerHTML += `
                             <div class="arch-step">
-                                <h4 class="has-tooltip" style="margin:0 0 6px 0; color:#00ff88;">${stripForeignSymbols(step.title)} <span style="font-size:12px; color:#aaa; font-weight:normal;">(Инструкция)</span><span class="tooltip-text">${stripForeignSymbols(step.instruction || step.desc)}</span></h4>
+                                <div class="arch-header-row">
+                                    <h4 class="has-tooltip" style="margin:0; color:#00ff88;">
+                                        <span class="arch-num-badge">#${numStr}</span>${stripForeignSymbols(step.title)}
+                                        <span style="font-size:12px; color:#aaa; font-weight:normal;">(Инструкция)</span>
+                                        <span class="tooltip-text">${stripForeignSymbols(step.instruction || step.desc)}</span>
+                                    </h4>
+                                    <span class="liquidity-badge">💧 Ликвидность внедрения: ${liqPct}%</span>
+                                </div>
                                 <p style="margin: 0; color: #ccc; font-size: 14px;">${stripForeignSymbols(step.desc)}</p>
                             </div>`;
                         });
@@ -1405,16 +1603,18 @@
                         document.getElementById('fin-payback').innerText = paybackStr;
                     }
 
-                    // Рендер Подрядчиков и Интеграторов с выводом Страны и Города
+                    // Рендер расширенного пула Подрядчиков и Интеграторов (7-8 компаний, скан по названию, реальная география)
                     const vendorsContainer = document.getElementById('b-vendors');
                     vendorsContainer.innerHTML = '';
-                    if(data.itVendors && data.itVendors.length > 0) {
-                        data.itVendors.forEach(vendor => {
+                    if(richVendors.length > 0) {
+                        richVendors.forEach(vendor => {
                             let cleanVendorName = extractCleanCompanyName(vendor.cleanName || vendor.name);
                             let vCountry = (vendor.country && vendor.country !== "Н/Д") ? stripForeignSymbols(vendor.country) : activeReportCountry;
-                            let vCity = sanitizeCityField(vendor.city, vCountry, activeReportCity);
+                            let vCity = sanitizeCityField(vendor.city, vCountry, "Центральный офис");
                             let rawVendorUrl = cleanUrl(vendor.website);
-                            let vendorUrl = rawVendorUrl && rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + (rawVendorUrl || ('www.google' + DOT_COM + '/search?q=' + encodeURIComponent(cleanVendorName + ' ' + vCity)));
+                            let vendorUrl = (rawVendorUrl && rawVendorUrl !== "N/A" && !rawVendorUrl.includes("google.com"))
+                                ? (rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + rawVendorUrl)
+                                : (PROTO + "www.google" + DOT_COM + "/search?btnI=1&q=" + encodeURIComponent(cleanVendorName + " official website"));
 
                             const safeVName = cleanVendorName.replace(/'/g, "\\'");
                             const safeVCountry = vCountry.replace(/'/g, "\\'");
@@ -1422,21 +1622,32 @@
 
                             let vDiv = document.createElement('div');
                             vDiv.className = 'vendor-card';
+                            vDiv.setAttribute('data-geo-lookup', 'true');
+                            vDiv.setAttribute('data-company-name', cleanVendorName);
+                            vDiv.setAttribute('data-company-country', vCountry);
+                            vDiv.setAttribute('data-company-city', vCity);
+
                             vDiv.innerHTML = `
-                                <div style="font-weight: bold; font-size: 16px; color: #fff;">${cleanVendorName} <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span></div>
-                                <div class="geo-badge-inline">🌍 ${vCountry}, 🏙️ ${vCity}</div>
-                                <div style="font-size: 13px; color: #aaa; margin: 6px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(vendor.description || vendor.desc || '')}</div>
-                                <a href="${vendorUrl}" target="_blank" class="vendor-site-btn" onclick="event.stopPropagation()">🌐 Сайт подрядчика</a>
-                                <div class="comp-tooltip">🔍 Запустить скан: ${cleanVendorName} (${vCountry}, ${vCity})</div>
+                                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                                    <span class="scan-company-title" onclick="scanDirect('${safeVName}', '${safeVCountry}', '${safeVCity}')">
+                                        ${cleanVendorName}
+                                        <span class="title-scan-tooltip">🔍 Нажмите B2B Scan: ${cleanVendorName} (${vCountry}, ${vCity})</span>
+                                    </span>
+                                    <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span>
+                                    <span class="geo-badge-inline">🌍 ${vCountry}, 🏙️ ${vCity}</span>
+                                </div>
+                                <div style="font-size: 13px; color: #ccc; margin: 8px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(vendor.description || vendor.desc || '')}</div>
+                                <a href="${vendorUrl}" target="_blank" rel="noopener" class="vendor-site-btn">🌐 Перейти на сайт компании</a>
                             `;
-                            vDiv.onclick = (e) => {
-                                if(e.target.tagName !== 'A') scanDirect(safeVName, safeVCountry, safeVCity);
-                            };
                             vendorsContainer.appendChild(vDiv);
                         });
                     } else {
                         vendorsContainer.innerHTML = '<p style="color:#aaa;">Подрядчики не найдены.</p>';
                     }
+
+                    renderCompetitorsList(allCompetitorsData);
+                    syncReportLocationsWithGoogleDB(data, activeIsCorporate);
+                    verifyPartnerAndVendorGeoViaGoogle();
 
                 } else {
                     document.getElementById('b-name').innerText = "Отчет не найден.";
@@ -1458,16 +1669,17 @@
                     let compCountry = (comp.country && comp.country !== "Н/Д") ? stripForeignSymbols(comp.country) : activeReportCountry;
                     let compCity = sanitizeCityField(comp.city, compCountry, activeReportCity);
                     let compNiche = stripForeignSymbols(comp.niche || activeReportNiche);
-                    let compSummary = stripForeignSymbols(comp.summary || comp.description || `Действующая компания в сегменте «${compNiche}» (${compCity}, ${compCountry}).`);
+                    let detailedDossier = buildDetailedCompetitorDossier(comp, compNiche, compCity, compCountry);
+
                     let btn = document.createElement('div');
                     btn.className = 'click-tag';
                     btn.innerHTML = `
                         <div class="comp-name">${stripForeignSymbols(comp.name)}</div>
                         <div class="comp-meta">⭐️ ${comp.rating || '4.4'} | 🌍 ${compCountry}, 🏙️ ${compCity}</div>
                         <div class="comp-tooltip">
-                            <div style="color:#ffaa00; font-weight:bold; margin-bottom:4px;">💼 Ниша: ${compNiche}</div>
-                            <div style="color:#ddd; margin-bottom:6px;">📌 <b>О компании:</b> ${compSummary}</div>
-                            <div style="color:#00ff88; font-size:11px;">🔍 Нажмите для запуска полного аудита</div>
+                            <div style="color:#ffaa00; font-weight:bold; margin-bottom:6px;">💼 Ниша: ${compNiche}</div>
+                            <div style="color:#ddd; margin-bottom:8px;">📌 <b>О компании:</b> ${detailedDossier}</div>
+                            <div style="color:#00ff88; font-size:11px; font-weight:bold;">🔍 Нажмите B2B Scan для полного аудита</div>
                         </div>
                     `;
                     btn.onclick = () => scanDirect(comp.name, compCountry, compCity);
@@ -1613,6 +1825,7 @@
 
         function populateList(elementId, arrayData) {
             const ul = document.getElementById(elementId);
+            if (!ul) return;
             ul.innerHTML = ''; 
             if (arrayData && arrayData.length > 0) {
                 arrayData.forEach(item => {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B2B Nexus - Official Data Business Audit</title>
+    <title>B2B Nexus - Global Official Data Business Scanner</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a0a; color: #e0e0e0; display: flex; justify-content: center; padding: 40px 20px; margin: 0;}
         .container { background: #151515; padding: 40px; border-radius: 16px; max-width: 1100px; width: 100%; box-shadow: 0 10px 30px rgba(0,255,136,0.1); border: 1px solid #222;}
@@ -160,7 +160,7 @@
     <div class="container" id="app-container">
         <!-- ФОРМА ВВОДА -->
         <div id="lead-form">
-            <h1 id="ui-main-title">B2B Nexus - Official Data Scanner</h1>
+            <h1 id="ui-main-title">B2B Nexus - Global Official Scanner</h1>
             
             <div class="geo-grid">
                 <div class="autocomplete-wrap">
@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <!-- 2. ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА -->
+            <!-- 2. МАТЕМАТИЧЕСКИЙ ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА -->
             <div class="grid-4">
                 <div class="score-box">
                     <div class="score-label" id="ui-sc-digital">Digital Maturity</div>
@@ -378,6 +378,7 @@
         const DOT_COM = ".c" + "om";
         const DOT_SPACE = ".spa" + "ce";
         const PLACES_REST_KEY = "AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs";
+        const GEMINI_REST_KEY = "AQ.Ab8RN6IJuPFbJSDjEqiK9V4K_LenWxYPfgNIw458E5LZJjQUWA";
         const DEFAULT_PHOTO = PROTO + "images.unsplash" + DOT_COM + "/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
         const FAVICON_BASE = PROTO + "www.google" + DOT_COM + "/s2/favicons?sz=128&domain=";
         const AVATAR_BASE = PROTO + "ui-avatars" + DOT_COM + "/api/?background=00ff88&color=000&bold=true&size=128&name=";
@@ -408,6 +409,8 @@
         let activeReportCountry = "";
         let activeReportCountryCode = "";
         let activeReportNiche = "";
+        let activeReportLat = null;
+        let activeReportLng = null;
         let activeIsCorporate = false;
         let currentCountry = "";
         let currentCity = "";
@@ -415,10 +418,24 @@
         let bizAutoTimer = null;
         let globalUsedContractorBrands = new Set();
 
-        async function fetchPlacesNewAPI(textQuery, maxCount) {
+        // Глобальный запрос к официальному Google Places API (New) v1 с поддержкой координатного радиуса в любой точке мира
+        async function fetchPlacesNewAPI(textQuery, maxCount, biasLat, biasLng, radiusMeters) {
             if (!textQuery || !String(textQuery).trim()) return [];
             const langCode = (document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU").substring(0, 2);
             const url = PROTO + "places.googleapis" + DOT_COM + "/v1/places:searchText";
+            const payload = {
+                textQuery: String(textQuery).trim(),
+                languageCode: langCode,
+                maxResultCount: maxCount || 20
+            };
+            if (biasLat && biasLng) {
+                payload.locationBias = {
+                    circle: {
+                        center: { latitude: Number(biasLat), longitude: Number(biasLng) },
+                        radius: Number(radiusMeters || 50000.0)
+                    }
+                };
+            }
             try {
                 const res = await fetch(url, {
                     method: "POST",
@@ -427,11 +444,7 @@
                         "X-Goog-Api-Key": PLACES_REST_KEY,
                         "X-Goog-FieldMask": "places.id,places.displayName,places.businessStatus,places.rating,places.userRatingCount,places.location,places.primaryType,places.primaryTypeDisplayName,places.formattedAddress,places.addressComponents,places.websiteUri"
                     },
-                    body: JSON.stringify({
-                        textQuery: String(textQuery).trim(),
-                        languageCode: langCode,
-                        maxResultCount: maxCount || 20
-                    })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 return (data && Array.isArray(data.places)) ? data.places : [];
@@ -440,9 +453,22 @@
             }
         }
 
+        // Математическая формула Гаверсинуса: вычисляет точное расстояние в километрах между двумя точками (lat1, lng1) и (lat2, lng2) на Земле
+        function haversineDistanceKm(lat1, lng1, lat2, lng2) {
+            if (!lat1 || !lng1 || !lat2 || !lng2) return 999999;
+            const toRad = deg => (deg * Math.PI) / 180;
+            const R = 6371;
+            const dLat = toRad(Number(lat2) - Number(lat1));
+            const dLng = toRad(Number(lng2) - Number(lng1));
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(toRad(Number(lat1))) * Math.cos(toRad(Number(lat2))) *
+                      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
         const UI_DICT = {
             "en-US": {
-                mainTitle: "B2B Nexus - Official Data Scanner",
+                mainTitle: "B2B Nexus - Global Official Scanner",
                 countryPh: "🌍 Country (type first letter)",
                 cityPh: "🏙️ City (type first letter)",
                 urlPh: "Business Name, Brand or Website URL (type first letter)",
@@ -507,7 +533,7 @@
                 propModalTitle: "✉️ Send Commercial Proposal to Contractor"
             },
             "ru-RU": {
-                mainTitle: "B2B Nexus - Официальный Сканер Бизнеса",
+                mainTitle: "B2B Nexus - Глобальный Официальный Сканер",
                 countryPh: "🌍 Страна (введите первую букву)",
                 cityPh: "🏙️ Город (введите первую букву)",
                 urlPh: "Название бизнеса, бренд или URL (введите первую букву)",
@@ -572,7 +598,7 @@
                 propModalTitle: "✉️ Отправить коммерческое предложение подрядчику"
             },
             "de-DE": {
-                mainTitle: "B2B Nexus - Unternehmensscanner",
+                mainTitle: "B2B Nexus - Globaler Unternehmensscanner",
                 countryPh: "🌍 Land (ersten Buchstaben eingeben)",
                 cityPh: "🏙️ Stadt (ersten Buchstaben eingeben)",
                 urlPh: "Firmenname, Marke oder URL (ersten Buchstaben eingeben)",
@@ -643,63 +669,26 @@
             const pack = UI_DICT[lang] || UI_DICT["en-US"];
             return pack[key] || UI_DICT["en-US"][key] || key;
         }
-        // Очистка дефисных микрорайонов (Krefeld-Fichtenhain, Duisburg-Homberg-Ruhrort-Baerl, Leverkusen-Wiesdorf) и сторон света (Bochum Süd/Nord) до официального названия города
-        function cleanDistrictToOfficialCity(rawCity, formattedAddress, fallbackCity) {
+        // Извлечение чистого названия города из адресных компонентов Google Places API v1 для любой страны мира
+        function cleanGlobalCityName(rawCity, formattedAddress, fallbackCity) {
             let city = String(rawCity || "").trim();
             const addr = String(formattedAddress || "").trim();
 
-            const zipCityMatch = addr.match(/\b\d{5}\s+([A-Za-zÄÖÜäöüßА-Яа-яіїєґ\s\-]+)/);
+            const zipCityMatch = addr.match(/\b\d{4,6}\s+([A-Za-zÄÖÜäöüßА-Яа-яіїєґ\s\-]+)/);
             if (zipCityMatch && zipCityMatch[1]) {
                 const fromZip = zipCityMatch[1].split(",")[0].trim();
-                if (fromZip && fromZip.length >= 3 && !/stadtbezirk|innenstadt/i.test(fromZip)) {
+                if (fromZip && fromZip.length >= 2 && !/stadtbezirk|innenstadt|district|ward/i.test(fromZip)) {
                     city = fromZip;
                 }
             }
 
-            // Приводим русские дубли городов к единому стандарту земли NRW, чтобы в фильтре не двоились "Эссен" и "Essen"
-            const ruToDeMap = {
-                "эссен": "Essen", "дюссельдорф": "Düsseldorf", "кёльн": "Köln", "кельн": "Köln",
-                "дортмунд": "Dortmund", "дуйсбург": "Duisburg", "бохум": "Bochum", "вупперталь": "Wuppertal",
-                "крефельд": "Krefeld", "оберхаузен": "Oberhausen", "мюнстер": "Münster", "бонн": "Bonn",
-                "леверкузен": "Leverkusen", "мёрс": "Moers", "клеве": "Kleve", "гох": "Goch", "везель": "Wesel"
-            };
-            if (ruToDeMap[city.toLowerCase()]) {
-                city = ruToDeMap[city.toLowerCase()];
+            city = city.replace(/\s+(Süd|Nord|West|Ost|Mitte|Innenstadt|Altstadt|Zentrum|District|Subdistrict)$/i, "").trim();
+
+            if (city.includes("-") && !/^(kamp-lintfort|castrop-rauxel|bedburg-hau|bad-|sankt-|st\.-|new-|port-|el-|al-)/i.test(city)) {
+                const basePart = city.split("-")[0].trim();
+                if (basePart.length >= 3) city = basePart;
             }
 
-            // Убираем стороны света и районные пометки (Bochum Süd -> Bochum, Duisburg Süd -> Duisburg)
-            city = city.replace(/\s+(Süd|Nord|West|Ost|Mitte|Innenstadt|Altstadt|Zentrum)$/i, "").trim();
-
-            // Убираем пригородные районы через дефис, сохраняя настоящие двойные названия городов (Kamp-Lintfort, Castrop-Rauxel, Bedburg-Hau)
-            if (city.toLowerCase().startsWith("kamp-lintfort")) return "Kamp-Lintfort";
-            if (city.toLowerCase().startsWith("castrop-rauxel")) return "Castrop-Rauxel";
-            if (city.toLowerCase().startsWith("bedburg-hau")) return "Bedburg-Hau";
-            if (city.toLowerCase().startsWith("emmerich")) return "Emmerich am Rhein";
-
-            const majorHyphenCities = ["Krefeld", "Duisburg", "Dortmund", "Oberhausen", "Leverkusen", "Essen", "Köln", "Bochum", "Düsseldorf", "Mülheim", "Wuppertal", "Gelsenkirchen", "Mönchengladbach"];
-            for (let i = 0; i < majorHyphenCities.length; i++) {
-                const mc = majorHyphenCities[i];
-                if (city.toLowerCase().startsWith(mc.toLowerCase() + "-")) {
-                    return mc;
-                }
-            }
-
-            const lower = city.toLowerCase();
-            if (lower.includes("cologne")) return "Köln";
-            if (lower.includes("elberfeld") || lower.includes("barmen")) return "Wuppertal";
-            if (lower.includes("quettingen") || lower.includes("opladen") || lower.includes("wiesdorf")) return "Leverkusen";
-            if (lower.includes("fichtenhain") || lower.includes("linn") || lower.includes("uerdingen")) return "Krefeld";
-            if (lower.includes("osterfeld") || lower.includes("sterkrade")) return "Oberhausen";
-            if (lower.includes("hombruch") || lower.includes("aplerbeck")) return "Dortmund";
-            if (lower.includes("homberg") || lower.includes("ruhrort") || lower.includes("walsum")) return "Duisburg";
-            if (lower.includes("stadtbezirk") || lower === "innenstadt" || lower === "altstadt" || lower === "mitte") {
-                if (addr.toLowerCase().includes("düsseldorf")) return "Düsseldorf";
-                if (addr.toLowerCase().includes("köln")) return "Köln";
-                if (addr.toLowerCase().includes("essen")) return "Essen";
-                if (addr.toLowerCase().includes("dortmund")) return "Dortmund";
-                if (addr.toLowerCase().includes("duisburg")) return "Duisburg";
-                return fallbackCity || "Düsseldorf";
-            }
             return city || fallbackCity || "";
         }
 
@@ -710,7 +699,6 @@
             let postalTown = "";
             let admin2 = "";
             let admin1 = "";
-            let sublocality = "";
             let country = "";
             let countryCode = "";
 
@@ -726,7 +714,6 @@
                     if (types.includes("postal_town") && !postalTown) postalTown = longTxt;
                     if (types.includes("administrative_area_level_2") && !admin2) admin2 = longTxt;
                     if (types.includes("administrative_area_level_1") && !admin1) admin1 = longTxt;
-                    if (types.includes("sublocality_level_1") && !sublocality) sublocality = longTxt;
                     if (types.includes("country")) {
                         country = longTxt;
                         countryCode = shortTxt.toUpperCase();
@@ -734,8 +721,8 @@
                 });
             }
             let street = [route, streetNum].filter(Boolean).join(" ");
-            const rawCity = locality || postalTown || admin2 || sublocality || admin1 || "";
-            const resolvedCity = cleanDistrictToOfficialCity(rawCity, placeObj.formattedAddress, "");
+            const rawCity = locality || postalTown || admin2 || admin1 || "";
+            const resolvedCity = cleanGlobalCityName(rawCity, placeObj.formattedAddress, "");
             if (!street && placeObj.formattedAddress) {
                 street = placeObj.formattedAddress.split(",")[0].trim();
             }
@@ -745,6 +732,33 @@
                 country: country,
                 countryCode: countryCode
             };
+        }
+
+        // Математический расчет 4 индексов зрелости на основе реальных метрик конкретного бизнеса (без зашитых цифр 72/74/82/88)
+        function computeMathematicalScores(data, rawRevNum, rawLostNum, cleanStack, splitBots) {
+            const s = data.executiveScores;
+            if (s && s.digital && s.operations && s.customer && s.growth &&
+                !(s.digital === 72 && s.operations === 74 && s.customer === 82 && s.growth === 88)) {
+                return s;
+            }
+
+            const clamp = (val, min, max) => Math.max(min, Math.min(max, Math.round(val)));
+            const ratingNum = parseFloat(String(data.rating || "4.4").split("/")[0]) || 4.4;
+            const revCount = parseInt(String(data.reviewCount || "25").replace(/[^0-9]/g, ""), 10) || 25;
+            const stackLen = Array.isArray(cleanStack) ? cleanStack.length : 5;
+            const infraLen = Array.isArray(data.infrastructure) ? data.infrastructure.length : 5;
+            const itBotsLen = splitBots.itList.length || 4;
+            const physBotsLen = splitBots.physList.length || 4;
+            const negLen = (data.reputation && Array.isArray(data.reputation.negative)) ? data.reputation.negative.length : 3;
+            const hasWeb = (data.contacts && data.contacts.website && data.contacts.website !== "N/A") ? 1 : 0;
+            const lossPct = (rawLostNum / Math.max(1, rawRevNum)) * 100;
+
+            const digital = clamp(46 + (hasWeb * 12) + Math.min(24, stackLen * 2.6) - (itBotsLen * 2.4), 38, 94);
+            const operations = clamp(54 + ((ratingNum - 3.5) * 11) + Math.min(16, infraLen * 1.8) - (physBotsLen * 2.7), 42, 95);
+            const customer = clamp(((ratingNum / 5.0) * 76) + Math.min(18, Math.log10(revCount + 1) * 5.2) - (negLen * 1.8), 45, 98);
+            const growth = clamp(60 + Math.min(25, lossPct * 1.4) + Math.min(12, (itBotsLen + physBotsLen) * 1.1), 58, 97);
+
+            return { digital, operations, customer, growth };
         }
 
         function applyLanguageUI() {
@@ -975,7 +989,6 @@
             }
         });
 
-        // Полная очистка любых случайных символов чужих алфавитов (включая деванагари "टाइम", CJK, арабский, тайский)
         function stripForeignSymbols(str) {
             if (!str) return "";
             let s = String(str).replace(/टाइम/g, "Time");
@@ -988,12 +1001,11 @@
             return stripForeignSymbols(str).replace(/\.+$/, "");
         }
 
-        // Транслитерация немецких умляутов для корректных доменных имен и Email по стандарту RFC
-        function transliterateDomainSlug(str) {
-            return String(str || "").toLowerCase()
-                .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
-                .replace(/\b(gmbh|ag|se|kg|ohg|bv|inc|ltd|ek|gbr|mbh|co)\b/g, "")
-                .replace(/[^a-z0-9]/g, "");
+        function extractCleanDomainFromUrl(rawUrl) {
+            if (!rawUrl || rawUrl === "N/A") return "";
+            const cleaned = cleanUrl(rawUrl).replace(/^https?:\/\/(www\.)?/i, "").split("/")[0].split("?")[0].toLowerCase();
+            if (!cleaned || !cleaned.includes(".") || cleaned.includes("google.")) return "";
+            return cleaned.replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss");
         }
 
         function extractCleanCompanyName(rawTitle) {
@@ -1007,10 +1019,9 @@
             return s.split(" — ")[0].split(" - ")[0].replace(/\s*\(🌍.*?\)\s*/g, "").trim();
         }
 
-        // Точное выделение корневого бренда компании (очищает общие слова вроде Autohaus, Dealership, Nutzfahrzeuge, VW, Audi, Skoda, чтобы Borgmann и Minrath распознавались безошибочно!)
         function extractCoreBrandKey(compName) {
             if (!compName) return "";
-            const genericWords = /\b(gmbh|co|kg|ag|se|ek|ohg|gbr|mbh|inc|ltd|llc|bv|standort|autohaus|automobil|automobile|auto|zentrum|center|centre|dealership|nutzfahrzeuge|gebrauchtwagen|vertragshändler|service|services|systemhaus|it-systemhaus|edv|consulting|solutions|software|studio|küchen|küchenstudio|möbelhaus|einrichtungshaus|vw|volkswagen|audi|skoda|seat|cupra|bmw|mercedes|benz|porsche|ford|opel|toyota|hyundai|renault|peugeot|citroen|nissan|mazda|kia|fiat|volvo)\b/gi;
+            const genericWords = /\b(gmbh|co|kg|ag|se|ek|ohg|gbr|mbh|inc|ltd|llc|bv|pty|plc|standort|autohaus|automobil|automobile|auto|zentrum|center|centre|dealership|nutzfahrzeuge|gebrauchtwagen|vertragshändler|service|services|systemhaus|it-systemhaus|edv|consulting|solutions|software|studio|küchen|küchenstudio|möbelhaus|einrichtungshaus|zoo|tiergarten|tierpark|dierenpark|wildpark)\b/gi;
             const cleaned = String(compName).toLowerCase().replace(genericWords, " ").replace(/[^a-zа-яіїєґ0-9\s]/gi, " ").trim();
             const tokens = cleaned.split(/\s+/).filter(w => w.length >= 3);
             if (tokens.length > 0) return tokens[0];
@@ -1018,92 +1029,19 @@
             return fallbackTokens.length > 0 ? fallbackTokens[0] : String(compName).toLowerCase().replace(/[^a-z0-9]/g, "");
         }
 
-        // Проверка принадлежности к одной сети/бренду (чтобы "VW Nutzfahrzeuge Borgmann" никогда не попадал в конкуренты "VW Borgmann"!)
-        function isSameBrandChain(compName, mainBusinessName) {
-            if (!compName || !mainBusinessName) return false;
-            const cLower = String(compName).toLowerCase().trim();
-            const bLower = String(mainBusinessName).toLowerCase().trim();
-            if (cLower === bLower) return true;
+        // Проверка совпадения бренда или вложенного вольера/отдела (например: "ErdmännchenLodge - Zoo Krefeld" внутри "Zoo Krefeld")
+        function isSameOrSubEntity(candidateName, existingName) {
+            if (!candidateName || !existingName) return false;
+            const cLower = String(candidateName).toLowerCase().trim();
+            const eLower = String(existingName).toLowerCase().trim();
+            if (cLower === eLower) return true;
+            if (eLower.length >= 5 && cLower.includes(eLower)) return true;
+            if (cLower.length >= 5 && eLower.includes(cLower)) return true;
 
-            const cKey = extractCoreBrandKey(compName);
-            const bKey = extractCoreBrandKey(mainBusinessName);
-            if (cKey && bKey && cKey.length >= 3 && cKey === bKey) return true;
-
-            if (bKey && bKey.length >= 4 && cLower.includes(bKey)) return true;
-            if (cKey && cKey.length >= 4 && bLower.includes(cKey)) return true;
+            const cKey = extractCoreBrandKey(candidateName);
+            const eKey = extractCoreBrandKey(existingName);
+            if (cKey && eKey && cKey.length >= 4 && cKey === eKey) return true;
             return false;
-        }
-
-        function isForeignCrossBorderCity(cityName, reportCountry) {
-            if (!cityName || !reportCountry) return false;
-            const cLower = String(cityName).toLowerCase().trim();
-            const rCountryLower = String(reportCountry).toLowerCase().trim();
-            const dutchBorderCities = [
-                "wijchen", "duiven", "venlo", "winterswijk", "zutphen", "nijmegen", "arnhem",
-                "roermond", "enschede", "hengelo", "zevenaar", "doetinchem", "apeldoorn",
-                "eindhoven", "gennep", "boxmeer", "cuijk", "groesbeek", "millingen", "malden",
-                "beuningen", "elst", "bemmel", "huissen", "westervoort", "velp", "wageningen",
-                "ede", "barneveld", "deventer", "almelo", "oldenzaal", "losser", "haaksbergen"
-            ];
-            if ((rCountryLower.includes("герман") || rCountryLower.includes("german") || rCountryLower.includes("deutschland")) &&
-                dutchBorderCities.some(dc => cLower.includes(dc))) {
-                return true;
-            }
-            return false;
-        }
-
-        function isIrrelevantPlaceForCompetitor(compName, compNicheOrType, targetNiche) {
-            const nameLower = String(compName || "").toLowerCase().trim();
-            const typeLower = String(compNicheOrType || "").toLowerCase().trim();
-            const targetLower = String(targetNiche || "").toLowerCase().trim();
-
-            const isTargetGroceryOrFuel = /супермаркет|продукты|grocery|supermarket|азс|заправк|tankstelle|gas_station|музей|зоопарк|museum|zoo/.test(targetLower);
-            if (isTargetGroceryOrFuel) return false;
-
-            const bannedBrandsAndPlaces = [
-                "kaufland", "rewe", "lidl", "aldi", "edeka", "netto", "penny", "dm-drogerie",
-                "rossmann", "aral", "shell", "totalenergies", "esso", "classic tankstelle",
-                "tankstelle", "зоопарк", "tiergarten", "zoo ", "museum", "schloss moyland",
-                "bahnhof", "train station", "bus station", "sparkasse", "volksbank", "postbank",
-                "apotheke", "hagebaumarkt", "bauhaus", "obi ", "toom ", "tuincentrum", "intratuin",
-                "obelink", "nuklear-service", "pwc", "pricewaterhouse", "deloitte", "kpmg"
-            ];
-            if (bannedBrandsAndPlaces.some(b => nameLower === "dm" || nameLower.startsWith("dm ") || nameLower.includes(b) || typeLower.includes(b))) {
-                return true;
-            }
-
-            const bannedGoogleTypes = [
-                "supermarket", "grocery_store", "gas_station", "drugstore", "pharmacy",
-                "zoo", "museum", "tourist_attraction", "train_station", "transit_station",
-                "light_rail_station", "subway_station", "park", "hospital", "school", "bank", "atm"
-            ];
-            if (bannedGoogleTypes.some(t => typeLower.includes(t))) {
-                return true;
-            }
-            return false;
-        }
-
-        function localizeNicheLabel(rawNiche) {
-            const s = stripForeignSymbols(rawNiche || activeReportNiche || "Business");
-            const lang = document.getElementById('lang') ? document.getElementById('lang').value : "en-US";
-            if (!lang.startsWith("ru")) return s;
-            const map = {
-                "garden center": "Садовый центр и товары для дома",
-                "furniture store": "Салон мебели и кухонь",
-                "home goods store": "Товары для дома и интерьера",
-                "kitchen remodeler": "Студия проектирования и монтажа кухонь",
-                "hardware store": "Строительный и интерьерный гипермаркет",
-                "general contractor": "Проектирование и комплектация объектов",
-                "consultant": "ИТ-консалтинг и системная интеграция",
-                "computer service": "ИТ-услуги и обслуживание инфраструктуры",
-                "software company": "Разработка ПО и системная интеграция",
-                "car dealer": "Официальный автомобильный дилер",
-                "motor vehicle dealer": "Автосалон и сервисный центр",
-                "used car dealer": "Центр автомобилей с пробегом",
-                "auto repair shop": "Авторизованный автосервис"
-            };
-            const lower = s.toLowerCase().trim();
-            return map[lower] || activeReportNiche || s;
         }
 
         function isSocialOrDirectoryDomain(domain) {
@@ -1175,14 +1113,14 @@
             const rawCity = locality || postalTown || admin2 || admin1 || "";
             return {
                 street: fullStreet || "",
-                city: cleanDistrictToOfficialCity(rawCity, formattedAddress, ""),
+                city: cleanGlobalCityName(rawCity, formattedAddress, ""),
                 country: country || "",
                 countryCode: countryCode || ""
             };
         }
 
         function sanitizeCityField(rawCity, countryStr, fallbackCity, formattedAddr) {
-            const cleaned = cleanDistrictToOfficialCity(stripForeignSymbols(rawCity), formattedAddr || "", fallbackCity);
+            const cleaned = cleanGlobalCityName(stripForeignSymbols(rawCity), formattedAddr || "", fallbackCity);
             const cnt = stripForeignSymbols(countryStr);
             if (!cleaned || cleaned === "Н/Д" || cleaned === "Не указан" || cleaned === "N/A" || cleaned === "HQ" || cleaned.toLowerCase() === cnt.toLowerCase()) {
                 return (fallbackCity && fallbackCity !== "Н/Д" && fallbackCity !== "N/A" && fallbackCity !== "HQ" && fallbackCity.toLowerCase() !== cnt.toLowerCase()) ? fallbackCity : "";
@@ -1190,144 +1128,155 @@
             return cleaned;
         }
 
-        function isSyntheticFakeCompetitor(compName) {
-            if (!compName) return true;
-            const fakePattern = /\b(Central|Plus|Group|Express|Pro|Market|Service|Center|Prime|Direct|Hub|Solutions|Partner|Network|Standard|Optima|Alliance|Global|Local|Premium|City|Metro|Nord|Sud|West|East|Select|Master|Expert|Leader|Центральные|Плюс|Экспресс|Про|рынки|сервисы|центры|хаб|решения|партнеры|сети|Стандарты|Альянсы)\s*\([^)]+\)$/i;
-            return fakePattern.test(String(compName));
+        // Строгая математическая фильтрация конкурентов: принимаем только объекты с координатами и проверенным countryCode из Google Maps, отсекая вложенные вольеры/отделы в радиусе 450 метров
+        function canAddVerifiedCompetitor(cand, existingList, mainBizName, mainLat, mainLng, targetCountryCode) {
+            if (!cand || !cand.name) return false;
+            const cName = stripForeignSymbols(cand.name);
+            if (isSameOrSubEntity(cName, mainBizName)) return false;
+
+            const bKey = extractCoreBrandKey(cName);
+            if (globalUsedContractorBrands.has(bKey)) return false;
+
+            // Если известен официальный ISO-код страны проверяемого бизнеса (например DE, CN, KE, US), требуем точного совпадения countryCode
+            if (targetCountryCode && cand.countryCode && cand.countryCode !== targetCountryCode) {
+                return false;
+            }
+
+            // Математическая отсечка внутренних вольеров/отделов самого проверяемого объекта (ближе 350 метров)
+            if (mainLat && mainLng && cand.lat && cand.lng) {
+                if (haversineDistanceKm(mainLat, mainLng, cand.lat, cand.lng) < 0.35) {
+                    return false;
+                }
+            }
+
+            for (let i = 0; i < existingList.length; i++) {
+                const ex = existingList[i];
+                if (isSameOrSubEntity(cName, ex.name)) return false;
+                // Если новый объект находится в радиусе 450 метров от уже добавленного конкурента (например, павильон внутри Zoo Krefeld или Grugapark) — отсекаем!
+                if (cand.lat && cand.lng && ex.lat && ex.lng) {
+                    if (haversineDistanceKm(cand.lat, cand.lng, ex.lat, ex.lng) < 0.45) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
-        // Фильтрация конкурентов: исключает собственные подразделения компании (VW Nutzfahrzeuge Borgmann), дубли дилерских групп (Minrath) и уже назначенных подрядчиков
-        function filterRealCompetitorsOnly(rawCompetitors, bizName, niche, city, country) {
-            const result = [];
-            const seenBrands = new Set();
+        // Глобальная загрузка 30 реальных профильных конкурентов через официальный Google Places API v1 для любой точки мира и любой ниши
+        async function loadOfficialGlobalCompetitors(rawServerCompetitors, bizName, niche, city, country) {
+            const verifiedList = [];
 
-            if (Array.isArray(rawCompetitors)) {
-                rawCompetitors.forEach(c => {
-                    if (!c || !c.name) return;
-                    const cName = stripForeignSymbols(c.name);
-                    if (isSameBrandChain(cName, bizName)) return;
-                    if (isSyntheticFakeCompetitor(cName)) return;
-                    if (isIrrelevantPlaceForCompetitor(cName, c.niche || "", niche)) return;
-
-                    const brandKey = extractCoreBrandKey(cName);
-                    if (seenBrands.has(brandKey) || globalUsedContractorBrands.has(brandKey)) return;
-
-                    const cCountry = (c.country && c.country !== "Н/Д" && c.country !== "N/A") ? stripForeignSymbols(c.country) : country;
-                    const cCity = sanitizeCityField(c.city, cCountry, city, c.street || "");
-
-                    if (isForeignCrossBorderCity(cCity, country) || isForeignCrossBorderCity(cName, country)) {
-                        return;
+            // 1. Сначала берем из ответа сервера только те объекты, у которых есть реальные координаты Google Maps и совпадающий countryCode
+            if (Array.isArray(rawServerCompetitors)) {
+                rawServerCompetitors.forEach(c => {
+                    if (!c || !c.lat || !c.lng) return;
+                    if (canAddVerifiedCompetitor(c, verifiedList, bizName, activeReportLat, activeReportLng, activeReportCountryCode)) {
+                        verifiedList.push({
+                            name: stripForeignSymbols(c.name),
+                            rating: c.rating || "4.5",
+                            street: c.street || c.city || city,
+                            city: sanitizeCityField(c.city, country, city, c.street || "") || city,
+                            country: country,
+                            countryCode: c.countryCode || activeReportCountryCode,
+                            niche: stripForeignSymbols(c.niche || niche),
+                            lat: Number(c.lat),
+                            lng: Number(c.lng)
+                        });
                     }
-
-                    seenBrands.add(brandKey);
-
-                    result.push({
-                        name: cName,
-                        rating: c.rating || "4.5",
-                        street: c.street || cCity,
-                        country: cCountry,
-                        city: cCity,
-                        niche: localizeNicheLabel(c.niche || niche),
-                        lat: c.lat || null,
-                        lng: c.lng || null
-                    });
                 });
             }
-            return result.slice(0, 30);
-        }
 
-        // Добор ровно до 30 уникальных профильных конкурентов внутри страны (без дублей одной дилерской сети и без пересечения с подрядчиками)
-        async function verifyAndSupplementOfficialCompetitors(bizName, niche, city, country) {
-            if (allCompetitorsData.length >= 30) return;
-
-            const seenBrands = new Set(allCompetitorsData.map(c => extractCoreBrandKey(c.name)));
-            const nLower = String(niche || "").toLowerCase();
-            let searchCore = niche.split(/[\/,()]/)[0].trim();
-            if (nLower.includes("авто") || nLower.includes("дилер") || nLower.includes("volkswagen") || nLower.includes("car")) {
-                searchCore = "Autohaus Vertragshändler Autohändler";
-            } else if (nLower.includes("ит") || nLower.includes("it-") || nLower.includes("edv") || nLower.includes("консалтинг")) {
-                searchCore = "IT-Systemhaus EDV-Beratung IT-Dienstleister";
-            } else if (nLower.includes("кух") || nLower.includes("küche") || nLower.includes("kitchen")) {
-                searchCore = "Küchenstudio Möbelhaus";
-            }
-
-            const queries = [
-                `${searchCore} ${city} ${country}`,
-                `${searchCore} Krefeld Moers Duisburg Düsseldorf Mönchengladbach`,
-                `${searchCore} Essen Oberhausen Mülheim Bochum Dortmund`,
-                `${searchCore} Köln Leverkusen Bonn Wuppertal Münster`,
-                `${searchCore} Nordrhein-Westfalen ${country}`
+            // 2. Добираем до 30 уникальных реальных компаний этой же ниши через Google Places API v1 (с расширяющимся радиусом от 30 км до всей страны)
+            const cleanNiche = niche.split(/[\/,()]/)[0].trim();
+            const searchSteps = [
+                { q: `${cleanNiche} ${city} ${country}`, rad: 35000.0 },
+                { q: `${cleanNiche} ${country}`, rad: 120000.0 },
+                { q: `${niche} ${country}`, rad: 300000.0 },
+                { q: `Top ${cleanNiche} in ${country}`, rad: null }
             ];
 
-            for (let q = 0; q < queries.length && allCompetitorsData.length < 30; q++) {
-                const places = await fetchPlacesNewAPI(queries[q], 20);
-                places.forEach(p => {
-                    if (allCompetitorsData.length >= 30 || !p || !p.displayName || !p.displayName.text) return;
-                    if (p.businessStatus && p.businessStatus !== "OPERATIONAL") return;
-                    const pName = p.displayName.text;
-                    if (isSameBrandChain(pName, bizName)) return;
-                    if (isIrrelevantPlaceForCompetitor(pName, p.primaryType || "", niche)) return;
+            for (let s = 0; s < searchSteps.length && verifiedList.length < 30; s++) {
+                const step = searchSteps[s];
+                const places = await fetchPlacesNewAPI(
+                    step.q,
+                    20,
+                    step.rad ? activeReportLat : null,
+                    step.rad ? activeReportLng : null,
+                    step.rad
+                );
 
-                    const brandKey = extractCoreBrandKey(pName);
-                    if (seenBrands.has(brandKey) || globalUsedContractorBrands.has(brandKey)) return;
+                places.forEach(p => {
+                    if (verifiedList.length >= 30 || !p || !p.displayName || !p.displayName.text) return;
+                    if (p.businessStatus && p.businessStatus !== "OPERATIONAL") return;
 
                     const geo = extractGeoFromNewPlace(p);
-                    if (activeReportCountryCode && geo.countryCode && geo.countryCode !== activeReportCountryCode) return;
-                    if (geo.countryCode === "NL" && (country.toLowerCase().includes("герман") || country.toLowerCase().includes("german"))) return;
-                    if (isForeignCrossBorderCity(geo.city, country) || isForeignCrossBorderCity(pName, country)) return;
+                    if (!activeReportCountryCode && geo.countryCode && geo.city.toLowerCase() === city.toLowerCase()) {
+                        activeReportCountryCode = geo.countryCode;
+                    }
 
-                    seenBrands.add(brandKey);
-
-                    const finalCity = sanitizeCityField(geo.city, country, city, p.formattedAddress) || city;
-                    allCompetitorsData.push({
-                        name: pName,
-                        rating: p.rating ? String(p.rating) : "4.5",
-                        street: geo.street || finalCity,
-                        city: finalCity,
+                    const candObj = {
+                        name: p.displayName.text,
+                        rating: p.rating ? String(p.rating) : "4.4",
+                        street: geo.street || geo.city || city,
+                        city: sanitizeCityField(geo.city, country, city, p.formattedAddress) || city,
                         country: country,
-                        niche: localizeNicheLabel((p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : niche),
-                        lat: (p.location && p.location.latitude) ? p.location.latitude : null,
-                        lng: (p.location && p.location.longitude) ? p.location.longitude : null
-                    });
+                        countryCode: geo.countryCode,
+                        niche: (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : niche,
+                        lat: (p.location && p.location.latitude) ? Number(p.location.latitude) : null,
+                        lng: (p.location && p.location.longitude) ? Number(p.location.longitude) : null
+                    };
+
+                    if (canAddVerifiedCompetitor(candObj, verifiedList, bizName, activeReportLat, activeReportLng, activeReportCountryCode || geo.countryCode)) {
+                        verifiedList.push(candObj);
+                    }
                 });
             }
 
+            allCompetitorsData = verifiedList;
             populateCompetitorFilterDropdowns(allCompetitorsData);
             renderCompetitorsList(allCompetitorsData);
+            initLiveMap(activeReportLat, activeReportLng, bizName, allCompetitorsData, `${bizName} ${city} ${country}`);
         }
 
-        // Разделение узких мест строго по данным конкретного бизнеса БЕЗ подстановки зашитых ИТ-фраз в другие отрасли!
+        // Семантический классификатор ИТ/цифровых и физических/операционных узких мест (без деления по четным/нечетным индексам и без зашитых фраз!)
         function splitBottlenecksIntoItAndPhys(data) {
             const negSet = new Set(((data.reputation && data.reputation.negative) || []).map(n => stripTrailingDot(n).toLowerCase()));
-
-            const rawIt = (Array.isArray(data.bottlenecksIt) ? data.bottlenecksIt : [])
+            const rawCombined = [].concat(data.bottlenecksIt || [], data.bottlenecksPhys || [], data.bottlenecks || [])
                 .map(stripForeignSymbols)
-                .filter(s => s && !negSet.has(stripTrailingDot(s).toLowerCase()));
+                .filter(Boolean);
 
-            const rawPhys = (Array.isArray(data.bottlenecksPhys) ? data.bottlenecksPhys : [])
-                .map(stripForeignSymbols)
-                .filter(s => s && !negSet.has(stripTrailingDot(s).toLowerCase()) && !/выездное обслуживание клиентов на объектах|аппаратных инцидентов от физической загрузки/i.test(s));
+            const digitalRegex = /(сайт|веб|web|приложен|app|онлайн|online|crm|erp|cms|api|qr|электронн|цифров|digital|аналитик|analytics|баз данных|database|сервер|server|облач|cloud|seo|маркетинг|таргет|бот|ai|ии|программ|software|интеграц|монолитн|архитектур|аудиогид|динамического ценообразования|интерфейс|ux|ui|кабинет|портал|devops|ci\/cd|iot|телеметр)/i;
 
-            const pureItRegex = /\b(devops|ci\/cd|пайплайн|saas|api|headless|ux|ui|баз знаний|crm|erp)\b/i;
-            const finalIt = [...rawIt];
-            const finalPhys = [];
+            const itList = [];
+            const physList = [];
+            const seen = new Set();
 
-            rawPhys.forEach(item => {
-                if (pureItRegex.test(item) && finalPhys.length >= 3) {
-                    finalIt.push(item);
+            rawCombined.forEach(item => {
+                const norm = stripTrailingDot(item).toLowerCase();
+                if (negSet.has(norm) || seen.has(norm)) return;
+                seen.add(norm);
+
+                if (digitalRegex.test(item)) {
+                    itList.push(item);
                 } else {
-                    finalPhys.push(item);
+                    physList.push(item);
                 }
             });
 
-            if (finalIt.length === 0 && finalPhys.length === 0 && Array.isArray(data.bottlenecks)) {
-                data.bottlenecks.map(stripForeignSymbols).filter(Boolean).forEach((b, i) => {
-                    if (i % 2 === 0) finalIt.push(b);
-                    else finalPhys.push(b);
+            // Если в списке были только цифровые пункты, преобразуем физические жалобы/инфраструктурные задачи локации в операционные узкие места
+            if (physList.length < 3 && Array.isArray(data.infrastructure)) {
+                const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
+                data.infrastructure.slice(0, 3).forEach(inf => {
+                    const cleanInf = stripTrailingDot(inf);
+                    if (cleanInf && physList.length < 4) {
+                        physList.push(isRu
+                            ? `Высокая операционная нагрузка и издержки на ручное обслуживание узла: «${cleanInf}» в часы пикового потока`
+                            : `High operational workload and manual maintenance costs for: "${cleanInf}" during peak hours`);
+                    }
                 });
             }
 
-            return { itList: finalIt.slice(0, 7), physList: finalPhys.slice(0, 6) };
+            return { itList: itList.slice(0, 7), physList: physList.slice(0, 6) };
         }
 
         function renderStructuredContacts(data, addr) {
@@ -1395,126 +1344,109 @@
             return val.toFixed(1);
         }
 
-        // Предметный генератор 4-шаговой инструкции по сути каждого шага (БЕЗ случайной подстановки Cookiebot/Mobile.de и БЕЗ одинаковых пунктов 3–4!)
-        function buildDynamic4StepGuide(step) {
-            let arr = [];
+        // Чистая структурная раскладка шага строго из его собственных данных (0% отраслевых шаблонов!)
+        function getInitialCleanStepGuide(step, bizName, niche) {
             if (Array.isArray(step.stepByStepGuide) && step.stepByStepGuide.length >= 3) {
-                arr = step.stepByStepGuide
+                const cleaned = step.stepByStepGuide
                     .map(x => stripForeignSymbols(x).replace(/^(Шаг\s*\d+\s*(\([^)]+\))?\s*:\s*|Step\s*\d+\s*:\s*|\d+\.\s*)/i, "").trim())
-                    .filter(s => s && !/без остановки обслуживания клиентов|контрольный замер сокращения времени реакции по sla|дизайнеров и монтажников|электрики\/сантехники|стоимости привлечения каждого клиента \(cac\)/i.test(s));
-                if (arr.length >= 3) return arr;
+                    .filter(Boolean);
+                if (cleaned.length >= 3) return cleaned;
             }
 
-            const baseAction = (arr[0] || stripTrailingDot(step.instruction || step.desc || "")).trim();
+            const rawAction = stripTrailingDot((Array.isArray(step.stepByStepGuide) && step.stepByStepGuide[0]) || step.instruction || step.desc || "");
             const title = stripTrailingDot(step.title || "");
             const explain = stripTrailingDot(step.plainExplanation || step.desc || "");
-            const blob = (title + " " + explain + " " + baseAction).toLowerCase();
             const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
 
             if (!isRu) {
                 return [
-                    baseAction || `Audit current workflow and data sources for "${title}"`,
-                    `Configure API integration and automated triggers for "${title}" (${explain})`,
-                    `Train front-line staff on the simplified interface and set automated client notifications`,
-                    `Track conversion growth and lead response speed on the management dashboard`
+                    rawAction || `Prepare technical specification for "${title}" at ${bizName}`,
+                    `Implement core target functionality: ${explain || title}`,
+                    `Integrate "${title}" into daily "${niche}" workflows and train responsible staff`,
+                    `Monitor operational efficiency and revenue growth metrics after launch`
                 ];
             }
 
-            if (blob.includes("cdp") || blob.includes("crm") || blob.includes("единый профиль") || blob.includes("омниканальн")) {
-                return [
-                    baseAction || "Объединить клиентские базы отдела продаж, сервиса, сайта и телефонии в единую карточку клиента",
-                    "Настроить автоматическую фиксацию каждой заявки с сайта, звонка и классифайдов без ручного переноса менеджером",
-                    "Включить автоматическое распределение входящих лидов свободным консультантам с контролем ответа за 10 минут",
-                    "Настроить триггерные сценарии повторных касаний по истории покупок и визитов клиента"
-                ];
-            }
-            if (blob.includes("контакт-центр") || blob.includes("голосов") || blob.includes("чат-бот") || blob.includes("звонк") || blob.includes("service desk") || blob.includes("тикет")) {
-                return [
-                    baseAction || "Подключить интеллектуального голосового и текстового ассистента к корпоративной телефонии и мессенджерам",
-                    "Настроить автоматический прием звонков в часы пик и нерабочее время с записью клиента в свободные слоты сервиса",
-                    "Связать бота с расписанием мастеров-приемщиков и консультантов для мгновенного подтверждения записи по SMS/WhatsApp",
-                    "Настроить автоматическую маршрутизацию нестандартных обращений на профильного специалиста с карточкой клиента на экране"
-                ];
-            }
-            if (blob.includes("iot") || blob.includes("предиктивн") || blob.includes("телеметр") || blob.includes("мониторинг") || blob.includes("то ")) {
-                return [
-                    baseAction || "Подключить модуль считывания сервисных интервалов, пробега и кодов диагностики к клиентской базе",
-                    "Настроить автоматическое формирование персонального приглашения на плановое ТО за 14 дней до наступления пробега или срока",
-                    "Отправлять клиенту персональную ссылку с выбором удобного времени визита и готовым расчетом стоимости работ",
-                    "Автоматически резервировать необходимые расходники и запчасти на складе под подтвержденную запись клиента"
-                ];
-            }
-            if (blob.includes("trade-in") || blob.includes("трейд-ин") || blob.includes("оценк") || blob.includes("конфигуратор") || blob.includes("3d")) {
-                return [
-                    baseAction || "Встроить на сайт интерактивный модуль онлайн-оценки и подбора комплектации по параметрам и фото",
-                    "Подключить автоматическую сверку рыночных цен для мгновенного расчета предварительного предложения клиенту за 2 минуты",
-                    "Настроить автоматическую передачу заполненной анкеты и фотографий напрямую в отдел оценки и продаж",
-                    "Предлагать клиенту сразу забронировать время осмотра или тест-драйва с фиксацией условий"
-                ];
-            }
-            if (blob.includes("финанс") || blob.includes("кредит") || blob.includes("лизинг") || blob.includes("счет") || blob.includes("документооборот") || blob.includes("подпис")) {
-                return [
-                    baseAction || "Интегрировать прямые цифровые шлюзы банков-партнеров и лизинговых провайдеров в рабочее место менеджера и на сайт",
-                    "Перевести заполнение заявки и пакета документов в безбумажный цифровой формат с автозаполнением реквизитов клиента",
-                    "Включить получение автоматического предварительного решения по кредиту или лизингу за 5–10 минут прямо в шоуруме",
-                    "Подключить юридически значимую электронную подпись для дистанционного согласования договоров и счетов"
-                ];
-            }
-            if (blob.includes("фронтенд") || blob.includes("ux") || blob.includes("сайт") || blob.includes("веб") || blob.includes("headless")) {
-                return [
-                    baseAction || "Оптимизировать архитектуру сайта и каталог наличия для мгновенной загрузки страниц на мобильных устройствах",
-                    "Вывести на первый экран актуальный сток в наличии с фильтрацией по ежемесячному платежу и комплектации в 2 нажатия",
-                    "Встроить в каждую карточку каталога быстрые кнопки записи на тест-драйв, онлайн-резерва и расчета трейд-ин",
-                    "Настроить автоматическую синхронизацию цен и статусов наличия между внутренней базой и витриной сайта каждые 15 минут"
-                ];
-            }
-            if (blob.includes("склад") || blob.includes("запчаст") || blob.includes("rfid") || blob.includes("логист")) {
-                return [
-                    baseAction || "Внедрить адресное хранение и быстрое сканирование кодов/меток при приемке и выдаче деталей со склада",
-                    "Связать складскую программу с заказ-нарядами сервисной зоны для мгновенного резервирования запчастей под ремонт",
-                    "Установить автоматический порог минимального остатка по ходовым расходникам для своевременного автозаказа у поставщика",
-                    "Сократить время комплектации и выдачи запчастей мастерам ремзоны, исключив простои подъемников"
-                ];
-            }
-            if (blob.includes("аналитик") || blob.includes("attribution") || blob.includes("romi") || blob.includes("bi") || blob.includes("продаж")) {
-                return [
-                    baseAction || "Объединить данные рекламных площадок, классифайдов, звонков и закрытых сделок из CRM на едином дашборде руководителя",
-                    "Настроить сквозное отслеживание каждого обращения от рекламного клика до фактической выручки в кассе автосалона и сервиса",
-                    "Отключать нерентабельные рекламные объявления и перераспределять бюджет в каналы с минимальной стоимостью целевого лида",
-                    "Контролировать конверсию каждого продавца и мастера-приемщика в режиме реального времени"
-                ];
-            }
-            if (blob.includes("приложен") || blob.includes("лояльност") || blob.includes("кабинет") || blob.includes("портал")) {
-                return [
-                    baseAction || "Запустить брендированный мобильный веб-кабинет клиента с доступом по номеру телефона без сложной регистрации",
-                    "Вывести в кабинет электронную сервисную книжку, историю обслуживания, баланс бонусов и онлайн-запись на сервис",
-                    "Включить автоматические Push/WhatsApp-уведомления о готовности автомобиля к выдаче из сервисной зоны",
-                    "Добавить возможность онлайн-оплаты заказ-наряда со смартфона для экспресс-выдачи автомобиля без очереди в кассу"
-                ];
-            }
             return [
-                baseAction || `Развернуть и настроить целевую архитектуру по направлению «${title}» с резервированием ключевых узлов`,
-                "Настроить автоматический мониторинг нагрузки и бесперебойного обмена данными между внутренними сервисами компании",
-                "Внедрить ролевое разграничение прав доступа сотрудников и автоматическое резервное копирование баз данных",
-                "Провести нагрузочное тестирование контура для гарантированной работы без сбоев в дни пикового клиентского трафика"
+                rawAction || `Провести предпроектный аудит и подготовить техническое задание по направлению «${title}» для «${bizName}»`,
+                `Реализовать целевую задачу модуля: ${explain || title}`,
+                `Связать решение «${title}» с действующими процессами объекта («${niche}») и провести инструктаж сотрудников`,
+                `Оценить сокращение ручных операций и фактический прирост выручки «${bizName}» через 30 дней эксплуатации`
             ];
         }
 
-        function buildPlacesQueryForStep(step, stepIdx, city, country) {
-            const text = ((step.title || "") + " " + (step.plainExplanation || "") + " " + (step.desc || "")).toLowerCase();
-            const nrwHubs = [city, "Düsseldorf", "Essen", "Köln", "Dortmund", "Duisburg", "Münster", "Bochum", "Wuppertal", "Bonn"];
-            const targetHub = nrwHubs[stepIdx % nrwHubs.length] || city;
+        // Живое ИИ-обогащение 4-шаговых инструкций напрямую через Gemini API под конкретный бизнес, если сервер вернул однострочный вариант
+        async function enrichStepGuidesViaLiveGemini(archSteps, bizName, niche, city, country) {
+            if (!Array.isArray(archSteps) || archSteps.length === 0) return;
+            const needsEnrichment = archSteps.some(s => !Array.isArray(s.stepByStepGuide) || s.stepByStepGuide.length < 3);
+            if (!needsEnrichment) return;
 
-            if (text.includes("аналитик") || text.includes("attribution") || text.includes("romi") || text.includes("seo") || text.includes("реклам")) {
-                return `Online Marketing Agentur Performance Marketing ${targetHub} ${country}`;
+            const lang = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
+            const stepsInput = archSteps.map((s, i) => ({
+                index: i,
+                title: s.title || "",
+                goal: s.plainExplanation || s.desc || "",
+                coreTool: s.instruction || (Array.isArray(s.stepByStepGuide) ? s.stepByStepGuide[0] : "") || ""
+            }));
+
+            const prompt = `You are a practical business implementation architect.
+Target Business: "${bizName}" | Industry/Niche: "${niche}" | Location: ${city}, ${country}.
+Language: ${lang}.
+For each growth step below, write a 4-step practical implementation guide ('steps': array of 4 strings) in plain, everyday human language tailored 100% to "${bizName}" (${niche}).
+STRICT RULE: Every step MUST be specific to "${niche}" and the exact 'title'/'coreTool'. NEVER mention unrelated industries! Do NOT prefix items with numbers or "Шаг 1:".
+Input steps: ${JSON.stringify(stepsInput)}
+Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2", "action 3", "action 4"]}]}`;
+
+            try {
+                const url = `${PROTO}generativelanguage.googleapis${DOT_COM}/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_REST_KEY}`;
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { temperature: 0.2, responseMimeType: "application/json" }
+                    })
+                });
+                if (!res.ok) return;
+                const json = await res.json();
+                const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!rawText) return;
+                const parsed = JSON.parse(rawText);
+                if (parsed && Array.isArray(parsed.guides)) {
+                    parsed.guides.forEach(g => {
+                        const olEl = document.getElementById(`step-guide-ol-${g.index}`);
+                        if (olEl && Array.isArray(g.steps) && g.steps.length >= 3) {
+                            olEl.innerHTML = g.steps.map(st => `<li>${stripTrailingDot(st)}.</li>`).join("");
+                        }
+                    });
+                }
+            } catch (e) {}
+        }
+
+        // Формирование глобального поискового запроса в Google Places API v1 для поиска профильных подрядчиков в стране проверяемого бизнеса
+        function buildGlobalContractorQuery(step, stepIdx, city, country) {
+            const text = ((step.title || "") + " " + (step.plainExplanation || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
+            const locScope = (stepIdx < 2) ? `${city} ${country}` : country;
+
+            if (text.includes("приложен") || text.includes("flutter") || text.includes("mobile") || text.includes("app") || text.includes("гид")) {
+                return `Mobile App Development Software Company ${locScope}`;
             }
-            if (text.includes("фронтенд") || text.includes("ux") || text.includes("сайт") || text.includes("приложен") || text.includes("trade-in") || text.includes("портал")) {
-                return `Softwareentwicklung Webagentur App Entwicklung ${targetHub} ${country}`;
+            if (text.includes("билет") || text.includes("ticket") || text.includes("киоск") || text.includes("терминал") || text.includes("kiosk") || text.includes("pos")) {
+                return `Ticketing Kiosk POS System Integrator ${locScope}`;
             }
-            if (text.includes("cdp") || text.includes("crm") || text.includes("финанс") || text.includes("склад") || text.includes("rfid") || text.includes("erp")) {
-                return `CRM ERP Systemhaus IT-Beratung ${targetHub} ${country}`;
+            if (text.includes("iot") || text.includes("датчик") || text.includes("lorawan") || text.includes("сенсор") || text.includes("телеметр") || text.includes("rfid")) {
+                return `IoT Automation Engineering System Integrator ${locScope}`;
             }
-            return `IT-Systemhaus Softwareunternehmen ${targetHub} ${country}`;
+            if (text.includes("crm") || text.includes("erp") || text.includes("hubspot") || text.includes("salesforce") || text.includes("sap")) {
+                return `CRM ERP Implementation Partner IT Consulting ${locScope}`;
+            }
+            if (text.includes("аналитик") || text.includes("powerbi") || text.includes("power bi") || text.includes("bi") || text.includes("маркетинг") || text.includes("реклам") || text.includes("seo")) {
+                return `Business Intelligence Data Analytics Digital Agency ${locScope}`;
+            }
+            if (text.includes("веб") || text.includes("сайт") || text.includes("headless") || text.includes("next.js") || text.includes("wordpress") || text.includes("портал") || text.includes("кабинет")) {
+                return `Web Development Software Engineering Agency ${locScope}`;
+            }
+            return `IT System Integrator Software Consulting ${locScope}`;
         }
 
         function createContractorCardHtml(v, stepTitle) {
@@ -1522,18 +1454,12 @@
             const vCountry = stripForeignSymbols(v.country || activeReportCountry);
             const vCity = sanitizeCityField(v.city, vCountry, activeReportCity, v.street || "") || activeReportCity;
             const rawVUrl = cleanUrl(v.website || "");
-            const vSiteUrl = (rawVUrl && rawVUrl !== "N/A" && !rawVUrl.includes("google.com"))
-                ? (rawVUrl.startsWith('http') ? rawVUrl : PROTO + rawVUrl)
-                : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(vCleanName + " " + vCity + " " + vCountry));
+            const cleanDomain = extractCleanDomainFromUrl(rawVUrl);
+            const vSiteUrl = cleanDomain ? (PROTO + cleanDomain) : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(vCleanName + " " + vCity + " " + vCountry));
 
             let vEmail = (v.email && v.email.includes("@") && !v.email.includes("integrationpartner")) ? v.email.trim() : "";
-            if (!vEmail && rawVUrl && !rawVUrl.includes("google.com")) {
-                const dom = rawVUrl.replace(/^https?:\/\/(www\.)?/, "").split("/")[0].split("?")[0].toLowerCase();
-                if (dom && dom.includes(".")) vEmail = `info@${dom}`;
-            }
-            if (!vEmail) {
-                const slug = transliterateDomainSlug(vCleanName);
-                vEmail = slug ? `info@${slug}.de` : `info@systemhaus.de`;
+            if (!vEmail && cleanDomain) {
+                vEmail = `info@${cleanDomain}`;
             }
 
             const safeVName = vCleanName.replace(/'/g, "\\'");
@@ -1550,7 +1476,7 @@
                         </span>
                     </div>
                     <div style="font-size:12.5px; color:#ccc; margin:6px 0; line-height:1.45;">${stripForeignSymbols(v.description || v.desc || '')}</div>
-                    <div style="font-size:12px; color:#00d2ff;">📧 Email: <b>${vEmail}</b></div>
+                    ${vEmail ? `<div style="font-size:12px; color:#00d2ff;">📧 Email: <b>${vEmail}</b></div>` : ''}
                     <div class="vendor-action-row">
                         <button type="button" class="vendor-mini-btn proposal-btn" onclick="openProposalModal('${safeVName}', '${safeVEmail}', '${vSiteUrl.replace(/'/g, "\\'")}', '${safeStepTitle}')">${tUI('sendPropBtn')}</button>
                         <a href="${vSiteUrl}" target="_blank" rel="noopener" class="vendor-mini-btn">${tUI('visitSiteBtn')}</a>
@@ -1558,6 +1484,7 @@
                 </div>`;
         }
 
+        // Подбор по 2 официальных подрядчика с обязательным наличием зарегистрированного сайта (websiteUri) в базе Google Maps
         async function fillStepContractorsViaOfficialPlaces(archSteps, usedContractorKeys, mainBizName) {
             const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
 
@@ -1569,46 +1496,45 @@
                 let currentCount = gridEl.querySelectorAll('.inline-vendor-card').length;
                 if (currentCount >= 2) continue;
 
-                const searchQ = buildPlacesQueryForStep(step, idx, activeReportCity, activeReportCountry);
-                const places = await fetchPlacesNewAPI(searchQ, 15);
+                const searchQ = buildGlobalContractorQuery(step, idx, activeReportCity, activeReportCountry);
+                const biasRadius = (idx < 2) ? 60000.0 : 350000.0;
+                const places = await fetchPlacesNewAPI(searchQ, 18, activeReportLat, activeReportLng, biasRadius);
 
                 for (let i = 0; i < places.length && currentCount < 2; i++) {
                     const p = places[i];
                     if (!p || !p.displayName || !p.displayName.text) continue;
                     if (p.businessStatus && p.businessStatus !== "OPERATIONAL") continue;
 
-                    const pName = p.displayName.text;
-                    if (isSameBrandChain(pName, mainBizName)) continue;
+                    // Требуем обязательного наличия официального сайта в карточке Google Maps, чтобы не генерировать фейковые домены из названия!
+                    const officialDomain = extractCleanDomainFromUrl(p.websiteUri || "");
+                    if (!officialDomain || isSocialOrDirectoryDomain(officialDomain)) continue;
 
-                    const catRaw = (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : "";
-                    if (/телефонной связи|telecommunications|call shop/i.test(catRaw)) continue;
+                    const pName = p.displayName.text;
+                    if (isSameOrSubEntity(pName, mainBizName)) continue;
 
                     const brandKey = extractCoreBrandKey(pName);
                     if (usedContractorKeys.has(brandKey)) continue;
 
                     const geo = extractGeoFromNewPlace(p);
                     if (activeReportCountryCode && geo.countryCode && geo.countryCode !== activeReportCountryCode) continue;
-                    if (geo.countryCode === "NL" && (activeReportCountry.toLowerCase().includes("герман") || activeReportCountry.toLowerCase().includes("german"))) continue;
-                    if (isForeignCrossBorderCity(geo.city, activeReportCountry)) continue;
 
                     usedContractorKeys.add(brandKey);
                     globalUsedContractorBrands.add(brandKey);
                     currentCount++;
 
                     const pCity = sanitizeCityField(geo.city, activeReportCountry, activeReportCity, p.formattedAddress) || activeReportCity;
-                    const officialSite = p.websiteUri ? cleanUrl(p.websiteUri).split("?")[0] : "";
                     const ratingStr = p.rating ? ` (⭐️ ${p.rating})` : "";
-                    const catStr = catRaw || "IT & Digital";
+                    const catRaw = (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : "B2B Integrator";
 
                     const cardHtml = createContractorCardHtml({
                         name: pName,
                         country: activeReportCountry,
                         city: pCity,
-                        website: officialSite,
-                        email: "",
+                        website: PROTO + officialDomain,
+                        email: `info@${officialDomain}`,
                         description: isRu
-                            ? `Официальная профильная компания${ratingStr} в категории «${catStr}» (г. ${pCity}), специализирующаяся на реализации задачи: «${stripForeignSymbols(step.title)}».`
-                            : `Verified "${catStr}" specialist${ratingStr} (${pCity}) for "${stripForeignSymbols(step.title)}".`
+                            ? `Официальный профильный интегратор${ratingStr} («${catRaw}», г. ${pCity}), специализирующийся на задаче: «${stripForeignSymbols(step.title)}».`
+                            : `Verified "${catRaw}" specialist${ratingStr} (${pCity}) for "${stripForeignSymbols(step.title)}".`
                     }, step.title);
                     gridEl.insertAdjacentHTML('beforeend', cardHtml);
                 }
@@ -1630,11 +1556,11 @@
 
             let defaultBody = "";
             if (lang.startsWith("ru")) {
-                defaultBody = `Здравствуйте, команда ${vendorName}!\n\nКомпания «${bizName}» (${activeReportCity}, ${activeReportCountry}) заинтересована во внедрении решения по направлению: «${stepTitle}».\nПожалуйста, пришлите коммерческое предложение, ориентировочные сроки и стоимость реализации.`;
+                defaultBody = `Здравствуйте, команда ${vendorName}!\n\nОрганизация «${bizName}» (${activeReportCity}, ${activeReportCountry}) заинтересована во внедрении решения по направлению: «${stepTitle}».\nПожалуйста, пришлите коммерческое предложение, ориентировочные сроки и стоимость реализации.`;
             } else if (lang.startsWith("de")) {
                 defaultBody = `Guten Tag ${vendorName}-Team,\n\ndas Unternehmen "${bizName}" (${activeReportCity}, ${activeReportCountry}) interessiert sich für die Umsetzung im Bereich: "${stepTitle}".\nBitte senden Sie uns ein kommerzielles Angebot sowie Informationen zu Zeitplan und Konditionen.`;
             } else {
-                defaultBody = `Hello ${vendorName} Team,\n\nOur company "${bizName}" (${activeReportCity}, ${activeReportCountry}) is interested in implementing a solution for: "${stepTitle}".\nPlease send us a commercial proposal, estimated timeline, and pricing terms.`;
+                defaultBody = `Hello ${vendorName} Team,\n\nOur organization "${bizName}" (${activeReportCity}, ${activeReportCountry}) is interested in implementing a solution for: "${stepTitle}".\nPlease send us a commercial proposal, estimated timeline, and pricing terms.`;
             }
 
             document.getElementById('prop-message-body').value = defaultBody;
@@ -2035,7 +1961,6 @@
 
         async function loadReport(id) {
             try {
-                // Сброс кнопки отправки отчета на почту при открытии каждого нового отчета
                 const emailBtn = document.getElementById('send-email-btn');
                 const emailMsg = document.getElementById('email-msg');
                 if (emailBtn) {
@@ -2065,9 +1990,25 @@
                     document.getElementById('b-name').innerText = bizName;
                     
                     activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || (isRu ? 'Германия' : 'Germany'));
-                    activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || 'Krefeld', data.contacts?.address);
-                    activeReportCountryCode = data.companyMeta?.countryCode || "";
-                    activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || (isRu ? "Профильный бизнес" : "Commercial Business"));
+                    activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || '', data.contacts?.address);
+                    activeReportCountryCode = (data.companyMeta?.countryCode || "").toUpperCase();
+                    activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || (isRu ? "Профильное предприятие" : "Commercial Business"));
+                    activeReportLat = (data.coordinates && data.coordinates.lat) ? Number(data.coordinates.lat) : null;
+                    activeReportLng = (data.coordinates && data.coordinates.lng) ? Number(data.coordinates.lng) : null;
+
+                    // Если со старого сервера не пришел официальный двухбуквенный код страны (countryCode) или координаты — мгновенно уточняем их в официальной базе Google Places API v1
+                    if (!activeReportCountryCode || !activeReportLat) {
+                        const mainLookup = await fetchPlacesNewAPI(`${bizName} ${activeReportCity} ${activeReportCountry}`, 1);
+                        if (mainLookup && mainLookup.length > 0) {
+                            const mPlace = mainLookup[0];
+                            const mGeo = extractGeoFromNewPlace(mPlace);
+                            if (mGeo.countryCode) activeReportCountryCode = mGeo.countryCode;
+                            if (!activeReportLat && mPlace.location) {
+                                activeReportLat = Number(mPlace.location.latitude);
+                                activeReportLng = Number(mPlace.location.longitude);
+                            }
+                        }
+                    }
 
                     currentCountry = activeReportCountry;
                     currentCity = activeReportCity;
@@ -2095,12 +2036,11 @@
                     document.getElementById('m-debts').innerText = legalStr;
 
                     const cleanStack = Array.isArray(data.techStack) ? data.techStack : [];
-                    const cleanInfra = (Array.isArray(data.infrastructure) ? data.infrastructure : []).filter(item => {
-                        const s = String(item || "").toLowerCase();
-                        return !s.includes("электронные ценники") && !s.includes("esl");
-                    });
+                    const cleanInfra = Array.isArray(data.infrastructure) ? data.infrastructure : [];
+                    const splitBots = splitBottlenecksIntoItAndPhys(data);
 
-                    const s = data.executiveScores || { digital: 72, operations: 74, customer: 82, growth: 88 };
+                    // Вычисляем честные математические индексы зрелости для данного бизнеса
+                    const s = computeMathematicalScores(data, rawRevNum, rawLostNum, cleanStack, splitBots);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
                     document.getElementById('bar-digital').style.width = `${s.digital}%`;
                     document.getElementById('sc-ops').innerText = `${s.operations}/100`;
@@ -2110,8 +2050,6 @@
                     document.getElementById('sc-growth').innerText = `${s.growth}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth}%`;
 
-                    const splitBots = splitBottlenecksIntoItAndPhys(data);
-
                     const mi = data.marketIntelligence || {};
                     let posText = stripForeignSymbols(mi.positioning || "");
                     if (!posText || (isRu && posText.includes("operates in the"))) {
@@ -2120,18 +2058,16 @@
                             : "";
                         const topBots = [].concat(splitBots.itList, splitBots.physList).slice(0, 2).map(b => stripTrailingDot(b).toLowerCase()).join(", а также ");
                         posText = isRu
-                            ? `${bizName} работает в сегменте «${activeReportNiche}» (${activeReportCity}, ${activeReportCountry}). Ключевые конкурентные преимущества компании: ${topPros || "высокая репутация и экспертиза"}. Главные точки роста прибыли лежат в устранении выявленных узких мест: ${topBots || "автоматизации бизнес-процессов"}.`
-                            : `${bizName} operates in the "${activeReportNiche}" sector (${activeReportCity}, ${activeReportCountry}), focusing on ${topPros || "service quality"} and resolving key bottlenecks: ${topBots || "workflow automation"}.`;
+                            ? `${bizName} работает в сегменте «${activeReportNiche}» (${activeReportCity}, ${activeReportCountry}). Ключевые конкурентные преимущества компании: ${topPros || "устойчивая репутация и профильная экспертиза"}. Главные точки роста прибыли лежат в устранении выявленных узких мест: ${topBots || "оцифровке клиентского пути и автоматизации процессов"}.`
+                            : `${bizName} operates in the "${activeReportNiche}" sector (${activeReportCity}, ${activeReportCountry}), focusing on ${topPros || "core strengths"} and resolving key bottlenecks: ${topBots || "process automation"}.`;
                     }
                     document.getElementById('b-positioning').innerText = posText;
 
                     setCompanyLogo(document.getElementById('b-logo'), data.contacts?.website, bizName);
 
                     const addr = (data.contacts && data.contacts.address && data.contacts.address !== "N/A") ? data.contacts.address : `${activeReportCity}, ${activeReportCountry}`;
-                    const latVal = data.coordinates ? data.coordinates.lat : null;
-                    const lngVal = data.coordinates ? data.coordinates.lng : null;
-
-                    setGuaranteedLocationPhoto(data.photoUrl, latVal, lngVal, `${bizName} ${addr}`);
+                    setGuaranteedLocationPhoto(data.photoUrl, activeReportLat, activeReportLng, `${bizName} ${addr}`);
+                    renderStructuredContacts(data, addr);
 
                     let ratingText = String(data.rating || '4.5/5.0');
                     if (!ratingText.includes('/')) ratingText += '/5.0';
@@ -2182,14 +2118,16 @@
                         const profitPct = computeStepProfitPercent(step, idx, archSteps.length, rawRevNum, rawLostNum);
                         const stepTitle = stripForeignSymbols(step.title || "");
                         const plainExplanation = stripForeignSymbols(step.plainExplanation || step.desc || "");
-                        const guideStepsArr = buildDynamic4StepGuide(step);
+                        const guideStepsArr = getInitialCleanStepGuide(step, bizName, activeReportNiche);
                         const guideHtml = guideStepsArr.map(gs => `<li>${stripTrailingDot(gs)}.</li>`).join("");
 
                         let contractorsHtml = "";
                         if (Array.isArray(step.contractors)) {
                             step.contractors.forEach(v => {
                                 if (!v || !v.name) return;
-                                if (isSameBrandChain(v.name, bizName)) return;
+                                const vDom = extractCleanDomainFromUrl(v.website || "");
+                                if (!vDom) return;
+                                if (isSameOrSubEntity(v.name, bizName)) return;
                                 const bKey = extractCoreBrandKey(v.name);
                                 if (globalUsedContractorBrands.has(bKey)) return;
                                 globalUsedContractorBrands.add(bKey);
@@ -2206,7 +2144,7 @@
                             <div class="arch-plain-explain">${plainExplanation}</div>
                             <div class="arch-guide-box">
                                 <div class="arch-guide-title">${tUI('guideTitle')}</div>
-                                <ol class="arch-guide-steps">${guideHtml}</ol>
+                                <ol class="arch-guide-steps" id="step-guide-ol-${idx}">${guideHtml}</ol>
                             </div>
                             <div class="step-contractors-box">
                                 <div class="step-contractors-title">${tUI('contractorsTitle')}</div>
@@ -2215,6 +2153,8 @@
                         </div>`;
                     });
 
+                    // Параллельно запускаем живое ИИ-обогащение 4 шагов под конкретную нишу, подбор официальных подрядчиков с реальными сайтами и загрузку 30 конкурентов
+                    enrichStepGuidesViaLiveGemini(archSteps, bizName, activeReportNiche, activeReportCity, activeReportCountry);
                     await fillStepContractorsViaOfficialPlaces(archSteps, globalUsedContractorBrands, bizName);
 
                     if(data.financials) {
@@ -2232,14 +2172,7 @@
                         document.getElementById('fin-payback').innerText = paybackStr;
                     }
 
-                    // Сборка 30 конкурентов запускается ПОСЛЕ формирования реестра подрядчиков, чтобы исключить пересечение списков
-                    allCompetitorsData = filterRealCompetitorsOnly(data.competitors, bizName, activeReportNiche, activeReportCity, activeReportCountry);
-                    initLiveMap(latVal, lngVal, bizName, allCompetitorsData, `${bizName} ${addr}`);
-                    renderStructuredContacts(data, addr);
-
-                    populateCompetitorFilterDropdowns(allCompetitorsData);
-                    renderCompetitorsList(allCompetitorsData);
-                    await verifyAndSupplementOfficialCompetitors(bizName, activeReportNiche, activeReportCity, activeReportCountry);
+                    await loadOfficialGlobalCompetitors(data.competitors, bizName, activeReportNiche, activeReportCity, activeReportCountry);
                 }
             } catch (error) {
                 console.error(error);
@@ -2283,7 +2216,7 @@
                 compArray.forEach(comp => {
                     let compCountry = (comp.country && comp.country !== "Н/Д") ? stripForeignSymbols(comp.country) : activeReportCountry;
                     let compCity = sanitizeCityField(comp.city, compCountry, activeReportCity, comp.street || "") || activeReportCity;
-                    let compNiche = localizeNicheLabel(comp.niche || activeReportNiche);
+                    let compNiche = stripForeignSymbols(comp.niche || activeReportNiche);
 
                     let btn = document.createElement('div');
                     btn.className = 'click-tag';
@@ -2344,8 +2277,6 @@
                         if (st2 === "OK" && res2 && res2[0]) {
                             const loc2 = res2[0].geometry.location;
                             renderMapWithCoords(loc2.lat(), loc2.lng(), bizName, competitors);
-                        } else {
-                            renderMapWithCoords(51.3388, 6.5853, bizName, competitors);
                         }
                     });
                 }
@@ -2359,7 +2290,7 @@
             const loc = { lat: lat, lng: lng };
             googleMap = new google.maps.Map(mapElement, {
                 center: loc,
-                zoom: 14
+                zoom: 13
             });
 
             new google.maps.Marker({

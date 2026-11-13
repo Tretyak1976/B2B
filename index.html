@@ -378,7 +378,6 @@
         const DOT_COM = ".c" + "om";
         const DOT_SPACE = ".spa" + "ce";
         const PLACES_REST_KEY = "AIzaSyBwe_JkJ76mrtgLQk3QVXFAnyMI8hI94Qs";
-        const GEMINI_REST_KEY = "AQ.Ab8RN6IJuPFbJSDjEqiK9V4K_LenWxYPfgNIw458E5LZJjQUWA";
         const DEFAULT_PHOTO = PROTO + "images.unsplash" + DOT_COM + "/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
         const FAVICON_BASE = PROTO + "www.google" + DOT_COM + "/s2/favicons?sz=128&domain=";
         const AVATAR_BASE = PROTO + "ui-avatars" + DOT_COM + "/api/?background=00ff88&color=000&bold=true&size=128&name=";
@@ -418,7 +417,6 @@
         let bizAutoTimer = null;
         let globalUsedContractorBrands = new Set();
 
-        // Глобальный запрос к официальному Google Places API (New) v1 с поддержкой координатного радиуса в любой точке мира
         async function fetchPlacesNewAPI(textQuery, maxCount, biasLat, biasLng, radiusMeters) {
             if (!textQuery || !String(textQuery).trim()) return [];
             const langCode = (document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU").substring(0, 2);
@@ -453,7 +451,6 @@
             }
         }
 
-        // Математическая формула Гаверсинуса: вычисляет точное расстояние в километрах между двумя точками (lat1, lng1) и (lat2, lng2) на Земле
         function haversineDistanceKm(lat1, lng1, lat2, lng2) {
             if (!lat1 || !lng1 || !lat2 || !lng2) return 999999;
             const toRad = deg => (deg * Math.PI) / 180;
@@ -669,7 +666,6 @@
             const pack = UI_DICT[lang] || UI_DICT["en-US"];
             return pack[key] || UI_DICT["en-US"][key] || key;
         }
-        // Извлечение чистого названия города из адресных компонентов Google Places API v1 для любой страны мира
         function cleanGlobalCityName(rawCity, formattedAddress, fallbackCity) {
             let city = String(rawCity || "").trim();
             const addr = String(formattedAddress || "").trim();
@@ -734,7 +730,7 @@
             };
         }
 
-        // Математический расчет 4 индексов зрелости на основе реальных метрик конкретного бизнеса (без зашитых цифр 72/74/82/88)
+        // Математический расчет 4 индексов зрелости на основе реальных метрик конкретного бизнеса
         function computeMathematicalScores(data, rawRevNum, rawLostNum, cleanStack, splitBots) {
             const s = data.executiveScores;
             if (s && s.digital && s.operations && s.customer && s.growth &&
@@ -1029,7 +1025,6 @@
             return fallbackTokens.length > 0 ? fallbackTokens[0] : String(compName).toLowerCase().replace(/[^a-z0-9]/g, "");
         }
 
-        // Проверка совпадения бренда или вложенного вольера/отдела (например: "ErdmännchenLodge - Zoo Krefeld" внутри "Zoo Krefeld")
         function isSameOrSubEntity(candidateName, existingName) {
             if (!candidateName || !existingName) return false;
             const cLower = String(candidateName).toLowerCase().trim();
@@ -1128,7 +1123,6 @@
             return cleaned;
         }
 
-        // Строгая математическая фильтрация конкурентов: принимаем только объекты с координатами и проверенным countryCode из Google Maps, отсекая вложенные вольеры/отделы в радиусе 450 метров
         function canAddVerifiedCompetitor(cand, existingList, mainBizName, mainLat, mainLng, targetCountryCode) {
             if (!cand || !cand.name) return false;
             const cName = stripForeignSymbols(cand.name);
@@ -1137,12 +1131,10 @@
             const bKey = extractCoreBrandKey(cName);
             if (globalUsedContractorBrands.has(bKey)) return false;
 
-            // Если известен официальный ISO-код страны проверяемого бизнеса (например DE, CN, KE, US), требуем точного совпадения countryCode
             if (targetCountryCode && cand.countryCode && cand.countryCode !== targetCountryCode) {
                 return false;
             }
 
-            // Математическая отсечка внутренних вольеров/отделов самого проверяемого объекта (ближе 350 метров)
             if (mainLat && mainLng && cand.lat && cand.lng) {
                 if (haversineDistanceKm(mainLat, mainLng, cand.lat, cand.lng) < 0.35) {
                     return false;
@@ -1152,7 +1144,6 @@
             for (let i = 0; i < existingList.length; i++) {
                 const ex = existingList[i];
                 if (isSameOrSubEntity(cName, ex.name)) return false;
-                // Если новый объект находится в радиусе 450 метров от уже добавленного конкурента (например, павильон внутри Zoo Krefeld или Grugapark) — отсекаем!
                 if (cand.lat && cand.lng && ex.lat && ex.lng) {
                     if (haversineDistanceKm(cand.lat, cand.lng, ex.lat, ex.lng) < 0.45) {
                         return false;
@@ -1162,11 +1153,9 @@
             return true;
         }
 
-        // Глобальная загрузка 30 реальных профильных конкурентов через официальный Google Places API v1 для любой точки мира и любой ниши
         async function loadOfficialGlobalCompetitors(rawServerCompetitors, bizName, niche, city, country) {
             const verifiedList = [];
 
-            // 1. Сначала берем из ответа сервера только те объекты, у которых есть реальные координаты Google Maps и совпадающий countryCode
             if (Array.isArray(rawServerCompetitors)) {
                 rawServerCompetitors.forEach(c => {
                     if (!c || !c.lat || !c.lng) return;
@@ -1186,7 +1175,6 @@
                 });
             }
 
-            // 2. Добираем до 30 уникальных реальных компаний этой же ниши через Google Places API v1 (с расширяющимся радиусом от 30 км до всей страны)
             const cleanNiche = niche.split(/[\/,()]/)[0].trim();
             const searchSteps = [
                 { q: `${cleanNiche} ${city} ${country}`, rad: 35000.0 },
@@ -1238,7 +1226,6 @@
             initLiveMap(activeReportLat, activeReportLng, bizName, allCompetitorsData, `${bizName} ${city} ${country}`);
         }
 
-        // Семантический классификатор ИТ/цифровых и физических/операционных узких мест (без деления по четным/нечетным индексам и без зашитых фраз!)
         function splitBottlenecksIntoItAndPhys(data) {
             const negSet = new Set(((data.reputation && data.reputation.negative) || []).map(n => stripTrailingDot(n).toLowerCase()));
             const rawCombined = [].concat(data.bottlenecksIt || [], data.bottlenecksPhys || [], data.bottlenecks || [])
@@ -1263,7 +1250,6 @@
                 }
             });
 
-            // Если в списке были только цифровые пункты, преобразуем физические жалобы/инфраструктурные задачи локации в операционные узкие места
             if (physList.length < 3 && Array.isArray(data.infrastructure)) {
                 const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
                 data.infrastructure.slice(0, 3).forEach(inf => {
@@ -1344,7 +1330,6 @@
             return val.toFixed(1);
         }
 
-        // Чистая структурная раскладка шага строго из его собственных данных (0% отраслевых шаблонов!)
         function getInitialCleanStepGuide(step, bizName, niche) {
             if (Array.isArray(step.stepByStepGuide) && step.stepByStepGuide.length >= 3) {
                 const cleaned = step.stepByStepGuide
@@ -1375,55 +1360,6 @@
             ];
         }
 
-        // Живое ИИ-обогащение 4-шаговых инструкций напрямую через Gemini API под конкретный бизнес, если сервер вернул однострочный вариант
-        async function enrichStepGuidesViaLiveGemini(archSteps, bizName, niche, city, country) {
-            if (!Array.isArray(archSteps) || archSteps.length === 0) return;
-            const needsEnrichment = archSteps.some(s => !Array.isArray(s.stepByStepGuide) || s.stepByStepGuide.length < 3);
-            if (!needsEnrichment) return;
-
-            const lang = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
-            const stepsInput = archSteps.map((s, i) => ({
-                index: i,
-                title: s.title || "",
-                goal: s.plainExplanation || s.desc || "",
-                coreTool: s.instruction || (Array.isArray(s.stepByStepGuide) ? s.stepByStepGuide[0] : "") || ""
-            }));
-
-            const prompt = `You are a practical business implementation architect.
-Target Business: "${bizName}" | Industry/Niche: "${niche}" | Location: ${city}, ${country}.
-Language: ${lang}.
-For each growth step below, write a 4-step practical implementation guide ('steps': array of 4 strings) in plain, everyday human language tailored 100% to "${bizName}" (${niche}).
-STRICT RULE: Every step MUST be specific to "${niche}" and the exact 'title'/'coreTool'. NEVER mention unrelated industries! Do NOT prefix items with numbers or "Шаг 1:".
-Input steps: ${JSON.stringify(stepsInput)}
-Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2", "action 3", "action 4"]}]}`;
-
-            try {
-                const url = `${PROTO}generativelanguage.googleapis${DOT_COM}/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_REST_KEY}`;
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { temperature: 0.2, responseMimeType: "application/json" }
-                    })
-                });
-                if (!res.ok) return;
-                const json = await res.json();
-                const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!rawText) return;
-                const parsed = JSON.parse(rawText);
-                if (parsed && Array.isArray(parsed.guides)) {
-                    parsed.guides.forEach(g => {
-                        const olEl = document.getElementById(`step-guide-ol-${g.index}`);
-                        if (olEl && Array.isArray(g.steps) && g.steps.length >= 3) {
-                            olEl.innerHTML = g.steps.map(st => `<li>${stripTrailingDot(st)}.</li>`).join("");
-                        }
-                    });
-                }
-            } catch (e) {}
-        }
-
-        // Формирование глобального поискового запроса в Google Places API v1 для поиска профильных подрядчиков в стране проверяемого бизнеса
         function buildGlobalContractorQuery(step, stepIdx, city, country) {
             const text = ((step.title || "") + " " + (step.plainExplanation || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
             const locScope = (stepIdx < 2) ? `${city} ${country}` : country;
@@ -1484,7 +1420,6 @@ Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2
                 </div>`;
         }
 
-        // Подбор по 2 официальных подрядчика с обязательным наличием зарегистрированного сайта (websiteUri) в базе Google Maps
         async function fillStepContractorsViaOfficialPlaces(archSteps, usedContractorKeys, mainBizName) {
             const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
 
@@ -1505,7 +1440,6 @@ Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2
                     if (!p || !p.displayName || !p.displayName.text) continue;
                     if (p.businessStatus && p.businessStatus !== "OPERATIONAL") continue;
 
-                    // Требуем обязательного наличия официального сайта в карточке Google Maps, чтобы не генерировать фейковые домены из названия!
                     const officialDomain = extractCleanDomainFromUrl(p.websiteUri || "");
                     if (!officialDomain || isSocialOrDirectoryDomain(officialDomain)) continue;
 
@@ -1996,7 +1930,6 @@ Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2
                     activeReportLat = (data.coordinates && data.coordinates.lat) ? Number(data.coordinates.lat) : null;
                     activeReportLng = (data.coordinates && data.coordinates.lng) ? Number(data.coordinates.lng) : null;
 
-                    // Если со старого сервера не пришел официальный двухбуквенный код страны (countryCode) или координаты — мгновенно уточняем их в официальной базе Google Places API v1
                     if (!activeReportCountryCode || !activeReportLat) {
                         const mainLookup = await fetchPlacesNewAPI(`${bizName} ${activeReportCity} ${activeReportCountry}`, 1);
                         if (mainLookup && mainLookup.length > 0) {
@@ -2039,7 +1972,6 @@ Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2
                     const cleanInfra = Array.isArray(data.infrastructure) ? data.infrastructure : [];
                     const splitBots = splitBottlenecksIntoItAndPhys(data);
 
-                    // Вычисляем честные математические индексы зрелости для данного бизнеса
                     const s = computeMathematicalScores(data, rawRevNum, rawLostNum, cleanStack, splitBots);
                     document.getElementById('sc-digital').innerText = `${s.digital}/100`;
                     document.getElementById('bar-digital').style.width = `${s.digital}%`;
@@ -2153,8 +2085,6 @@ Return ONLY valid JSON: {"guides": [{"index": 0, "steps": ["action 1", "action 2
                         </div>`;
                     });
 
-                    // Параллельно запускаем живое ИИ-обогащение 4 шагов под конкретную нишу, подбор официальных подрядчиков с реальными сайтами и загрузку 30 конкурентов
-                    enrichStepGuidesViaLiveGemini(archSteps, bizName, activeReportNiche, activeReportCity, activeReportCountry);
                     await fillStepContractorsViaOfficialPlaces(archSteps, globalUsedContractorBrands, bizName);
 
                     if(data.financials) {

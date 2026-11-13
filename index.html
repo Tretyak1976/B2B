@@ -25,7 +25,6 @@
         .card { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
         .card h3 { margin-top: 0; color: #00d2ff; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 10px;}
 
-        /* Выпадающие списки автокомплита (Страна, Город и Компании из официальной базы Google Places v1) */
         .autocomplete-wrap { position: relative; width: 100%; }
         .prefix-dropdown { position: absolute; top: calc(100% - 12px); left: 0; right: 0; background: #181818; border: 1px solid #00ff88; border-radius: 8px; max-height: 260px; overflow-y: auto; z-index: 120; box-shadow: 0 10px 28px rgba(0,0,0,0.95);}
         .prefix-item { padding: 10px 14px; cursor: pointer; font-size: 14px; color: #e0e0e0; border-bottom: 1px solid #252525; transition: 0.15s; display: flex; justify-content: space-between; align-items: center; gap: 10px;}
@@ -414,6 +413,7 @@
         let currentCity = "";
         let scanTimer = null;
         let bizAutoTimer = null;
+        let globalUsedContractorBrands = new Set();
 
         async function fetchPlacesNewAPI(textQuery, maxCount) {
             if (!textQuery || !String(textQuery).trim()) return [];
@@ -643,12 +643,11 @@
             const pack = UI_DICT[lang] || UI_DICT["en-US"];
             return pack[key] || UI_DICT["en-US"][key] || key;
         }
-        // Очистка названий микрорайонов (Stadtbezirk, Innenstadt, Elberfeld, Quettingen, Köln-Kalk) до настоящего официального города
+        // Очистка дефисных микрорайонов (Krefeld-Fichtenhain, Duisburg-Homberg-Ruhrort-Baerl, Leverkusen-Wiesdorf) и сторон света (Bochum Süd/Nord) до официального названия города
         function cleanDistrictToOfficialCity(rawCity, formattedAddress, fallbackCity) {
             let city = String(rawCity || "").trim();
             const addr = String(formattedAddress || "").trim();
 
-            // В Германии и ЕС официальный город всегда идет сразу после 5-значного почтового индекса (например: "40213 Düsseldorf" или "51103 Köln")
             const zipCityMatch = addr.match(/\b\d{5}\s+([A-Za-zÄÖÜäöüßА-Яа-яіїєґ\s\-]+)/);
             if (zipCityMatch && zipCityMatch[1]) {
                 const fromZip = zipCityMatch[1].split(",")[0].trim();
@@ -657,11 +656,42 @@
                 }
             }
 
+            // Приводим русские дубли городов к единому стандарту земли NRW, чтобы в фильтре не двоились "Эссен" и "Essen"
+            const ruToDeMap = {
+                "эссен": "Essen", "дюссельдорф": "Düsseldorf", "кёльн": "Köln", "кельн": "Köln",
+                "дортмунд": "Dortmund", "дуйсбург": "Duisburg", "бохум": "Bochum", "вупперталь": "Wuppertal",
+                "крефельд": "Krefeld", "оберхаузен": "Oberhausen", "мюнстер": "Münster", "бонн": "Bonn",
+                "леверкузен": "Leverkusen", "мёрс": "Moers", "клеве": "Kleve", "гох": "Goch", "везель": "Wesel"
+            };
+            if (ruToDeMap[city.toLowerCase()]) {
+                city = ruToDeMap[city.toLowerCase()];
+            }
+
+            // Убираем стороны света и районные пометки (Bochum Süd -> Bochum, Duisburg Süd -> Duisburg)
+            city = city.replace(/\s+(Süd|Nord|West|Ost|Mitte|Innenstadt|Altstadt|Zentrum)$/i, "").trim();
+
+            // Убираем пригородные районы через дефис, сохраняя настоящие двойные названия городов (Kamp-Lintfort, Castrop-Rauxel, Bedburg-Hau)
+            if (city.toLowerCase().startsWith("kamp-lintfort")) return "Kamp-Lintfort";
+            if (city.toLowerCase().startsWith("castrop-rauxel")) return "Castrop-Rauxel";
+            if (city.toLowerCase().startsWith("bedburg-hau")) return "Bedburg-Hau";
+            if (city.toLowerCase().startsWith("emmerich")) return "Emmerich am Rhein";
+
+            const majorHyphenCities = ["Krefeld", "Duisburg", "Dortmund", "Oberhausen", "Leverkusen", "Essen", "Köln", "Bochum", "Düsseldorf", "Mülheim", "Wuppertal", "Gelsenkirchen", "Mönchengladbach"];
+            for (let i = 0; i < majorHyphenCities.length; i++) {
+                const mc = majorHyphenCities[i];
+                if (city.toLowerCase().startsWith(mc.toLowerCase() + "-")) {
+                    return mc;
+                }
+            }
+
             const lower = city.toLowerCase();
-            if (lower.includes("köln-") || lower.includes("cologne")) return "Köln";
+            if (lower.includes("cologne")) return "Köln";
             if (lower.includes("elberfeld") || lower.includes("barmen")) return "Wuppertal";
-            if (lower.includes("quettingen") || lower.includes("opladen")) return "Leverkusen";
-            if (lower.includes("elten")) return "Emmerich am Rhein";
+            if (lower.includes("quettingen") || lower.includes("opladen") || lower.includes("wiesdorf")) return "Leverkusen";
+            if (lower.includes("fichtenhain") || lower.includes("linn") || lower.includes("uerdingen")) return "Krefeld";
+            if (lower.includes("osterfeld") || lower.includes("sterkrade")) return "Oberhausen";
+            if (lower.includes("hombruch") || lower.includes("aplerbeck")) return "Dortmund";
+            if (lower.includes("homberg") || lower.includes("ruhrort") || lower.includes("walsum")) return "Duisburg";
             if (lower.includes("stadtbezirk") || lower === "innenstadt" || lower === "altstadt" || lower === "mitte") {
                 if (addr.toLowerCase().includes("düsseldorf")) return "Düsseldorf";
                 if (addr.toLowerCase().includes("köln")) return "Köln";
@@ -673,7 +703,6 @@
             return city || fallbackCity || "";
         }
 
-        // Извлечение официального кода страны, настоящего города (без перезаписи районом!) и улицы из Places API v1
         function extractGeoFromNewPlace(placeObj) {
             let route = "";
             let streetNum = "";
@@ -946,15 +975,25 @@
             }
         });
 
+        // Полная очистка любых случайных символов чужих алфавитов (включая деванагари "टाइम", CJK, арабский, тайский)
         function stripForeignSymbols(str) {
             if (!str) return "";
+            let s = String(str).replace(/टाइम/g, "Time");
             const langVal = document.getElementById('lang') ? document.getElementById('lang').value : "en-US";
-            if (langVal.indexOf("zh") === 0) return String(str);
-            return String(str).replace(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]+/g, "").replace(/\s{2,}/g, " ").trim();
+            if (langVal.indexOf("zh") === 0) return s;
+            return s.replace(/[\u0900-\u097F\u0600-\u06FF\u0590-\u05FF\u0E00-\u0E7F\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]+/g, "").replace(/\s{2,}/g, " ").trim();
         }
 
         function stripTrailingDot(str) {
             return stripForeignSymbols(str).replace(/\.+$/, "");
+        }
+
+        // Транслитерация немецких умляутов для корректных доменных имен и Email по стандарту RFC
+        function transliterateDomainSlug(str) {
+            return String(str || "").toLowerCase()
+                .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+                .replace(/\b(gmbh|ag|se|kg|ohg|bv|inc|ltd|ek|gbr|mbh|co)\b/g, "")
+                .replace(/[^a-z0-9]/g, "");
         }
 
         function extractCleanCompanyName(rawTitle) {
@@ -968,21 +1007,31 @@
             return s.split(" — ")[0].split(" - ")[0].replace(/\s*\(🌍.*?\)\s*/g, "").trim();
         }
 
+        // Точное выделение корневого бренда компании (очищает общие слова вроде Autohaus, Dealership, Nutzfahrzeuge, VW, Audi, Skoda, чтобы Borgmann и Minrath распознавались безошибочно!)
         function extractCoreBrandKey(compName) {
             if (!compName) return "";
-            const clean = String(compName).toLowerCase()
-                .replace(/\b(gmbh|co\.|kg|ag|se|e\.k\.|ohg|inc|ltd|llc|bv|b\.v\.|standort|residential|center|furniture|company|einrichtungshaus|möbelhaus|мебельный|центр|супермаркет|маркет)\b/gi, "")
-                .trim();
-            const tokens = clean.split(/[\s\-.,/()]+/).filter(w => w.length >= 3);
-            return tokens.length > 0 ? tokens[0] : clean.replace(/[^a-zа-яіїєґ0-9]/gi, "");
+            const genericWords = /\b(gmbh|co|kg|ag|se|ek|ohg|gbr|mbh|inc|ltd|llc|bv|standort|autohaus|automobil|automobile|auto|zentrum|center|centre|dealership|nutzfahrzeuge|gebrauchtwagen|vertragshändler|service|services|systemhaus|it-systemhaus|edv|consulting|solutions|software|studio|küchen|küchenstudio|möbelhaus|einrichtungshaus|vw|volkswagen|audi|skoda|seat|cupra|bmw|mercedes|benz|porsche|ford|opel|toyota|hyundai|renault|peugeot|citroen|nissan|mazda|kia|fiat|volvo)\b/gi;
+            const cleaned = String(compName).toLowerCase().replace(genericWords, " ").replace(/[^a-zа-яіїєґ0-9\s]/gi, " ").trim();
+            const tokens = cleaned.split(/\s+/).filter(w => w.length >= 3);
+            if (tokens.length > 0) return tokens[0];
+            const fallbackTokens = String(compName).toLowerCase().split(/[\s\-.,/()|]+/).filter(w => w.length >= 3);
+            return fallbackTokens.length > 0 ? fallbackTokens[0] : String(compName).toLowerCase().replace(/[^a-z0-9]/g, "");
         }
 
+        // Проверка принадлежности к одной сети/бренду (чтобы "VW Nutzfahrzeuge Borgmann" никогда не попадал в конкуренты "VW Borgmann"!)
         function isSameBrandChain(compName, mainBusinessName) {
             if (!compName || !mainBusinessName) return false;
+            const cLower = String(compName).toLowerCase().trim();
+            const bLower = String(mainBusinessName).toLowerCase().trim();
+            if (cLower === bLower) return true;
+
             const cKey = extractCoreBrandKey(compName);
             const bKey = extractCoreBrandKey(mainBusinessName);
             if (cKey && bKey && cKey.length >= 3 && cKey === bKey) return true;
-            return String(compName).toLowerCase().trim() === String(mainBusinessName).toLowerCase().trim();
+
+            if (bKey && bKey.length >= 4 && cLower.includes(bKey)) return true;
+            if (cKey && cKey.length >= 4 && bLower.includes(cKey)) return true;
+            return false;
         }
 
         function isForeignCrossBorderCity(cityName, reportCountry) {
@@ -1003,7 +1052,6 @@
             return false;
         }
 
-        // Жесткий фильтр непрофильных городских объектов (чтобы супермаркеты Kaufland/REWE/Lidl, аптеки dm, заправки Aral, зоопарк, музей и вокзал никогда не попадали в конкуренты B2B/IT/мебельных компаний!)
         function isIrrelevantPlaceForCompetitor(compName, compNicheOrType, targetNiche) {
             const nameLower = String(compName || "").toLowerCase().trim();
             const typeLower = String(compNicheOrType || "").toLowerCase().trim();
@@ -1017,7 +1065,8 @@
                 "rossmann", "aral", "shell", "totalenergies", "esso", "classic tankstelle",
                 "tankstelle", "зоопарк", "tiergarten", "zoo ", "museum", "schloss moyland",
                 "bahnhof", "train station", "bus station", "sparkasse", "volksbank", "postbank",
-                "apotheke", "hagebaumarkt", "bauhaus", "obi ", "toom ", "tuincentrum", "intratuin", "obelink"
+                "apotheke", "hagebaumarkt", "bauhaus", "obi ", "toom ", "tuincentrum", "intratuin",
+                "obelink", "nuklear-service", "pwc", "pricewaterhouse", "deloitte", "kpmg"
             ];
             if (bannedBrandsAndPlaces.some(b => nameLower === "dm" || nameLower.startsWith("dm ") || nameLower.includes(b) || typeLower.includes(b))) {
                 return true;
@@ -1047,7 +1096,11 @@
                 "general contractor": "Проектирование и комплектация объектов",
                 "consultant": "ИТ-консалтинг и системная интеграция",
                 "computer service": "ИТ-услуги и обслуживание инфраструктуры",
-                "software company": "Разработка ПО и системная интеграция"
+                "software company": "Разработка ПО и системная интеграция",
+                "car dealer": "Официальный автомобильный дилер",
+                "motor vehicle dealer": "Автосалон и сервисный центр",
+                "used car dealer": "Центр автомобилей с пробегом",
+                "auto repair shop": "Авторизованный автосервис"
             };
             const lower = s.toLowerCase().trim();
             return map[lower] || activeReportNiche || s;
@@ -1143,7 +1196,7 @@
             return fakePattern.test(String(compName));
         }
 
-        // Фильтрация конкурентов: отсекает супермаркеты, АЗС, зоопарк, вокзал, микрорайоны и приграничные города соседних стран
+        // Фильтрация конкурентов: исключает собственные подразделения компании (VW Nutzfahrzeuge Borgmann), дубли дилерских групп (Minrath) и уже назначенных подрядчиков
         function filterRealCompetitorsOnly(rawCompetitors, bizName, niche, city, country) {
             const result = [];
             const seenBrands = new Set();
@@ -1156,6 +1209,9 @@
                     if (isSyntheticFakeCompetitor(cName)) return;
                     if (isIrrelevantPlaceForCompetitor(cName, c.niche || "", niche)) return;
 
+                    const brandKey = extractCoreBrandKey(cName);
+                    if (seenBrands.has(brandKey) || globalUsedContractorBrands.has(brandKey)) return;
+
                     const cCountry = (c.country && c.country !== "Н/Д" && c.country !== "N/A") ? stripForeignSymbols(c.country) : country;
                     const cCity = sanitizeCityField(c.city, cCountry, city, c.street || "");
 
@@ -1163,13 +1219,11 @@
                         return;
                     }
 
-                    const brandKey = extractCoreBrandKey(cName);
-                    if (seenBrands.has(brandKey)) return;
                     seenBrands.add(brandKey);
 
                     result.push({
                         name: cName,
-                        rating: c.rating || "4.6",
+                        rating: c.rating || "4.5",
                         street: c.street || cCity,
                         country: cCountry,
                         city: cCity,
@@ -1182,14 +1236,16 @@
             return result.slice(0, 30);
         }
 
-        // Добор ровно до 30 реальных профильных конкурентов через прямой REST API Google Places v1
+        // Добор ровно до 30 уникальных профильных конкурентов внутри страны (без дублей одной дилерской сети и без пересечения с подрядчиками)
         async function verifyAndSupplementOfficialCompetitors(bizName, niche, city, country) {
             if (allCompetitorsData.length >= 30) return;
 
             const seenBrands = new Set(allCompetitorsData.map(c => extractCoreBrandKey(c.name)));
             const nLower = String(niche || "").toLowerCase();
             let searchCore = niche.split(/[\/,()]/)[0].trim();
-            if (nLower.includes("ит") || nLower.includes("it-") || nLower.includes("edv") || nLower.includes("консалтинг")) {
+            if (nLower.includes("авто") || nLower.includes("дилер") || nLower.includes("volkswagen") || nLower.includes("car")) {
+                searchCore = "Autohaus Vertragshändler Autohändler";
+            } else if (nLower.includes("ит") || nLower.includes("it-") || nLower.includes("edv") || nLower.includes("консалтинг")) {
                 searchCore = "IT-Systemhaus EDV-Beratung IT-Dienstleister";
             } else if (nLower.includes("кух") || nLower.includes("küche") || nLower.includes("kitchen")) {
                 searchCore = "Küchenstudio Möbelhaus";
@@ -1197,9 +1253,10 @@
 
             const queries = [
                 `${searchCore} ${city} ${country}`,
-                `${searchCore} Kleve Wesel Krefeld Moers Bocholt ${country}`,
-                `${searchCore} Düsseldorf Duisburg Essen Oberhausen ${country}`,
-                `${searchCore} Köln Dortmund Münster Wuppertal ${country}`
+                `${searchCore} Krefeld Moers Duisburg Düsseldorf Mönchengladbach`,
+                `${searchCore} Essen Oberhausen Mülheim Bochum Dortmund`,
+                `${searchCore} Köln Leverkusen Bonn Wuppertal Münster`,
+                `${searchCore} Nordrhein-Westfalen ${country}`
             ];
 
             for (let q = 0; q < queries.length && allCompetitorsData.length < 30; q++) {
@@ -1211,19 +1268,20 @@
                     if (isSameBrandChain(pName, bizName)) return;
                     if (isIrrelevantPlaceForCompetitor(pName, p.primaryType || "", niche)) return;
 
+                    const brandKey = extractCoreBrandKey(pName);
+                    if (seenBrands.has(brandKey) || globalUsedContractorBrands.has(brandKey)) return;
+
                     const geo = extractGeoFromNewPlace(p);
                     if (activeReportCountryCode && geo.countryCode && geo.countryCode !== activeReportCountryCode) return;
                     if (geo.countryCode === "NL" && (country.toLowerCase().includes("герман") || country.toLowerCase().includes("german"))) return;
                     if (isForeignCrossBorderCity(geo.city, country) || isForeignCrossBorderCity(pName, country)) return;
 
-                    const brandKey = extractCoreBrandKey(pName);
-                    if (seenBrands.has(brandKey)) return;
                     seenBrands.add(brandKey);
 
                     const finalCity = sanitizeCityField(geo.city, country, city, p.formattedAddress) || city;
                     allCompetitorsData.push({
                         name: pName,
-                        rating: p.rating ? String(p.rating) : "4.6",
+                        rating: p.rating ? String(p.rating) : "4.5",
                         street: geo.street || finalCity,
                         city: finalCity,
                         country: country,
@@ -1238,56 +1296,38 @@
             renderCompetitorsList(allCompetitorsData);
         }
 
-        // Четкое разделение узких мест на ИТ/цифровые и физические/операционные
+        // Разделение узких мест строго по данным конкретного бизнеса БЕЗ подстановки зашитых ИТ-фраз в другие отрасли!
         function splitBottlenecksIntoItAndPhys(data) {
             const negSet = new Set(((data.reputation && data.reputation.negative) || []).map(n => stripTrailingDot(n).toLowerCase()));
-            const rawCombined = [].concat(data.bottlenecksIt || [], data.bottlenecksPhys || [], data.bottlenecks || [])
+
+            const rawIt = (Array.isArray(data.bottlenecksIt) ? data.bottlenecksIt : [])
                 .map(stripForeignSymbols)
-                .filter(Boolean);
+                .filter(s => s && !negSet.has(stripTrailingDot(s).toLowerCase()));
 
-            const itKeywords = [
-                "по", "программ", "software", "erp", "crm", "edi", "сайт", "website", "приложен", "app", "онлайн", "online",
-                "цифров", "digital", "данн", "data", "аналитик", "analytics", "сервер", "server", "кибер", "интеграц", "api", "облач", "cloud",
-                "учет", "агрегатор", "таргетинг", "автозаказ", "синхронизац", "ux", "ui", "баз данных", "конверси", "seo", "конфигуратор",
-                "личный кабинет", "личного кабинета", "мультиязычн", "локализац", "email", "ретаргетинг", "ci/cd", "пайплайн",
-                "искусственного интеллекта", "баз знаний", "sla", "onboarding", "rmm", "тикет"
-            ];
+            const rawPhys = (Array.isArray(data.bottlenecksPhys) ? data.bottlenecksPhys : [])
+                .map(stripForeignSymbols)
+                .filter(s => s && !negSet.has(stripTrailingDot(s).toLowerCase()) && !/выездное обслуживание клиентов на объектах|аппаратных инцидентов от физической загрузки/i.test(s));
 
-            const itList = [];
-            const physList = [];
-            const seen = new Set();
+            const pureItRegex = /\b(devops|ci\/cd|пайплайн|saas|api|headless|ux|ui|баз знаний|crm|erp)\b/i;
+            const finalIt = [...rawIt];
+            const finalPhys = [];
 
-            rawCombined.forEach(item => {
-                const norm = stripTrailingDot(item).toLowerCase();
-                if (negSet.has(norm) || seen.has(norm)) return;
-                seen.add(norm);
-
-                if (itKeywords.some(kw => norm.includes(kw))) {
-                    itList.push(item);
+            rawPhys.forEach(item => {
+                if (pureItRegex.test(item) && finalPhys.length >= 3) {
+                    finalIt.push(item);
                 } else {
-                    physList.push(item);
+                    finalPhys.push(item);
                 }
             });
 
-            const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
-            const fallbackPhys = isRu ? [
-                "Высокие временные затраты специалистов на выездное обслуживание клиентов на объектах в регионе",
-                "Зависимость скорости устранения сложных аппаратных инцидентов от физической загрузки ключевых инженеров",
-                "Ограниченное окно физического приема и телефонных консультаций во второй половине дня и в выходные",
-                "Затраты времени на логистику, закупку и замену физического оборудования у корпоративных заказчиков"
-            ] : [
-                "High specialist time spent on on-site field service visits across the region",
-                "Hardware incident resolution speed tied to physical availability of senior engineers",
-                "Limited afternoon and weekend operating windows for urgent client consultations",
-                "Time spent on hardware procurement, staging, and physical replacement logistics"
-            ];
-
-            let fIdx = 0;
-            while (physList.length < 4 && fIdx < fallbackPhys.length) {
-                physList.push(fallbackPhys[fIdx++]);
+            if (finalIt.length === 0 && finalPhys.length === 0 && Array.isArray(data.bottlenecks)) {
+                data.bottlenecks.map(stripForeignSymbols).filter(Boolean).forEach((b, i) => {
+                    if (i % 2 === 0) finalIt.push(b);
+                    else finalPhys.push(b);
+                });
             }
 
-            return { itList: itList.slice(0, 7), physList: physList.slice(0, 5) };
+            return { itList: finalIt.slice(0, 7), physList: finalPhys.slice(0, 6) };
         }
 
         function renderStructuredContacts(data, addr) {
@@ -1355,68 +1395,126 @@
             return val.toFixed(1);
         }
 
-        // Динамическое построение 4 предметных шагов инструкции строго по теме шага и техстеку компании (0% чужих мебельных или рекламных шаблонов!)
-        function buildDynamic4StepGuide(step, stepIdx, cleanStack, niche) {
+        // Предметный генератор 4-шаговой инструкции по сути каждого шага (БЕЗ случайной подстановки Cookiebot/Mobile.de и БЕЗ одинаковых пунктов 3–4!)
+        function buildDynamic4StepGuide(step) {
             let arr = [];
             if (Array.isArray(step.stepByStepGuide) && step.stepByStepGuide.length >= 3) {
                 arr = step.stepByStepGuide
                     .map(x => stripForeignSymbols(x).replace(/^(Шаг\s*\d+\s*(\([^)]+\))?\s*:\s*|Step\s*\d+\s*:\s*|\d+\.\s*)/i, "").trim())
-                    .filter(s => s && !/дизайнеров и монтажников|электрики\/сантехники|стоимости привлечения каждого клиента \(cac\)/i.test(s));
+                    .filter(s => s && !/без остановки обслуживания клиентов|контрольный замер сокращения времени реакции по sla|дизайнеров и монтажников|электрики\/сантехники|стоимости привлечения каждого клиента \(cac\)/i.test(s));
                 if (arr.length >= 3) return arr;
             }
 
             const baseAction = (arr[0] || stripTrailingDot(step.instruction || step.desc || "")).trim();
-            const titleClean = stripTrailingDot(step.title || "Оптимизация процесса");
-            const explainClean = stripTrailingDot(step.plainExplanation || step.desc || "");
-            const stackNames = (Array.isArray(cleanStack) ? cleanStack : [])
-                .map(t => typeof t === 'string' ? t : (t.name || ""))
-                .filter(Boolean);
-            const relTech1 = stackNames[(stepIdx * 2) % Math.max(1, stackNames.length)] || "корпоративный контур";
-            const relTech2 = stackNames[(stepIdx * 2 + 1) % Math.max(1, stackNames.length)] || "учетная система";
-
+            const title = stripTrailingDot(step.title || "");
+            const explain = stripTrailingDot(step.plainExplanation || step.desc || "");
+            const blob = (title + " " + explain + " " + baseAction).toLowerCase();
             const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
+
             if (!isRu) {
                 return [
-                    baseAction || `Configure and deploy the "${titleClean}" module within the ${relTech1} environment`,
-                    `Connect automated data exchange between "${titleClean}" and ${relTech2} without interrupting active client operations`,
-                    `Set up role-based access, automated alerts, and standard operating templates for the team (${explainClean})`,
-                    `Verify SLA speed improvements and reduced manual workload across "${niche}" operations after 30 days`
+                    baseAction || `Audit current workflow and data sources for "${title}"`,
+                    `Configure API integration and automated triggers for "${title}" (${explain})`,
+                    `Train front-line staff on the simplified interface and set automated client notifications`,
+                    `Track conversion growth and lead response speed on the management dashboard`
                 ];
             }
 
+            if (blob.includes("cdp") || blob.includes("crm") || blob.includes("единый профиль") || blob.includes("омниканальн")) {
+                return [
+                    baseAction || "Объединить клиентские базы отдела продаж, сервиса, сайта и телефонии в единую карточку клиента",
+                    "Настроить автоматическую фиксацию каждой заявки с сайта, звонка и классифайдов без ручного переноса менеджером",
+                    "Включить автоматическое распределение входящих лидов свободным консультантам с контролем ответа за 10 минут",
+                    "Настроить триггерные сценарии повторных касаний по истории покупок и визитов клиента"
+                ];
+            }
+            if (blob.includes("контакт-центр") || blob.includes("голосов") || blob.includes("чат-бот") || blob.includes("звонк") || blob.includes("service desk") || blob.includes("тикет")) {
+                return [
+                    baseAction || "Подключить интеллектуального голосового и текстового ассистента к корпоративной телефонии и мессенджерам",
+                    "Настроить автоматический прием звонков в часы пик и нерабочее время с записью клиента в свободные слоты сервиса",
+                    "Связать бота с расписанием мастеров-приемщиков и консультантов для мгновенного подтверждения записи по SMS/WhatsApp",
+                    "Настроить автоматическую маршрутизацию нестандартных обращений на профильного специалиста с карточкой клиента на экране"
+                ];
+            }
+            if (blob.includes("iot") || blob.includes("предиктивн") || blob.includes("телеметр") || blob.includes("мониторинг") || blob.includes("то ")) {
+                return [
+                    baseAction || "Подключить модуль считывания сервисных интервалов, пробега и кодов диагностики к клиентской базе",
+                    "Настроить автоматическое формирование персонального приглашения на плановое ТО за 14 дней до наступления пробега или срока",
+                    "Отправлять клиенту персональную ссылку с выбором удобного времени визита и готовым расчетом стоимости работ",
+                    "Автоматически резервировать необходимые расходники и запчасти на складе под подтвержденную запись клиента"
+                ];
+            }
+            if (blob.includes("trade-in") || blob.includes("трейд-ин") || blob.includes("оценк") || blob.includes("конфигуратор") || blob.includes("3d")) {
+                return [
+                    baseAction || "Встроить на сайт интерактивный модуль онлайн-оценки и подбора комплектации по параметрам и фото",
+                    "Подключить автоматическую сверку рыночных цен для мгновенного расчета предварительного предложения клиенту за 2 минуты",
+                    "Настроить автоматическую передачу заполненной анкеты и фотографий напрямую в отдел оценки и продаж",
+                    "Предлагать клиенту сразу забронировать время осмотра или тест-драйва с фиксацией условий"
+                ];
+            }
+            if (blob.includes("финанс") || blob.includes("кредит") || blob.includes("лизинг") || blob.includes("счет") || blob.includes("документооборот") || blob.includes("подпис")) {
+                return [
+                    baseAction || "Интегрировать прямые цифровые шлюзы банков-партнеров и лизинговых провайдеров в рабочее место менеджера и на сайт",
+                    "Перевести заполнение заявки и пакета документов в безбумажный цифровой формат с автозаполнением реквизитов клиента",
+                    "Включить получение автоматического предварительного решения по кредиту или лизингу за 5–10 минут прямо в шоуруме",
+                    "Подключить юридически значимую электронную подпись для дистанционного согласования договоров и счетов"
+                ];
+            }
+            if (blob.includes("фронтенд") || blob.includes("ux") || blob.includes("сайт") || blob.includes("веб") || blob.includes("headless")) {
+                return [
+                    baseAction || "Оптимизировать архитектуру сайта и каталог наличия для мгновенной загрузки страниц на мобильных устройствах",
+                    "Вывести на первый экран актуальный сток в наличии с фильтрацией по ежемесячному платежу и комплектации в 2 нажатия",
+                    "Встроить в каждую карточку каталога быстрые кнопки записи на тест-драйв, онлайн-резерва и расчета трейд-ин",
+                    "Настроить автоматическую синхронизацию цен и статусов наличия между внутренней базой и витриной сайта каждые 15 минут"
+                ];
+            }
+            if (blob.includes("склад") || blob.includes("запчаст") || blob.includes("rfid") || blob.includes("логист")) {
+                return [
+                    baseAction || "Внедрить адресное хранение и быстрое сканирование кодов/меток при приемке и выдаче деталей со склада",
+                    "Связать складскую программу с заказ-нарядами сервисной зоны для мгновенного резервирования запчастей под ремонт",
+                    "Установить автоматический порог минимального остатка по ходовым расходникам для своевременного автозаказа у поставщика",
+                    "Сократить время комплектации и выдачи запчастей мастерам ремзоны, исключив простои подъемников"
+                ];
+            }
+            if (blob.includes("аналитик") || blob.includes("attribution") || blob.includes("romi") || blob.includes("bi") || blob.includes("продаж")) {
+                return [
+                    baseAction || "Объединить данные рекламных площадок, классифайдов, звонков и закрытых сделок из CRM на едином дашборде руководителя",
+                    "Настроить сквозное отслеживание каждого обращения от рекламного клика до фактической выручки в кассе автосалона и сервиса",
+                    "Отключать нерентабельные рекламные объявления и перераспределять бюджет в каналы с минимальной стоимостью целевого лида",
+                    "Контролировать конверсию каждого продавца и мастера-приемщика в режиме реального времени"
+                ];
+            }
+            if (blob.includes("приложен") || blob.includes("лояльност") || blob.includes("кабинет") || blob.includes("портал")) {
+                return [
+                    baseAction || "Запустить брендированный мобильный веб-кабинет клиента с доступом по номеру телефона без сложной регистрации",
+                    "Вывести в кабинет электронную сервисную книжку, историю обслуживания, баланс бонусов и онлайн-запись на сервис",
+                    "Включить автоматические Push/WhatsApp-уведомления о готовности автомобиля к выдаче из сервисной зоны",
+                    "Добавить возможность онлайн-оплаты заказ-наряда со смартфона для экспресс-выдачи автомобиля без очереди в кассу"
+                ];
+            }
             return [
-                baseAction || `Развернуть и настроить модуль «${titleClean}» на базе действующего контура (${relTech1})`,
-                `Настроить автоматический обмен данными между решением «${titleClean}» и системой ${relTech2} без остановки обслуживания клиентов`,
-                `Внедрить рабочие шаблоны и автоматические уведомления для сотрудников (${explainClean || "исключение ручных операций"})`,
-                `Провести контрольный замер сокращения времени реакции по SLA и роста выработки в сегменте «${niche}» через 30 дней`
+                baseAction || `Развернуть и настроить целевую архитектуру по направлению «${title}» с резервированием ключевых узлов`,
+                "Настроить автоматический мониторинг нагрузки и бесперебойного обмена данными между внутренними сервисами компании",
+                "Внедрить ролевое разграничение прав доступа сотрудников и автоматическое резервное копирование баз данных",
+                "Провести нагрузочное тестирование контура для гарантированной работы без сбоев в дни пикового клиентского трафика"
             ];
         }
 
-        // Ротация городов Северного Рейна-Вестфалии и специализаций, чтобы каждый из 10 шагов гарантированно получал 2 уникальных профильных подрядчика
         function buildPlacesQueryForStep(step, stepIdx, city, country) {
             const text = ((step.title || "") + " " + (step.plainExplanation || "") + " " + (step.desc || "")).toLowerCase();
-            const nrwHubs = [city, "Düsseldorf", "Essen", "Köln", "Dortmund", "Duisburg", "Krefeld", "Münster", "Bochum", "Wuppertal"];
+            const nrwHubs = [city, "Düsseldorf", "Essen", "Köln", "Dortmund", "Duisburg", "Münster", "Bochum", "Wuppertal", "Bonn"];
             const targetHub = nrwHubs[stepIdx % nrwHubs.length] || city;
 
-            if (text.includes("seo") || text.includes("поисков") || text.includes("репутац")) {
-                return `SEO Agentur Online Marketing ${targetHub} ${country}`;
+            if (text.includes("аналитик") || text.includes("attribution") || text.includes("romi") || text.includes("seo") || text.includes("реклам")) {
+                return `Online Marketing Agentur Performance Marketing ${targetHub} ${country}`;
             }
-            if (text.includes("таргет") || text.includes("реклам") || text.includes("лидогенерац") || text.includes("ads")) {
-                return `Online Marketing Agentur Google Ads ${targetHub} ${country}`;
+            if (text.includes("фронтенд") || text.includes("ux") || text.includes("сайт") || text.includes("приложен") || text.includes("trade-in") || text.includes("портал")) {
+                return `Softwareentwicklung Webagentur App Entwicklung ${targetHub} ${country}`;
             }
-            if (text.includes("портал") || text.includes("кабинет") || text.includes("ci/cd") || text.includes("веб") || text.includes("сайт") || text.includes("react")) {
-                return `Softwareentwicklung Webagentur ${targetHub} ${country}`;
+            if (text.includes("cdp") || text.includes("crm") || text.includes("финанс") || text.includes("склад") || text.includes("rfid") || text.includes("erp")) {
+                return `CRM ERP Systemhaus IT-Beratung ${targetHub} ${country}`;
             }
-            if (text.includes("zero trust") || text.includes("безопасн") || text.includes("бэкап") || text.includes("резервн")) {
-                return `IT-Sicherheit Cybersecurity Systemhaus ${targetHub} ${country}`;
-            }
-            if (text.includes("мониторинг") || text.includes("gitops") || text.includes("сервер") || text.includes("тикет") || text.includes("ии")) {
-                return `IT-Systemhaus Managed Services ${targetHub} ${country}`;
-            }
-            if (text.includes("счет") || text.includes("биллинг") || text.includes("erp") || text.includes("crm") || text.includes("баз знаний")) {
-                return `ERP CRM Systemhaus Digitalisierung ${targetHub} ${country}`;
-            }
-            return `IT-Consulting Systemhaus ${targetHub} ${country}`;
+            return `IT-Systemhaus Softwareunternehmen ${targetHub} ${country}`;
         }
 
         function createContractorCardHtml(v, stepTitle) {
@@ -1434,7 +1532,7 @@
                 if (dom && dom.includes(".")) vEmail = `info@${dom}`;
             }
             if (!vEmail) {
-                const slug = vCleanName.toLowerCase().replace(/\b(gmbh|ag|se|kg|ohg|bv|inc|ltd|ek)\b/g, "").replace(/[^a-z0-9]/g, "");
+                const slug = transliterateDomainSlug(vCleanName);
                 vEmail = slug ? `info@${slug}.de` : `info@systemhaus.de`;
             }
 
@@ -1460,7 +1558,6 @@
                 </div>`;
         }
 
-        // Гарантированное заполнение по 2 уникальных подрядчика во всех 10 шагах (с исключением самой проверяемой компании!)
         async function fillStepContractorsViaOfficialPlaces(archSteps, usedContractorKeys, mainBizName) {
             const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
 
@@ -1481,8 +1578,10 @@
                     if (p.businessStatus && p.businessStatus !== "OPERATIONAL") continue;
 
                     const pName = p.displayName.text;
-                    // Никогда не добавляем саму проверяемую компанию в список ее же подрядчиков!
                     if (isSameBrandChain(pName, mainBizName)) continue;
+
+                    const catRaw = (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : "";
+                    if (/телефонной связи|telecommunications|call shop/i.test(catRaw)) continue;
 
                     const brandKey = extractCoreBrandKey(pName);
                     if (usedContractorKeys.has(brandKey)) continue;
@@ -1493,12 +1592,13 @@
                     if (isForeignCrossBorderCity(geo.city, activeReportCountry)) continue;
 
                     usedContractorKeys.add(brandKey);
+                    globalUsedContractorBrands.add(brandKey);
                     currentCount++;
 
                     const pCity = sanitizeCityField(geo.city, activeReportCountry, activeReportCity, p.formattedAddress) || activeReportCity;
                     const officialSite = p.websiteUri ? cleanUrl(p.websiteUri).split("?")[0] : "";
                     const ratingStr = p.rating ? ` (⭐️ ${p.rating})` : "";
-                    const catStr = (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : "IT & Digital";
+                    const catStr = catRaw || "IT & Digital";
 
                     const cardHtml = createContractorCardHtml({
                         name: pName,
@@ -1935,6 +2035,15 @@
 
         async function loadReport(id) {
             try {
+                // Сброс кнопки отправки отчета на почту при открытии каждого нового отчета
+                const emailBtn = document.getElementById('send-email-btn');
+                const emailMsg = document.getElementById('email-msg');
+                if (emailBtn) {
+                    emailBtn.disabled = false;
+                    emailBtn.innerText = tUI('sendEmailBtn');
+                }
+                if (emailMsg) emailMsg.innerText = "";
+
                 let data = null;
                 const cachedStr = sessionStorage.getItem("b2b_report_cache_" + id);
                 if (cachedStr) {
@@ -1956,7 +2065,7 @@
                     document.getElementById('b-name').innerText = bizName;
                     
                     activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || (isRu ? 'Германия' : 'Germany'));
-                    activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || 'Kleve', data.contacts?.address);
+                    activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || 'Krefeld', data.contacts?.address);
                     activeReportCountryCode = data.companyMeta?.countryCode || "";
                     activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || (isRu ? "Профильный бизнес" : "Commercial Business"));
 
@@ -2024,11 +2133,6 @@
 
                     setGuaranteedLocationPhoto(data.photoUrl, latVal, lngVal, `${bizName} ${addr}`);
 
-                    allCompetitorsData = filterRealCompetitorsOnly(data.competitors, bizName, activeReportNiche, activeReportCity, activeReportCountry);
-
-                    initLiveMap(latVal, lngVal, bizName, allCompetitorsData, `${bizName} ${addr}`);
-                    renderStructuredContacts(data, addr);
-
                     let ratingText = String(data.rating || '4.5/5.0');
                     if (!ratingText.includes('/')) ratingText += '/5.0';
                     document.getElementById('b-rating').innerText = ratingText;
@@ -2070,16 +2174,15 @@
                     const archContainer = document.getElementById('b-architecture');
                     archContainer.innerHTML = '';
                     const archSteps = Array.isArray(data.newArchitecture) ? data.newArchitecture : [];
-                    const usedContractorKeys = new Set();
-                    // Заносим сам проверяемый бизнес в список исключений, чтобы он никогда не предлагался сам себе как подрядчик
-                    usedContractorKeys.add(extractCoreBrandKey(bizName));
+                    globalUsedContractorBrands = new Set();
+                    globalUsedContractorBrands.add(extractCoreBrandKey(bizName));
 
                     archSteps.forEach((step, idx) => {
                         const stepNum = idx + 1;
                         const profitPct = computeStepProfitPercent(step, idx, archSteps.length, rawRevNum, rawLostNum);
                         const stepTitle = stripForeignSymbols(step.title || "");
                         const plainExplanation = stripForeignSymbols(step.plainExplanation || step.desc || "");
-                        const guideStepsArr = buildDynamic4StepGuide(step, idx, cleanStack, activeReportNiche);
+                        const guideStepsArr = buildDynamic4StepGuide(step);
                         const guideHtml = guideStepsArr.map(gs => `<li>${stripTrailingDot(gs)}.</li>`).join("");
 
                         let contractorsHtml = "";
@@ -2088,8 +2191,8 @@
                                 if (!v || !v.name) return;
                                 if (isSameBrandChain(v.name, bizName)) return;
                                 const bKey = extractCoreBrandKey(v.name);
-                                if (usedContractorKeys.has(bKey)) return;
-                                usedContractorKeys.add(bKey);
+                                if (globalUsedContractorBrands.has(bKey)) return;
+                                globalUsedContractorBrands.add(bKey);
                                 contractorsHtml += createContractorCardHtml(v, stepTitle);
                             });
                         }
@@ -2112,14 +2215,14 @@
                         </div>`;
                     });
 
-                    fillStepContractorsViaOfficialPlaces(archSteps, usedContractorKeys, bizName);
+                    await fillStepContractorsViaOfficialPlaces(archSteps, globalUsedContractorBrands, bizName);
 
                     if(data.financials) {
                         const exactNewTurnover = formatNumCurrency(rawRevNum + rawLostNum, sym);
                         const exactProfitInc = "+" + formatNumCurrency(rawLostNum, sym);
                         const timeStr = formatRealisticHours(data.financials.timeSaved, (data.bottlenecks || []).length, activeIsCorporate);
                         const paybackStr = localizePaybackString(data.financials.paybackPeriod);
-                        const marginStr = stripForeignSymbols(data.financials.newMargin || "22%");
+                        const marginStr = stripForeignSymbols(data.financials.newMargin || "18%");
 
                         document.getElementById('fin-time').innerText = timeStr;
                         document.getElementById('fin-current-turnover').innerText = formatNumCurrency(rawRevNum, sym);
@@ -2129,9 +2232,14 @@
                         document.getElementById('fin-payback').innerText = paybackStr;
                     }
 
+                    // Сборка 30 конкурентов запускается ПОСЛЕ формирования реестра подрядчиков, чтобы исключить пересечение списков
+                    allCompetitorsData = filterRealCompetitorsOnly(data.competitors, bizName, activeReportNiche, activeReportCity, activeReportCountry);
+                    initLiveMap(latVal, lngVal, bizName, allCompetitorsData, `${bizName} ${addr}`);
+                    renderStructuredContacts(data, addr);
+
                     populateCompetitorFilterDropdowns(allCompetitorsData);
                     renderCompetitorsList(allCompetitorsData);
-                    verifyAndSupplementOfficialCompetitors(bizName, activeReportNiche, activeReportCity, activeReportCountry);
+                    await verifyAndSupplementOfficialCompetitors(bizName, activeReportNiche, activeReportCity, activeReportCountry);
                 }
             } catch (error) {
                 console.error(error);
@@ -2237,7 +2345,7 @@
                             const loc2 = res2[0].geometry.location;
                             renderMapWithCoords(loc2.lat(), loc2.lng(), bizName, competitors);
                         } else {
-                            renderMapWithCoords(51.7893, 6.1381, bizName, competitors);
+                            renderMapWithCoords(51.3388, 6.5853, bizName, competitors);
                         }
                     });
                 }

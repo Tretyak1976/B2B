@@ -205,8 +205,8 @@
                     <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
                 </select>
                 <select id="engine-mode">
-                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 2.5 Pro + Google Geo DB)</option>
-                    <option value="fast_flash">⚡ Турбо-режим (Gemini 2.5 Flash)</option>
+                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 3.5 Pro + Google Geo DB)</option>
+                    <option value="fast_flash">⚡ Турбо-режим (Gemini 3.5 Flash)</option>
                 </select>
             </div>
 
@@ -2082,7 +2082,7 @@
                     const isRu = currentLang.startsWith("ru");
                     const bizName = stripForeignSymbols(data.businessName || "Business");
                     document.getElementById('b-name').innerText = bizName;
-                    document.getElementById('b-engine-badge').innerText = "🧠 " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro)");
+                    document.getElementById('b-engine-badge').innerText = "🧠 " + (data.usedModel || "Argon Deep Engine (Gemini 3.5 Pro)");
                     
                     activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || '');
                     activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || '', data.contacts?.address);

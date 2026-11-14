@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" translate="no" class="notranslate">
+<html lang="ru" translate="no" class="notranslate">
 <head>
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B2B Nexus - Global Official Data Business Scanner</title>
+    <title>B2B Nexus - Global Deep Business Audit</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a0a; color: #e0e0e0; display: flex; justify-content: center; padding: 40px 20px; margin: 0;}
         .container { background: #151515; padding: 40px; border-radius: 16px; max-width: 1100px; width: 100%; box-shadow: 0 10px 30px rgba(0,255,136,0.1); border: 1px solid #222;}
@@ -36,6 +36,7 @@
         .company-logo { width: 90px; height: 90px; border-radius: 10px; object-fit: contain; background: #fff; padding: 5px; flex-shrink: 0;}
         .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; font-size: 14px; color: #ccc;}
         .meta-item strong { color: #fff; }
+        .engine-pill { display: inline-block; background: rgba(0, 255, 136, 0.12); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.4px;}
 
         .contacts-structured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; width: 100%; margin-top: 10px;}
         .contact-pill { background: #181818; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; font-size: 13px; color: #ddd; display: flex; align-items: center; gap: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
@@ -43,11 +44,14 @@
         .contact-pill a:hover { text-decoration: underline; }
         .header-positioning-box { color: #ddd; font-size: 14px; line-height: 1.6; background: #181818; padding: 14px 16px; border-radius: 8px; border-left: 3px solid #00d2ff; margin-top: 15px;}
 
-        .score-box { background: #202020; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center;}
+        .score-box { position: relative; background: #202020; border: 1px solid #333; border-radius: 10px; padding: 15px; text-align: center; cursor: help; transition: 0.25s;}
+        .score-box:hover { border-color: #00ff88; background: #252525; }
         .score-val { font-size: 28px; font-weight: bold; color: #00ff88; margin: 5px 0;}
         .score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px;}
         .score-bar-bg { width: 100%; height: 6px; background: #111; border-radius: 3px; margin-top: 8px; overflow: hidden;}
         .score-bar-fill { height: 100%; background: linear-gradient(90deg, #00d2ff, #00ff88); border-radius: 3px; transition: width 0.6s ease;}
+        .score-box .score-tooltip { visibility: hidden; width: 290px; background-color: #111; color: #fff; text-align: left; border: 1px solid #00ff88; border-radius: 8px; padding: 14px; position: absolute; z-index: 30; bottom: 112%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.25s; font-size: 12.5px; line-height: 1.5; box-shadow: 0 10px 28px rgba(0,0,0,0.9); pointer-events: none;}
+        .score-box:hover .score-tooltip { visibility: visible; opacity: 1; }
 
         .history-section { margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;}
         .history-item { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #282828; gap: 12px; flex-wrap: wrap;}
@@ -98,6 +102,18 @@
         .vendor-mini-btn.proposal-btn { color: #ffaa00; border-color: #ffaa00;}
         .vendor-mini-btn.proposal-btn:hover { background: #ffaa00; color: #000;}
 
+        .vendor-card { background: #222; padding: 16px; border-radius: 8px; border-left: 3px solid #ff4444; position: relative; transition: 0.3s;}
+        .vendor-card.partner-card { border-left: 3px solid #00d2ff; }
+        .scan-company-title { position: relative; display: inline-block; font-weight: bold; font-size: 16px; color: #00ff88; cursor: pointer; border-bottom: 1px dashed #00ff88; padding-bottom: 2px; transition: 0.2s;}
+        .scan-company-title:hover { color: #00d2ff; border-bottom-color: #00d2ff;}
+        .integration-badge { display: inline-block; background: rgba(0, 210, 255, 0.12); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-top: 6px; margin-bottom: 6px;}
+        .geo-badge-inline { display: inline-block; background: #161616; color: #ddd; border: 1px solid #333; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: normal; margin-left: 6px;}
+        .vendor-site-btn { display: inline-block; background: #000; color: #00ff88; border: 1px solid #00ff88; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 13px; font-weight: bold; transition: 0.3s; margin-top: 8px;}
+        .vendor-site-btn:hover { background: #00ff88; color: #000; }
+        .vendor-site-btn.partner-btn { color: #00d2ff; border-color: #00d2ff; }
+        .vendor-site-btn.partner-btn:hover { background: #00d2ff; color: #000; }
+        .vendor-rating { color: #ffaa00; font-weight: bold; margin-left: 8px; font-size: 14px;}
+
         .fin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .fin-table th, .fin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
         .fin-table td { font-weight: bold; color: #fff; font-size: 18px;}
@@ -113,7 +129,7 @@
         .comp-name { font-size: 14px; font-weight: bold; margin-bottom: 6px; line-height: 1.25;}
         .comp-meta { font-size: 12px; color: #bbb; line-height: 1.4;}
         .click-tag:hover .comp-meta { color: #111; font-weight: 600;}
-        .click-tag .comp-tooltip { visibility: hidden; width: max-content; max-width: 260px; background-color: #111; color: #fff; text-align: left; border: 1px solid #ffaa00; border-radius: 8px; padding: 9px 12px; position: absolute; z-index: 25; bottom: 110%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.25s; font-size: 12px; line-height: 1.4; box-shadow: 0 8px 25px rgba(0,0,0,0.9); pointer-events: none;}
+        .click-tag .comp-tooltip { visibility: hidden; width: 290px; background-color: #111; color: #fff; text-align: left; border: 1px solid #ffaa00; border-radius: 8px; padding: 13px; position: absolute; z-index: 25; bottom: 112%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.25s; font-size: 12px; line-height: 1.5; box-shadow: 0 8px 25px rgba(0,0,0,0.9); pointer-events: none;}
         .click-tag:hover .comp-tooltip { visibility: visible; opacity: 1; }
 
         .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;}
@@ -134,13 +150,14 @@
             .company-header { flex-direction: column; }
             .grid-2, .grid-4, .media-grid, .geo-grid, .meta-grid { grid-template-columns: 1fr; }
             .click-tag { width: 100%; margin: 5px 0; }
+            .click-tag .comp-tooltip, .score-box .score-tooltip { left: 0; transform: none; width: 250px; }
         }
 
         @media print {
             body { background: #fff !important; color: #000 !important; padding: 0 !important;}
             .container { box-shadow: none !important; border: none !important; max-width: 100% !important; background: #fff !important; padding: 10px !important;}
             h1, h2, h3, h4, .meta-item strong, .comp-name, .fin-table td, .lost-revenue, .arch-step-title, .stack-item-title { color: #000 !important; }
-            .card, .arch-step, .inline-vendor-card, .click-tag, .score-box, .company-header, .critical-box, .bottleneck-subcard, .media-grid, .stack-item-open {
+            .card, .arch-step, .inline-vendor-card, .vendor-card, .click-tag, .score-box, .company-header, .critical-box, .bottleneck-subcard, .media-grid, .stack-item-open {
                 background: #fff !important;
                 color: #000 !important;
                 border: 1px solid #ccc !important;
@@ -151,7 +168,7 @@
             .arch-plain-explain, .arch-guide-box, .header-positioning-box, .contact-pill { background: #f8f8f8 !important; color: #111 !important; border-color: #bbb !important;}
             .badge-green { border-color: #00c853 !important; color: #00702e !important; }
             .badge-red { border-color: #d32f2f !important; color: #b71c1c !important; }
-            button, .action-toolbar, .filter-bar, .local-subfilter-bar, #lead-form, .comp-tooltip, .vendor-action-row, .modal-overlay { display: none !important; }
+            button, .action-toolbar, .filter-bar, .local-subfilter-bar, #lead-form, .comp-tooltip, .score-tooltip, .vendor-action-row, .modal-overlay { display: none !important; }
         }
     </style>
 </head>
@@ -164,56 +181,63 @@
             
             <div class="geo-grid">
                 <div class="autocomplete-wrap">
-                    <input type="text" id="country" placeholder="🌍 Country" autocomplete="off" oninput="onCountryInput()" onfocus="onCountryInput()">
+                    <input type="text" id="country" placeholder="🌍 Страна" autocomplete="off" oninput="onCountryInput()" onfocus="onCountryInput()">
                     <div id="country-dropdown" class="prefix-dropdown hidden"></div>
                 </div>
                 <div class="autocomplete-wrap">
-                    <input type="text" id="city" placeholder="🏙️ City" autocomplete="off" oninput="onCityInput()" onfocus="onCityInput()">
+                    <input type="text" id="city" placeholder="🏙️ Город" autocomplete="off" oninput="onCityInput()" onfocus="onCityInput()">
                     <div id="city-dropdown" class="prefix-dropdown hidden"></div>
                 </div>
             </div>
 
             <div class="autocomplete-wrap">
-                <input type="text" id="url" placeholder="Business Name, Brand or Website URL" autocomplete="off" required oninput="onBusinessUrlInput()" onfocus="onBusinessUrlInput()">
+                <input type="text" id="url" placeholder="Название бизнеса, бренд или URL сайта" autocomplete="off" required oninput="onBusinessUrlInput()" onfocus="onBusinessUrlInput()">
                 <div id="url-dropdown" class="prefix-dropdown hidden"></div>
             </div>
 
-            <select id="lang" onchange="onLanguageChange()">
-                <option value="en-US">🇬🇧 English</option>
-                <option value="ru-RU">🇷🇺 Русский</option>
-                <option value="de-DE">🇩🇪 Deutsch</option>
-                <option value="es-ES">🇪🇸 Español</option>
-                <option value="fr-FR">🇫🇷 Français</option>
-                <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
-            </select>
+            <div class="geo-grid">
+                <select id="lang" onchange="onLanguageChange()">
+                    <option value="ru-RU">🇷🇺 Русский</option>
+                    <option value="en-US">🇬🇧 English</option>
+                    <option value="de-DE">🇩🇪 Deutsch</option>
+                    <option value="es-ES">🇪🇸 Español</option>
+                    <option value="fr-FR">🇫🇷 Français</option>
+                    <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
+                </select>
+                <select id="engine-mode">
+                    <option value="argon_pro">🧠 Ядро Аргон (Gemini 2.5 Pro + Google Geo DB)</option>
+                    <option value="fast_flash">⚡ Турбо-режим (Gemini 2.5 Flash)</option>
+                </select>
+            </div>
 
-            <button onclick="submitLead()" id="scan-btn">Launch Deep Audit</button>
+            <button onclick="submitLead()" id="scan-btn">Запустить Глубокий Скан</button>
             <p id="status-msg" style="text-align: center; font-weight: bold; margin-top: 15px;"></p>
 
             <div class="history-section">
-                <h3 style="color: #aaa; font-size: 16px;" id="ui-history-title">🕰️ Scan History</h3>
+                <h3 style="color: #aaa; font-size: 16px;" id="ui-history-title">🕰️ История сканирований</h3>
                 <div id="history-list"></div>
             </div>
         </div>
 
         <!-- ДАШБОРД ОТЧЕТА -->
         <div id="report-dashboard" class="hidden">
-            <button onclick="resetToHome(true)" id="ui-back-top" style="background: #333; color: #fff; padding: 10px 18px; margin-bottom: 20px; font-size: 14px; width: auto;">⬅ New Scan</button>
+            <button onclick="resetToHome(true)" id="ui-back-top" style="background: #333; color: #fff; padding: 10px 18px; margin-bottom: 20px; font-size: 14px; width: auto;">⬅ Новый скан</button>
             
             <!-- 1. ШАПКА КОМПАНИИ -->
             <div class="company-header">
                 <img id="b-logo" class="company-logo" src="" alt="Logo">
                 <div style="width: 100%;">
-                    <h2 style="margin: 0 0 15px 0; color: #00ff88;" id="b-name">Loading...</h2>
+                    <div class="engine-pill" id="b-engine-badge">🧠 Ядро анализа: Argon Deep Engine</div>
+                    <h2 style="margin: 0 0 15px 0; color: #00ff88;" id="b-name">Загрузка...</h2>
                     
                     <div class="meta-grid">
-                        <div class="meta-item"><span id="ui-lbl-country">🌍 Country:</span> <strong id="m-country"></strong></div>
-                        <div class="meta-item"><span id="ui-lbl-city">🏙️ City:</span> <strong id="m-city"></strong></div>
-                        <div class="meta-item"><span id="ui-lbl-niche">💼 Niche:</span> <strong id="m-niche"></strong></div>
-                        <div class="meta-item"><span id="ui-lbl-owner">👤 Owner / Structure:</span> <strong id="m-owner"></strong></div>
-                        <div class="meta-item"><span id="m-revenue-label">💰 Annual Revenue:</span> <strong id="m-revenue"></strong></div>
-                        <div class="meta-item"><span id="ui-lbl-year">📅 Founded:</span> <strong id="m-year"></strong></div>
-                        <div class="meta-item" style="grid-column: 1 / -1;"><span id="ui-lbl-compliance">⚖️ Compliance & Risks:</span> <strong id="m-debts"></strong></div>
+                        <div class="meta-item"><span id="ui-lbl-country">🌍 Страна:</span> <strong id="m-country"></strong></div>
+                        <div class="meta-item"><span id="ui-lbl-city">🏙️ Город:</span> <strong id="m-city"></strong></div>
+                        <div class="meta-item"><span id="ui-lbl-niche">💼 Ниша:</span> <strong id="m-niche"></strong></div>
+                        <div class="meta-item"><span id="ui-lbl-owner">👤 Владелец / Структура:</span> <strong id="m-owner"></strong></div>
+                        <div class="meta-item"><span id="m-revenue-label">💰 Годовой оборот:</span> <strong id="m-revenue"></strong></div>
+                        <div class="meta-item"><span id="ui-lbl-year">📅 Год основания:</span> <strong id="m-year"></strong></div>
+                        <div class="meta-item" style="grid-column: 1 / -1;"><span id="ui-lbl-compliance">⚖️ Комплаенс и риски:</span> <strong id="m-debts"></strong></div>
                     </div>
 
                     <hr style="border-color: #333; margin: 15px 0;">
@@ -222,27 +246,31 @@
                 </div>
             </div>
 
-            <!-- 2. МАТЕМАТИЧЕСКИЙ ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА -->
+            <!-- 2. ИНДЕКС ЗРЕЛОСТИ БИЗНЕСА С ВСПЛЫВАЮЩИМИ ПОЯСНЕНИЯМИ -->
             <div class="grid-4">
                 <div class="score-box">
-                    <div class="score-label" id="ui-sc-digital">Digital Maturity</div>
+                    <div class="score-label" id="ui-sc-digital">Цифровая зрелость</div>
                     <div class="score-val" id="sc-digital">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-digital" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-digital"></div>
                 </div>
                 <div class="score-box">
-                    <div class="score-label" id="ui-sc-ops">Operations & Processes</div>
+                    <div class="score-label" id="ui-sc-ops">Операции и процессы</div>
                     <div class="score-val" id="sc-ops">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-ops" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-ops"></div>
                 </div>
                 <div class="score-box">
-                    <div class="score-label" id="ui-sc-cust">Customer Experience</div>
+                    <div class="score-label" id="ui-sc-cust">Клиентский опыт</div>
                     <div class="score-val" id="sc-cust">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-cust" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-cust"></div>
                 </div>
                 <div class="score-box">
-                    <div class="score-label" id="ui-sc-growth">Growth Potential</div>
+                    <div class="score-label" id="ui-sc-growth">Потенциал роста</div>
                     <div class="score-val" id="sc-growth">--</div>
                     <div class="score-bar-bg"><div class="score-bar-fill" id="bar-growth" style="width: 0%;"></div></div>
+                    <div class="score-tooltip" id="tip-growth"></div>
                 </div>
             </div>
             
@@ -250,82 +278,109 @@
             <div class="media-grid">
                 <div class="media-box" id="b-photo-container"></div>
                 <div class="media-box" id="map-container">
-                    <div id="map" style="width: 100%; height: 100%; background:#222; display:flex; align-items:center; justify-content:center; color:#aaa;">Loading map...</div>
+                    <div id="map" style="width: 100%; height: 100%; background:#222; display:flex; align-items:center; justify-content:center; color:#aaa;">Загрузка карты...</div>
                 </div>
             </div>
 
             <!-- 4. РЕПУТАЦИЯ И ОТЗЫВЫ КЛИЕНТОВ -->
             <div class="card" style="margin-bottom: 25px;">
-                <h3 id="ui-rep-title">⭐️ Reputation & Reviews (Google Maps)</h3>
+                <h3 id="ui-rep-title">⭐️ Репутация и Отзывы (Google Maps)</h3>
                 <div style="font-size: 24px; font-weight: bold; color: #00ff88; margin-bottom: 5px;" id="b-rating"></div>
                 <div style="color: #aaa; margin-bottom: 20px;" id="b-reviews"></div>
                 
                 <div class="grid-2" style="margin-bottom: 0;">
                     <div style="border-right: 1px solid #333; padding-right: 15px;">
-                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:15px;" id="ui-rep-pos">👍 Positive Highlights</h4>
+                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:15px;" id="ui-rep-pos">👍 Позитивный фон</h4>
                         <div id="b-reviews-pos"></div>
                     </div>
                     <div style="padding-left: 15px;">
-                        <h4 style="color:#ff4444; margin-top:0; margin-bottom:15px;" id="ui-rep-neg">👎 Customer Complaints</h4>
+                        <h4 style="color:#ff4444; margin-top:0; margin-bottom:15px;" id="ui-rep-neg">👎 Жалобы клиентов</h4>
                         <div id="b-reviews-neg"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. ТЕХНИЧЕСКИЙ СТЕК И ИНФРАСТРУКТУРА -->
+            <!-- 5. ГЛУБОКИЙ АНАЛИЗ НИШИ: БЫСТРЫЕ ПОБЕДЫ И ТРЕНДЫ -->
+            <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
+                <h3 style="color: #00ff88;" id="ui-niche-analysis-title">🧭 Глубокий анализ ниши и Точки кратного роста</h3>
+                <div class="grid-2" style="margin-bottom: 0;">
+                    <div class="list-section" style="border-right: 1px solid #333; padding-right: 15px;">
+                        <h4 style="color:#00ff88; margin-top:0; margin-bottom:12px;" id="ui-quick-wins-title">⚡ Быстрые победы (Quick Wins за 30–60 дней)</h4>
+                        <ul id="b-quick-wins"></ul>
+                    </div>
+                    <div class="list-section" style="padding-left: 15px;">
+                        <h4 style="color:#00d2ff; margin-top:0; margin-bottom:12px;" id="ui-trends-title">📈 Ключевые тренды ниши и куда движется рынок</h4>
+                        <ul id="b-trends"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. ТЕХНИЧЕСКИЙ СТЕК И ИНФРАСТРУКТУРА -->
             <div class="grid-2">
                 <div class="card list-section">
-                    <h3 id="ui-stack-title">👨‍💻 Tech Stack, Equipment & Software</h3>
+                    <h3 id="ui-stack-title">👨‍💻 Технический стек, Оборудование и ПО</h3>
                     <ul id="b-stack" style="padding-left: 0;"></ul>
                 </div>
                 <div class="card list-section">
-                    <h3 id="ui-infra-title">⚙️ Physical & Service Infrastructure</h3>
+                    <h3 id="ui-infra-title">⚙️ Физическая и сервисная инфраструктура</h3>
                     <ul id="b-infra"></ul>
                 </div>
             </div>
 
-            <!-- 6. КРИТИЧЕСКИЕ УЗКИЕ МЕСТА -->
+            <!-- 7. КРИТИЧЕСКИЕ УЗКИЕ МЕСТА -->
             <div class="critical-box list-section">
-                <h3 style="color:#ff4444; margin-top:0;" id="ui-bot-title">🚨 Critical Bottlenecks</h3>
+                <h3 style="color:#ff4444; margin-top:0;" id="ui-bot-title">🚨 Критические Узкие Места</h3>
                 <div class="grid-2" style="margin-bottom: 15px;">
                     <div class="bottleneck-subcard">
-                        <h4 id="ui-bot-it-title">💻 Digital & IT Bottlenecks</h4>
+                        <h4 id="ui-bot-it-title">💻 Цифровые и IT-узкие места</h4>
                         <ul id="b-bottlenecks-it"></ul>
                     </div>
                     <div class="bottleneck-subcard">
-                        <h4 id="ui-bot-phys-title">⚙️ Physical & Operational Bottlenecks</h4>
+                        <h4 id="ui-bot-phys-title">⚙️ Физические и операционные узкие места</h4>
                         <ul id="b-bottlenecks-phys"></ul>
                     </div>
                 </div>
-                <div class="lost-revenue"><span id="ui-lost-label">Estimated Lost Revenue:</span> <span id="b-lost"></span> <span id="ui-per-year">/ year</span></div>
+                <div class="lost-revenue"><span id="ui-lost-label">Расчетная упущенная выгода:</span> <span id="b-lost"></span> <span id="ui-per-year">/ год</span></div>
             </div>
 
-            <!-- 7. АРХИТЕКТУРА РОСТА -->
+            <!-- 8. АРХИТЕКТУРА РОСТА (8 ШАГОВ + 4 ЭТАПА + ПРОФИЛЬНЫЕ ПОДРЯДЧИКИ) -->
             <div class="card" style="margin-bottom: 25px; border-color: #00ff88;">
-                <h3 style="color: #00ff88;" id="ui-arch-title">🚀 Growth Architecture</h3>
+                <h3 style="color: #00ff88;" id="ui-arch-title">🚀 Архитектура Роста</h3>
                 <div id="b-architecture"></div>
             </div>
 
-            <!-- 8. НОВАЯ ЭКОНОМИКА БИЗНЕСА -->
+            <!-- 9. НОВАЯ ЭКОНОМИКА БИЗНЕСА -->
             <div class="card" style="margin-bottom: 25px;">
-                <h3 style="color: #00d2ff;" id="ui-fin-title">💰 New Business Economics</h3>
+                <h3 style="color: #00d2ff;" id="ui-fin-title">💰 Новая экономика бизнеса</h3>
                 <table class="fin-table">
-                    <tr><th id="ui-fin-time">Staff Time Saved:</th><td id="fin-time">--</td></tr>
-                    <tr><th id="ui-fin-cur">Current Annual Turnover:</th><td id="fin-current-turnover">--</td></tr>
-                    <tr><th id="ui-fin-prof">Net Profit Growth (Recovered Revenue):</th><td id="fin-profit" style="color:#00ff88;">--</td></tr>
-                    <tr><th id="ui-fin-new">Projected Annual Turnover:</th><td id="fin-turnover">--</td></tr>
-                    <tr><th id="ui-fin-marg">Target Margin (Post-Optimization):</th><td id="fin-margin">--</td></tr>
-                    <tr><th id="ui-fin-roi">Estimated Payback Period (ROI):</th><td id="fin-payback" style="color:#00d2ff;">--</td></tr>
+                    <tr><th id="ui-fin-time">Высвобождение времени персонала:</th><td id="fin-time">--</td></tr>
+                    <tr><th id="ui-fin-cur">Текущий годовой оборот:</th><td id="fin-current-turnover">--</td></tr>
+                    <tr><th id="ui-fin-prof">Рост чистой прибыли (Возврат упущенной выгоды):</th><td id="fin-profit" style="color:#00ff88;">--</td></tr>
+                    <tr><th id="ui-fin-new">Новый прогнозируемый годовой оборот:</th><td id="fin-turnover">--</td></tr>
+                    <tr><th id="ui-fin-marg">Целевая рентабельность (после оптимизации):</th><td id="fin-margin">--</td></tr>
+                    <tr><th id="ui-fin-roi">Прогнозируемый срок окупаемости (ROI):</th><td id="fin-payback" style="color:#00d2ff;">--</td></tr>
                 </table>
             </div>
 
-            <!-- 9. БЛИЖАЙШИЕ И ОТРАСЛЕВЫЕ КОНКУРЕНТЫ -->
+            <!-- 10. СТРАТЕГИЧЕСКОЕ ПАРТНЕРСТВО И ЭКОСИСТЕМА ИНТЕГРАТОРОВ -->
+            <div class="grid-2">
+                <div class="card" style="border-color: #00d2ff;">
+                    <h3 style="color: #00d2ff;" id="ui-partners-title">🤝 Стратегическое партнерство (Экосистема)</h3>
+                    <div id="b-partners" style="display: grid; gap: 15px; margin-top: 15px;"></div>
+                </div>
+                <div class="card" style="border-color: #ff4444;">
+                    <h3 style="color: #ff4444;" id="ui-vendors-title">🛠️ Профильные технологические вендоры</h3>
+                    <div id="b-vendors" style="display: grid; gap: 15px; margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- 11. БЛИЖАЙШИЕ И ОТРАСЛЕВЫЕ КОНКУРЕНТЫ (30 КОМПАНИЙ) -->
             <div class="card" style="margin-bottom: 25px; border-color: #ffaa00;">
-                <h3 style="color: #ffaa00;" id="ui-comp-title">🎯 Nearest & Industry Competitors</h3>
+                <h3 style="color: #ffaa00;" id="ui-comp-title">🎯 Ближайшие и отраслевые конкуренты</h3>
                 <div class="filter-bar">
-                    <button class="filter-btn active" onclick="filterCompetitors('all', this)"><span id="ui-filt-all">All Competitors</span> (<span id="comp-count-badge">0</span>)</button>
-                    <button class="filter-btn" onclick="filterCompetitors('local', this)" id="ui-filt-local">🏙️ Only in this City / Country</button>
-                    <button class="filter-btn" onclick="filterCompetitors('top', this)" id="ui-filt-top">⭐️ Top Rated (4.4+)</button>
+                    <button class="filter-btn active" onclick="filterCompetitors('all', this)"><span id="ui-filt-all">Все конкуренты</span> (<span id="comp-count-badge">0</span>)</button>
+                    <button class="filter-btn" onclick="filterCompetitors('local', this)" id="ui-filt-local">🏙️ Только в этом городе / стране</button>
+                    <button class="filter-btn" onclick="filterCompetitors('top', this)" id="ui-filt-top">⭐️ Лидеры рейтинга (4.4+)</button>
                 </div>
                 <div id="local-geo-subfilter" class="local-subfilter-bar hidden">
                     <select id="comp-country-select" onchange="applyLocalSubfilter()"></select>
@@ -334,40 +389,40 @@
                 <div id="b-competitors" style="display: flex; flex-wrap: wrap;"></div>
             </div>
 
-            <!-- 10. СОХРАНЕНИЕ И ОТПРАВКА ОТЧЕТА -->
+            <!-- 12. СОХРАНЕНИЕ И ОТПРАВКА ОТЧЕТА -->
             <div class="card" style="border-color: #00d2ff; text-align: center; margin-bottom: 25px; padding: 30px;">
-                <h3 style="color: #00d2ff; margin-bottom:10px;" id="ui-save-title">Save Audit Copy</h3>
+                <h3 style="color: #00d2ff; margin-bottom:10px;" id="ui-save-title">Сохранить копию аудита</h3>
                 
                 <div class="action-toolbar" style="margin-bottom: 20px;">
-                    <button class="tool-btn" onclick="window.print()" id="ui-btn-print">🖨️ Print / Save PDF</button>
-                    <button class="tool-btn" onclick="copyReportLink()" id="copy-btn">🔗 Copy Report Link</button>
+                    <button class="tool-btn" onclick="window.print()" id="ui-btn-print">🖨️ Распечатать / Сохранить PDF</button>
+                    <button class="tool-btn" onclick="copyReportLink()" id="copy-btn">🔗 Копировать ссылку на отчет</button>
                 </div>
                 
                 <hr style="border-color: #333; margin: 20px auto; width: 50%;">
                 
-                <p style="color:#aaa; font-size:14px; margin-bottom:20px;" id="ui-email-desc">Or enter your email to receive the full HTML version of this report in your selected language.</p>
+                <p style="color:#aaa; font-size:14px; margin-bottom:20px;" id="ui-email-desc">Или введите email, чтобы отправить развернутую HTML-версию отчета на выбранном языке.</p>
                 <div style="display:flex; gap:10px; justify-content:center; max-width:500px; margin: 0 auto; flex-wrap: wrap;">
-                    <input type="email" id="report-email" placeholder="Your Email" style="margin:0; text-align:center; flex:1; min-width: 220px;">
-                    <button onclick="sendReportEmail()" id="send-email-btn" style="margin:0; width:auto; padding: 14px 30px;">Send to Email</button>
+                    <input type="email" id="report-email" placeholder="Ваш Email" style="margin:0; text-align:center; flex:1; min-width: 220px;">
+                    <button onclick="sendReportEmail()" id="send-email-btn" style="margin:0; width:auto; padding: 14px 30px;">Отправить на почту</button>
                 </div>
                 <p id="email-msg" style="font-size:14px; margin-top:15px;"></p>
             </div>
 
-            <button onclick="resetToHome(true)" id="ui-back-bottom" style="background: #333; color: #fff; padding: 10px 18px; margin-top: 10px; margin-bottom: 40px; font-size: 14px; width: auto;">⬅ New Scan</button>
+            <button onclick="resetToHome(true)" id="ui-back-bottom" style="background: #333; color: #fff; padding: 10px 18px; margin-top: 10px; margin-bottom: 40px; font-size: 14px; width: auto;">⬅ Новый скан</button>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО ОТПРАВКИ КОММЕРЧЕСКОГО ПРЕДЛОЖЕНИЯ ИНТЕГРАТОРУ -->
     <div id="proposal-modal" class="modal-overlay hidden">
         <div class="modal-card">
-            <h3 style="margin-top:0; color:#00ff88;" id="ui-prop-modal-title">✉️ Send Commercial Proposal to Contractor</h3>
+            <h3 style="margin-top:0; color:#00ff88;" id="ui-prop-modal-title">✉️ Отправить коммерческое предложение подрядчику</h3>
             <p style="font-size:13px; color:#aaa; margin-bottom:10px;" id="prop-target-info"></p>
-            <input type="email" id="prop-recipient-email" placeholder="Contractor Email">
-            <input type="text" id="prop-sender-contact" placeholder="Your Name / Phone / Email for reply">
+            <input type="email" id="prop-recipient-email" placeholder="Email подрядчика">
+            <input type="text" id="prop-sender-contact" placeholder="Ваше имя / Телефон / Email для ответа">
             <textarea id="prop-message-body" rows="5"></textarea>
             <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button onclick="closeProposalModal()" style="background:#333; color:#fff; width:auto; padding:10px 20px; font-size:14px; margin:0;">Cancel</button>
-                <button onclick="submitContractorProposal()" id="prop-send-btn" style="width:auto; padding:10px 24px; font-size:14px; margin:0;">Send Proposal</button>
+                <button onclick="closeProposalModal()" style="background:#333; color:#fff; width:auto; padding:10px 20px; font-size:14px; margin:0;">Отмена</button>
+                <button onclick="submitContractorProposal()" id="prop-send-btn" style="width:auto; padding:10px 24px; font-size:14px; margin:0;">Отправить</button>
             </div>
             <p id="prop-status-msg" style="font-size:13px; text-align:center; margin-top:10px;"></p>
         </div>
@@ -387,7 +442,8 @@
             return String(u).replace(/\[https?:\/\/[^\]]+\]\((https?:\/\/[^)]+)\)/g, "$1").replace(/[\[\]]/g, "").trim();
         }
 
-        const GAS_URL = cleanUrl("https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec");
+        // === УБЕДИСЬ, ЧТО ЗДЕСЬ СТОИТ АКТУАЛЬНЫЙ URL РАЗВЕРТЫВАНИЯ GOOGLE APPS SCRIPT ===
+        const GAS_URL = cleanUrl(PROTO + "script.google" + DOT_COM + "/macros/s/AKfycbxnt4gffWibP4xAYqTJTGA_K_9zPsrr0L9GAiQbwfbL27kf3Q_AnqemLanR-68t9-s/exec");
 
         (function loadMapsScript() {
             const s = document.createElement('script');
@@ -417,6 +473,7 @@
         let bizAutoTimer = null;
         let globalUsedContractorBrands = new Set();
 
+        // Официальный вызов Google Places API v1: соблюдает лимит 50 000 м для circle и переключается на rectangle для широкого регионального поиска
         async function fetchPlacesNewAPI(textQuery, maxCount, biasLat, biasLng, radiusMeters) {
             if (!textQuery || !String(textQuery).trim()) return [];
             const langCode = (document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU").substring(0, 2);
@@ -426,13 +483,27 @@
                 languageCode: langCode,
                 maxResultCount: maxCount || 20
             };
-            if (biasLat && biasLng) {
-                payload.locationBias = {
-                    circle: {
-                        center: { latitude: Number(biasLat), longitude: Number(biasLng) },
-                        radius: Number(radiusMeters || 50000.0)
-                    }
-                };
+            if (biasLat && biasLng && radiusMeters) {
+                const r = Number(radiusMeters);
+                const latNum = Number(biasLat);
+                const lngNum = Number(biasLng);
+                if (r <= 50000.0) {
+                    payload.locationBias = {
+                        circle: {
+                            center: { latitude: latNum, longitude: lngNum },
+                            radius: Math.max(1000.0, r)
+                        }
+                    };
+                } else {
+                    const dLat = r / 111320.0;
+                    const dLng = r / (111320.0 * Math.max(0.2, Math.cos((latNum * Math.PI) / 180.0)));
+                    payload.locationBias = {
+                        rectangle: {
+                            low: { latitude: Math.max(-89.9, latNum - dLat), longitude: Math.max(-179.9, lngNum - dLng) },
+                            high: { latitude: Math.min(89.9, latNum + dLat), longitude: Math.min(179.9, lngNum + dLng) }
+                        }
+                    };
+                }
             }
             try {
                 const res = await fetch(url, {
@@ -440,7 +511,7 @@
                     headers: {
                         "Content-Type": "application/json",
                         "X-Goog-Api-Key": PLACES_REST_KEY,
-                        "X-Goog-FieldMask": "places.id,places.displayName,places.businessStatus,places.rating,places.userRatingCount,places.location,places.primaryType,places.primaryTypeDisplayName,places.formattedAddress,places.addressComponents,places.websiteUri"
+                        "X-Goog-FieldMask": "places.id,places.displayName,places.businessStatus,places.rating,places.userRatingCount,places.location,places.primaryType,places.primaryTypeDisplayName,places.formattedAddress,places.addressComponents,places.websiteUri,places.editorialSummary"
                     },
                     body: JSON.stringify(payload)
                 });
@@ -464,6 +535,76 @@
         }
 
         const UI_DICT = {
+            "ru-RU": {
+                mainTitle: "B2B Nexus - Глобальный Официальный Сканер",
+                countryPh: "🌍 Страна (введите первую букву)",
+                cityPh: "🏙️ Город (введите первую букву)",
+                urlPh: "Название бизнеса, бренд или URL (введите первую букву)",
+                scanBtn: "Запустить Глубокий Скан",
+                historyTitle: "🕰️ История сканирований",
+                noHistory: "Вы еще не проводили аудиты.",
+                newScanBtn: "⬅ Новый скан",
+                lblCountry: "🌍 Страна:",
+                lblCity: "🏙️ Город:",
+                lblNiche: "💼 Ниша:",
+                lblOwner: "👤 Владелец / Структура:",
+                lblRevLocal: "💰 Оборот локации:",
+                lblRevCorp: "💰 Глобальный оборот:",
+                lblYear: "📅 Год основания:",
+                lblCompliance: "⚖️ Комплаенс и риски:",
+                noIssuesText: "Соответствие отраслевым стандартам и регламентам (нарушений в реестрах не выявлено)",
+                scDigital: "Цифровая зрелость",
+                scOps: "Операции и процессы",
+                scCust: "Клиентский опыт",
+                scGrowth: "Потенциал роста",
+                repTitle: "⭐️ Репутация и Отзывы (Google Maps)",
+                reviewsWord: "отзывов",
+                repPos: "👍 Позитивный фон",
+                repNeg: "👎 Жалобы клиентов",
+                nicheAnalysisTitle: "🧭 Глубокий анализ ниши и Точки кратного роста",
+                quickWinsTitle: "⚡ Быстрые победы (Quick Wins за 30–60 дней)",
+                trendsTitle: "📈 Ключевые тренды ниши и куда движется рынок",
+                stackTitle: "👨‍💻 Технический стек, Оборудование и ПО",
+                infraTitle: "⚙️ Физическая и сервисная инфраструктура",
+                botTitle: "🚨 Критические Узкие Места",
+                botItTitle: "💻 Цифровые и IT-узкие места",
+                botPhysTitle: "⚙️ Физические и операционные узкие места",
+                lostLabel: "Расчетная упущенная выгода:",
+                perYear: "/ год",
+                archTitle: "🚀 Архитектура Роста",
+                stepWord: "Шаг",
+                profitImpact: "📈 Прирост прибыли:",
+                guideTitle: "📋 Пошаговая инструкция внедрения простым языком:",
+                contractorsTitle: "🛠️ Официальные подрядчики и интеграторы (проверено в Google Maps и на сайтах):",
+                sendPropBtn: "✉️ Отправить коммерческое предложение",
+                visitSiteBtn: "🌐 Официальный сайт",
+                finTitle: "💰 Новая экономика бизнеса",
+                finTime: "Высвобождение времени персонала:",
+                hoursYearUnit: "часов/год",
+                monthsUnit: "месяцев",
+                finCur: "Текущий годовой оборот:",
+                finProf: "Рост чистой прибыли (Возврат упущенной выгоды):",
+                finNew: "Новый прогнозируемый годовой оборот:",
+                finMarg: "Целевая рентабельность (после оптимизации):",
+                finRoi: "Прогнозируемый срок окупаемости (ROI):",
+                partnersTitle: "🤝 Стратегическое партнерство (Экосистема)",
+                vendorsTitle: "🛠️ Профильные технологические вендоры",
+                compTitle: "🎯 Ближайшие и отраслевые конкуренты",
+                filtAll: "Все конкуренты",
+                filtLocal: "🏙️ Только в этом городе / стране",
+                filtTop: "⭐️ Лидеры рейтинга (4.4+)",
+                allCountriesOpt: "🌍 Все страны",
+                allCitiesOpt: "🏙️ Все города",
+                saveTitle: "Сохранить копию аудита",
+                btnPrint: "🖨️ Распечатать / Сохранить PDF",
+                btnCopy: "🔗 Копировать ссылку на отчет",
+                btnCopied: "✅ Ссылка скопирована!",
+                emailDesc: "Или введите email, чтобы отправить развернутую HTML-версию отчета на выбранном языке.",
+                emailPh: "Ваш Email",
+                sendEmailBtn: "Отправить на почту",
+                mapScanBtn: "🔍 Сделать B2B Скан-Анализ",
+                propModalTitle: "✉️ Отправить коммерческое предложение подрядчику"
+            },
             "en-US": {
                 mainTitle: "B2B Nexus - Global Official Scanner",
                 countryPh: "🌍 Country (type first letter)",
@@ -490,6 +631,9 @@
                 reviewsWord: "reviews",
                 repPos: "👍 Positive Highlights",
                 repNeg: "👎 Customer Complaints",
+                nicheAnalysisTitle: "🧭 Deep Niche Analysis & Growth Multipliers",
+                quickWinsTitle: "⚡ Quick Wins (30–60 Days)",
+                trendsTitle: "📈 Key Industry Trends & Market Direction",
                 stackTitle: "👨‍💻 Tech Stack, Equipment & Software",
                 infraTitle: "⚙️ Physical & Service Infrastructure",
                 botTitle: "🚨 Critical Bottlenecks",
@@ -499,7 +643,7 @@
                 perYear: "/ year",
                 archTitle: "🚀 Growth Architecture",
                 stepWord: "Step",
-                profitImpact: "📈 Business Profit Impact:",
+                profitImpact: "📈 Profit Impact:",
                 guideTitle: "📋 Step-by-Step Implementation Guide:",
                 contractorsTitle: "🛠️ Official Contractors & Integrators (Google Maps & Web Verified):",
                 sendPropBtn: "✉️ Send Commercial Proposal",
@@ -513,6 +657,8 @@
                 finNew: "Projected Annual Turnover:",
                 finMarg: "Target Margin (Post-Optimization):",
                 finRoi: "Estimated Payback Period (ROI):",
+                partnersTitle: "🤝 Strategic Partnerships (Ecosystem)",
+                vendorsTitle: "🛠️ Specialized Technology Vendors",
                 compTitle: "🎯 Nearest & Industry Competitors",
                 filtAll: "All Competitors",
                 filtLocal: "🏙️ Only in this City / Country",
@@ -528,71 +674,6 @@
                 sendEmailBtn: "Send to Email",
                 mapScanBtn: "🔍 B2B Scan Analysis",
                 propModalTitle: "✉️ Send Commercial Proposal to Contractor"
-            },
-            "ru-RU": {
-                mainTitle: "B2B Nexus - Глобальный Официальный Сканер",
-                countryPh: "🌍 Страна (введите первую букву)",
-                cityPh: "🏙️ Город (введите первую букву)",
-                urlPh: "Название бизнеса, бренд или URL (введите первую букву)",
-                scanBtn: "Запустить Глубокий Скан",
-                historyTitle: "🕰️ История сканирований",
-                noHistory: "Вы еще не проводили аудиты.",
-                newScanBtn: "⬅ Новый скан",
-                lblCountry: "🌍 Страна:",
-                lblCity: "🏙️ Город:",
-                lblNiche: "💼 Ниша:",
-                lblOwner: "👤 Владелец / Структура:",
-                lblRevLocal: "💰 Оборот локации:",
-                lblRevCorp: "💰 Глобальный оборот:",
-                lblYear: "📅 Год основания:",
-                lblCompliance: "⚖️ Комплаенс и риски:",
-                noIssuesText: "Соответствие отраслевым стандартам и регламентам (нарушений в реестрах не выявлено)",
-                scDigital: "Цифровая зрелость",
-                scOps: "Операции и процессы",
-                scCust: "Клиентский опыт",
-                scGrowth: "Потенциал роста",
-                repTitle: "⭐️ Репутация и Отзывы",
-                reviewsWord: "отзывов",
-                repPos: "👍 Позитивный фон",
-                repNeg: "👎 Жалобы клиентов",
-                stackTitle: "👨‍💻 Технический стек, Оборудование и ПО",
-                infraTitle: "⚙️ Физическая и сервисная инфраструктура",
-                botTitle: "🚨 Критические Узкие Места",
-                botItTitle: "💻 Узкие места в IT и цифровом контуре",
-                botPhysTitle: "⚙️ Узкие места в физическом и операционном плане",
-                lostLabel: "Расчетная упущенная выгода:",
-                perYear: "/ год",
-                archTitle: "🚀 Архитектура Роста",
-                stepWord: "Шаг",
-                profitImpact: "📈 Прирост прибыли бизнеса:",
-                guideTitle: "📋 Пошаговая инструкция внедрения простым языком:",
-                contractorsTitle: "🛠️ Официальные подрядчики и интеграторы (проверено в Google Maps и на сайтах):",
-                sendPropBtn: "✉️ Отправить коммерческое предложение",
-                visitSiteBtn: "🌐 Официальный сайт",
-                finTitle: "💰 Новая экономика бизнеса",
-                finTime: "Высвобождение времени персонала:",
-                hoursYearUnit: "часов/год",
-                monthsUnit: "месяцев",
-                finCur: "Текущий годовой оборот:",
-                finProf: "Рост чистой прибыли (Возврат упущенной выгоды):",
-                finNew: "Новый прогнозируемый годовой оборот:",
-                finMarg: "Целевая рентабельность (после оптимизации):",
-                finRoi: "Прогнозируемый срок окупаемости (ROI):",
-                compTitle: "🎯 Ближайшие и отраслевые конкуренты",
-                filtAll: "Все конкуренты",
-                filtLocal: "🏙️ Только в этом городе / стране",
-                filtTop: "⭐️ Лидеры рейтинга (4.4+)",
-                allCountriesOpt: "🌍 Все страны",
-                allCitiesOpt: "🏙️ Все города",
-                saveTitle: "Сохранить копию аудита",
-                btnPrint: "🖨️ Распечатать / Сохранить PDF",
-                btnCopy: "🔗 Копировать ссылку на отчет",
-                btnCopied: "✅ Ссылка скопирована!",
-                emailDesc: "Или введите email, чтобы отправить развернутую HTML-версию отчета на выбранном языке.",
-                emailPh: "Ваш Email",
-                sendEmailBtn: "Отправить на почту",
-                mapScanBtn: "🔍 Сделать B2B Скан-Анализ",
-                propModalTitle: "✉️ Отправить коммерческое предложение подрядчику"
             },
             "de-DE": {
                 mainTitle: "B2B Nexus - Globaler Unternehmensscanner",
@@ -620,6 +701,9 @@
                 reviewsWord: "Bewertungen",
                 repPos: "👍 Positive Aspekte",
                 repNeg: "👎 Kundenbeschwerden",
+                nicheAnalysisTitle: "🧭 Tiefenanalyse der Branche & Wachstumstreiber",
+                quickWinsTitle: "⚡ Schnelle Erfolge (Quick Wins in 30–60 Tagen)",
+                trendsTitle: "📈 Wichtige Branchentrends & Marktentwicklung",
                 stackTitle: "👨‍💻 Tech-Stack, Ausrüstung & Software",
                 infraTitle: "⚙️ Physische & Service-Infrastruktur",
                 botTitle: "🚨 Kritische Engpässe",
@@ -629,7 +713,7 @@
                 perYear: "/ Jahr",
                 archTitle: "🚀 Wachstumsarchitektur",
                 stepWord: "Schritt",
-                profitImpact: "📈 Gewinnbeitrag für das Unternehmen:",
+                profitImpact: "📈 Gewinnbeitrag:",
                 guideTitle: "📋 Verständliche Schritt-für-Schritt-Anleitung:",
                 contractorsTitle: "🛠️ Offizielle Integratoren & Dienstleister (Google Maps verifiziert):",
                 sendPropBtn: "✉️ Angebot anfordern (E-Mail)",
@@ -643,6 +727,8 @@
                 finNew: "Prognostizierter neuer Umsatz:",
                 finMarg: "Zielrentabilität:",
                 finRoi: "Amortisationszeit (ROI):",
+                partnersTitle: "🤝 Strategische Partnerschaften (Ökosystem)",
+                vendorsTitle: "🛠️ Spezialisierte Technologie-Anbieter",
                 compTitle: "🎯 Direkte & Branchen-Wettbewerber",
                 filtAll: "Alle Wettbewerber",
                 filtLocal: "🏙️ Nur in dieser Stadt / diesem Land",
@@ -662,7 +748,7 @@
         };
 
         function tUI(key) {
-            const lang = document.getElementById('lang') ? document.getElementById('lang').value : "en-US";
+            const lang = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
             const pack = UI_DICT[lang] || UI_DICT["en-US"];
             return pack[key] || UI_DICT["en-US"][key] || key;
         }
@@ -730,7 +816,6 @@
             };
         }
 
-        // Математический расчет 4 индексов зрелости на основе реальных метрик конкретного бизнеса
         function computeMathematicalScores(data, rawRevNum, rawLostNum, cleanStack, splitBots) {
             const s = data.executiveScores;
             if (s && s.digital && s.operations && s.customer && s.growth &&
@@ -755,6 +840,29 @@
             const growth = clamp(60 + Math.min(25, lossPct * 1.4) + Math.min(12, (itBotsLen + physBotsLen) * 1.1), 58, 97);
 
             return { digital, operations, customer, growth };
+        }
+
+        function populateScoreTooltips(scores, bizName, cleanStack, splitBots) {
+            const topStack = (cleanStack || []).slice(0, 3).map(t => typeof t === 'string' ? t : (t.name || "")).join(", ") || "текущих систем";
+            const allBots = [].concat(splitBots.itList || [], splitBots.physList || []);
+            const firstBot = allBots[0] ? lowerFirstCharOnly(allBots[0]) : "ручных операционных процессов";
+
+            document.getElementById('tip-digital').innerHTML = `
+                <div style="color:#00ff88; font-weight:bold; margin-bottom:5px;">💻 ${tUI('scDigital')}: ${scores.digital}/100</div>
+                Оценивает уровень автоматизации «${bizName}», глубину интеграции стека (${topStack}) и скорость обмена данными. Резерв роста (+${100 - scores.digital} п.) лежит в устранении узкого места: ${firstBot}.
+            `;
+            document.getElementById('tip-ops').innerHTML = `
+                <div style="color:#00d2ff; font-weight:bold; margin-bottom:5px;">⚙️ ${tUI('scOps')}: ${scores.operations}/100</div>
+                Отражает пропускную способность локации в часы пик, скорость внутренних процессов и эффективность работы персонала без простоев.
+            `;
+            document.getElementById('tip-cust').innerHTML = `
+                <div style="color:#00ff88; font-weight:bold; margin-bottom:5px;">⭐️ ${tUI('scCust')}: ${scores.customer}/100</div>
+                Рассчитан на базе официального рейтинга и числа отзывов в Google Maps, удобства обращения и удержания постоянных клиентов (LTV).
+            `;
+            document.getElementById('tip-growth').innerHTML = `
+                <div style="color:#ffaa00; font-weight:bold; margin-bottom:5px;">🚀 ${tUI('scGrowth')}: ${scores.growth}/100</div>
+                Показывает емкость возврата упущенной выручки за ближайшие 6–12 месяцев при реализации предложенной Архитектуры Роста.
+            `;
         }
 
         function applyLanguageUI() {
@@ -783,6 +891,9 @@
             document.getElementById('ui-rep-title').innerText = tUI('repTitle');
             document.getElementById('ui-rep-pos').innerText = tUI('repPos');
             document.getElementById('ui-rep-neg').innerText = tUI('repNeg');
+            document.getElementById('ui-niche-analysis-title').innerText = tUI('nicheAnalysisTitle');
+            document.getElementById('ui-quick-wins-title').innerText = tUI('quickWinsTitle');
+            document.getElementById('ui-trends-title').innerText = tUI('trendsTitle');
             document.getElementById('ui-stack-title').innerText = tUI('stackTitle');
             document.getElementById('ui-infra-title').innerText = tUI('infraTitle');
             document.getElementById('ui-bot-title').innerText = tUI('botTitle');
@@ -798,6 +909,8 @@
             document.getElementById('ui-fin-new').innerText = tUI('finNew');
             document.getElementById('ui-fin-marg').innerText = tUI('finMarg');
             document.getElementById('ui-fin-roi').innerText = tUI('finRoi');
+            document.getElementById('ui-partners-title').innerText = tUI('partnersTitle');
+            document.getElementById('ui-vendors-title').innerText = tUI('vendorsTitle');
             document.getElementById('ui-comp-title').innerText = tUI('compTitle');
             document.getElementById('ui-filt-all').innerText = tUI('filtAll');
             document.getElementById('ui-filt-local').innerText = tUI('filtLocal');
@@ -822,7 +935,7 @@
         function detectInitialBrowserLanguage() {
             const saved = localStorage.getItem('b2b_lang');
             if (saved) return saved;
-            const navLang = (navigator.language || navigator.userLanguage || "en-US").toLowerCase();
+            const navLang = (navigator.language || navigator.userLanguage || "ru-RU").toLowerCase();
             if (navLang.startsWith("ru") || navLang.startsWith("uk") || navLang.startsWith("be")) return "ru-RU";
             if (navLang.startsWith("de")) return "de-DE";
             if (navLang.startsWith("es")) return "es-ES";
@@ -988,13 +1101,20 @@
         function stripForeignSymbols(str) {
             if (!str) return "";
             let s = String(str).replace(/टाइम/g, "Time");
-            const langVal = document.getElementById('lang') ? document.getElementById('lang').value : "en-US";
+            const langVal = document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU";
             if (langVal.indexOf("zh") === 0) return s;
             return s.replace(/[\u0900-\u097F\u0600-\u06FF\u0590-\u05FF\u0E00-\u0E7F\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]+/g, "").replace(/\s{2,}/g, " ").trim();
         }
 
         function stripTrailingDot(str) {
             return stripForeignSymbols(str).replace(/\.+$/, "");
+        }
+
+        function lowerFirstCharOnly(str) {
+            const s = stripTrailingDot(str);
+            if (!s) return "";
+            if (s.length > 1 && s[0] === s[0].toUpperCase() && s[1] === s[1].toUpperCase()) return s;
+            return s.charAt(0).toLowerCase() + s.slice(1);
         }
 
         function extractCleanDomainFromUrl(rawUrl) {
@@ -1017,7 +1137,7 @@
 
         function extractCoreBrandKey(compName) {
             if (!compName) return "";
-            const genericWords = /\b(gmbh|co|kg|ag|se|ek|ohg|gbr|mbh|inc|ltd|llc|bv|pty|plc|standort|autohaus|automobil|automobile|auto|zentrum|center|centre|dealership|nutzfahrzeuge|gebrauchtwagen|vertragshändler|service|services|systemhaus|it-systemhaus|edv|consulting|solutions|software|studio|küchen|küchenstudio|möbelhaus|einrichtungshaus|zoo|tiergarten|tierpark|dierenpark|wildpark)\b/gi;
+            const genericWords = /\b(gmbh|co|kg|ag|se|ek|ohg|gbr|mbh|inc|ltd|llc|bv|pty|plc|standort|company|limited|group|holding|center|centre|service|services|solutions|consulting|software|studio|store|shop|market)\b/gi;
             const cleaned = String(compName).toLowerCase().replace(genericWords, " ").replace(/[^a-zа-яіїєґ0-9\s]/gi, " ").trim();
             const tokens = cleaned.split(/\s+/).filter(w => w.length >= 3);
             if (tokens.length > 0) return tokens[0];
@@ -1118,9 +1238,46 @@
             const cleaned = cleanGlobalCityName(stripForeignSymbols(rawCity), formattedAddr || "", fallbackCity);
             const cnt = stripForeignSymbols(countryStr);
             if (!cleaned || cleaned === "Н/Д" || cleaned === "Не указан" || cleaned === "N/A" || cleaned === "HQ" || cleaned.toLowerCase() === cnt.toLowerCase()) {
-                return (fallbackCity && fallbackCity !== "Н/Д" && fallbackCity !== "N/A" && fallbackCity !== "HQ" && fallbackCity.toLowerCase() !== cnt.toLowerCase()) ? fallbackCity : "";
+                return (fallbackCity && fallbackCity !== "Н/Д" && fallbackCity !== "N/A" && fallbackCity !== "HQ" && fallbackCity.toLowerCase() !== cnt.toLowerCase()) ? fallbackCity : "Центральный офис";
             }
             return cleaned;
+        }
+
+        // Асинхронная сверка реальной страны и города штаб-квартиры для карточек Партнеров и Вендоров через базу Google Places API v1
+        async function verifyPartnerAndVendorGeoViaGoogle() {
+            const geoNodes = document.querySelectorAll('[data-geo-lookup]');
+            for (let i = 0; i < geoNodes.length; i++) {
+                const node = geoNodes[i];
+                const companyName = node.getAttribute('data-company-name') || "";
+                const currentCountry = node.getAttribute('data-company-country') || "";
+                const currentCity = node.getAttribute('data-company-city') || "";
+                if (!companyName) continue;
+
+                const needsLookup = !currentCity || currentCity === "Центральный офис" || currentCity.toLowerCase() === activeReportCity.toLowerCase();
+                if (!needsLookup) continue;
+
+                const places = await fetchPlacesNewAPI(`${companyName} headquarters office`, 1);
+                if (places && places.length > 0) {
+                    const pGeo = extractGeoFromNewPlace(places[0]);
+                    if (pGeo.country && pGeo.city) {
+                        const realCountry = pGeo.country;
+                        const realCity = sanitizeCityField(pGeo.city, realCountry, currentCity);
+                        node.setAttribute('data-company-country', realCountry);
+                        node.setAttribute('data-company-city', realCity);
+
+                        const badgeEl = node.querySelector('.geo-badge-inline');
+                        if (badgeEl) badgeEl.innerText = `🌍 ${realCountry}, 🏙️ ${realCity}`;
+
+                        const titleEl = node.querySelector('.scan-company-title');
+                        if (titleEl) {
+                            titleEl.onclick = (e) => {
+                                e.stopPropagation();
+                                scanDirect(companyName, realCountry, realCity);
+                            };
+                        }
+                    }
+                }
+            }
         }
 
         function canAddVerifiedCompetitor(cand, existingList, mainBizName, mainLat, mainLng, targetCountryCode) {
@@ -1153,6 +1310,23 @@
             return true;
         }
 
+        function buildDetailedCompetitorDossier(comp, compNiche, compCity, compCountry) {
+            let rawSum = stripForeignSymbols(comp.summary || comp.description || "");
+            rawSum = rawSum.replace(/Адрес:.*$/i, "").replace(/Действующий объект в категории «[^»]+»\s*(\(Отзывов:\s*\d+\))?\.?/i, "").trim();
+
+            const ratingNum = parseFloat(comp.rating || "4.3") || 4.3;
+            const standingText = ratingNum >= 4.5
+                ? `Высокорейтинговый лидер клиентской лояльности (${ratingNum}★) в г. ${compCity}, формирующий планку качества обслуживания в сегменте «${compNiche}».`
+                : ratingNum >= 4.1
+                ? `Устойчивый рыночный игрок (${ratingNum}★) в локации ${compCity}, конкурирующий за основной поток целевого трафика.`
+                : `Действующий участник рынка (${ratingNum}★) в г. ${compCity} с потенциалом перехвата его клиентского потока за счет более быстрого сервиса.`;
+
+            if (rawSum && rawSum.length > 25) {
+                return `${stripTrailingDot(rawSum)}. ${standingText}`;
+            }
+            return `Профильное предприятие в сегменте «${compNiche}» (${compCity}, ${compCountry}), работающее с целевой аудиторией региона. ${standingText}`;
+        }
+
         async function loadOfficialGlobalCompetitors(rawServerCompetitors, bizName, niche, city, country) {
             const verifiedList = [];
 
@@ -1168,6 +1342,7 @@
                             country: country,
                             countryCode: c.countryCode || activeReportCountryCode,
                             niche: stripForeignSymbols(c.niche || niche),
+                            summary: stripForeignSymbols(c.summary || ""),
                             lat: Number(c.lat),
                             lng: Number(c.lng)
                         });
@@ -1177,10 +1352,11 @@
 
             const cleanNiche = niche.split(/[\/,()]/)[0].trim();
             const searchSteps = [
-                { q: `${cleanNiche} ${city} ${country}`, rad: 35000.0 },
-                { q: `${cleanNiche} ${country}`, rad: 120000.0 },
-                { q: `${niche} ${country}`, rad: 300000.0 },
-                { q: `Top ${cleanNiche} in ${country}`, rad: null }
+                { q: `${cleanNiche} ${city} ${country}`, rad: 25000.0 },
+                { q: `${cleanNiche} ${city} ${country}`, rad: 50000.0 },
+                { q: `${cleanNiche} ${country}`, rad: 110000.0 },
+                { q: `${niche} ${country}`, rad: 220000.0 },
+                { q: `${cleanNiche} ${country}`, rad: null }
             ];
 
             for (let s = 0; s < searchSteps.length && verifiedList.length < 30; s++) {
@@ -1194,7 +1370,7 @@
                 );
 
                 places.forEach(p => {
-                    if (verifiedList.length >= 30 || !p || !p.displayName || !p.displayName.text) return;
+                    if (verifiedList.length >= 35 || !p || !p.displayName || !p.displayName.text) return;
                     if (p.businessStatus && p.businessStatus !== "OPERATIONAL") return;
 
                     const geo = extractGeoFromNewPlace(p);
@@ -1210,6 +1386,7 @@
                         country: country,
                         countryCode: geo.countryCode,
                         niche: (p.primaryTypeDisplayName && p.primaryTypeDisplayName.text) ? p.primaryTypeDisplayName.text : niche,
+                        summary: (p.editorialSummary && p.editorialSummary.text) ? p.editorialSummary.text : "",
                         lat: (p.location && p.location.latitude) ? Number(p.location.latitude) : null,
                         lng: (p.location && p.location.longitude) ? Number(p.location.longitude) : null
                     };
@@ -1220,15 +1397,29 @@
                 });
             }
 
-            allCompetitorsData = verifiedList;
+            if (activeReportLat && activeReportLng) {
+                verifiedList.sort((a, b) => {
+                    const distA = haversineDistanceKm(activeReportLat, activeReportLng, a.lat, a.lng);
+                    const distB = haversineDistanceKm(activeReportLat, activeReportLng, b.lat, b.lng);
+                    return distA - distB;
+                });
+            }
+
+            allCompetitorsData = verifiedList.slice(0, 30);
             populateCompetitorFilterDropdowns(allCompetitorsData);
             renderCompetitorsList(allCompetitorsData);
             initLiveMap(activeReportLat, activeReportLng, bizName, allCompetitorsData, `${bizName} ${city} ${country}`);
         }
 
         function splitBottlenecksIntoItAndPhys(data) {
-            const negSet = new Set(((data.reputation && data.reputation.negative) || []).map(n => stripTrailingDot(n).toLowerCase()));
-            const rawCombined = [].concat(data.bottlenecksIt || [], data.bottlenecksPhys || [], data.bottlenecks || [])
+            const directIt = (Array.isArray(data.bottlenecksIt) ? data.bottlenecksIt : []).map(stripForeignSymbols).filter(Boolean);
+            const directPhys = (Array.isArray(data.bottlenecksPhys) ? data.bottlenecksPhys : []).map(stripForeignSymbols).filter(Boolean);
+
+            if (directIt.length >= 2 && directPhys.length >= 2) {
+                return { itList: directIt.slice(0, 7), physList: directPhys.slice(0, 6) };
+            }
+
+            const rawCombined = [].concat(directIt, directPhys, data.bottlenecks || [])
                 .map(stripForeignSymbols)
                 .filter(Boolean);
 
@@ -1240,7 +1431,7 @@
 
             rawCombined.forEach(item => {
                 const norm = stripTrailingDot(item).toLowerCase();
-                if (negSet.has(norm) || seen.has(norm)) return;
+                if (seen.has(norm)) return;
                 seen.add(norm);
 
                 if (digitalRegex.test(item)) {
@@ -1249,18 +1440,6 @@
                     physList.push(item);
                 }
             });
-
-            if (physList.length < 3 && Array.isArray(data.infrastructure)) {
-                const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
-                data.infrastructure.slice(0, 3).forEach(inf => {
-                    const cleanInf = stripTrailingDot(inf);
-                    if (cleanInf && physList.length < 4) {
-                        physList.push(isRu
-                            ? `Высокая операционная нагрузка и издержки на ручное обслуживание узла: «${cleanInf}» в часы пикового потока`
-                            : `High operational workload and manual maintenance costs for: "${cleanInf}" during peak hours`);
-                    }
-                });
-            }
 
             return { itList: itList.slice(0, 7), physList: physList.slice(0, 6) };
         }
@@ -1341,7 +1520,7 @@
             const rawAction = stripTrailingDot((Array.isArray(step.stepByStepGuide) && step.stepByStepGuide[0]) || step.instruction || step.desc || "");
             const title = stripTrailingDot(step.title || "");
             const explain = stripTrailingDot(step.plainExplanation || step.desc || "");
-            const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
+            const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU").startsWith("ru");
 
             if (!isRu) {
                 return [
@@ -1358,31 +1537,6 @@
                 `Связать решение «${title}» с действующими процессами объекта («${niche}») и провести инструктаж сотрудников`,
                 `Оценить сокращение ручных операций и фактический прирост выручки «${bizName}» через 30 дней эксплуатации`
             ];
-        }
-
-        function buildGlobalContractorQuery(step, stepIdx, city, country) {
-            const text = ((step.title || "") + " " + (step.plainExplanation || "") + " " + (step.desc || "") + " " + (step.instruction || "")).toLowerCase();
-            const locScope = (stepIdx < 2) ? `${city} ${country}` : country;
-
-            if (text.includes("приложен") || text.includes("flutter") || text.includes("mobile") || text.includes("app") || text.includes("гид")) {
-                return `Mobile App Development Software Company ${locScope}`;
-            }
-            if (text.includes("билет") || text.includes("ticket") || text.includes("киоск") || text.includes("терминал") || text.includes("kiosk") || text.includes("pos")) {
-                return `Ticketing Kiosk POS System Integrator ${locScope}`;
-            }
-            if (text.includes("iot") || text.includes("датчик") || text.includes("lorawan") || text.includes("сенсор") || text.includes("телеметр") || text.includes("rfid")) {
-                return `IoT Automation Engineering System Integrator ${locScope}`;
-            }
-            if (text.includes("crm") || text.includes("erp") || text.includes("hubspot") || text.includes("salesforce") || text.includes("sap")) {
-                return `CRM ERP Implementation Partner IT Consulting ${locScope}`;
-            }
-            if (text.includes("аналитик") || text.includes("powerbi") || text.includes("power bi") || text.includes("bi") || text.includes("маркетинг") || text.includes("реклам") || text.includes("seo")) {
-                return `Business Intelligence Data Analytics Digital Agency ${locScope}`;
-            }
-            if (text.includes("веб") || text.includes("сайт") || text.includes("headless") || text.includes("next.js") || text.includes("wordpress") || text.includes("портал") || text.includes("кабинет")) {
-                return `Web Development Software Engineering Agency ${locScope}`;
-            }
-            return `IT System Integrator Software Consulting ${locScope}`;
         }
 
         function createContractorCardHtml(v, stepTitle) {
@@ -1420,8 +1574,9 @@
                 </div>`;
         }
 
+        // Глобальный поиск подрядчиков для каждого шага по целевому запросу ИИ (step.contractorSearchQuery) в базе Google Places API v1
         async function fillStepContractorsViaOfficialPlaces(archSteps, usedContractorKeys, mainBizName) {
-            const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "en-US").startsWith("ru");
+            const isRu = (document.getElementById('lang') ? document.getElementById('lang').value : "ru-RU").startsWith("ru");
 
             for (let idx = 0; idx < archSteps.length; idx++) {
                 const step = archSteps[idx];
@@ -1431,9 +1586,13 @@
                 let currentCount = gridEl.querySelectorAll('.inline-vendor-card').length;
                 if (currentCount >= 2) continue;
 
-                const searchQ = buildGlobalContractorQuery(step, idx, activeReportCity, activeReportCountry);
-                const biasRadius = (idx < 2) ? 60000.0 : 350000.0;
-                const places = await fetchPlacesNewAPI(searchQ, 18, activeReportLat, activeReportLng, biasRadius);
+                const aiQuery = stripForeignSymbols(step.contractorSearchQuery || step.title || "B2B System Integrator");
+                const localQuery = `${aiQuery} ${activeReportCity} ${activeReportCountry}`;
+                let places = await fetchPlacesNewAPI(localQuery, 18, activeReportLat, activeReportLng, 45000.0);
+                if (places.length < 4) {
+                    const regionalPlaces = await fetchPlacesNewAPI(`${aiQuery} ${activeReportCountry}`, 20, activeReportLat, activeReportLng, 180000.0);
+                    places = places.concat(regionalPlaces);
+                }
 
                 for (let i = 0; i < places.length && currentCount < 2; i++) {
                     const p = places[i];
@@ -1517,13 +1676,13 @@
             const sendBtn = document.getElementById('prop-send-btn');
 
             if (!toEmail || !messageBody) {
-                statusEl.innerText = "Please fill in the email and message.";
+                statusEl.innerText = "Заполните адрес и текст сообщения.";
                 statusEl.style.color = "#ff4444";
                 return;
             }
 
             sendBtn.disabled = true;
-            statusEl.innerText = "Verifying official corporate email on contractor website & sending...";
+            statusEl.innerText = "Проверка официального корпоративного Email на сайте подрядчика и отправка...";
             statusEl.style.color = "#00d2ff";
 
             const payload = {
@@ -1548,16 +1707,16 @@
                 const result = await res.json();
                 if (result.status === "success") {
                     document.getElementById('prop-recipient-email').value = result.resolvedEmail || toEmail;
-                    statusEl.innerText = "✅ Sent to official email: " + (result.resolvedEmail || toEmail);
+                    statusEl.innerText = "✅ Отправлено на официальный адрес: " + (result.resolvedEmail || toEmail);
                     statusEl.style.color = "#00ff88";
                     setTimeout(() => closeProposalModal(), 1800);
                 } else {
-                    statusEl.innerText = "Error: " + result.message;
+                    statusEl.innerText = "Ошибка: " + result.message;
                     statusEl.style.color = "#ff4444";
                     sendBtn.disabled = false;
                 }
             } catch (e) {
-                statusEl.innerText = "Network error while sending.";
+                statusEl.innerText = "Ошибка сети при отправке.";
                 statusEl.style.color = "#ff4444";
                 sendBtn.disabled = false;
             }
@@ -1632,7 +1791,7 @@
                 document.getElementById('country').value = currentCountry;
                 updateActiveCitiesForCountry(currentCountry);
             }
-            if (activeReportCity && activeReportCity !== "Н/Д") {
+            if (activeReportCity && activeReportCity !== "Н/Д" && activeReportCity !== "Центральный офис") {
                 currentCity = activeReportCity;
                 localStorage.setItem('b2b_city', currentCity);
                 document.getElementById('city').value = currentCity;
@@ -1660,7 +1819,7 @@
                 updateActiveCitiesForCountry(cleanCountry);
             }
             
-            if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д") {
+            if(cityContext && cityContext !== "Не указан" && cityContext !== "Н/Д" && cityContext !== "Центральный офис") {
                 const cleanCity = cityContext.replace(/\s*\(.*?\)\s*/g, "").trim();
                 document.getElementById('city').value = cleanCity;
                 localStorage.setItem('b2b_city', cleanCity);
@@ -1757,7 +1916,7 @@
             const urlInput = document.getElementById('url').value.trim();
             
             if (!urlInput) {
-                msg.innerText = "Please enter a business name or URL";
+                msg.innerText = "Введите название бизнеса или URL";
                 msg.style.color = "#ff4444";
                 return;
             }
@@ -1765,12 +1924,13 @@
             const country = document.getElementById('country').value.trim();
             const city = document.getElementById('city').value.trim();
             const langVal = document.getElementById('lang').value;
+            const engineMode = document.getElementById('engine-mode') ? document.getElementById('engine-mode').value : "argon_pro";
             localStorage.setItem('b2b_country', country);
             localStorage.setItem('b2b_city', city);
             localStorage.setItem('b2b_lang', langVal);
             
             let locationParts = [];
-            if (city && city !== "Не указан" && city !== "Н/Д") locationParts.push(city);
+            if (city && city !== "Не указан" && city !== "Н/Д" && city !== "Центральный офис") locationParts.push(city);
             if (country && country !== "Не указана" && country !== "Н/Д") locationParts.push(country);
             const locationStr = locationParts.join(", ");
             const searchQuery = locationStr ? `${urlInput} ${locationStr}` : urlInput;
@@ -1783,7 +1943,7 @@
             if (scanTimer) clearInterval(scanTimer);
             scanTimer = setInterval(() => {
                 seconds++;
-                btn.innerText = `Deep Official Data Audit in progress... (${seconds}s)`;
+                btn.innerText = `Argon Deep Audit in progress... (${seconds}s)`;
             }, 1000);
 
             const payload = { 
@@ -1791,7 +1951,7 @@
                 language: langVal,
                 country: country,
                 city: city,
-                engineMode: "argon_pro"
+                engineMode: engineMode
             };
 
             try {
@@ -1815,14 +1975,14 @@
                     window.history.pushState({ id: result.fileId }, document.title, `?id=${result.fileId}`);
                     await handleUrlRouteState();
                 } else {
-                    msg.innerText = "Error: " + result.message;
+                    msg.innerText = "Ошибка сервера: " + result.message;
                     msg.style.color = "#ff4444";
                     btn.disabled = false;
                     btn.innerText = tUI('scanBtn');
                 }
             } catch (err) {
                 clearInterval(scanTimer);
-                msg.innerText = "Connection error with GAS server.";
+                msg.innerText = "Ошибка соединения с сервером GAS. Проверьте ссылку GAS_URL и развертывание.";
                 msg.style.color = "#ff4444";
                 btn.disabled = false;
                 btn.innerText = tUI('scanBtn');
@@ -1838,7 +1998,7 @@
             const selectedLang = document.getElementById('lang').value;
 
             if(!emailInput || !reportId) {
-                msg.innerText = "Please enter a valid Email.";
+                msg.innerText = "Введите корректный Email.";
                 msg.style.color = "#ff4444";
                 return;
             }
@@ -1858,17 +2018,17 @@
                 const result = await response.json();
                 
                 if (result.status === "success") {
-                    msg.innerText = "✅ Sent!";
+                    msg.innerText = "✅ Отправлено!";
                     msg.style.color = "#00ff88";
                     btn.innerText = "✓";
                 } else {
-                    msg.innerText = "Error: " + result.message;
+                    msg.innerText = "Ошибка: " + result.message;
                     msg.style.color = "#ff4444";
                     btn.disabled = false;
                     btn.innerText = tUI('sendEmailBtn');
                 }
             } catch (err) {
-                msg.innerText = "Network error.";
+                msg.innerText = "Ошибка сети.";
                 msg.style.color = "#ff4444";
                 btn.disabled = false;
                 btn.innerText = tUI('sendEmailBtn');
@@ -1922,11 +2082,12 @@
                     const isRu = currentLang.startsWith("ru");
                     const bizName = stripForeignSymbols(data.businessName || "Business");
                     document.getElementById('b-name').innerText = bizName;
+                    document.getElementById('b-engine-badge').innerText = "🧠 " + (data.usedModel || "Argon Deep Engine (Gemini 2.5 Pro)");
                     
-                    activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || (isRu ? 'Германия' : 'Germany'));
+                    activeReportCountry = stripForeignSymbols(data.companyMeta?.detectedCountry || data.searchCountry || currentCountry || '');
                     activeReportCity = sanitizeCityField(data.companyMeta?.detectedCity || data.searchCity || currentCity, activeReportCountry, currentCity || '', data.contacts?.address);
                     activeReportCountryCode = (data.companyMeta?.countryCode || "").toUpperCase();
-                    activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || (isRu ? "Профильное предприятие" : "Commercial Business"));
+                    activeReportNiche = stripForeignSymbols(data.companyMeta?.niche || "Business");
                     activeReportLat = (data.coordinates && data.coordinates.lat) ? Number(data.coordinates.lat) : null;
                     activeReportLng = (data.coordinates && data.coordinates.lng) ? Number(data.coordinates.lng) : null;
 
@@ -1936,6 +2097,8 @@
                             const mPlace = mainLookup[0];
                             const mGeo = extractGeoFromNewPlace(mPlace);
                             if (mGeo.countryCode) activeReportCountryCode = mGeo.countryCode;
+                            if (!activeReportCountry && mGeo.country) activeReportCountry = mGeo.country;
+                            if ((!activeReportCity || activeReportCity === "Центральный офис") && mGeo.city) activeReportCity = mGeo.city;
                             if (!activeReportLat && mPlace.location) {
                                 activeReportLat = Number(mPlace.location.latitude);
                                 activeReportLng = Number(mPlace.location.longitude);
@@ -1948,8 +2111,8 @@
                     localStorage.setItem('b2b_country', currentCountry);
                     localStorage.setItem('b2b_city', currentCity);
 
-                    const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 1200000;
-                    const rawLostNum = Number(String(data.lostRevenue || "0").replace(/[^0-9]/g, '')) || Math.round(rawRevNum * 0.12);
+                    const rawRevNum = Number(String(data.companyMeta?.revenue || "0").replace(/[^0-9]/g, '')) || 2400000;
+                    const rawLostNum = Number(String(data.lostRevenue || "0").replace(/[^0-9]/g, '')) || Math.round(rawRevNum * 0.11);
                     const sym = String(data.companyMeta?.revenue || "").includes("$") ? "$" : "€";
                     activeIsCorporate = rawRevNum >= 50000000;
 
@@ -1961,12 +2124,7 @@
                     document.getElementById('m-owner').innerText = stripForeignSymbols(data.companyMeta?.owner || bizName);
                     document.getElementById('m-revenue').innerText = formatNumCurrency(rawRevNum, sym);
                     document.getElementById('m-year').innerText = data.companyMeta?.founded || "N/A";
-
-                    let legalStr = stripForeignSymbols(data.companyMeta?.legalIssues || "");
-                    if (!legalStr || (isRu && /no major issues|no critical/i.test(legalStr))) {
-                        legalStr = tUI('noIssuesText');
-                    }
-                    document.getElementById('m-debts').innerText = legalStr;
+                    document.getElementById('m-debts').innerText = stripForeignSymbols(data.companyMeta?.legalIssues || tUI('noIssuesText'));
 
                     const cleanStack = Array.isArray(data.techStack) ? data.techStack : [];
                     const cleanInfra = Array.isArray(data.infrastructure) ? data.infrastructure : [];
@@ -1981,19 +2139,12 @@
                     document.getElementById('bar-cust').style.width = `${s.customer}%`;
                     document.getElementById('sc-growth').innerText = `${s.growth}/100`;
                     document.getElementById('bar-growth').style.width = `${s.growth}%`;
+                    populateScoreTooltips(s, bizName, cleanStack, splitBots);
 
                     const mi = data.marketIntelligence || {};
-                    let posText = stripForeignSymbols(mi.positioning || "");
-                    if (!posText || (isRu && posText.includes("operates in the"))) {
-                        const topPros = (data.reputation && data.reputation.positive && data.reputation.positive.length > 0)
-                            ? data.reputation.positive.slice(0, 2).map(p => stripTrailingDot(p).toLowerCase()).join(" и ")
-                            : "";
-                        const topBots = [].concat(splitBots.itList, splitBots.physList).slice(0, 2).map(b => stripTrailingDot(b).toLowerCase()).join(", а также ");
-                        posText = isRu
-                            ? `${bizName} работает в сегменте «${activeReportNiche}» (${activeReportCity}, ${activeReportCountry}). Ключевые конкурентные преимущества компании: ${topPros || "устойчивая репутация и профильная экспертиза"}. Главные точки роста прибыли лежат в устранении выявленных узких мест: ${topBots || "оцифровке клиентского пути и автоматизации процессов"}.`
-                            : `${bizName} operates in the "${activeReportNiche}" sector (${activeReportCity}, ${activeReportCountry}), focusing on ${topPros || "core strengths"} and resolving key bottlenecks: ${topBots || "process automation"}.`;
-                    }
-                    document.getElementById('b-positioning').innerText = posText;
+                    document.getElementById('b-positioning').innerText = stripForeignSymbols(mi.positioning || "");
+                    populateList('b-quick-wins', Array.isArray(mi.quickWins) ? mi.quickWins : []);
+                    populateList('b-trends', Array.isArray(mi.industryTrends) ? mi.industryTrends : []);
 
                     setCompanyLogo(document.getElementById('b-logo'), data.contacts?.website, bizName);
 
@@ -2087,6 +2238,80 @@
 
                     await fillStepContractorsViaOfficialPlaces(archSteps, globalUsedContractorBrands, bizName);
 
+                    // Рендер карточек Стратегического партнерства и Технологических вендоров из ответа ИИ
+                    const partContainer = document.getElementById('b-partners');
+                    partContainer.innerHTML = '';
+                    const partnersList = Array.isArray(data.strategicPartnerships) ? data.strategicPartnerships : [];
+                    partnersList.forEach(p => {
+                        const cleanScanName = extractCleanCompanyName(p.cleanName || p.name || "");
+                        if (!cleanScanName) return;
+                        const pCountry = (p.country && p.country !== "Н/Д") ? stripForeignSymbols(p.country) : activeReportCountry;
+                        const pCity = sanitizeCityField(p.city, pCountry, "Центральный офис");
+                        const targetArea = stripForeignSymbols(p.integrationTarget || activeReportNiche);
+                        const rawPartnerUrl = cleanUrl(p.website);
+                        const partnerUrl = (rawPartnerUrl && rawPartnerUrl !== "N/A" && !rawPartnerUrl.includes("google.com"))
+                            ? (rawPartnerUrl.startsWith('http') ? rawPartnerUrl : PROTO + rawPartnerUrl)
+                            : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(cleanScanName + " official website"));
+
+                        const safeScanName = cleanScanName.replace(/'/g, "\\'");
+                        const safePCountry = pCountry.replace(/'/g, "\\'");
+                        const safePCity = pCity.replace(/'/g, "\\'");
+
+                        let pDiv = document.createElement('div');
+                        pDiv.className = 'vendor-card partner-card';
+                        pDiv.setAttribute('data-geo-lookup', 'true');
+                        pDiv.setAttribute('data-company-name', cleanScanName);
+                        pDiv.setAttribute('data-company-country', pCountry);
+                        pDiv.setAttribute('data-company-city', pCity);
+
+                        pDiv.innerHTML = `
+                            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                                <span class="scan-company-title" onclick="scanDirect('${safeScanName}', '${safePCountry}', '${safePCity}')">${cleanScanName}</span>
+                                <span class="geo-badge-inline">🌍 ${pCountry}, 🏙️ ${pCity}</span>
+                            </div>
+                            <div class="integration-badge">🔗 ${targetArea}</div>
+                            <div style="font-size: 13px; color: #ccc; margin: 5px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(p.reason || p.description || '')}</div>
+                            <a href="${partnerUrl}" target="_blank" rel="noopener" class="vendor-site-btn partner-btn">${tUI('visitSiteBtn')}</a>
+                        `;
+                        partContainer.appendChild(pDiv);
+                    });
+
+                    const vendorsContainer = document.getElementById('b-vendors');
+                    vendorsContainer.innerHTML = '';
+                    const vendorsList = Array.isArray(data.itVendors) ? data.itVendors : [];
+                    vendorsList.forEach(vendor => {
+                        const cleanVendorName = extractCleanCompanyName(vendor.cleanName || vendor.name || "");
+                        if (!cleanVendorName) return;
+                        const vCountry = (vendor.country && vendor.country !== "Н/Д") ? stripForeignSymbols(vendor.country) : activeReportCountry;
+                        const vCity = sanitizeCityField(vendor.city, vCountry, "Центральный офис");
+                        const rawVendorUrl = cleanUrl(vendor.website);
+                        const vendorUrl = (rawVendorUrl && rawVendorUrl !== "N/A" && !rawVendorUrl.includes("google.com"))
+                            ? (rawVendorUrl.startsWith('http') ? rawVendorUrl : PROTO + rawVendorUrl)
+                            : (PROTO + "www.google" + DOT_COM + "/search?q=" + encodeURIComponent(cleanVendorName + " official website"));
+
+                        const safeVName = cleanVendorName.replace(/'/g, "\\'");
+                        const safeVCountry = vCountry.replace(/'/g, "\\'");
+                        const safeVCity = vCity.replace(/'/g, "\\'");
+
+                        let vDiv = document.createElement('div');
+                        vDiv.className = 'vendor-card';
+                        vDiv.setAttribute('data-geo-lookup', 'true');
+                        vDiv.setAttribute('data-company-name', cleanVendorName);
+                        vDiv.setAttribute('data-company-country', vCountry);
+                        vDiv.setAttribute('data-company-city', vCity);
+
+                        vDiv.innerHTML = `
+                            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+                                <span class="scan-company-title" onclick="scanDirect('${safeVName}', '${safeVCountry}', '${safeVCity}')">${cleanVendorName}</span>
+                                <span class="vendor-rating">⭐️ ${vendor.rating || '4.8'}</span>
+                                <span class="geo-badge-inline">🌍 ${vCountry}, 🏙️ ${vCity}</span>
+                            </div>
+                            <div style="font-size: 13px; color: #ccc; margin: 8px 0 10px 0; line-height: 1.5;">${stripForeignSymbols(vendor.description || vendor.desc || '')}</div>
+                            <a href="${vendorUrl}" target="_blank" rel="noopener" class="vendor-site-btn">${tUI('visitSiteBtn')}</a>
+                        `;
+                        vendorsContainer.appendChild(vDiv);
+                    });
+
                     if(data.financials) {
                         const exactNewTurnover = formatNumCurrency(rawRevNum + rawLostNum, sym);
                         const exactProfitInc = "+" + formatNumCurrency(rawLostNum, sym);
@@ -2103,6 +2328,7 @@
                     }
 
                     await loadOfficialGlobalCompetitors(data.competitors, bizName, activeReportNiche, activeReportCity, activeReportCountry);
+                    verifyPartnerAndVendorGeoViaGoogle();
                 }
             } catch (error) {
                 console.error(error);
@@ -2147,6 +2373,7 @@
                     let compCountry = (comp.country && comp.country !== "Н/Д") ? stripForeignSymbols(comp.country) : activeReportCountry;
                     let compCity = sanitizeCityField(comp.city, compCountry, activeReportCity, comp.street || "") || activeReportCity;
                     let compNiche = stripForeignSymbols(comp.niche || activeReportNiche);
+                    let detailedDossier = buildDetailedCompetitorDossier(comp, compNiche, compCity, compCountry);
 
                     let btn = document.createElement('div');
                     btn.className = 'click-tag';
@@ -2154,7 +2381,9 @@
                         <div class="comp-name">${stripForeignSymbols(comp.name)}</div>
                         <div class="comp-meta">⭐️ ${comp.rating || '4.5'} | 🌍 ${compCountry}, 🏙️ ${compCity}</div>
                         <div class="comp-tooltip">
-                            <div style="color:#ffaa00; font-weight:bold;">${tUI('lblNiche')} ${compNiche}</div>
+                            <div style="color:#ffaa00; font-weight:bold; margin-bottom:5px;">${tUI('lblNiche')} ${compNiche}</div>
+                            <div style="color:#ddd; margin-bottom:6px;">📌 ${detailedDossier}</div>
+                            <div style="color:#00ff88; font-size:11px; font-weight:bold;">${tUI('mapScanBtn')}</div>
                         </div>
                     `;
                     btn.onclick = () => scanDirect(comp.name, compCountry, compCity);

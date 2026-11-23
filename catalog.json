@@ -1,5 +1,16 @@
 [
   {
+    "id": "1DEzPyojByr-quH6gRi-D27IEID5YfOcP",
+    "name": "Вопак",
+    "niche": "Сетевой супермаркет у дома",
+    "country": "Украина",
+    "city": "Ужгород",
+    "rating": "3.2/5.0",
+    "score": 53,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T17:34:00.885Z"
+  },
+  {
     "id": "1qxN58e0UZskiGKWVR8QZ7gBgsi6QOjJx",
     "name": "Aral teńizi - Арал теңізі",
     "niche": "АЗС с зарядкой электромобилей и автосервисом",

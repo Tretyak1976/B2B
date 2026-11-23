@@ -1,5 +1,16 @@
 [
   {
+    "id": "1vKaPN5HmRRpYGbRJd8itpwuDh1zlp7Hm",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Дизайн и установка кухонь на заказ",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.9/5.0",
+    "score": 74,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T15:07:10.386Z"
+  },
+  {
     "id": "1SXHYTprQLr4PhFS2RnGW08QYww9fxzWA",
     "name": "SSHE",
     "niche": "Неопределенный малый бизнес (SMB)",

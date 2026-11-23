@@ -1,5 +1,16 @@
 [
   {
+    "id": "1u0ReG0SqwwKNZ4dAT1tS-9Xl3YRZ1hQA",
+    "name": "TotalEnergies",
+    "niche": "Автомобильная заправка с магазином и сервисом",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T13:59:43.275Z"
+  },
+  {
     "id": "1rnzbmL0fbcNmsFBIHFTsvvLzE1nKXE8p",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Студия проектирования и монтажа кухонь",

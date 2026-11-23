@@ -1,5 +1,16 @@
 [
   {
+    "id": "1bxrAshxWe1MlKSYnZWxtYwJB5RYHGgNj",
+    "name": "TOTAL Gas Station",
+    "niche": "Автозаправка с мини‑маркетом",
+    "country": "Германия",
+    "city": "Клеве",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T13:01:36.759Z"
+  },
+  {
     "id": "1W6czpgEUaAzFJeaTFWO30rx3JJ08y6Kd",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "премиум‑кухонный салон под ключ",

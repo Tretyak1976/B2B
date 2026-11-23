@@ -1,5 +1,16 @@
 [
   {
+    "id": "1Td-rdM177rbvM2PNhbSIscwrwBDcJVMX",
+    "name": "TOTAL Gas Station",
+    "niche": "Топливная станция с магазином и кафе",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T12:17:46.674Z"
+  },
+  {
     "id": "1OO-73LFZRRL7GKy651jl_IwBAuQwlJoB",
     "name": "TOTAL Gas Station",
     "niche": "Топливная автозаправка с мини‑магазином",

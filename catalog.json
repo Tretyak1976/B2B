@@ -1,5 +1,16 @@
 [
   {
+    "id": "1dv1b_yZUROz1EAD20vp6h2TBUB7uuUlk",
+    "name": "TotalEnergies",
+    "niche": "Автомобильная заправка с магазином и сервисом",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 74,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T17:06:02.690Z"
+  },
+  {
     "id": "1zuEeHVghl63UojDjQUM_6-v8imsl8Z0X",
     "name": "Ужгородська початкова школа \"Престиж\"",
     "niche": "начальная школа",
@@ -99,17 +110,6 @@
     "createdAt": "2026-11-23T14:49:08.098Z"
   },
   {
-    "id": "16kbzamWNx353q8D6ypBgjN_v-Qf0P_0X",
-    "name": "TotalEnergies",
-    "niche": "Мультиэнергетический хаб (АЗС и EV-услуги)",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 64,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T14:28:50.976Z"
-  },
-  {
     "id": "1r5y6ARqqahacCf1VtZgRxOZ9wWEgkP1n",
     "name": "MrBeast Burger",
     "niche": "Виртуальная кухня (Ghost Kitchen) / Фаст-фуд с доставкой",
@@ -143,17 +143,6 @@
     "createdAt": "2026-11-23T14:04:16.877Z"
   },
   {
-    "id": "1u0ReG0SqwwKNZ4dAT1tS-9Xl3YRZ1hQA",
-    "name": "TotalEnergies",
-    "niche": "Автомобильная заправка с магазином и сервисом",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 6,
-    "createdAt": "2026-11-23T13:59:43.275Z"
-  },
-  {
     "id": "1FFnGE2tBwSKCrkd7kDo0ovw6t4r0IGdX",
     "name": "ستاد اّل مكتوم",
     "niche": "многодисциплинарный спортивный клуб",
@@ -174,17 +163,6 @@
     "score": 57,
     "modelsUsed": 5,
     "createdAt": "2026-11-23T13:50:50.714Z"
-  },
-  {
-    "id": "1vde8nBRq5ikT5nGNt-0xrCK6tRjaoAV-",
-    "name": "TotalEnergies",
-    "niche": "топливная станция с сервисом",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 6,
-    "createdAt": "2026-11-23T13:48:22.386Z"
   },
   {
     "id": "1T2R4f34jP8CF4HJ-hD3hAO9ww05EJyHU",

@@ -1,5 +1,16 @@
 [
   {
+    "id": "16bP49GUyk1PLPRsKsvaknHwJmE8xvtda",
+    "name": "Aral",
+    "niche": "АЗС с магазином и зарядкой электромобилей",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 7,
+    "createdAt": "2026-11-23T14:07:17.620Z"
+  },
+  {
     "id": "1ovZ8ux8R5g2bjrmeEMxYmMLednnB8Bxn",
     "name": "Horsthemke",
     "niche": "кафе быстрого обслуживания",

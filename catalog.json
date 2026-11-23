@@ -1,5 +1,16 @@
 [
   {
+    "id": "1v7Kn4n6G6ALxXCHc-jXm7LMZV0_8OqSR",
+    "name": "star Tankstelle",
+    "niche": "автозаправочная станция с обслуживанием B2C и B2B",
+    "country": "Германия",
+    "city": "Эммерих-ам-Райн",
+    "rating": "N/A",
+    "score": 53,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T13:19:26.102Z"
+  },
+  {
     "id": "1bxrAshxWe1MlKSYnZWxtYwJB5RYHGgNj",
     "name": "TOTAL Gas Station",
     "niche": "Автозаправка с мини‑маркетом",

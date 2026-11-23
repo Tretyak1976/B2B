@@ -1,5 +1,16 @@
 [
   {
+    "id": "1OO-73LFZRRL7GKy651jl_IwBAuQwlJoB",
+    "name": "TOTAL Gas Station",
+    "niche": "Топливная автозаправка с мини‑магазином",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 58,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T12:14:31.915Z"
+  },
+  {
     "id": "1Qt767UcayD2c2nD1cqJydFCOnYIgwx5s",
     "name": "TotalEnergies GmbH – филиал Клеве",
     "niche": "Топливный ретейлер и автосервис",

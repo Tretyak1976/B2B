@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>B2B Nexus — AI Symbiosis Factory (30 Free Models 3D)</title>
+  <title>B2B Nexus — AI Symbiosis Factory (30 Models 3D)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.146.0/three.min.js"
@@ -14,681 +14,460 @@
       color-scheme: light;
       --ff-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --ff-mono: 'JetBrains Mono', ui-monospace, monospace;
-      --surface: #f5f6f8;
-      --surface-bright: #ffffff;
-      --surface-dim: #eceff4;
-      --surface-translucent: rgba(255, 255, 255, 0.88);
-      --on-surface: #0f172a;
-      --on-surface-variant: rgba(15, 23, 42, 0.62);
-      --on-surface-low: rgba(15, 23, 42, 0.10);
-      --stroke: #dce2ec;
+      --bg: #eef2f7;
+      --panel: #ffffff;
+      --panel-2: #f4f6fa;
+      --glass: rgba(255, 255, 255, 0.90);
+      --text: #0f172a;
+      --muted: rgba(15, 23, 42, 0.62);
+      --border: #d9e1ec;
       --primary: #2563eb;
-      --accent-container: #dbeafe;
-      --positive: #059669;
-      --positive-container: #d1fae5;
-      --error: #dc2626;
-      --chart-1: #2575fc;
-      --chart-2: #5b6e9e;
-      --chart-3: #16a34a;
-      --chart-4: #65a30d;
-      --chart-7: #0284c7;
-      --chart-8: #d97706;
-      --chart-9: #7c3aed;
-      --chart-10: #db2777;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --primary-bg: #dbeafe;
+      --ok: #059669;
+      --ok-bg: #d1fae5;
+      --err: #dc2626;
+      --c1: #2575fc; --c3: #16a34a; --c7: #0284c7; --c8: #d97706; --c10: #db2777;
     }
-
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --surface: #0a0c10;
-      --surface-bright: #121620;
-      --surface-dim: #181d2a;
-      --surface-translucent: rgba(18, 22, 32, 0.88);
-      --on-surface: #edf2f7;
-      --on-surface-variant: rgba(237, 242, 247, 0.60);
-      --on-surface-low: rgba(255, 255, 255, 0.10);
-      --stroke: #262e42;
+      --bg: #080b11;
+      --panel: #101520;
+      --panel-2: #161d2c;
+      --glass: rgba(16, 21, 32, 0.90);
+      --text: #edf2f7;
+      --muted: rgba(237, 242, 247, 0.58);
+      --border: #232d42;
       --primary: #7cc4ff;
-      --accent-container: #1a2c54;
-      --positive: #10b981;
-      --positive-container: #063b2c;
-      --error: #f87171;
-      --chart-1: #60a5fa;
-      --chart-2: #94a3b8;
-      --chart-3: #34d399;
-      --chart-4: #a3e635;
-      --chart-7: #38bdf8;
-      --chart-8: #fbbf24;
-      --chart-9: #a78bfa;
-      --chart-10: #f472b6;
-      --shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+      --primary-bg: #172a4f;
+      --ok: #10b981;
+      --ok-bg: #063b2c;
+      --err: #f87171;
+      --c1: #60a5fa; --c3: #34d399; --c7: #38bdf8; --c8: #fbbf24; --c10: #f472b6;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
     html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--surface);
-      color: var(--on-surface);
-      font-family: var(--ff-sans);
-      min-height: 100vh;
+      margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden;
+      background: var(--bg); color: var(--text); font-family: var(--ff-sans);
     }
 
-    .app-wrap {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 18px 16px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    /* Single-screen cockpit grid */
+    .cockpit {
+      display: grid;
+      grid-template-rows: 50px minmax(0, 1fr);
+      height: 100vh; width: 100vw; padding: 8px; gap: 8px;
     }
 
-    .factory-shell {
-      background: var(--surface-bright);
-      border: 1px solid var(--stroke);
-      border-radius: 28px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    /* Top compact bar */
+    .topbar {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+      padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+    .brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 8px var(--primary); }
 
-    .factory-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .view-tabs { display: flex; gap: 4px; background: var(--panel-2); padding: 3px; border-radius: 999px; border: 1px solid var(--border); }
+    .vtab {
+      border: none; background: transparent; color: var(--muted); font-family: var(--ff-sans);
+      font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; cursor: pointer;
     }
+    .vtab.active { background: var(--primary-bg); color: var(--text); }
 
-    .title-block h1 {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .title-block p {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: var(--on-surface-variant);
-    }
-
-    .header-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .top-right { display: flex; align-items: center; gap: 6px; }
     .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: var(--surface-dim);
-      border: 1px solid var(--stroke);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--on-surface);
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+      border-radius: 999px; background: var(--panel-2); border: 1px solid var(--border);
+      font-size: 11px; font-weight: 600; white-space: nowrap;
     }
-
-    .pill.is-published { background: var(--positive-container); border-color: var(--positive); }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--on-surface-variant); }
-    .pill.is-active .dot { background: var(--primary); box-shadow: 0 0 8px var(--primary); }
-    .pill.is-published .dot { background: var(--positive); }
-
+    .pill.live { background: var(--ok-bg); border-color: var(--ok); }
     .btn {
-      appearance: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: var(--surface-dim);
-      color: var(--on-surface);
-      font-family: var(--ff-sans);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.12s, background 0.15s, border-color 0.15s;
+      appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 6px 11px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--panel-2); color: var(--text); font-family: var(--ff-sans);
+      font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
     }
-
     .btn:hover { border-color: var(--primary); }
-    .btn:active { transform: scale(0.98); }
-    .btn-primary {
-      background: var(--primary);
-      color: #09111f;
-      border-color: transparent;
-    }
+    .btn-primary { background: var(--primary); color: #09111f; border-color: transparent; }
     :root:not([data-theme="dark"]) .btn-primary { color: #ffffff; }
-    .btn-voice.is-recording {
-      background: var(--error);
-      color: #ffffff;
-      border-color: transparent;
-      animation: pulseRec 1.2s infinite;
-    }
-    @keyframes pulseRec { 0%,100%{opacity:1} 50%{opacity:0.65} }
+    .btn-voice.is-recording { background: var(--err); color: #fff; border-color: transparent; animation: pulse 1.1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
-    .chip {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: var(--surface-dim);
-      color: var(--on-surface-variant);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .chip.is-active {
-      background: var(--accent-container);
-      color: var(--on-surface);
-      border-color: var(--primary);
+    /* Main split workspace (fits 100% in one window) */
+    .workspace {
+      display: grid;
+      grid-template-columns: 370px minmax(0, 1fr);
+      gap: 8px; min-height: 0;
     }
 
-    /* 3D Viewport (matches original clean Three.js composition) */
-    .viewport-shell {
-      position: relative;
-      width: 100%;
-      height: 440px;
-      border-radius: 22px;
-      overflow: hidden;
-      background: radial-gradient(circle at 50% 42%, var(--surface-dim) 0%, var(--surface) 100%);
-      border: 1px solid var(--stroke);
+    /* Left sidebar: Prompt + Live Progress + Reports List from Google Drive */
+    .sidebar {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 8px; min-height: 0;
+    }
+    .box {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+      padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; min-height: 0;
+    }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+    .label-xs { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    .mono-xs { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
+
+    select.sel, input.inp {
+      background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+      border-radius: 999px; padding: 5px 10px; font-size: 11.5px; font-family: var(--ff-sans); outline: none;
+    }
+    textarea.prompt {
+      width: 100%; height: 118px; resize: none; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--panel-2); color: var(--text); padding: 9px 11px;
+      font-family: var(--ff-sans); font-size: 13px; line-height: 1.45; outline: none;
+    }
+    textarea.prompt:focus { border-color: var(--primary); }
+    textarea.prompt.drag-over { border: 2px dashed var(--primary); background: var(--primary-bg); }
+
+    /* 5-orbit mini progress strip */
+    .orbit-steps { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .ostep {
+      text-align: center; padding: 4px 2px; border-radius: 8px; font-size: 10px; font-weight: 700;
+      background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+    }
+    .ostep.active { background: var(--primary-bg); border-color: var(--primary); color: var(--text); }
+    .ostep.done { background: var(--ok-bg); border-color: var(--ok); color: var(--text); }
+
+    /* Reports list from Google Drive (scrollable cleanly inside left panel) */
+    .reports-scroll {
+      overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 2px; min-height: 0;
+    }
+    .rep-item {
+      padding: 8px 10px; border-radius: 11px; background: var(--panel-2); border: 1px solid var(--border);
+      cursor: pointer; display: flex; flex-direction: column; gap: 3px; transition: border-color 0.15s;
+    }
+    .rep-item:hover, .rep-item.active { border-color: var(--primary); background: var(--primary-bg); }
+    .rep-title { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rep-meta { display: flex; justify-content: space-between; font-size: 10.5px; font-family: var(--ff-mono); color: var(--muted); }
+
+    /* Right main stage */
+    .stage {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+      position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 0;
     }
 
-    #factoryCanvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-      cursor: grab;
-      outline: none;
+    /* Pane 1: 3D Scene (exact first Three.js composition with 30 models) */
+    .pane { display: none; flex: 1; min-height: 0; flex-direction: column; position: relative; }
+    .pane.active { display: flex; }
+
+    .viewport-wrap {
+      flex: 1; min-height: 0; position: relative; overflow: hidden;
+      background: radial-gradient(circle at 50% 44%, var(--panel-2) 0%, var(--bg) 100%);
     }
+    #factoryCanvas { display: block; width: 100%; height: 100%; cursor: grab; outline: none; }
     #factoryCanvas:active { cursor: grabbing; }
-
-    .floating-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
+    .floating-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
     .mini-terminal {
-      position: absolute;
-      transform: translate(-50%, -115%);
-      min-width: 158px;
-      max-width: 225px;
-      padding: 7px 10px;
-      border-radius: 12px;
-      background: var(--surface-translucent);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--stroke);
-      color: var(--on-surface);
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      pointer-events: auto;
-      cursor: pointer;
-      box-shadow: var(--shadow);
+      position: absolute; transform: translate(-50%, -115%); min-width: 150px; max-width: 215px;
+      padding: 6px 9px; border-radius: 10px; background: var(--glass); backdrop-filter: blur(8px);
+      border: 1px solid var(--border); color: var(--text); pointer-events: auto; cursor: pointer;
     }
     .mini-terminal.is-selected { border-color: var(--primary); }
-    .mini-terminal-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-    .mini-terminal-name { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .mini-terminal-tag { font-family: var(--ff-mono); font-size: 10px; color: var(--primary); flex-shrink: 0; }
-    .mini-terminal-line { font-family: var(--ff-mono); font-size: 10px; color: var(--on-surface-variant); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mt-h { display: flex; justify-content: space-between; gap: 6px; font-size: 10.5px; font-weight: 700; }
+    .mt-t { font-family: var(--ff-mono); font-size: 9.5px; color: var(--primary); }
+    .mt-l { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .viewport-hint {
-      position: absolute;
-      left: 12px;
-      bottom: 10px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--surface-translucent);
-      border: 1px solid var(--stroke);
-      font-size: 11px;
-      color: var(--on-surface-variant);
-      pointer-events: none;
+    .stage-footer {
+      border-top: 1px solid var(--border); padding: 7px 12px; background: var(--panel);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
     }
+    .chip {
+      padding: 4px 9px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--panel-2); color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer;
+    }
+    .chip.is-active { background: var(--primary-bg); border-color: var(--primary); color: var(--text); }
 
-    /* Prompt Composer Panel (Unlimited text + Voice + Layer 0 Meta-Prompt) */
-    .prompt-panel {
-      background: var(--surface-dim);
-      border: 1px solid var(--stroke);
-      border-radius: 20px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    /* Pane 2: Beautiful Executive Report Viewer (renders Google Drive reports right on GitHub!) */
+    .report-head {
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
     }
+    .report-head h2 { margin: 0; font-size: 16px; }
+    .report-tabs {
+      padding: 8px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-wrap: wrap; background: var(--panel-2);
+    }
+    .report-scroll {
+      flex: 1; min-height: 0; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .rcard {
+      background: var(--panel-2); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px;
+    }
+    .rcard-h {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px;
+    }
+    .rcard-h h3 { margin: 0; font-size: 14.5px; color: var(--primary); }
+    .md { font-size: 13.5px; line-height: 1.6; }
+    .md h1, .md h2, .md h3 { margin: 12px 0 6px; font-size: 15px; }
+    .md ul { margin: 6px 0; padding-left: 20px; }
+    .md pre { background: var(--bg); padding: 10px; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); }
+    .md code { font-family: var(--ff-mono); font-size: 12px; }
+    .md table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12.5px; }
+    .md th, .md td { border: 1px solid var(--border); padding: 6px 8px; text-align: left; }
+    .md th { background: var(--panel); }
 
-    .prompt-top {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+    /* Modal for GAS Settings */
+    .modal-bg {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 50;
+      align-items: center; justify-content: center; padding: 16px;
     }
-
-    .prompt-controls-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    select.select-input, input.text-input {
-      background: var(--surface-bright);
-      color: var(--on-surface);
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-family: var(--ff-sans);
-      font-size: 12px;
-      outline: none;
-    }
-    select.select-input:focus, input.text-input:focus, textarea.prompt-area:focus {
-      border-color: var(--primary);
+    .modal-bg.open { display: flex; }
+    .modal {
+      width: 100%; max-width: 520px; background: var(--panel); border: 1px solid var(--border);
+      border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 10px;
     }
 
-    textarea.prompt-area {
-      width: 100%;
-      min-height: 110px;
-      max-height: 460px;
-      resize: vertical;
-      border-radius: 14px;
-      border: 1px solid var(--stroke);
-      background: var(--surface-bright);
-      color: var(--on-surface);
-      padding: 12px 14px;
-      font-family: var(--ff-sans);
-      font-size: 14px;
-      line-height: 1.5;
-      outline: none;
+    @media (max-width: 900px) {
+      html, body { overflow: auto; height: auto; }
+      .cockpit { height: auto; grid-template-rows: auto auto; }
+      .workspace { grid-template-columns: 1fr; }
+      .stage { min-height: 480px; }
     }
-    textarea.prompt-area.drag-over {
-      border: 2px dashed var(--primary);
-      background: var(--accent-container);
-    }
-
-    .meta-preview {
-      display: none;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: var(--surface-bright);
-      border: 1px dashed var(--primary);
-      font-size: 12px;
-      color: var(--on-surface);
-      white-space: pre-wrap;
-      max-height: 180px;
-      overflow-y: auto;
-    }
-    .meta-preview.is-visible { display: block; }
-
-    .prompt-footer {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .counter-mono {
-      font-family: var(--ff-mono);
-      font-size: 12px;
-      color: var(--on-surface-variant);
-    }
-
-    /* Settings Drawer for B2BNexusArgon Web App URL */
-    .settings-drawer {
-      display: none;
-      background: var(--surface-dim);
-      border: 1px solid var(--stroke);
-      border-radius: 18px;
-      padding: 14px;
-      gap: 10px;
-      flex-direction: column;
-    }
-    .settings-drawer.is-open { display: flex; }
-    .settings-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr auto;
-      gap: 8px;
-    }
-    @media (max-width: 720px) {
-      .settings-grid { grid-template-columns: 1fr; }
-      .viewport-shell { height: 340px; }
-    }
-
-    /* Node Inspector (exact clean style from first 3D model) */
-    .inspector-panel {
-      background: var(--surface-dim);
-      border: 1px solid var(--stroke);
-      border-radius: 20px;
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .inspector-head {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-    .inspector-head h3 { margin: 0; font-size: 16px; }
-    .inspector-meta { font-size: 12px; color: var(--on-surface-variant); }
-    .log-list { display: flex; flex-direction: column; gap: 6px; }
-    .log-row {
-      display: grid;
-      grid-template-columns: 54px minmax(0, 1fr) auto;
-      gap: 10px;
-      padding-top: 6px;
-      border-top: 1px solid var(--on-surface-low);
-      font-family: var(--ff-mono);
-      font-size: 12px;
-    }
-    .log-row:first-child { border-top: none; padding-top: 0; }
-    .log-time, .log-size { color: var(--on-surface-variant); }
-    .log-msg { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-    .control-deck {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .stage-strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-
-    /* Published Catalog Gallery */
-    .catalog-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 10px;
-    }
-    .proj-card {
-      background: var(--surface-dim);
-      border: 1px solid var(--stroke);
-      border-radius: 16px;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .proj-card h4 { margin: 0; font-size: 14px; }
-    .proj-card .meta { font-size: 11px; color: var(--on-surface-variant); font-family: var(--ff-mono); }
-    .proj-card a { color: var(--primary); font-size: 12px; font-weight: 600; text-decoration: none; }
-    .proj-card a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-<div class="app-wrap">
-  <section class="factory-shell">
-    <header class="factory-header">
-      <div class="title-block">
-        <h1>B2B Nexus · AI Symbiosis Factory (30 Free Models)</h1>
-        <p id="stage-subtitle">Слой 0/1 · Мета-Промпт Инженер + Разведка и разбор 00_master_prompt.txt</p>
-      </div>
-      <div class="header-actions">
-        <span class="pill is-active" id="pipeline-badge"><span class="dot"></span><span id="pipeline-badge-text">Орбита 1 / 5 · 30 моделей</span></span>
-        <span class="pill" id="hub-badge"><span class="dot"></span><span id="hub-badge-text">Hub: Ожидание</span></span>
-        <button type="button" class="btn" id="btn-theme" title="Переключить тему">☀️ / 🌙</button>
-        <button type="button" class="btn" id="btn-settings">⚙️ GAS-мост</button>
-      </div>
-    </header>
-
-    <!-- Collapsible GAS Connection Panel -->
-    <div class="settings-drawer" id="settings-drawer">
-      <div style="font-size:13px;font-weight:600;">Подключение к Google Apps Script (B2BNexusArgon)</div>
-      <div class="settings-grid">
-        <input type="url" class="text-input" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec">
-        <input type="password" class="text-input" id="input-pin" placeholder="PIN (если задан)">
-        <button type="button" class="btn btn-primary" id="btn-save-gas">Сохранить и проверить</button>
-      </div>
-      <div class="counter-mono" id="gas-status-line">Режим: Демо 3D (вставьте URL развёртывания B2BNexusArgon для боевого запуска 30 API)</div>
+<div class="cockpit">
+  <!-- COMPACT TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span>B2B Nexus · 30 Models 3D</span>
     </div>
-
-    <!-- 3D Viewport (First Three.js Orbital Composition upgraded to 30 models) -->
-    <div class="viewport-shell" id="viewport-zone">
-      <canvas id="factoryCanvas" tabindex="0"></canvas>
-      <div class="floating-layer" id="floating-layer"></div>
-      <div class="viewport-hint">Вращение: мышь · Зум: колесо · Клик по узлу: детальный лог (30 бесплатных моделей)</div>
+    <div class="view-tabs">
+      <button type="button" class="vtab active" data-pane="pane-3d">🌐 3D-Сцена</button>
+      <button type="button" class="vtab" data-pane="pane-report">📊 Готовый Отчёт</button>
     </div>
+    <div class="top-right">
+      <span class="pill" id="pill-status">Демо 3D</span>
+      <button type="button" class="btn" id="btn-theme" title="Светлая / Тёмная тема">☀️/🌙</button>
+      <button type="button" class="btn" id="btn-settings">⚙️ GAS</button>
+    </div>
+  </header>
 
-    <!-- Unlimited Prompt Window + Voice + Layer 0 Meta-Prompt -->
-    <div class="prompt-panel">
-      <div class="prompt-top">
-        <div style="font-size:13px;font-weight:700;">Окно безграничного запроса → Слой 0 (Профи-Промпт) → 30 моделей</div>
-        <div class="prompt-controls-row">
-          <select id="select-mission" class="select-input" title="Профиль задачи">
-            <option value="auto">Авто-определение миссии</option>
-            <option value="b2b_audit">B2B-Аудит бизнеса 360°</option>
-            <option value="partners_competitors">Поиск партнёров и конкурентов</option>
-            <option value="web_product">Сборка веб-продукта (HTML)</option>
-            <option value="deep_research">Глубокое исследование</option>
-          </select>
-          <select id="select-mode" class="select-input" title="Режим роя">
-            <option value="all_in">ALL-IN · Все 30 моделей</option>
-            <option value="combat">БОЕВОЙ · 14 моделей</option>
-            <option value="eco">ЭКО · 5 моделей</option>
-          </select>
+  <!-- SINGLE-WINDOW SPLIT WORKSPACE -->
+  <main class="workspace">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <!-- 1. Prompt Input -->
+      <div class="box">
+        <div class="row">
+          <span class="label-xs">Запрос → Авто-усиление → 30 моделей</span>
           <button type="button" class="btn btn-voice" id="btn-voice">🎙️ Голос</button>
         </div>
-      </div>
-
-      <textarea id="prompt-input" class="prompt-area" placeholder="Вставьте безграничный объём текста (ТЗ, данные компании, старый код, таблицы) или продиктуйте короткую задачу голосом — Слой 0 сам превратит её в профессиональный промпт. Можно перетащить сюда .txt / .md / .html / .json файл..."></textarea>
-
-      <div class="meta-preview" id="meta-preview"></div>
-
-      <div class="prompt-footer">
-        <span class="counter-mono" id="prompt-counter">0 символов · 0.0 КБ · Перетащите файл или вставьте текст</span>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a id="btn-open-live" class="btn" style="display:none;text-decoration:none;" target="_blank" rel="noopener">🚀 Открыть на GitHub Pages</a>
-          <button type="button" class="btn btn-primary" id="btn-launch">⚡ Запустить 30 моделей</button>
+        <div class="row">
+          <select id="select-mission" class="sel" style="flex:1;">
+            <option value="b2b_audit">B2B-Аудит 360°</option>
+            <option value="partners_competitors">Партнёры и конкуренты</option>
+            <option value="web_product">Веб-продукт (HTML)</option>
+            <option value="deep_research">Глубокий анализ</option>
+          </select>
+          <select id="select-mode" class="sel">
+            <option value="eco">ЭКО (5 мод.)</option>
+            <option value="combat">БОЕВОЙ (14)</option>
+            <option value="all_in">ALL-IN (30)</option>
+          </select>
+        </div>
+        <textarea id="prompt-input" class="prompt" placeholder="Вставьте задачу, название компании/сайт или перетащите файл (.txt/.json/.html). Промпт сам усилится в фоне и уйдёт всем моделям..."></textarea>
+        <div class="row">
+          <span class="mono-xs" id="prompt-counter">0 симв. · 0 КБ</span>
+          <button type="button" class="btn btn-primary" id="btn-launch">⚡ Запустить анализ</button>
         </div>
       </div>
-    </div>
 
-    <!-- Node Inspector -->
-    <div class="inspector-panel">
-      <div class="inspector-head">
-        <div>
-          <h3 id="inspector-name">Google Диск + GAS (B2B_Portal)</h3>
-          <div class="inspector-meta" id="inspector-role">Центральная башня хранилища · 5 ярусов папок</div>
+      <!-- 2. Live 5-Orbit Progress -->
+      <div class="box" style="padding:8px 12px;gap:6px;">
+        <div class="row">
+          <span class="label-xs" id="live-stage-label">Готов к запуску</span>
+          <span class="mono-xs" id="live-node-log">Ожидание</span>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <span class="pill" id="inspector-provider">Google Drive API</span>
-          <span class="pill" id="inspector-state">Синхронизация</span>
+        <div class="orbit-steps" id="orbit-steps">
+          <div class="ostep" data-s="1">1.Разв</div>
+          <div class="ostep" data-s="2">2.Страт</div>
+          <div class="ostep" data-s="3">3.Факт</div>
+          <div class="ostep" data-s="4">4.Мод</div>
+          <div class="ostep" data-s="5">5.Фин</div>
+          <div class="ostep" data-s="6">GitHub</div>
         </div>
       </div>
-      <div class="log-list" id="inspector-logs"></div>
-    </div>
 
-    <!-- Stage & Playback Controls -->
-    <div class="control-deck">
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <button type="button" class="btn" id="btn-play-pause">⏸ Пауза</button>
-        <button type="button" class="btn" id="btn-restart">↺ Сначала</button>
-        <label style="display:inline-flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
-          <input type="checkbox" id="sw-autopilot" checked> Автопилот камеры
-        </label>
+      <!-- 3. Reports from Google Drive (B2B_Portal) -->
+      <div class="box">
+        <div class="row">
+          <span class="label-xs">Отчёты на Google Диске</span>
+          <div style="display:flex;gap:4px;">
+            <button type="button" class="btn" id="btn-filter-swarm" style="padding:3px 8px;font-size:11px;">Новые</button>
+            <button type="button" class="btn" id="btn-filter-arch" style="padding:3px 8px;font-size:11px;">Архив</button>
+            <button type="button" class="btn" id="btn-refresh-reports" style="padding:3px 8px;font-size:11px;" title="Обновить список с Диска">↻</button>
+          </div>
+        </div>
+        <div class="reports-scroll" id="reports-list">
+          <div class="mono-xs">Подключите URL B2BNexusArgon в ⚙️ GAS, чтобы видеть и открывать все отчёты с Google Диска прямо здесь.</div>
+        </div>
       </div>
-      <div class="stage-strip" id="stage-strip">
-        <button type="button" class="chip is-active" data-stage="auto">Авто-цикл</button>
-        <button type="button" class="chip" data-stage="1">1. Разведка (6)</button>
-        <button type="button" class="chip" data-stage="2">2. Стратегия (6)</button>
-        <button type="button" class="chip" data-stage="3">3. Присяжные (6)</button>
-        <button type="button" class="chip" data-stage="4">4. Код/Сборка (6)</button>
-        <button type="button" class="chip" data-stage="5">5. Финал (6)</button>
-        <button type="button" class="chip" data-stage="6">GitHub Деплой</button>
-      </div>
-    </div>
-  </section>
+    </aside>
 
-  <!-- Published Projects Gallery (from catalog.json) -->
-  <section class="factory-shell" id="catalog-section" style="display:none;">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h2 style="margin:0;font-size:16px;">Опубликованные проекты на GitHub Pages</h2>
-      <button type="button" class="btn" id="btn-refresh-catalog">↻ Обновить</button>
+    <!-- RIGHT MAIN STAGE -->
+    <section class="stage">
+      <!-- PANE 1: 3D SCENE (EXACT FIRST VISUAL + 30 MODELS) -->
+      <div class="pane active" id="pane-3d">
+        <div class="viewport-wrap">
+          <canvas id="factoryCanvas" tabindex="0"></canvas>
+          <div class="floating-layer" id="floating-layer"></div>
+        </div>
+        <div class="stage-footer">
+          <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;">
+            <button type="button" class="btn" id="btn-play-pause" style="padding:4px 9px;font-size:11px;">⏸</button>
+            <label class="mono-xs" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;">
+              <input type="checkbox" id="sw-autopilot" checked> Камера
+            </label>
+            <span class="mono-xs" id="inspector-inline">Google Диск + GAS · 5 ярусов</span>
+          </div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;" id="stage-strip">
+            <button type="button" class="chip is-active" data-stage="auto">Авто</button>
+            <button type="button" class="chip" data-stage="1">1</button>
+            <button type="button" class="chip" data-stage="2">2</button>
+            <button type="button" class="chip" data-stage="3">3</button>
+            <button type="button" class="chip" data-stage="4">4</button>
+            <button type="button" class="chip" data-stage="5">5</button>
+            <button type="button" class="chip" data-stage="6">Hub</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANE 2: LIVE BEAUTIFUL REPORT VIEWER -->
+      <div class="pane" id="pane-report">
+        <div class="report-head">
+          <div>
+            <h2 id="rep-title">Выберите отчёт слева или запустите анализ</h2>
+            <div class="mono-xs" id="rep-sub">Здесь сразу отображается полный многомодельный анализ с Google Диска</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <a id="rep-live-link" class="btn btn-primary" style="display:none;text-decoration:none;" target="_blank" rel="noopener">🌐 Страница GitHub</a>
+            <a id="rep-drive-link" class="btn" style="display:none;text-decoration:none;" target="_blank" rel="noopener">📁 Google Диск</a>
+            <button type="button" class="btn" id="btn-print-report" style="display:none;">🖨️ PDF</button>
+          </div>
+        </div>
+        <div class="report-tabs" id="rep-tabs"></div>
+        <div class="report-scroll" id="rep-body">
+          <div class="rcard">
+            <div class="md">Кликните по любому отчёту в левой колонке («Отчёты на Google Диске»), чтобы красиво открыть весь анализ прямо в этом окне, или запустите новый расчёт.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="row">
+      <strong>Настройка моста B2BNexusArgon (GAS)</strong>
+      <button type="button" class="btn" id="btn-close-modal">✕</button>
     </div>
-    <div class="catalog-bar" id="catalog-list"></div>
-  </section>
+    <input type="url" class="inp" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%;">
+    <input type="password" class="inp" id="input-pin" placeholder="PIN (если задан в ScriptProperties)" style="width:100%;">
+    <div class="mono-xs" id="gas-status-line">Вставьте URL веб-приложения B2BNexusArgon</div>
+    <div class="row" style="justify-content:flex-end;">
+      <button type="button" class="btn" id="btn-republish-all">🔄 Пересобрать старые отчёты на GitHub</button>
+      <button type="button" class="btn btn-primary" id="btn-save-gas">Сохранить и проверить</button>
+    </div>
+  </div>
 </div>
 
 <script>
 // ============================================================================
-// 1. ALL 30 FREE MODELS ACROSS 5 ORBITS + CORE + GOOGLE DRIVE + GITHUB HUB
+// 1. DATA: ALL 30 FREE MODELS ON 5 ORBITS (EXACT FIRST 3D COMPOSITION)
 // ============================================================================
 const STAGES = [
-  { id: 1, name: 'Орбита 1 · Разведка + Слой 0 Профи-Промпт', desc: 'Усиление запроса и разбор 00_master_prompt.txt (6 моделей)', tierY: -1.7, camPos: [6.4, 1.8, 7.6], camLook: [-0.3, -1.2, 0] },
-  { id: 2, name: 'Орбита 2 · Стратегия, Архитектура и Конкуренты', desc: 'Генерация концепций, партнёров и критика R1 в 01_ideas/ (6 моделей)', tierY: -0.85, camPos: [7.0, 2.2, 7.2], camLook: [0, -0.5, 0] },
-  { id: 3, name: 'Орбита 3 · Суд Присяжных (Анти-галлюцинация)', desc: 'Жесткая верификация и запись 02_verified_blueprint.json (6 моделей)', tierY: 0.0, camPos: [7.4, 2.7, 6.8], camLook: [0, 0.1, 0] },
-  { id: 4, name: 'Орбита 4 · Фабрика Кода и Аналитических Модулей', desc: 'Сборка модулей, финмоделей и UI в 03_modules/ (6 моделей)', tierY: 0.85, camPos: [6.8, 3.2, 7.2], camLook: [0, 0.8, 0] },
-  { id: 5, name: 'Орбита 5 · Финальный Синтез, Аудит и Резерв', desc: 'Слияние монолита dist/index.html и FINAL_VERDICT.md (6 моделей)', tierY: 1.7, camPos: [6.2, 3.8, 6.8], camLook: [0.4, 1.4, 0] },
-  { id: 6, name: 'Деплой · GitHub Pages Hub', desc: 'B2BNexusArgon пушит dist/index.html и catalog.json в tretyak1976/B2B', tierY: 2.0, camPos: [7.2, 3.5, 6.4], camLook: [1.9, 1.5, -0.4] }
+  { id: 1, name: 'Орбита 1 · Разведка', tierY: -1.7, camPos: [6.4, 1.8, 7.6], camLook: [-0.3, -1.2, 0] },
+  { id: 2, name: 'Орбита 2 · Стратегия', tierY: -0.85, camPos: [7.0, 2.2, 7.2], camLook: [0, -0.5, 0] },
+  { id: 3, name: 'Орбита 3 · Присяжные', tierY: 0.0, camPos: [7.4, 2.7, 6.8], camLook: [0, 0.1, 0] },
+  { id: 4, name: 'Орбита 4 · Модули/Код', tierY: 0.85, camPos: [6.8, 3.2, 7.2], camLook: [0, 0.8, 0] },
+  { id: 5, name: 'Орбита 5 · Финал', tierY: 1.7, camPos: [6.2, 3.8, 6.8], camLook: [0.4, 1.4, 0] },
+  { id: 6, name: 'Деплой · GitHub Hub', tierY: 2.0, camPos: [7.2, 3.5, 6.4], camLook: [1.9, 1.5, -0.4] }
 ];
 
 const ORBIT_DEFS = [
-  { layer: 1, y: -1.7, r: 2.95, color: '--chart-1', models: [
-    ['m_gem38_1', 'Gemini 3.8 Flash', 'Google Free', 'Слой 0/1 · Профи-промпт и 1M контекст'],
-    ['m_gem37_1', 'Gemini 3.7 Flash', 'Google Free', 'Слой 1 · Извлечение фактов и метрик'],
-    ['m_gem35_lite', 'Gemini 3.5 Flash-Lite', 'Google Free', 'Слой 1 · Быстрая нарезка и JSON'],
-    ['m_nemo_ultra', 'Nemotron 3 Ultra 550B', 'NVIDIA NIM', 'Слой 1 · Карта зависимостей и рисков'],
-    ['m_nemo_vl', 'Nemotron 3.5 Super VL', 'NVIDIA NIM', 'Слой 1 · Структурирование таблиц'],
-    ['m_lfm3', 'LFM3-1.7B', 'OpenRouter Free', 'Слой 1 · Быстрый диспетчер и теги']
+  { layer: 1, y: -1.7, r: 2.95, color: '--c1', models: [
+    ['m_gem38_1', 'Gemini 3.8 Flash', 'Google Free'], ['m_gem37_1', 'Gemini 3.7 Flash', 'Google Free'],
+    ['m_gem35_lite', 'Gemini 3.5 Flash-Lite', 'Google Free'], ['m_nemo_ultra', 'Nemotron 3 Ultra 550B', 'NVIDIA NIM'],
+    ['m_nemo_vl', 'Nemotron 3.5 Super VL', 'NVIDIA NIM'], ['m_lfm3', 'LFM3-1.7B', 'OpenRouter']
   ]},
-  { layer: 2, y: -0.85, r: 3.55, color: '--chart-8', models: [
-    ['m_mistral_l3', 'Mistral Large 3', 'Mistral Free', 'Слой 2 · Системная архитектура и B2B'],
-    ['m_mistral_m35', 'Mistral Medium 3.5', 'Mistral Free', 'Слой 2 · UX-потоки и монетизация'],
-    ['m_gptoss', 'GPT-oss 120B', 'Groq Free', 'Слой 2 · Точки роста и поиск партнёров'],
-    ['m_maverick', 'Llama 4 Maverick', 'Groq Free', 'Слой 2 · Конкурентный разбор и тесты'],
-    ['m_deepseek_r1', 'DeepSeek R1', 'NVIDIA NIM', 'Слой 2 · Адвокат Дьявола (критика)'],
-    ['m_muse_open', 'Muse Spark Open', 'OpenRouter Free', 'Слой 2 · Нестандартные гипотезы']
+  { layer: 2, y: -0.85, r: 3.55, color: '--c8', models: [
+    ['m_mistral_l3', 'Mistral Large 3', 'Mistral Free'], ['m_mistral_m35', 'Mistral Medium 3.5', 'Mistral Free'],
+    ['m_gptoss', 'GPT-oss 120B', 'Groq Free'], ['m_maverick', 'Llama 4 Maverick', 'Groq Free'],
+    ['m_deepseek_r1', 'DeepSeek R1', 'NVIDIA NIM'], ['m_muse_open', 'Muse Spark Open', 'OpenRouter']
   ]},
-  { layer: 3, y: 0.0, r: 4.05, color: '--chart-10', models: [
-    ['m_deepseek_v41', 'DeepSeek V4.1 Flash', 'NVIDIA · 95.8%', 'Слой 3 · Суд Присяжных по тексту'],
-    ['m_phi4', 'Phi-4 Reasoning', 'NVIDIA · 96.3%', 'Слой 3 · Проверка математики и логики'],
-    ['m_granite_30b', 'Granite 4.2 30B', 'NVIDIA NIM', 'Слой 3 · Отказ от выдумок и Вето'],
-    ['m_granite_8b', 'Granite 4.2 8B', 'OpenRouter Free', 'Слой 3 · Быстрый фильтр фактов'],
-    ['m_scout', 'Llama 4 Scout', 'Groq · 92.3%', 'Слой 3 · Кросс-сверка документов'],
-    ['m_gemma3_27b', 'Gemma 3 27B', 'Google · 92.6%', 'Слой 3 · Сжатие чертежа Blueprint']
+  { layer: 3, y: 0.0, r: 4.05, color: '--c10', models: [
+    ['m_deepseek_v41', 'DeepSeek V4.1 Flash', 'NVIDIA 95.8%'], ['m_phi4', 'Phi-4 Reasoning', 'NVIDIA 96.3%'],
+    ['m_granite_30b', 'Granite 4.2 30B', 'NVIDIA NIM'], ['m_granite_8b', 'Granite 4.2 8B', 'OpenRouter'],
+    ['m_scout', 'Llama 4 Scout', 'Groq 92.3%'], ['m_gemma3_27b', 'Gemma 3 27B', 'Google 92.6%']
   ]},
-  { layer: 4, y: 0.85, r: 3.45, color: '--chart-7', models: [
-    ['m_codestral', 'Codestral 2', 'Mistral Free', 'Слой 4 · Точные сигнатуры API и JS'],
-    ['m_qwen38_27b', 'Qwen 3.8 27B', 'Groq Free', 'Слой 4 · Алгоритмы и финмодели'],
-    ['m_qwen_flash', 'Qwen 3.8 Flash-Next', 'OpenRouter Free', 'Слой 4 · Утилиты и парсеры'],
-    ['m_qwen36_27b', 'Qwen 3.6 27B', 'NVIDIA NIM', 'Слой 4 · Аналитические таблицы'],
-    ['m_gem36', 'Gemini 3.6 Flash', 'Google Free', 'Слой 4 · Интерфейс, CSS и 3D'],
-    ['m_gemma4_e4b', 'Gemma 4 E4B Reasoning', 'OpenRouter Free', 'Слой 4 · Валидация синтаксиса']
+  { layer: 4, y: 0.85, r: 3.45, color: '--c7', models: [
+    ['m_codestral', 'Codestral 2', 'Mistral Free'], ['m_qwen38_27b', 'Qwen 3.8 27B', 'Groq Free'],
+    ['m_qwen_flash', 'Qwen 3.8 Flash-Next', 'OpenRouter'], ['m_qwen36_27b', 'Qwen 3.6 27B', 'NVIDIA NIM'],
+    ['m_gem36', 'Gemini 3.6 Flash', 'Google Free'], ['m_gemma4_e4b', 'Gemma 4 E4B', 'OpenRouter']
   ]},
-  { layer: 5, y: 1.7, r: 2.8, color: '--chart-3', models: [
-    ['m_ling_31', 'Ling 3.1 Flash', 'OpenRouter Free', 'Слой 5 · Главный сборщик сводок'],
-    ['m_command_a', 'Command A+', 'Mistral/Cohere', 'Слой 5 · Сверка с исходным ТЗ'],
-    ['m_deepseek_v32', 'DeepSeek V3.2', 'NVIDIA NIM', 'Слой 5 · Сборка монолита index.html'],
-    ['m_glm53', 'GLM-5.3 Flash', 'OpenRouter Free', 'Слой 5 · Контроль адаптивности UX'],
-    ['m_mimo', 'Xiaomi MiMo-V2.6 Flash', 'OpenRouter Free', 'Слой 5 · Санитарный аудит и резерв'],
-    ['m_minimax', 'MiniMax-M3.1 Flash', 'OpenRouter Free', 'Слой 5 · Итоговый FINAL_VERDICT.md']
+  { layer: 5, y: 1.7, r: 2.8, color: '--c3', models: [
+    ['m_ling_31', 'Ling 3.1 Flash', 'OpenRouter'], ['m_command_a', 'Command A+', 'Mistral/Cohere'],
+    ['m_deepseek_v32', 'DeepSeek V3.2', 'NVIDIA NIM'], ['m_glm53', 'GLM-5.3 Flash', 'OpenRouter'],
+    ['m_mimo', 'Xiaomi MiMo-V2.6', 'OpenRouter'], ['m_minimax', 'MiniMax-M3.1', 'OpenRouter']
   ]}
 ];
 
 const NODES_DATA = [
-  {
-    id: 'core', name: 'Ядро ТЗ (Слой 0)', type: 'core', layer: 0, provider: 'Prompt Architect',
-    role: 'Безграничный ввод + усиление в профи-промпт',
-    pos: [-5.6, -1.45, 1.3], colorVar: '--chart-7',
-    logs: [
-      { msg: 'Прием текста из окна запроса / голоса', size: '00_master' },
-      { msg: 'Слой 0: усиление в профессиональный бриф', size: 'META OK' },
-      { msg: 'Потоковая запись в Google Диск (B2B_Portal)', size: '200 КБ/чанк' }
-    ]
-  },
-  {
-    id: 'drive', name: 'Google Диск + GAS (B2B_Portal)', type: 'drive', layer: 0, provider: 'B2BNexusArgon',
-    role: 'Центральная башня хранилища · 5 ярусов папок',
-    pos: [0, 0.0, 0], colorVar: '--chart-1',
-    logs: [
-      { msg: '00_SYSTEM/swarm_config.json загружен (30 моделей)', size: 'OK' },
-      { msg: '01_ACTIVE_JOBS: запись идей, чертежа и модулей', size: '5 ярусов' },
-      { msg: 'Авто-триггер deploy_frontend → GitHub активен', size: '1 мин' }
-    ]
-  },
-  {
-    id: 'github', name: 'GitHub Pages Hub (B2B)', type: 'hub', layer: 6, provider: 'tretyak1976/B2B',
-    role: 'Публичный портал · dist/index.html + catalog.json',
-    pos: [5.7, 1.9, -1.2], colorVar: '--chart-3',
-    logs: [
-      { msg: 'Прием коммита dist/index.html от B2BNexusArgon', size: 'REST API' },
-      { msg: 'Обновление реестра catalog.json', size: 'SYNC' },
-      { msg: 'Доступно на tretyak1976.github.io/B2B/', size: 'HTTP 200' }
-    ]
-  }
+  { id: 'core', name: 'Ядро ТЗ', type: 'core', layer: 0, provider: 'Слой 0', pos: [-5.6, -1.45, 1.3], colorVar: '--c7', log: 'Авто-усиление запроса в фоне' },
+  { id: 'drive', name: 'Google Диск + GAS', type: 'drive', layer: 0, provider: 'B2B_Portal', pos: [0, 0, 0], colorVar: '--c1', log: 'Башня памяти · 5 ярусов' },
+  { id: 'github', name: 'GitHub Pages Hub', type: 'hub', layer: 6, provider: 'tretyak1976/B2B', pos: [5.7, 1.9, -1.2], colorVar: '--c3', log: 'Витрина готовых отчётов' }
 ];
-
-ORBIT_DEFS.forEach(orb => {
-  orb.models.forEach((m, i) => {
-    const angle = (i / orb.models.length) * Math.PI * 2 + orb.layer * 0.35;
-    NODES_DATA.push({
-      id: m[0], name: m[1], type: 'model', layer: orb.layer, provider: m[2], role: m[3],
-      orbitR: orb.r, angle: angle, y: orb.y, colorVar: orb.color,
-      logs: [
-        { msg: 'Сканирование данных с башни Google Диска', size: 'READ' },
-        { msg: m[3], size: m[2] },
-        { msg: 'Запись результата в B2B_Portal/01_ACTIVE_JOBS', size: 'SYNC OK' }
-      ]
-    });
+ORBIT_DEFS.forEach(o => o.models.forEach((m, i) => {
+  NODES_DATA.push({
+    id: m[0], name: m[1], type: 'model', layer: o.layer, provider: m[2],
+    orbitR: o.r, angle: (i / o.models.length) * Math.PI * 2 + o.layer * 0.35, y: o.y, colorVar: o.color,
+    log: 'Орбита ' + o.layer + ' · ' + m[2]
   });
-});
+}));
 
 const DRIVE_TIERS = [
-  { y: -1.7, label: '00_master_prompt.txt', layer: 1 },
-  { y: -0.85, label: '01_ideas/', layer: 2 },
-  { y: 0.0, label: '02_verified_blueprint.json', layer: 3 },
-  { y: 0.85, label: '03_modules/', layer: 4 },
-  { y: 1.7, label: 'dist/index.html', layer: 5 }
+  { y: -1.7, layer: 1 }, { y: -0.85, layer: 2 }, { y: 0.0, layer: 3 }, { y: 0.85, layer: 4 }, { y: 1.7, layer: 5 }
 ];
 
 // ============================================================================
-// 2. STATE & CONFIG
+// 2. APP STATE
 // ============================================================================
 const state = {
-  isPlaying: true,
-  stageMode: 'auto',
-  autopilot: true,
-  selectedNodeId: 'drive',
+  isPlaying: true, stageMode: 'auto', autopilot: true, selectedNodeId: 'drive',
   theme: localStorage.getItem('b2b_theme') || 'dark',
   gasUrl: localStorage.getItem('b2b_gas_url') || '',
   pin: localStorage.getItem('b2b_gas_pin') || '',
-  liveJobId: null,
-  liveMode: false
+  liveMode: false,
+  reports: [],
+  reportFilter: 'swarm',
+  activeReport: null,
+  reportOrbitTab: 'all'
 };
 
-let activeStage = 1;
-let stageElapsed = 0;
-let simSeconds = 1;
-let lastLogTick = 0;
-let isPublished = false;
-const STAGE_DURATION = 5.5;
-
+let activeStage = 1, stageElapsed = 0, isPublished = false;
+const STAGE_DURATION = 5.0;
 let scene, camera, renderer, controls, raycaster, pointer;
-const nodeMeshes = new Map();
-const clickableMeshes = [];
-const driveTierMeshes = [];
-const orbitRings = [];
-const connectionLines = [];
-const particles = [];
-let hoveredNodeId = null;
-let lastFrameTime = 0;
-let camTargetPos, camTargetLook;
+const nodeMeshes = new Map(), clickableMeshes = [], driveTierMeshes = [], orbitRings = [], connectionLines = [], particles = [];
+let hoveredNodeId = null, lastFrameTime = 0, camTargetPos, camTargetLook;
 
-function getCssVar(name) {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const getVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function switchPane(id) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('active', p.id === id));
+  document.querySelectorAll('.vtab').forEach(b => b.classList.toggle('active', b.dataset.pane === id));
 }
+
 function applyTheme(t) {
   state.theme = t;
   document.documentElement.setAttribute('data-theme', t);
@@ -697,53 +476,108 @@ function applyTheme(t) {
 }
 
 // ============================================================================
-// 3. THREE.JS SCENE (EXACT FIRST VISUAL ARCHITECTURE, 30 MODELS)
+// 3. THREE.JS 3D SCENE (30 FREE MODELS)
 // ============================================================================
-function initThreeScene() {
+function initThree() {
   const canvas = document.getElementById('factoryCanvas');
   if (!canvas || typeof THREE === 'undefined') return;
-
   scene = new THREE.Scene();
-  const w = canvas.clientWidth || 900;
-  const h = canvas.clientHeight || 440;
+  const w = canvas.clientWidth || 700, h = canvas.clientHeight || 480;
   camera = new THREE.PerspectiveCamera(44, w / h, 0.1, 120);
-  camera.position.set(6.8, 2.9, 7.8);
-  camera.lookAt(0, 0.1, 0);
-
+  camera.position.set(6.8, 2.8, 7.8);
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.setSize(w, h, false);
 
   if (typeof THREE.OrbitControls === 'function') {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-    controls.minDistance = 4.5;
-    controls.maxDistance = 18;
-    controls.maxPolarAngle = Math.PI * 0.65;
-    controls.target.set(0, 0.05, 0);
-    controls.addEventListener('start', () => {
-      if (state.autopilot) {
-        state.autopilot = false;
-        document.getElementById('sw-autopilot').checked = false;
-      }
-    });
+    controls.enableDamping = true; controls.dampingFactor = 0.06;
+    controls.minDistance = 4.5; controls.maxDistance = 18;
+    controls.addEventListener('start', () => { state.autopilot = false; document.getElementById('sw-autopilot').checked = false; });
+  }
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  const dl = new THREE.DirectionalLight(0xffffff, 1.0); dl.position.set(7, 10, 7); scene.add(dl);
+  const rl = new THREE.DirectionalLight(0x9dd2ff, 0.5); rl.position.set(-7, -3, -6); scene.add(rl);
+
+  raycaster = new THREE.Raycaster(); pointer = new THREE.Vector2(-99, -99);
+
+  // Tower
+  const pCol = new THREE.Color(getVar('--c1') || '#60a5fa');
+  const dGrp = new THREE.Group();
+  const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 4.1, 16),
+    new THREE.MeshStandardMaterial({ color: pCol, metalness: 0.2, roughness: 0.45, transparent: true, opacity: 0.5 }));
+  spine.userData.nodeId = 'drive'; dGrp.add(spine); clickableMeshes.push(spine);
+
+  DRIVE_TIERS.forEach(t => {
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 0.22, 24),
+      new THREE.MeshStandardMaterial({ color: pCol, emissive: pCol, emissiveIntensity: 0.2, transparent: true, opacity: 0.88 }));
+    m.position.y = t.y; m.userData.nodeId = 'drive'; m.userData.tierLayer = t.layer;
+    dGrp.add(m); driveTierMeshes.push(m); clickableMeshes.push(m);
+
+    const orb = ORBIT_DEFS.find(o => o.layer === t.layer);
+    if (orb) {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(orb.r, 0.016, 8, 72),
+        new THREE.MeshBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.25 }));
+      ring.rotation.x = Math.PI / 2; ring.position.y = t.y; scene.add(ring); orbitRings.push(ring);
+    }
+  });
+  scene.add(dGrp);
+  nodeMeshes.set('drive', { group: dGrp, core: spine, data: NODES_DATA[1] });
+
+  // Core, Hub & 30 Models
+  NODES_DATA.forEach(n => {
+    if (n.id === 'drive') return;
+    const col = new THREE.Color(getVar(n.colorVar) || '#60a5fa');
+    const grp = new THREE.Group();
+    const geo = n.type === 'core' ? new THREE.OctahedronGeometry(0.54, 0)
+      : (n.type === 'hub' ? new THREE.IcosahedronGeometry(0.58, 0) : new THREE.SphereGeometry(0.22, 16, 16));
+    const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: 0.24, roughness: 0.45 }));
+    mesh.userData.nodeId = n.id; grp.add(mesh);
+    const halo = new THREE.Mesh(new THREE.TorusGeometry(n.type === 'model' ? 0.31 : 0.78, 0.016, 8, 24),
+      new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.35 }));
+    halo.rotation.x = Math.PI * 0.45; grp.add(halo);
+    if (n.pos) grp.position.set(n.pos[0], n.pos[1], n.pos[2]);
+    else grp.position.set(Math.cos(n.angle) * n.orbitR, n.y, Math.sin(n.angle) * n.orbitR);
+    scene.add(grp); clickableMeshes.push(mesh);
+    nodeMeshes.set(n.id, { group: grp, core: mesh, halo, data: n, baseAngle: n.angle || 0 });
+
+    const ty = n.type === 'core' ? -1.7 : (n.type === 'hub' ? 1.7 : n.y);
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([grp.position.clone(), new THREE.Vector3(0, ty, 0)]),
+      new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.16 })
+    );
+    scene.add(line); connectionLines.push({ line, nodeId: n.id, layer: n.layer, targetY: ty });
+  });
+
+  const pktGeo = new THREE.SphereGeometry(0.075, 8, 8);
+  for (let i = 0; i < 60; i++) {
+    const pkt = new THREE.Mesh(pktGeo, new THREE.MeshBasicMaterial({ color: pCol }));
+    pkt.visible = false; scene.add(pkt);
+    particles.push({ mesh: pkt, active: false, t: 0, speed: 0.75, fromId: 'core', toId: 'drive', toY: -1.7, arcH: 0.35 });
   }
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
-  dirLight.position.set(7, 10, 7);
-  scene.add(dirLight);
-  const rimLight = new THREE.DirectionalLight(0x9dd2ff, 0.5);
-  rimLight.position.set(-7, -3, -6);
-  scene.add(rimLight);
-
-  raycaster = new THREE.Raycaster();
-  pointer = new THREE.Vector2(-99, -99);
-
-  buildGeometry();
-  updateSceneColors();
-  bindCanvasEvents(canvas);
+  let down = { x: 0, y: 0 };
+  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; });
+  canvas.addEventListener('pointermove', e => {
+    const r = canvas.getBoundingClientRect();
+    pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1; pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const h = raycaster.intersectObjects(clickableMeshes, false);
+    hoveredNodeId = h.length ? h[0].object.userData.nodeId : null;
+    canvas.style.cursor = hoveredNodeId ? 'pointer' : 'grab';
+  });
+  canvas.addEventListener('pointerup', e => {
+    if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) return;
+    const r = canvas.getBoundingClientRect();
+    pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1; pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const h = raycaster.intersectObjects(clickableMeshes, false);
+    if (h.length && h[0].object.userData.nodeId) {
+      state.selectedNodeId = h[0].object.userData.nodeId;
+      const nd = NODES_DATA.find(x => x.id === state.selectedNodeId);
+      if (nd) document.getElementById('inspector-inline').textContent = nd.name + ' · ' + nd.log;
+    }
+  });
 
   camTargetPos = new THREE.Vector3(6.8, 2.4, 7.6);
   camTargetLook = new THREE.Vector3(0, 0.05, 0);
@@ -751,295 +585,95 @@ function initThreeScene() {
   requestAnimationFrame(animate);
 }
 
-function buildGeometry() {
-  const primaryCol = new THREE.Color(getCssVar('--chart-1') || '#60a5fa');
-  const ringCol = new THREE.Color('#64748b');
-
-  // Central Drive Tower (5 stacked tiers + spine)
-  const driveGroup = new THREE.Group();
-  const spine = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.2, 0.2, 4.1, 18),
-    new THREE.MeshStandardMaterial({ color: primaryCol, metalness: 0.2, roughness: 0.45, transparent: true, opacity: 0.5 })
-  );
-  spine.userData.nodeId = 'drive';
-  driveGroup.add(spine);
-  clickableMeshes.push(spine);
-
-  DRIVE_TIERS.forEach(tier => {
-    const mesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.8, 0.8, 0.22, 28),
-      new THREE.MeshStandardMaterial({ color: primaryCol, emissive: primaryCol, emissiveIntensity: 0.2, metalness: 0.2, roughness: 0.45, transparent: true, opacity: 0.88 })
-    );
-    mesh.position.y = tier.y;
-    mesh.userData.nodeId = 'drive';
-    mesh.userData.tierLayer = tier.layer;
-    driveGroup.add(mesh);
-    driveTierMeshes.push(mesh);
-    clickableMeshes.push(mesh);
-
-    const orb = ORBIT_DEFS.find(o => o.layer === tier.layer);
-    if (orb) {
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(orb.r, 0.016, 8, 72),
-        new THREE.MeshBasicMaterial({ color: ringCol, transparent: true, opacity: 0.24 })
-      );
-      ring.rotation.x = Math.PI / 2;
-      ring.position.y = tier.y;
-      scene.add(ring);
-      orbitRings.push(ring);
-    }
-  });
-  scene.add(driveGroup);
-  nodeMeshes.set('drive', { group: driveGroup, core: spine, data: NODES_DATA.find(n => n.id === 'drive') });
-
-  // Core, Hub, and all 30 Model Spheres
-  NODES_DATA.forEach(node => {
-    if (node.id === 'drive') return;
-    const col = new THREE.Color(getCssVar(node.colorVar) || '#60a5fa');
-    const grp = new THREE.Group();
-    const geo = node.type === 'core'
-      ? new THREE.OctahedronGeometry(0.54, 0)
-      : (node.type === 'hub' ? new THREE.IcosahedronGeometry(0.58, 0) : new THREE.SphereGeometry(0.22, 18, 18));
-
-    const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
-      color: col, emissive: col, emissiveIntensity: 0.24, metalness: 0.15, roughness: 0.45
-    }));
-    mesh.userData.nodeId = node.id;
-    grp.add(mesh);
-
-    const halo = new THREE.Mesh(
-      new THREE.TorusGeometry(node.type === 'model' ? 0.31 : 0.78, 0.016, 8, 28),
-      new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.35 })
-    );
-    halo.rotation.x = Math.PI * 0.45;
-    grp.add(halo);
-
-    if (node.pos) grp.position.set(node.pos[0], node.pos[1], node.pos[2]);
-    else grp.position.set(Math.cos(node.angle) * node.orbitR, node.y, Math.sin(node.angle) * node.orbitR);
-
-    scene.add(grp);
-    clickableMeshes.push(mesh);
-    nodeMeshes.set(node.id, { group: grp, core: mesh, halo, data: node, baseAngle: node.angle || 0 });
-
-    const targetY = node.type === 'core' ? -1.7 : (node.type === 'hub' ? 1.7 : node.y);
-    const curve = new THREE.QuadraticBezierCurve3(
-      grp.position.clone(),
-      grp.position.clone().lerp(new THREE.Vector3(0, targetY, 0), 0.5).add(new THREE.Vector3(0, node.type === 'hub' ? 0.7 : 0.25, 0)),
-      new THREE.Vector3(0, targetY, 0)
-    );
-    const line = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(curve.getPoints(16)),
-      new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.16 })
-    );
-    scene.add(line);
-    connectionLines.push({ line, nodeId: node.id, layer: node.layer, targetY });
-  });
-
-  // 60-packet luminous pool for 30 models
-  const pktGeo = new THREE.SphereGeometry(0.075, 10, 10);
-  for (let i = 0; i < 60; i++) {
-    const pkt = new THREE.Mesh(pktGeo, new THREE.MeshBasicMaterial({ color: primaryCol, transparent: true, opacity: 0.92 }));
-    pkt.visible = false;
-    scene.add(pkt);
-    particles.push({ mesh: pkt, active: false, t: 0, speed: 0.7, fromId: 'core', toId: 'drive', toY: -1.7, arcH: 0.35 });
-  }
-}
-
 function updateSceneColors() {
-  const isDark = state.theme === 'dark';
-  const rCol = new THREE.Color(isDark ? '#7c8ea6' : '#475569');
+  const rCol = new THREE.Color(state.theme === 'dark' ? '#7c8ea6' : '#475569');
   orbitRings.forEach(r => r.material.color.copy(rCol));
   NODES_DATA.forEach(n => {
-    const entry = nodeMeshes.get(n.id);
-    if (!entry || n.id === 'drive') return;
-    const c = new THREE.Color(getCssVar(n.colorVar) || '#2575fc');
-    entry.core.material.color.copy(c);
-    entry.core.material.emissive.copy(c);
-    if (entry.halo) entry.halo.material.color.copy(c);
+    const e = nodeMeshes.get(n.id);
+    if (!e || n.id === 'drive') return;
+    const c = new THREE.Color(getVar(n.colorVar) || '#2575fc');
+    e.core.material.color.copy(c); e.core.material.emissive.copy(c);
+    if (e.halo) e.halo.material.color.copy(c);
   });
 }
 
 function spawnPacket(fromId, toId, toY, colorHex, speed, arcH) {
-  const slot = particles.find(p => !p.active);
-  if (!slot) return;
-  slot.active = true; slot.t = 0; slot.speed = speed || 0.72;
-  slot.fromId = fromId; slot.toId = toId; slot.toY = toY; slot.arcH = arcH || 0.32;
-  slot.mesh.material.color.set(colorHex);
-  slot.mesh.visible = true;
+  const s = particles.find(p => !p.active);
+  if (!s) return;
+  s.active = true; s.t = 0; s.speed = speed || 0.75; s.fromId = fromId; s.toId = toId; s.toY = toY; s.arcH = arcH || 0.32;
+  s.mesh.material.color.set(colorHex); s.mesh.visible = true;
 }
 
-function updateParticles(dt) {
-  if (state.isPlaying && Math.random() < dt * 9.0) {
-    if (activeStage === 1) spawnPacket('core', 'drive', -1.7, getCssVar('--chart-7') || '#38bdf8', 0.75, 0.45);
+function animate(now) {
+  requestAnimationFrame(animate);
+  const dt = Math.min(0.05, (now - lastFrameTime) / 1000); lastFrameTime = now;
+  if (!renderer || !scene || !camera) return;
+  const cv = renderer.domElement;
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if (!w || !h) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+  if (cv.width !== Math.floor(w * dpr) || cv.height !== Math.floor(h * dpr)) {
+    camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h, false);
+  }
+
+  if (state.isPlaying && !state.liveMode) {
+    stageElapsed += dt;
+    if (stageElapsed >= STAGE_DURATION) {
+      stageElapsed = 0;
+      if (state.stageMode === 'auto') { activeStage = activeStage < 6 ? activeStage + 1 : 1; isPublished = activeStage === 6; }
+    }
+  }
+
+  const tSec = now * 0.001;
+  nodeMeshes.forEach((e, id) => {
+    const n = e.data;
+    if (n.type === 'model') {
+      e.baseAngle += (n.layer % 2 === 0 ? 1 : -1) * (n.layer === activeStage ? 0.26 : 0.09) * dt;
+      e.group.position.x = Math.cos(e.baseAngle) * n.orbitR;
+      e.group.position.z = Math.sin(e.baseAngle) * n.orbitR;
+      const act = n.layer === activeStage, foc = id === state.selectedNodeId || id === hoveredNodeId;
+      e.core.scale.setScalar(act ? (1.14 + Math.sin(tSec * 5) * 0.14) : (foc ? 1.2 : 0.92));
+      e.core.material.emissiveIntensity = act ? 0.78 : (foc ? 0.6 : 0.16);
+      e.halo.rotation.z += dt * (act ? 2.2 : 0.6);
+      e.halo.material.opacity = act || foc ? 0.85 : 0.2;
+    } else if (n.type === 'core') { e.core.rotation.y += dt * 0.8; e.core.rotation.x += dt * 0.35; }
+    else if (n.type === 'hub') { e.core.rotation.y -= dt * (isPublished ? 1.2 : 0.4); }
+  });
+
+  driveTierMeshes.forEach(m => {
+    const act = m.userData.tierLayer === activeStage || (activeStage === 6 && m.userData.tierLayer === 5);
+    m.material.emissiveIntensity = act ? (0.58 + Math.sin(tSec * 4.5) * 0.2) : 0.14;
+    m.rotation.y += dt * 0.25;
+  });
+
+  connectionLines.forEach(c => {
+    const e = nodeMeshes.get(c.nodeId); if (!e) return;
+    const a = e.group.position, b = new THREE.Vector3(0, c.targetY, 0);
+    const mid = a.clone().lerp(b, 0.5); mid.y += c.nodeId === 'github' ? 0.7 : 0.25;
+    c.line.geometry.setFromPoints(new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(12));
+    const act = c.layer === activeStage || (c.nodeId === 'core' && activeStage === 1) || (c.nodeId === 'github' && activeStage === 6);
+    c.line.material.opacity = (c.nodeId === state.selectedNodeId || c.nodeId === hoveredNodeId) ? 0.85 : (act ? 0.46 : 0.10);
+  });
+
+  if (state.isPlaying && Math.random() < dt * 8.5) {
+    if (activeStage === 1) spawnPacket('core', 'drive', -1.7, getVar('--c7') || '#38bdf8', 0.78, 0.4);
     if (activeStage >= 1 && activeStage <= 5) {
-      const models = NODES_DATA.filter(n => n.type === 'model' && n.layer === activeStage);
-      const m = models[Math.floor(Math.random() * models.length)];
-      if (m) {
-        const col = getCssVar(m.colorVar) || '#60a5fa';
-        if (Math.random() > 0.45) spawnPacket(m.id, 'drive', m.y, col, 0.78, 0.3);
-        else spawnPacket('drive', m.id, m.y, col, 0.78, 0.3);
-      }
+      const ms = NODES_DATA.filter(n => n.type === 'model' && n.layer === activeStage);
+      const m = ms[Math.floor(Math.random() * ms.length)];
+      if (m) spawnPacket(Math.random() > 0.5 ? m.id : 'drive', Math.random() > 0.5 ? 'drive' : m.id, m.y, getVar(m.colorVar) || '#60a5fa', 0.8, 0.3);
     } else if (activeStage === 6) {
-      spawnPacket('drive', 'github', 1.7, getCssVar('--chart-3') || '#34d399', 0.72, 0.8);
+      spawnPacket('drive', 'github', 1.7, getVar('--c3') || '#34d399', 0.72, 0.8);
     }
   }
   particles.forEach(p => {
     if (!p.active) return;
     p.t += dt * p.speed;
     if (p.t >= 1) { p.active = false; p.mesh.visible = false; return; }
-    const aEntry = nodeMeshes.get(p.fromId), bEntry = nodeMeshes.get(p.toId);
-    if (!aEntry || !bEntry) return;
-    const a = p.fromId === 'drive' ? new THREE.Vector3(0, p.toY, 0) : aEntry.group.position;
-    const b = p.toId === 'drive' ? new THREE.Vector3(0, p.toY, 0) : bEntry.group.position;
-    p.mesh.position.set(
-      THREE.MathUtils.lerp(a.x, b.x, p.t),
-      THREE.MathUtils.lerp(a.y, b.y, p.t) + Math.sin(p.t * Math.PI) * p.arcH,
-      THREE.MathUtils.lerp(a.z, b.z, p.t)
-    );
+    const ae = nodeMeshes.get(p.fromId), be = nodeMeshes.get(p.toId); if (!ae || !be) return;
+    const a = p.fromId === 'drive' ? new THREE.Vector3(0, p.toY, 0) : ae.group.position;
+    const b = p.toId === 'drive' ? new THREE.Vector3(0, p.toY, 0) : be.group.position;
+    p.mesh.position.set(THREE.MathUtils.lerp(a.x, b.x, p.t), THREE.MathUtils.lerp(a.y, b.y, p.t) + Math.sin(p.t * Math.PI) * p.arcH, THREE.MathUtils.lerp(a.z, b.z, p.t));
   });
-}
-
-function updateFloatingTerminals(w, h) {
-  const layerEl = document.getElementById('floating-layer');
-  if (!layerEl || !camera) return;
-
-  let targets = activeStage <= 5
-    ? NODES_DATA.filter(n => n.type === 'model' && n.layer === activeStage).slice(0, 2)
-    : [NODES_DATA.find(n => n.id === 'github'), NODES_DATA.find(n => n.id === 'drive')];
-
-  if (state.selectedNodeId && !targets.some(t => t.id === state.selectedNodeId)) {
-    const sel = NODES_DATA.find(n => n.id === state.selectedNodeId);
-    if (sel) targets.push(sel);
-  }
-
-  const frag = document.createDocumentFragment();
-  const phaseIdx = Math.min(2, Math.floor((stageElapsed / STAGE_DURATION) * 3));
-
-  targets.forEach(node => {
-    const entry = nodeMeshes.get(node.id);
-    if (!entry) return;
-    const wp = entry.group.position.clone();
-    wp.y += node.id === 'drive' ? 2.25 : 0.36;
-    const proj = wp.project(camera);
-    if (proj.z > 1) return;
-    const sx = (proj.x * 0.5 + 0.5) * w, sy = (-proj.y * 0.5 + 0.5) * h;
-    if (sx < 70 || sx > w - 70 || sy < 42 || sy > h - 34) return;
-
-    const card = document.createElement('div');
-    card.className = 'mini-terminal' + (state.selectedNodeId === node.id ? ' is-selected' : '');
-    card.style.left = Math.round(sx) + 'px';
-    card.style.top = Math.round(sy) + 'px';
-    const logItem = node.logs[phaseIdx] || node.logs[0];
-    card.innerHTML =
-      '<div class="mini-terminal-head"><span class="mini-terminal-name">' + escapeHtml(node.name) + '</span>' +
-      '<span class="mini-terminal-tag">' + escapeHtml(getNodeStatusText(node)) + '</span></div>' +
-      '<div class="mini-terminal-line">&gt; ' + escapeHtml(logItem.msg) + '</div>';
-    card.onclick = e => { e.stopPropagation(); state.selectedNodeId = node.id; renderInspector(); };
-    frag.appendChild(card);
-  });
-  layerEl.replaceChildren(frag);
-}
-
-function bindCanvasEvents(canvas) {
-  let down = { x: 0, y: 0 };
-  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; });
-  canvas.addEventListener('pointermove', e => {
-    const rect = canvas.getBoundingClientRect();
-    pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    raycaster.setFromCamera(pointer, camera);
-    const hits = raycaster.intersectObjects(clickableMeshes, false);
-    hoveredNodeId = hits.length ? hits[0].object.userData.nodeId : null;
-    canvas.style.cursor = hoveredNodeId ? 'pointer' : 'grab';
-  });
-  canvas.addEventListener('pointerup', e => {
-    if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) return;
-    const rect = canvas.getBoundingClientRect();
-    pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    raycaster.setFromCamera(pointer, camera);
-    const hits = raycaster.intersectObjects(clickableMeshes, false);
-    if (hits.length && hits[0].object.userData.nodeId) {
-      state.selectedNodeId = hits[0].object.userData.nodeId;
-      renderInspector();
-    }
-  });
-}
-
-function animate(now) {
-  requestAnimationFrame(animate);
-  const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
-  lastFrameTime = now;
-  if (!renderer || !scene || !camera) return;
-
-  const canvas = renderer.domElement;
-  const w = canvas.clientWidth || 900, h = canvas.clientHeight || 440;
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-  if (canvas.width !== Math.floor(w * dpr) || canvas.height !== Math.floor(h * dpr)) {
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
-  }
-
-  if (state.isPlaying && !state.liveMode) {
-    stageElapsed += dt;
-    if (now - lastLogTick > 1000) { lastLogTick = now; simSeconds++; renderInspector(); }
-    if (stageElapsed >= STAGE_DURATION) {
-      stageElapsed = 0;
-      if (state.stageMode === 'auto') {
-        activeStage = activeStage < 6 ? activeStage + 1 : 1;
-        isPublished = activeStage === 6;
-      } else {
-        isPublished = activeStage === 6;
-      }
-      renderHeader(); renderInspector();
-    }
-  }
-
-  const tSec = now * 0.001;
-  nodeMeshes.forEach((entry, id) => {
-    const n = entry.data;
-    if (n.type === 'model') {
-      const speed = (n.layer % 2 === 0 ? 1 : -1) * (n.layer === activeStage ? 0.26 : 0.09);
-      entry.baseAngle += speed * dt;
-      entry.group.position.x = Math.cos(entry.baseAngle) * n.orbitR;
-      entry.group.position.z = Math.sin(entry.baseAngle) * n.orbitR;
-      const isAct = n.layer === activeStage;
-      const isFoc = id === state.selectedNodeId || id === hoveredNodeId;
-      entry.core.scale.setScalar(isAct ? (1.14 + Math.sin(tSec * 5) * 0.14) : (isFoc ? 1.2 : 0.92));
-      entry.core.material.emissiveIntensity = isAct ? 0.78 : (isFoc ? 0.6 : 0.16);
-      entry.halo.rotation.z += dt * (isAct ? 2.2 : 0.6);
-      entry.halo.material.opacity = isAct || isFoc ? 0.85 : 0.2;
-    } else if (n.type === 'core') {
-      entry.core.rotation.y += dt * 0.85;
-      entry.core.rotation.x += dt * 0.4;
-      entry.core.material.emissiveIntensity = activeStage === 1 ? 0.65 : 0.24;
-    } else if (n.type === 'hub') {
-      entry.core.rotation.y -= dt * (isPublished ? 1.3 : 0.45);
-      entry.core.material.emissiveIntensity = isPublished ? 0.9 : (activeStage === 6 ? 0.65 : 0.2);
-      entry.core.scale.setScalar(isPublished ? 1.2 : 1.0);
-    }
-  });
-
-  driveTierMeshes.forEach(mesh => {
-    const isAct = mesh.userData.tierLayer === activeStage || (activeStage === 6 && mesh.userData.tierLayer === 5);
-    mesh.material.emissiveIntensity = isAct ? (0.58 + Math.sin(tSec * 4.5) * 0.2) : 0.14;
-    mesh.rotation.y += dt * 0.25;
-  });
-
-  connectionLines.forEach(c => {
-    const entry = nodeMeshes.get(c.nodeId);
-    if (!entry) return;
-    const a = entry.group.position, b = new THREE.Vector3(0, c.targetY, 0);
-    const mid = a.clone().lerp(b, 0.5);
-    mid.y += c.nodeId === 'github' ? 0.7 : 0.25;
-    c.line.geometry.setFromPoints(new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(14));
-    const isAct = c.layer === activeStage || (c.nodeId === 'core' && activeStage === 1) || (c.nodeId === 'github' && activeStage === 6);
-    const isFoc = c.nodeId === state.selectedNodeId || c.nodeId === hoveredNodeId;
-    c.line.material.opacity = isFoc ? 0.88 : (isAct ? 0.48 : 0.10);
-  });
-
-  updateParticles(dt);
 
   if (state.autopilot && controls) {
     const st = STAGES[activeStage - 1] || STAGES[0];
@@ -1050,204 +684,272 @@ function animate(now) {
   }
   if (controls) controls.update();
   renderer.render(scene, camera);
-  updateFloatingTerminals(w, h);
+
+  // Floating mini-terminals (only 2 active + selected)
+  const layerEl = document.getElementById('floating-layer');
+  let targets = activeStage <= 5 ? NODES_DATA.filter(n => n.type === 'model' && n.layer === activeStage).slice(0, 2)
+    : [NODES_DATA[2], NODES_DATA[1]];
+  const frag = document.createDocumentFragment();
+  targets.forEach(n => {
+    const e = nodeMeshes.get(n.id); if (!e) return;
+    const wp = e.group.position.clone(); wp.y += n.id === 'drive' ? 2.25 : 0.36;
+    const pr = wp.project(camera); if (pr.z > 1) return;
+    const sx = (pr.x * 0.5 + 0.5) * w, sy = (-pr.y * 0.5 + 0.5) * h;
+    if (sx < 65 || sx > w - 65 || sy < 40 || sy > h - 30) return;
+    const d = document.createElement('div');
+    d.className = 'mini-terminal' + (state.selectedNodeId === n.id ? ' is-selected' : '');
+    d.style.left = Math.round(sx) + 'px'; d.style.top = Math.round(sy) + 'px';
+    d.innerHTML = '<div class="mt-h"><span>' + esc(n.name) + '</span><span class="mt-t">' + esc(n.provider) + '</span></div><div class="mt-l">&gt; ' + esc(n.log) + '</div>';
+    d.onclick = ev => { ev.stopPropagation(); state.selectedNodeId = n.id; document.getElementById('inspector-inline').textContent = n.name + ' · ' + n.log; };
+    frag.appendChild(d);
+  });
+  layerEl.replaceChildren(frag);
 }
 
 // ============================================================================
-// 4. UI RENDERING + REAL GAS EXECUTION + VOICE INPUT + CHUNKED UPLOAD
+// 4. BEAUTIFUL REPORT RENDERER (READS DIRECTLY FROM GOOGLE DRIVE VIA GAS)
 // ============================================================================
-function escapeHtml(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function formatClock(sec) {
-  return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
-}
-function getNodeStatusText(node) {
-  if (node.id === 'github') return isPublished ? 'Опубликовано' : (activeStage === 6 ? 'Выгрузка' : 'Ожидание');
-  if (node.id === 'drive') return 'Ярус ' + Math.min(activeStage, 5) + ' активен';
-  if (node.id === 'core') return activeStage === 1 ? 'Слой 0 Активен' : 'Синхронизирован';
-  if (node.layer < activeStage) return 'Готово';
-  if (node.layer === activeStage) return 'Работает';
-  return 'Ожидание';
+function renderMarkdown(text) {
+  let h = esc(text || '');
+  h = h.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+  h = h.replace(/^### (.*)$/gm, '<h3>$1</h3>').replace(/^## (.*)$/gm, '<h2>$1</h2>').replace(/^# (.*)$/gm, '<h1>$1</h1>');
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code>$1</code>');
+  h = h.replace(/^[\-\*] (.*)$/gm, '<li>$1</li>');
+  h = h.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g, '');
+  return h.replace(/\n/g, '<br>');
 }
 
-function renderHeader() {
-  const st = STAGES[activeStage - 1] || STAGES[0];
-  document.getElementById('stage-subtitle').textContent = st.name + ' · ' + st.desc;
-  document.getElementById('pipeline-badge-text').textContent = activeStage <= 5 ? ('Орбита ' + activeStage + ' / 5 · 30 моделей') : 'Деплой на GitHub';
-  const hb = document.getElementById('hub-badge');
-  hb.classList.toggle('is-published', isPublished);
-  hb.classList.toggle('is-active', activeStage === 6 && !isPublished);
-  document.getElementById('hub-badge-text').textContent = isPublished ? 'Hub: Опубликовано' : (activeStage === 6 ? 'Hub: Выгрузка...' : 'Hub: Ожидание');
-}
+function drawActiveReport() {
+  const rep = state.activeReport;
+  if (!rep) return;
+  document.getElementById('rep-title').textContent = rep.title || 'Отчёт B2B Nexus';
+  const secs = rep.sections || [];
+  document.getElementById('rep-sub').textContent = (rep.missionType || 'analysis') + ' · ' + secs.length + ' секций анализа · ' + (rep.createdAt || '').slice(0, 16).replace('T', ' ');
 
-function renderInspector() {
-  const node = NODES_DATA.find(n => n.id === state.selectedNodeId) || NODES_DATA[1];
-  document.getElementById('inspector-name').textContent = node.name;
-  document.getElementById('inspector-role').textContent = node.role;
-  document.getElementById('inspector-provider').textContent = node.provider;
-  document.getElementById('inspector-state').textContent = getNodeStatusText(node);
-  const baseSec = Math.max(1, simSeconds - 2);
-  document.getElementById('inspector-logs').innerHTML = node.logs.slice(-4).map((l, i) =>
-    '<div class="log-row"><span class="log-time">' + formatClock(baseSec + i) + '</span>' +
-    '<span class="log-msg">' + escapeHtml(l.msg) + '</span><span class="log-size">' + escapeHtml(l.size) + '</span></div>'
+  const liveA = document.getElementById('rep-live-link');
+  if (rep.liveUrl) { liveA.href = rep.liveUrl; liveA.style.display = 'inline-flex'; } else liveA.style.display = 'none';
+  const driveA = document.getElementById('rep-drive-link');
+  if (rep.driveUrl) { driveA.href = rep.driveUrl; driveA.style.display = 'inline-flex'; } else driveA.style.display = 'none';
+  document.getElementById('btn-print-report').style.display = 'inline-flex';
+
+  const tabsEl = document.getElementById('rep-tabs');
+  const tabDefs = [
+    ['all', 'Весь анализ (' + secs.length + ')'],
+    [5, '5. Финал'], [4, '4. Модули'], [3, '3. Присяжные'], [2, '2. Стратегия'], [1, '1. Разведка'],
+    ['prompt', 'Бриф Слоя 0']
+  ];
+  tabsEl.innerHTML = tabDefs.map(t =>
+    '<button type="button" class="chip ' + (state.reportOrbitTab === t[0] ? 'is-active' : '') + '" data-rtab="' + t[0] + '">' + t[1] + '</button>'
+  ).join('');
+  tabsEl.querySelectorAll('.chip').forEach(btn => {
+    btn.onclick = () => {
+      const v = btn.dataset.rtab;
+      state.reportOrbitTab = (v === 'all' || v === 'prompt') ? v : Number(v);
+      drawActiveReport();
+    };
+  });
+
+  const bodyEl = document.getElementById('rep-body');
+  if (state.reportOrbitTab === 'prompt') {
+    bodyEl.innerHTML = '<div class="rcard"><div class="rcard-h"><h3>Технический Мастер-Промпт (передан моделям в фоне)</h3></div><div class="md">' +
+      renderMarkdown(rep.enhancedPrompt || rep.rawPrompt || 'Нет данных') + '</div></div>';
+    return;
+  }
+
+  const list = state.reportOrbitTab === 'all'
+    ? secs.slice().sort((a, b) => (b.orbit || 0) - (a.orbit || 0))
+    : secs.filter(s => s.orbit === state.reportOrbitTab);
+
+  if (!list.length) {
+    bodyEl.innerHTML = '<div class="rcard"><div class="md">На этой орбите нет отдельных записей. Выберите «Весь анализ».</div></div>';
+    return;
+  }
+
+  bodyEl.innerHTML = list.map(s =>
+    '<article class="rcard"><div class="rcard-h"><h3>' + esc(s.model || 'Модель') + '</h3><span class="pill">' + esc(s.orbitName || '') + '</span></div>' +
+    '<div class="md">' + renderMarkdown(s.content) + '</div></article>'
   ).join('');
 }
 
-function pushNodeLog(nodeId, msg, size) {
-  const node = NODES_DATA.find(n => n.id === nodeId) || NODES_DATA[1];
-  node.logs.push({ msg, size: size || 'LIVE' });
-  if (node.logs.length > 8) node.logs.shift();
-  state.selectedNodeId = node.id;
-  renderInspector();
+async function openDriveReport(item) {
+  if (!state.gasUrl) return;
+  switchPane('pane-report');
+  document.getElementById('rep-title').textContent = 'Загрузка отчёта с Google Диска...';
+  document.getElementById('rep-body').innerHTML = '<div class="rcard"><div class="mono-xs">Чтение всех секций из B2B_Portal...</div></div>';
+  try {
+    const q = item.jobId ? ('jobId=' + encodeURIComponent(item.jobId)) : ('fileId=' + encodeURIComponent(item.fileId));
+    const res = await fetch(state.gasUrl + '?action=get_report&' + q).then(r => r.json());
+    if (res.status !== 'ok') throw new Error(res.message || 'Ошибка чтения отчёта');
+    state.activeReport = res;
+    state.reportOrbitTab = 'all';
+    drawActiveReport();
+  } catch (err) {
+    document.getElementById('rep-body').innerHTML = '<div class="rcard"><div class="md">Ошибка загрузки: ' + esc(err.message) + '</div></div>';
+  }
 }
 
-async function runRealSwarm(promptText) {
+function renderReportsList() {
+  const box = document.getElementById('reports-list');
+  const filtered = state.reports.filter(r => r.source === state.reportFilter);
+  if (!filtered.length) {
+    box.innerHTML = '<div class="mono-xs">' + (state.gasUrl ? 'Пока нет отчётов в этой категории.' : 'Укажите URL B2BNexusArgon в ⚙️ GAS.') + '</div>';
+    return;
+  }
+  box.innerHTML = '';
+  filtered.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'rep-item' + (state.activeReport && ((item.jobId && state.activeReport.jobId === item.jobId) || (item.fileId && state.activeReport.fileId === item.fileId)) ? ' active' : '');
+    el.innerHTML = '<div class="rep-title">' + esc(item.title) + '</div>' +
+      '<div class="rep-meta"><span>' + esc(item.missionType || '') + '</span><span>' + esc((item.createdAt || '').slice(0, 10)) + '</span></div>';
+    el.onclick = () => {
+      box.querySelectorAll('.rep-item').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      openDriveReport(item);
+    };
+    box.appendChild(el);
+  });
+}
+
+async function fetchDriveReports() {
+  if (!state.gasUrl) return;
+  try {
+    const r = await fetch(state.gasUrl + '?action=list_reports').then(x => x.json());
+    if (r.status === 'ok' && Array.isArray(r.reports)) {
+      state.reports = r.reports;
+      renderReportsList();
+      if (!state.activeReport && state.reports.length > 0) {
+        const latestSwarm = state.reports.find(x => x.source === 'swarm') || state.reports[0];
+        if (latestSwarm) {
+          // Preload silently into the Report tab
+          const q = latestSwarm.jobId ? ('jobId=' + encodeURIComponent(latestSwarm.jobId)) : ('fileId=' + encodeURIComponent(latestSwarm.fileId));
+          fetch(state.gasUrl + '?action=get_report&' + q).then(x => x.json()).then(d => {
+            if (d.status === 'ok') { state.activeReport = d; drawActiveReport(); }
+          }).catch(() => {});
+        }
+      }
+    }
+  } catch (_) {}
+}
+
+// ============================================================================
+// 5. LIVE SWARM EXECUTION (BACKGROUND PROMPT -> 5 ORBITS -> AUTO-OPEN REPORT)
+// ============================================================================
+function setOrbitProgress(step) {
+  document.querySelectorAll('#orbit-steps .ostep').forEach(el => {
+    const s = Number(el.dataset.s);
+    el.classList.toggle('done', s < step);
+    el.classList.toggle('active', s === step);
+  });
+}
+
+async function runSwarm(promptText) {
+  if (!state.gasUrl) {
+    document.getElementById('modal-bg').classList.add('open');
+    return;
+  }
   const btn = document.getElementById('btn-launch');
-  const metaBox = document.getElementById('meta-preview');
-  const liveBtn = document.getElementById('btn-open-live');
-  liveBtn.style.display = 'none';
-  btn.disabled = true;
-  btn.textContent = '⏳ Загрузка на Google Диск...';
-  state.liveMode = true;
-  state.isPlaying = true;
-  activeStage = 1;
-  isPublished = false;
-  renderHeader();
+  btn.disabled = true; btn.textContent = '⏳ Запуск...';
+  state.liveMode = true; state.isPlaying = true; activeStage = 1; isPublished = false;
+  switchPane('pane-3d');
+  setOrbitProgress(1);
 
   try {
     const CHUNK = 180000;
-    const firstPart = promptText.slice(0, CHUNK);
-    const initResp = await fetch(state.gasUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    const init = await fetch(state.gasUrl, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
-        action: 'init_job',
-        pin: state.pin,
+        action: 'init_job', pin: state.pin,
         mode: document.getElementById('select-mode').value,
         missionHint: document.getElementById('select-mission').value,
-        prompt: firstPart
+        prompt: promptText.slice(0, CHUNK)
       })
     }).then(r => r.json());
+    if (init.status !== 'ok') throw new Error(init.message || 'init_job error');
+    const jobId = init.jobId;
 
-    if (initResp.status !== 'ok') throw new Error(initResp.message || 'init_job error');
-    const jobId = initResp.jobId;
-    state.liveJobId = jobId;
-    pushNodeLog('core', 'Задача создана: ' + jobId, 'OK');
-
-    // Upload remaining chunks if prompt > 180 KB
-    for (let offset = CHUNK, idx = 1; offset < promptText.length; offset += CHUNK, idx++) {
-      btn.textContent = '⏳ Отправка пакета #' + idx + '...';
+    for (let off = CHUNK, idx = 1; off < promptText.length; off += CHUNK, idx++) {
       await fetch(state.gasUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'upload_chunk', pin: state.pin, jobId, index: idx, chunk: promptText.slice(offset, offset + CHUNK) })
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'upload_chunk', pin: state.pin, jobId, index: idx, chunk: promptText.slice(off, off + CHUNK) })
       });
     }
 
-    // Telemetry poller
-    let lastTelTs = 0;
+    let lastTs = 0;
     const poller = setInterval(async () => {
       try {
-        const t = await fetch(state.gasUrl + '?action=telemetry&jobId=' + encodeURIComponent(jobId) + '&since=' + lastTelTs).then(r => r.json());
+        const t = await fetch(state.gasUrl + '?action=telemetry&jobId=' + encodeURIComponent(jobId) + '&since=' + lastTs).then(r => r.json());
         if (t.events && t.events.length) {
           t.events.forEach(ev => {
-            lastTelTs = Math.max(lastTelTs, ev.ts || 0);
-            pushNodeLog(ev.node || 'drive', ev.msg || '', ev.size || 'LIVE');
-            if (ev.node && ev.node !== 'drive') spawnPacket(ev.node, 'drive', 0, getCssVar('--chart-1') || '#60a5fa', 0.85, 0.35);
+            lastTs = Math.max(lastTs, ev.ts || 0);
+            document.getElementById('live-node-log').textContent = ev.msg || '';
+            const nd = NODES_DATA.find(x => x.id === ev.node);
+            if (nd) nd.log = ev.msg || nd.log;
+            if (ev.node && ev.node !== 'drive') spawnPacket(ev.node, 'drive', 0, getVar('--c1') || '#60a5fa', 0.85, 0.35);
           });
         }
       } catch (_) {}
     }, 1500);
 
-    // Step 0..6 state machine
+    const stepNames = ['Слой 0 · Усиление в фоне...', 'Орбита 1 · Разведка...', 'Орбита 2 · Стратегия...', 'Орбита 3 · Присяжные...', 'Орбита 4 · Модули...', 'Орбита 5 · Сборка отчёта...', 'Деплой на GitHub Pages...'];
     for (let step = 0; step <= 6; step++) {
       activeStage = step === 0 ? 1 : step;
-      renderHeader();
-      btn.textContent = step === 0 ? '🧠 Слой 0: Профи-промпт...' : (step <= 5 ? ('⚡ Орбита ' + step + ' / 5...') : '🚀 Публикация на GitHub...');
-      const stepRes = await fetch(state.gasUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      setOrbitProgress(step === 0 ? 1 : step);
+      document.getElementById('live-stage-label').textContent = stepNames[step];
+      btn.textContent = '⏳ ' + (step === 0 ? 'Слой 0' : ('Шаг ' + step + '/6'));
+
+      const res = await fetch(state.gasUrl, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ action: 'step', pin: state.pin, jobId, forceStep: step })
       }).then(r => r.json());
+      if (res.status !== 'ok') throw new Error(res.message || ('Step ' + step + ' failed'));
 
-      if (stepRes.status !== 'ok') throw new Error(stepRes.message || ('Step ' + step + ' failed'));
-      if (step === 0 && stepRes.metaPrompt) {
-        metaBox.textContent = '✨ ПРОФИ-ПРОМПТ (Слой 0) · ' + (stepRes.metaPrompt.projectTitle || '') + '\n\n' + (stepRes.metaPrompt.enhancedPrompt || '');
-        metaBox.classList.add('is-visible');
-      }
-      if (step === 6 && stepRes.publishedUrl) {
+      if (step === 6) {
         isPublished = true;
-        renderHeader();
-        liveBtn.href = stepRes.publishedUrl;
-        liveBtn.style.display = 'inline-flex';
-        pushNodeLog('github', 'Опубликовано: ' + stepRes.publishedUrl, 'LIVE');
-        loadCatalog();
+        setOrbitProgress(7);
+        document.getElementById('live-stage-label').textContent = '✅ Анализ готов и опубликован!';
+        if (res.report && res.report.status === 'ok') {
+          state.activeReport = res.report;
+          state.reportOrbitTab = 'all';
+          drawActiveReport();
+          switchPane('pane-report');
+        }
+        fetchDriveReports();
       }
     }
     clearInterval(poller);
   } catch (err) {
-    pushNodeLog('drive', 'Ошибка: ' + err.message, 'ERR');
-    alert('Ошибка GAS: ' + err.message);
+    document.getElementById('live-stage-label').textContent = '⚠️ Ошибка: ' + err.message;
   } finally {
-    state.liveMode = false;
-    btn.disabled = false;
-    btn.textContent = '⚡ Запустить 30 моделей';
+    state.liveMode = false; btn.disabled = false; btn.textContent = '⚡ Запустить анализ';
   }
 }
 
 async function pingGas() {
-  const statusEl = document.getElementById('gas-status-line');
-  if (!state.gasUrl) {
-    statusEl.textContent = 'Режим: Демо 3D (вставьте URL B2BNexusArgon для реального запуска 30 бесплатных API)';
-    return;
-  }
-  statusEl.textContent = 'Проверка связи с B2BNexusArgon...';
+  const pill = document.getElementById('pill-status');
+  const line = document.getElementById('gas-status-line');
+  if (!state.gasUrl) { pill.textContent = 'Демо 3D'; pill.classList.remove('live'); return; }
+  line.textContent = 'Проверка связи с B2BNexusArgon...';
   try {
-    const res = await fetch(state.gasUrl + '?action=ping').then(r => r.json());
-    if (res.status === 'ok') {
-      const activeProvs = Object.keys(res.providers || {}).filter(k => res.providers[k]).join(', ');
-      statusEl.textContent = '✅ Подключено: ' + res.service + ' · Активные провайдеры: ' + (activeProvs || 'нет ключей');
-      loadCatalog();
-    } else {
-      statusEl.textContent = '⚠️ Ответ GAS: ' + JSON.stringify(res);
-    }
+    const r = await fetch(state.gasUrl + '?action=ping').then(x => x.json());
+    if (r.status === 'ok') {
+      const provs = Object.keys(r.providers || {}).filter(k => r.providers[k]).join(', ');
+      pill.textContent = '● Онлайн · GAS'; pill.classList.add('live');
+      line.textContent = '✅ ' + r.service + ' · Ключи: ' + provs;
+      fetchDriveReports();
+    } else line.textContent = '⚠️ ' + JSON.stringify(r);
   } catch (e) {
-    statusEl.textContent = '⚠️ Не удалось подключиться: проверьте доступ "Anyone" в развёртывании GAS.';
+    pill.textContent = '⚠️ Нет связи'; pill.classList.remove('live');
+    line.textContent = '⚠️ Ошибка подключения к GAS. Проверьте доступ Anyone.';
   }
 }
 
-async function loadCatalog() {
-  let list = [];
-  try {
-    const r = await fetch('./catalog.json?t=' + Date.now());
-    if (r.ok) list = await r.json();
-  } catch (_) {}
-  if ((!list || !list.length) && state.gasUrl) {
-    try {
-      const r = await fetch(state.gasUrl + '?action=catalog').then(x => x.json());
-      if (r.projects) list = r.projects;
-    } catch (_) {}
-  }
-  const sec = document.getElementById('catalog-section');
-  const box = document.getElementById('catalog-list');
-  if (!list || !list.length) { sec.style.display = 'none'; return; }
-  sec.style.display = 'flex';
-  box.innerHTML = list.map(p =>
-    '<div class="proj-card"><h4>' + escapeHtml(p.title || p.slug) + '</h4>' +
-    '<div class="meta">' + escapeHtml(p.missionType || 'swarm') + ' · ' + escapeHtml((p.createdAt || '').slice(0, 16).replace('T', ' ')) + '</div>' +
-    '<div style="display:flex;gap:12px;">' +
-    '<a href="' + escapeHtml(p.liveUrl || '#') + '" target="_blank" rel="noopener">Открыть сайт →</a>' +
-    (p.driveUrl ? '<a href="' + escapeHtml(p.driveUrl) + '" target="_blank" rel="noopener">Google Диск →</a>' : '') +
-    '</div></div>'
-  ).join('');
-}
-
 // ============================================================================
-// 5. EVENT BINDINGS (VOICE, DRAG-DROP, THEME, STAGE CHIPS)
+// 6. EVENTS
 // ============================================================================
+document.querySelectorAll('.vtab').forEach(b => b.onclick = () => switchPane(b.dataset.pane));
 document.getElementById('btn-theme').onclick = () => applyTheme(state.theme === 'dark' ? 'light' : 'dark');
-document.getElementById('btn-settings').onclick = () => document.getElementById('settings-drawer').classList.toggle('is-open');
+document.getElementById('btn-settings').onclick = () => document.getElementById('modal-bg').classList.add('open');
+document.getElementById('btn-close-modal').onclick = () => document.getElementById('modal-bg').classList.remove('open');
 document.getElementById('btn-save-gas').onclick = () => {
   state.gasUrl = document.getElementById('input-gas-url').value.trim();
   state.pin = document.getElementById('input-pin').value.trim();
@@ -1255,96 +957,61 @@ document.getElementById('btn-save-gas').onclick = () => {
   localStorage.setItem('b2b_gas_pin', state.pin);
   pingGas();
 };
-document.getElementById('btn-refresh-catalog').onclick = loadCatalog;
-
-const promptInput = document.getElementById('prompt-input');
-const updateCounter = () => {
-  const len = promptInput.value.length;
-  const kb = (new Blob([promptInput.value]).size / 1024).toFixed(1);
-  document.getElementById('prompt-counter').textContent = len.toLocaleString('ru-RU') + ' символов · ' + kb + ' КБ · Готово к отправке в 30 моделей';
+document.getElementById('btn-republish-all').onclick = async () => {
+  if (!state.gasUrl) return;
+  const line = document.getElementById('gas-status-line');
+  line.textContent = 'Пересборка и публикация всех отчётов на GitHub...';
+  try {
+    const r = await fetch(state.gasUrl + '?action=republish_all&pin=' + encodeURIComponent(state.pin)).then(x => x.json());
+    line.textContent = '✅ Готово: ' + JSON.stringify(r.republished || r);
+    fetchDriveReports();
+  } catch (e) { line.textContent = '⚠️ ' + e.message; }
 };
-promptInput.addEventListener('input', updateCounter);
+document.getElementById('btn-filter-swarm').onclick = () => { state.reportFilter = 'swarm'; renderReportsList(); };
+document.getElementById('btn-filter-arch').onclick = () => { state.reportFilter = 'archive'; renderReportsList(); };
+document.getElementById('btn-refresh-reports').onclick = fetchDriveReports;
+document.getElementById('btn-print-report').onclick = () => window.print();
 
-// Drag & Drop huge files directly into prompt window
-promptInput.addEventListener('dragover', e => { e.preventDefault(); promptInput.classList.add('drag-over'); });
-promptInput.addEventListener('dragleave', () => promptInput.classList.remove('drag-over'));
-promptInput.addEventListener('drop', e => {
-  e.preventDefault();
-  promptInput.classList.remove('drag-over');
-  const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    promptInput.value = (promptInput.value ? promptInput.value + '\n\n' : '') + '--- FILE: ' + file.name + ' ---\n' + reader.result;
-    updateCounter();
-  };
-  reader.readAsText(file);
+const pInp = document.getElementById('prompt-input');
+const updCnt = () => {
+  const kb = (new Blob([pInp.value]).size / 1024).toFixed(1);
+  document.getElementById('prompt-counter').textContent = pInp.value.length.toLocaleString('ru-RU') + ' симв. · ' + kb + ' КБ';
+};
+pInp.addEventListener('input', updCnt);
+pInp.addEventListener('dragover', e => { e.preventDefault(); pInp.classList.add('drag-over'); });
+pInp.addEventListener('dragleave', () => pInp.classList.remove('drag-over'));
+pInp.addEventListener('drop', e => {
+  e.preventDefault(); pInp.classList.remove('drag-over');
+  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { pInp.value = (pInp.value ? pInp.value + '\n\n' : '') + '--- ' + f.name + ' ---\n' + rd.result; updCnt(); };
+  rd.readAsText(f);
 });
 
-// Web Speech API Voice Input
-const voiceBtn = document.getElementById('btn-voice');
-let recognition = null;
-const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SpeechRec) {
-  recognition = new SpeechRec();
-  recognition.lang = 'ru-RU';
-  recognition.continuous = true;
-  recognition.interimResults = false;
-  recognition.onresult = e => {
+const vBtn = document.getElementById('btn-voice');
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SR) {
+  const rec = new SR(); rec.lang = 'ru-RU'; rec.continuous = true; rec.interimResults = false;
+  rec.onresult = e => {
     for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) {
-        promptInput.value = (promptInput.value ? promptInput.value + ' ' : '') + e.results[i][0].transcript.trim();
-        updateCounter();
-      }
+      if (e.results[i].isFinal) { pInp.value = (pInp.value ? pInp.value + ' ' : '') + e.results[i][0].transcript.trim(); updCnt(); }
     }
   };
-  recognition.onend = () => voiceBtn.classList.remove('is-recording');
-  voiceBtn.onclick = () => {
-    if (voiceBtn.classList.contains('is-recording')) { recognition.stop(); }
-    else { voiceBtn.classList.add('is-recording'); recognition.start(); }
-  };
-} else {
-  voiceBtn.style.display = 'none';
-}
+  rec.onend = () => vBtn.classList.remove('is-recording');
+  vBtn.onclick = () => { if (vBtn.classList.contains('is-recording')) rec.stop(); else { vBtn.classList.add('is-recording'); rec.start(); } };
+} else vBtn.style.display = 'none';
 
-// Launch button
-document.getElementById('btn-launch').onclick = () => {
-  const txt = promptInput.value.trim();
-  if (!txt) { promptInput.focus(); return; }
-  if (state.gasUrl) {
-    runRealSwarm(txt);
-  } else {
-    // Interactive 3D demo preview of Layer 0 + 30 models
-    activeStage = 1; stageElapsed = 0; isPublished = false; state.isPlaying = true; state.stageMode = 'auto';
-    const metaBox = document.getElementById('meta-preview');
-    metaBox.textContent = '✨ Слой 0 (Демо предпросмотр профи-промпта): задача "' + txt.slice(0, 90) + '..." разложена на 5 орбит и отправлена на 30 бесплатных моделей. Чтобы запустить реальные API, вставьте URL B2BNexusArgon в ⚙️ GAS-мост.';
-    metaBox.classList.add('is-visible');
-    pushNodeLog('core', 'Запущен запрос (' + txt.length + ' симв.) → Слой 0', 'START');
-    renderHeader();
-  }
-};
-
-document.getElementById('btn-play-pause').onclick = () => {
-  state.isPlaying = !state.isPlaying;
-  document.getElementById('btn-play-pause').textContent = state.isPlaying ? '⏸ Пауза' : '▶ Запуск';
-};
-document.getElementById('btn-restart').onclick = () => {
-  activeStage = 1; stageElapsed = 0; simSeconds = 1; isPublished = false; state.isPlaying = true; state.stageMode = 'auto';
-  document.querySelectorAll('#stage-strip .chip').forEach(c => c.classList.toggle('is-active', c.dataset.stage === 'auto'));
-  renderHeader(); renderInspector();
-};
+document.getElementById('btn-launch').onclick = () => { const t = pInp.value.trim(); if (t) runSwarm(t); else pInp.focus(); };
+document.getElementById('btn-play-pause').onclick = () => { state.isPlaying = !state.isPlaying; document.getElementById('btn-play-pause').textContent = state.isPlaying ? '⏸' : '▶'; };
 document.getElementById('sw-autopilot').onchange = e => { state.autopilot = e.target.checked; };
-document.querySelectorAll('#stage-strip .chip').forEach(chip => {
-  chip.onclick = () => {
-    document.querySelectorAll('#stage-strip .chip').forEach(c => c.classList.remove('is-active'));
-    chip.classList.add('is-active');
-    state.stageMode = chip.dataset.stage;
-    if (chip.dataset.stage !== 'auto') {
-      activeStage = parseInt(chip.dataset.stage, 10);
-      isPublished = activeStage === 6;
-    }
+document.querySelectorAll('#stage-strip .chip').forEach(c => {
+  c.onclick = () => {
+    document.querySelectorAll('#stage-strip .chip').forEach(x => x.classList.remove('is-active'));
+    c.classList.add('is-active');
+    state.stageMode = c.dataset.stage;
+    if (c.dataset.stage !== 'auto') { activeStage = parseInt(c.dataset.stage, 10); isPublished = activeStage === 6; }
     stageElapsed = 0;
-    renderHeader(); renderInspector();
   };
 });
 
@@ -1352,10 +1019,7 @@ document.querySelectorAll('#stage-strip .chip').forEach(chip => {
 applyTheme(state.theme);
 document.getElementById('input-gas-url').value = state.gasUrl;
 document.getElementById('input-pin').value = state.pin;
-renderHeader();
-renderInspector();
-initThreeScene();
-loadCatalog();
+initThree();
 if (state.gasUrl) pingGas();
 </script>
 </body>

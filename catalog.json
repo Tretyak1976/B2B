@@ -1,5 +1,16 @@
 [
   {
+    "id": "1R1OztMgFc4ai0G2j9ZD52Sa6cy7ZtYRz",
+    "name": "TOTAL Gas Station",
+    "niche": "АЗС с розничным сервисом",
+    "country": "Германия",
+    "city": "Клеве",
+    "rating": "N/A",
+    "score": 63,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T13:29:58.794Z"
+  },
+  {
     "id": "1a6n75y3QgpCd93ECOKxTzEurdhLZk-Rd",
     "name": "Токио Парк Хотелл",
     "niche": "отель среднего класса",

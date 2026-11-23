@@ -1,5 +1,16 @@
 [
   {
+    "id": "16kbzamWNx353q8D6ypBgjN_v-Qf0P_0X",
+    "name": "TotalEnergies",
+    "niche": "Мультиэнергетический хаб (АЗС и EV-услуги)",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 64,
+    "modelsUsed": 5,
+    "createdAt": "2026-11-23T14:28:50.976Z"
+  },
+  {
     "id": "1gE0TirNNh5mJVZBcHt_PN8fqAQaUZdjX",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Дизайн и установка кухонь на заказ",

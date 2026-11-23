@@ -1,5 +1,16 @@
 [
   {
+    "id": "18yoUS1WRbKhUO8pGI9hv41Ee3rc7tQT8",
+    "name": "TotalEnergies Station Kleve",
+    "niche": "Автомобильная заправка с магазином и сервисом",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 69,
+    "modelsUsed": 5,
+    "createdAt": "2026-11-23T15:44:58.926Z"
+  },
+  {
     "id": "1w8HlX16u8_OBR4qz8uXqkd9KgZPPiNzW",
     "name": "TotalEnergies Station Kleve",
     "niche": "Автозаправочная станция с сервисом",

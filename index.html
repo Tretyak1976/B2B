@@ -80,7 +80,7 @@
     /* TOP BAR */
     .topbar {
       position: sticky; top: 0; z-index: 90;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -113,16 +113,16 @@
       color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600;
       cursor: pointer; transition: 0.15s ease; white-space: nowrap;
     }
-    .btn:hover { background: var(--surface-2); border-color: var(--muted); }
+    .btn:hover { background: var(--surface-2); border-color: var(--muted); text-decoration: none; }
     .btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-sm { padding: 5px 10px; font-size: 12px; }
     .btn-primary {
       background: var(--accent); color: #ffffff; border-color: transparent;
       box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent);
     }
-    .btn-primary:hover { filter: brightness(1.06); background: var(--accent); border-color: transparent; }
+    .btn-primary:hover { filter: brightness(1.06); background: var(--accent); border-color: transparent; color: #ffffff; }
     .btn-blue { background: var(--blue); color: #fff; border-color: transparent; }
-    .btn-blue:hover { filter: brightness(1.06); background: var(--blue); }
+    .btn-blue:hover { filter: brightness(1.06); background: var(--blue); color: #fff; }
     .btn-voice-rec { background: var(--red) !important; color: #fff !important; border-color: var(--red) !important; animation: pulseDot 1s infinite; }
 
     .pill {
@@ -136,7 +136,7 @@
     .pill-amber { background: var(--amber-soft); color: var(--amber); border-color: var(--amber-border); }
     .pill-red { background: var(--red-soft); color: var(--red); border-color: var(--red-border); }
 
-    /* WHITE-LABEL & SAFE BANNERS */
+    /* LAYOUT SHELL & BANNERS */
     .shell { max-width: 1180px; margin: 0 auto; padding: 18px 16px 72px; }
     .banner {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -147,16 +147,12 @@
     body.safe-mode .banner-safe { display: flex; }
 
     /* SCREEN 1: PERPLEXITY-STYLE LAUNCHPAD */
-    .hero-wrap {
-      max-width: 780px; margin: 36px auto 28px; text-align: center;
-    }
+    .hero-wrap { max-width: 780px; margin: 34px auto 26px; text-align: center; }
     .hero-title {
       margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); font-weight: 800;
       letter-spacing: -0.03em; line-height: 1.15; color: var(--text);
     }
-    .hero-sub {
-      margin: 0 auto 24px; max-width: 600px; font-size: 15px; color: var(--muted);
-    }
+    .hero-sub { margin: 0 auto 22px; max-width: 600px; font-size: 15px; color: var(--muted); }
     .search-box {
       position: relative; background: var(--surface); border: 1.5px solid var(--border-strong);
       border-radius: 16px; padding: 6px 6px 6px 16px;
@@ -175,7 +171,7 @@
     .ac-drop {
       position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 120;
       background: var(--surface); border: 1px solid var(--border-strong);
-      border-radius: 12px; box-shadow: var(--shadow-md); max-height: 280px; overflow-y: auto; text-align: left;
+      border-radius: 12px; box-shadow: var(--shadow-md); max-height: 290px; overflow-y: auto; text-align: left;
     }
     .ac-item {
       padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border);
@@ -211,6 +207,13 @@
     }
     .inp:focus, .sel:focus, .ta:focus { border-color: var(--accent); }
     .field-lbl { display: block; font-size: 11.5px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+
+    /* PREFLIGHT PREVIEW ON HOME */
+    .home-preflight {
+      margin-top: 14px; padding: 12px 15px; border-radius: var(--radius-sm); text-align: left;
+      background: var(--surface); border: 1px solid var(--accent-border); box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
 
     /* SHOWCASE / HISTORY GRID */
     .sec-head {
@@ -260,7 +263,7 @@
     .tel-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
     .tel-log {
       background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px 12px; max-height: 170px; overflow-y: auto;
+      padding: 10px 12px; max-height: 180px; overflow-y: auto;
       font-family: var(--mono); font-size: 11.5px; color: var(--text-2);
     }
     .tel-log-row { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; border-bottom: 1px solid var(--border); }
@@ -411,15 +414,17 @@
     }
     .modal-box {
       background: var(--surface); border: 1px solid var(--border-strong); border-radius: 16px;
-      max-width: 560px; width: 100%; padding: 22px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-md);
+      max-width: 580px; width: 100%; padding: 22px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-md);
     }
-    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .modal-box.wide { max-width: 900px; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; }
     .modal-head h3 { margin: 0; font-size: 16px; }
     .qr-card {
       background: #fff; color: #0f172a; border: 2px solid #059669; border-radius: 14px;
       padding: 20px; text-align: center; max-width: 320px; margin: 12px auto;
     }
     .qr-card img { width: 180px; height: 180px; margin: 10px auto; display: block; }
+    #swarm3d-canvas { width: 100%; height: 420px; border-radius: 12px; background: #070b12; display: block; }
 
     /* PROGRESS BAR INLINE */
     .mini-bar-track { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin-top: 6px; }
@@ -500,7 +505,7 @@
     <section id="screen-home">
       <div class="hero-wrap">
         <h1 class="hero-title" id="hero-title">Глубокий B2B-аудит любого бизнеса за 25 секунд</h1>
-        <p class="hero-sub">Финансовая модель P&amp;L, рентген сайта и GEO-видимости, разбор конкурентов и чеклист из 10 шагов с подрядчиками — в одном чистом терминале.</p>
+        <p class="hero-sub">Честная финансовая модель P&amp;L, рентген сайта и GEO-видимости, разбор конкурентов и чеклист из 10 шагов с подрядчиками — в одном чистом терминале.</p>
 
         <div class="search-box">
           <input type="text" id="q-input" placeholder="Введите название компании, адрес или сайт (напр. Küchen Studio Kleve)..." autocomplete="off"
@@ -509,6 +514,8 @@
           <button type="button" class="btn btn-primary" id="btn-run" onclick="startAudit()">Аудит →</button>
           <div id="ac-drop" class="ac-drop hidden"></div>
         </div>
+
+        <div id="home-preflight" class="home-preflight hidden"></div>
 
         <div class="chip-row">
           <button type="button" class="chip-toggle" id="chip-loc" onclick="toggleHomeDrawer('loc')">📍 <span id="chip-loc-lbl">Локация: Авто</span></button>
@@ -1003,7 +1010,8 @@
           <div class="card-head">
             <h3>🧠 Прозрачность роя ИИ и экспорт артефактов</h3>
             <div class="strip-group">
-              <button type="button" class="btn btn-sm" onclick="exportCSV()">📥 База контактов (CSV)</button>
+              <button type="button" class="btn btn-sm" onclick="openSwarm3D()">🌌 3D-карта роя</button>
+              <button type="button" class="btn btn-sm" onclick="exportCSV()">📥 Контакты (CSV)</button>
               <button type="button" class="btn btn-sm" onclick="exportJSON()">💾 Полный JSON</button>
               <button type="button" class="btn btn-sm" onclick="openEmailModal()">📧 Отправить отчёт</button>
             </div>
@@ -1092,6 +1100,18 @@
     </div>
   </div>
 
+  <!-- MODAL: ON-DEMAND 3D SWARM MAP (ZERO BACKGROUND CPU!) -->
+  <div id="modal-3d" class="modal-bg hidden" onclick="if(event.target===this) closeSwarm3D()">
+    <div class="modal-box wide">
+      <div class="modal-head">
+        <h3>🌌 3D-карта роя моделей (включается только по клику)</h3>
+        <button type="button" class="btn btn-sm" onclick="closeSwarm3D()">✕ Закрыть</button>
+      </div>
+      <canvas id="swarm3d-canvas"></canvas>
+      <div id="swarm3d-legend" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;font-size:12px;"></div>
+    </div>
+  </div>
+
 <script>
 // =========================================================================
 // B2B NEXUS — EXECUTIVE OS v6.0 FRONTEND (CLEAN UTF-8 · ZERO CPU DRAIN)
@@ -1113,6 +1133,7 @@ let idToken = localStorage.getItem("b2b6_id_token") || "";
 let acTimer = null;
 let scanClock = null;
 let speechRec = null;
+let swarm3dRaf = 0;
 
 // --- UTILITIES ---
 const $ = id => document.getElementById(id);
@@ -1293,36 +1314,92 @@ function toggleVoice() {
   else { speechRec.lang = $("in-lang").value || "ru-RU"; btn.classList.add("btn-voice-rec"); speechRec.start(); }
 }
 
-// Live Free Autocomplete via GAS v6.0 (ArcGIS + Places)
+// Live Free Autocomplete (GAS Places + Direct Photon Komoot Free Fallback!)
 function onQueryInput() {
   const val = $("q-input").value.trim(), drop = $("ac-drop");
+  $("home-preflight").classList.add("hidden");
   if (val.length < 2 || val.startsWith("http")) { drop.classList.add("hidden"); return; }
   if (acTimer) clearTimeout(acTimer);
   acTimer = setTimeout(async () => {
+    const cnt = $("in-country").value.trim(), ct = $("in-city").value.trim();
+    let places = [];
     try {
-      const cnt = $("in-country").value.trim(), ct = $("in-city").value.trim();
-      const url = `${GAS_URL}?action=autocomplete&q=${encodeURIComponent(val)}&lang=${encodeURIComponent($("in-lang").value)}&country=${encodeURIComponent(cnt)}&city=${encodeURIComponent(ct)}`;
-      const j = await fetchTO(url, {}, 10000).then(r => r.json());
-      const places = (j && j.status === "success" && Array.isArray(j.places)) ? j.places : [];
-      if (!places.length) { drop.classList.add("hidden"); return; }
-      drop.innerHTML = places.map(p => {
-        const target = [p.name, p.street].filter(Boolean).join(", ");
-        return `<div class="ac-item" onmousedown="pickAc('${escAttr(target)}','${escAttr(p.country)}','${escAttr(p.city)}')">
-          <span class="ac-main">🏢 ${esc(p.name)}${p.rating ? ' · ★' + esc(p.rating) : ''}</span>
-          <span class="ac-sub">📍 ${esc(p.formattedAddress || [p.street, p.city, p.country].filter(Boolean).join(', '))}</span>
-        </div>`;
-      }).join("");
-      drop.classList.remove("hidden");
-    } catch (e) { drop.classList.add("hidden"); }
+      const phQ = [val, ct, cnt].filter(Boolean).join(", ");
+      const phRes = await fetchTO(`https://photon.komoot.io/api/?q=${encodeURIComponent(phQ)}&limit=6`, {}, 4500).then(r => r.json());
+      if (phRes && Array.isArray(phRes.features) && phRes.features.length) {
+        places = phRes.features.map(f => {
+          const p = f.properties || {};
+          const st = [p.street, p.housenumber].filter(Boolean).join(" ");
+          const city = p.city || p.locality || p.county || "";
+          const country = p.country || "";
+          const nm = p.name || st || val;
+          return {
+            name: nm, street: st, city: city, country: country,
+            formattedAddress: [st, city, country].filter(Boolean).join(", "),
+            rating: ""
+          };
+        });
+      }
+    } catch (e) {}
+
+    if (!places.length) {
+      try {
+        const url = `${GAS_URL}?action=autocomplete&q=${encodeURIComponent(val)}&lang=${encodeURIComponent($("in-lang").value)}&country=${encodeURIComponent(cnt)}&city=${encodeURIComponent(ct)}`;
+        const j = await fetchTO(url, {}, 7000).then(r => r.json());
+        if (j && j.status === "success" && Array.isArray(j.places)) places = j.places;
+      } catch (e) {}
+    }
+
+    if (!places.length) { drop.classList.add("hidden"); return; }
+    drop.innerHTML = places.slice(0, 6).map(p => {
+      const target = (p.street && p.name !== p.street) ? `${p.name}, ${p.street}` : p.name;
+      return `<div class="ac-item" onmousedown="pickAc('${escAttr(target)}','${escAttr(p.country)}','${escAttr(p.city)}')">
+        <span class="ac-main">🏢 ${esc(p.name)}${p.rating ? ' · ★' + esc(p.rating) : ''}</span>
+        <span class="ac-sub">📍 ${esc(p.formattedAddress || [p.street, p.city, p.country].filter(Boolean).join(', '))}</span>
+      </div>`;
+    }).join("");
+    drop.classList.remove("hidden");
   }, 240);
 }
+
 function pickAc(target, cnt, ct) {
   $("q-input").value = target;
   if (cnt) $("in-country").value = cnt;
   if (ct) $("in-city").value = ct;
   saveLoc();
   $("ac-drop").classList.add("hidden");
+  runHomePreflight(target, cnt, ct);
 }
+
+async function runHomePreflight(target, cnt, ct) {
+  const box = $("home-preflight");
+  box.innerHTML = `<span style="font-size:12.5px;color:var(--muted);">⏳ Быстрая проверка объекта...</span>`;
+  box.classList.remove("hidden");
+  try {
+    const loc = [ct, cnt].filter(Boolean).join(", ");
+    const fullQ = loc ? `${target}, ${loc}` : target;
+    const j = await fetchTO(GAS_URL, {
+      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "preflight", url: fullQ, language: $("in-lang").value, country: cnt, city: ct }),
+      redirect: "follow"
+    }, 10000).then(r => r.json());
+    if (j && j.status === "success" && j.data && j.data.place) {
+      const p = j.data.place, dom = getDom(p.website);
+      const alerts = (j.data.osintAlerts || []).length;
+      box.innerHTML = `
+        <div style="font-size:13px;">
+          <strong>📍 ${esc(p.name)}</strong> · <span style="color:var(--muted);">${esc([p.street, p.city, p.country].filter(Boolean).join(", "))}</span>
+          <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">
+            ${dom ? `<span class="pill pill-green">🌐 ${esc(dom)}</span>` : `<span class="pill">Сайт не указан</span>`}
+            ${(p.competitors || []).length ? `<span class="pill pill-blue">⚔️ Конкурентов: ${p.competitors.length}</span>` : ""}
+            ${alerts ? `<span class="pill pill-amber">⚠️ Сигналов: ${alerts}</span>` : ""}
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" onclick="startAudit()">Запустить полный аудит →</button>`;
+    } else { box.classList.add("hidden"); }
+  } catch (e) { box.classList.add("hidden"); }
+}
+
 document.addEventListener("click", e => {
   if (!e.target.closest(".search-box")) $("ac-drop").classList.add("hidden");
 });
@@ -1487,6 +1564,7 @@ async function startAudit(scopeMode) {
   if (!rawQ) { $("home-error").textContent = "Введите название компании, адрес или URL."; return; }
   $("home-error").textContent = "";
   $("ac-drop").classList.add("hidden");
+  $("home-preflight").classList.add("hidden");
 
   const cnt = $("in-country").value.trim(), ct = $("in-city").value.trim();
   const loc = [ct, cnt].filter(Boolean).join(", ");
@@ -1705,11 +1783,11 @@ function renderReport(data) {
 
   const ext = v4.externalLinks || {};
   const eChips = [];
-  if (ext.googleAds) eChips.push(`<a class="pill" href="${escAttr(ext.googleAds)}" target="_blank">📢 Google Ads</a>`);
-  if (ext.metaAds) eChips.push(`<a class="pill" href="${escAttr(ext.metaAds)}" target="_blank">📣 Meta Ads</a>`);
-  if (ext.trustpilot) eChips.push(`<a class="pill" href="${escAttr(ext.trustpilot)}" target="_blank">⭐ Trustpilot</a>`);
-  if (ext.kununu) eChips.push(`<a class="pill" href="${escAttr(ext.kununu)}" target="_blank">👥 Kununu</a>`);
-  if (sig.careersUrl) eChips.push(`<a class="pill" href="${escAttr(sig.careersUrl)}" target="_blank">💼 Вакансии</a>`);
+  if (ext.googleAds) eChips.push(`<a class="pill" href="${escAttr(ext.googleAds)}" target="_blank" rel="noopener">📢 Google Ads</a>`);
+  if (ext.metaAds) eChips.push(`<a class="pill" href="${escAttr(ext.metaAds)}" target="_blank" rel="noopener">📣 Meta Ads</a>`);
+  if (ext.trustpilot) eChips.push(`<a class="pill" href="${escAttr(ext.trustpilot)}" target="_blank" rel="noopener">⭐ Trustpilot</a>`);
+  if (ext.kununu) eChips.push(`<a class="pill" href="${escAttr(ext.kununu)}" target="_blank" rel="noopener">👥 Kununu</a>`);
+  if (sig.careersUrl) eChips.push(`<a class="pill" href="${escAttr(sig.careersUrl)}" target="_blank" rel="noopener">💼 Вакансии</a>`);
   $("d-ext-links").innerHTML = eChips.join("");
 
   // OSINT Alerts
@@ -1858,8 +1936,9 @@ function renderSteps(steps) {
     const ch = st.impactChannel || "revenue";
     const isComp = (ch === "compliance");
     const phase = st.sprintPhase || (idx === 0 ? "PHASE_0" : (idx < 4 ? "SPRINT_1" : "SPRINT_2"));
+    const riskTxt = st.complianceRiskFormatted || st.riskAvoidedFormatted || "";
     const impactBadge = isComp
-      ? `<span class="pill pill-amber">🛡️ Защита от штрафа${st.riskAvoidedFormatted ? ': ' + esc(st.riskAvoidedFormatted) : ''}</span>`
+      ? `<span class="pill pill-amber">🛡️ Щит от штрафа${riskTxt ? ': ' + esc(riskTxt) : ''}</span>`
       : `<span class="pill pill-green">${esc(st.stepNetProfitFormatted || ('+' + (st.impactPct || 1) + '%'))}</span>`;
     const contractors = (st.contractors || []).map(c => {
       const site = cleanUrl(c.website || "");
@@ -1944,7 +2023,7 @@ function renderMarketTab(data, rank, sig, ext, biz) {
     <td>⭐ ${esc(biz)} (Вы)</td>
     <td>${myR > 0 ? myR.toFixed(1) + '★' : '—'} (${data.reviewCount || 0})</td>
     <td>${selfSigs.length ? selfSigs.map(s => `<span class="pill pill-green">${esc(s)}</span>`).join(" ") : '<span class="pill pill-red">Нет сигналов</span>'}</td>
-    <td>${ext.googleAds ? `<a class="pill" href="${escAttr(ext.googleAds)}" target="_blank">Google</a>` : ''} <a class="pill" href="${escAttr(ext.metaAds || '#')}" target="_blank">Meta</a></td>
+    <td>${ext.googleAds ? `<a class="pill" href="${escAttr(ext.googleAds)}" target="_blank" rel="noopener">Google</a>` : ''} <a class="pill" href="${escAttr(ext.metaAds || '#')}" target="_blank" rel="noopener">Meta</a></td>
   </tr>`];
 
   (data.competitiveIntel?.headToHead || []).forEach(c => {
@@ -1952,8 +2031,8 @@ function renderMarketTab(data, rank, sig, ext, biz) {
     rows.push(`<tr>
       <td><strong>${esc(c.name)}</strong><div style="font-size:11.5px;color:var(--muted);">${esc(c.city || '')}${c.domain ? ' · ' + esc(c.domain) : ''}</div></td>
       <td>${esc(c.rating || '—')}★ (${c.reviewCount || 0})</td>
-      <td>${fs.length ? fs.map(s => `<span class="pill pill-blue">${esc(s)}</span>`).join(" ") : '<span style="color:var(--muted);">—</span>'}</td>
-      <td>${c.googleAdsLibraryUrl ? `<a class="pill" href="${escAttr(c.googleAdsLibraryUrl)}" target="_blank">Google</a>` : ''} <a class="pill" href="${escAttr(c.metaAdLibraryUrl)}" target="_blank">Meta</a></td>
+      <td>${fs.length ? fs.map(s => `<span class="pill pill-blue">${esc(s)}</span>`).join(" ") : (c.domain ? `<a class="pill" href="https://${escAttr(c.domain)}" target="_blank" rel="noopener">🌐 ${esc(c.domain)}</a>` : '<span style="color:var(--muted);">—</span>')}</td>
+      <td>${c.googleAdsLibraryUrl ? `<a class="pill" href="${escAttr(c.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google</a>` : ''} <a class="pill" href="${escAttr(c.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta</a></td>
     </tr>`);
   });
   $("r-h2h-tbody").innerHTML = rows.join("");
@@ -1974,7 +2053,7 @@ function renderMarketTab(data, rank, sig, ext, biz) {
     <div style="font-size:12px;color:var(--muted);">📍 ${esc(n.address || '')}</div>
     <div class="strip-group">
       <button type="button" class="btn btn-sm" onclick="rescanFromHist('${escAttr(n.name)}','${escAttr(data.searchCountry||'')}','${escAttr(data.searchCity||'')}','')">🔍 Аудит</button>
-      ${n.website ? `<a class="btn btn-sm" href="${escAttr(n.website)}" target="_blank">🌐 Сайт</a>` : ''}
+      ${n.website ? `<a class="btn btn-sm" href="${escAttr(n.website)}" target="_blank" rel="noopener">🌐 Сайт</a>` : ''}
     </div>
   </div>`).join("") : `<div style="color:var(--muted);font-size:13px;">Смежных коммерческих точек в радиусе 150–350 м не зафиксировано.</div>`;
 
@@ -2260,6 +2339,102 @@ function renderSwarmTab(data) {
   $("r-exec-logs").textContent = (data.executionLogs || []).join("\n");
 }
 
+// --- ON-DEMAND LIGHTWEIGHT CANVAS 3D SWARM MAP (NO THREE.JS NEEDED, 60 FPS ON INTEL HD!) ---
+function openSwarm3D() {
+  openModal("modal-3d");
+  const cv = $("swarm3d-canvas");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = cv.clientWidth || 840, h = 420;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext("2d");
+  ctx.scale(dpr, dpr);
+
+  const tr = Array.isArray(activeData?.swarmTrace) ? activeData.swarmTrace : [];
+  const colors = { market: "#38bdf8", strategy: "#10b981", risks: "#f59e0b", plan: "#a78bfa", synth: "#f472b6" };
+  const nodes = [
+    { name: activeData?.usedModel || "Master Synth", track: "synth", r: 0, a: 0, sz: 14, col: colors.synth }
+  ];
+  tr.forEach((m, i) => {
+    const orbitR = 75 + ((Number(m.orbit) || (i % 4 + 1)) * 28);
+    nodes.push({
+      name: m.name || ("Model " + (i + 1)),
+      track: m.track || "market",
+      r: orbitR,
+      a: (i / Math.max(1, tr.length)) * Math.PI * 2,
+      spd: 0.004 + (i % 3) * 0.002,
+      sz: 8,
+      col: colors[m.track] || "#38bdf8"
+    });
+  });
+
+  $("swarm3d-legend").innerHTML = nodes.map(n =>
+    `<span class="pill" style="border-color:${n.col};color:${n.col};">● ${esc(n.name)} (${esc(n.track)})</span>`
+  ).join("");
+
+  let t = 0;
+  function frame() {
+    ctx.fillStyle = "#070b12";
+    ctx.fillRect(0, 0, w, h);
+    const cx = w / 2, cy = h / 2;
+
+    // Orbit ellipses (tilted 3D perspective)
+    [105, 135, 165, 195].forEach(rad => {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rad, rad * 0.42, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(148,163,184,0.16)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    // Compute projected 3D coords
+    const proj = nodes.map((n, idx) => {
+      const ang = n.a + t * (n.spd || 0);
+      const x = cx + Math.cos(ang) * n.r;
+      const z = Math.sin(ang) * n.r;
+      const y = cy + z * 0.42 + (idx === 0 ? 0 : Math.sin(ang * 2) * 14);
+      const scale = 0.8 + ((z + 220) / 440) * 0.45;
+      return { n, x, y, z, scale };
+    }).sort((a, b) => a.z - b.z);
+
+    // Beams to core
+    proj.forEach(p => {
+      if (p.n.r === 0) return;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = p.n.col + "55";
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    });
+
+    // Draw nodes
+    proj.forEach(p => {
+      const rad = p.n.sz * p.scale;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, rad * 1.9, 0, Math.PI * 2);
+      ctx.fillStyle = p.n.col + "28";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, rad, 0, Math.PI * 2);
+      ctx.fillStyle = p.n.col;
+      ctx.fill();
+      ctx.font = "600 11px Inter, sans-serif";
+      ctx.fillStyle = "#e2e8f0";
+      ctx.textAlign = "center";
+      ctx.fillText(p.n.name, p.x, p.y - rad - 6);
+    });
+
+    t += 1;
+    swarm3dRaf = requestAnimationFrame(frame);
+  }
+  if (swarm3dRaf) cancelAnimationFrame(swarm3dRaf);
+  frame();
+}
+function closeSwarm3D() {
+  if (swarm3dRaf) { cancelAnimationFrame(swarm3dRaf); swarm3dRaf = 0; }
+  closeModal("modal-3d");
+}
+
 // --- EXPORTS, EMAIL, SMART RFP & QR ---
 function copyLink() {
   navigator.clipboard.writeText(window.location.href).then(() => {
@@ -2458,8 +2633,8 @@ window.addEventListener("load", async () => {
   if (!$("in-country").value) {
     fetch("https://ipwho.is/").then(r => r.json()).then(ip => {
       if (ip && ip.success && !$("in-country").value) {
-        $("in-country").value = ip.country || "";
-        $("in-city").value = ip.city || "";
+        if (ip.country) $("in-country").value = ip.country;
+        if (ip.city) $("in-city").value = ip.city;
         saveLoc();
       }
     }).catch(() => {});

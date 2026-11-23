@@ -1,5 +1,16 @@
 [
   {
+    "id": "1MGabKk1r_jEWOBjxVTfHZSRp3P_HWDrs",
+    "name": "American Hospital Dubai",
+    "niche": "Частная многопрофильная больница премиум-сегмента",
+    "country": "ОАЭ",
+    "city": "Дубай",
+    "rating": "N/A",
+    "score": 64,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T16:18:41.784Z"
+  },
+  {
     "id": "153ckI7fEiGVjgIHzbtLapqeY6Naa9ZeS",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Custom kitchen design and installation",
@@ -207,17 +218,6 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T13:28:21.509Z"
-  },
-  {
-    "id": "12TTTEvOPyTUBPOGifCo3Yy7-1cCgp5Wi",
-    "name": "American Hospital Dubai",
-    "niche": "многопрофильный частный госпиталь",
-    "country": "Объединённые Арабские Эмираты",
-    "city": "Дубай",
-    "rating": "N/A",
-    "score": 63,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T13:26:00.520Z"
   },
   {
     "id": "1CTUjC9yoOQx1-7yJxL2l-SOnnkjYFycw",

@@ -3154,18 +3154,26 @@
                 const customBrief = (document.getElementById('custom-brief-input')?.value || "").trim();
                 f3dStartLiveScan(urlInput, jobId);
 
-                let lastTelTs = 0;
+                let lastTelSeq = 0;
+                let telBusy = false;
+                const seenTelKeys = new Set();
                 const telPoller = setInterval(async () => {
+                    if (telBusy) return;
+                    telBusy = true;
                     try {
-                        const tr = await fetch(`${GAS_URL}?action=telemetry&jobId=${encodeURIComponent(jobId)}&since=${lastTelTs}`).then(r => r.json());
+                        const tr = await fetch(`${GAS_URL}?action=telemetry&jobId=${encodeURIComponent(jobId)}&sinceSeq=${lastTelSeq}`).then(r => r.json());
                         if (tr && tr.status === "success" && Array.isArray(tr.events) && tr.events.length > 0) {
                             tr.events.forEach(ev => {
-                                lastTelTs = Math.max(lastTelTs, ev.ts || 0);
+                                const k = `${ev.seq || ev.ts || 0}|${ev.node || ""}|${ev.msg || ""}`;
+                                if (seenTelKeys.has(k)) return;
+                                seenTelKeys.add(k);
+                                lastTelSeq = Math.max(lastTelSeq, ev.seq || 0);
                                 f3dPushEvent(ev.node || "drive", ev.layer || 1, ev.msg || "", ev.size || "LIVE");
                             });
                         }
                     } catch (_) {}
-                }, 1200);
+                    finally { telBusy = false; }
+                }, 1300);
 
                 let res;
                 try {
@@ -3930,10 +3938,29 @@
         }
 
         // Boot v5 theme, 3D Factory, and Cloud History cleanly
+        async function pingFactoryHealthV5() {
+            try {
+                const r = await fetch(`${GAS_URL}?action=ping`).then(x => x.json());
+                if (r && r.liveModels) {
+                    const lm = r.liveModels;
+                    const tot = (lm.groq || 0) + (lm.nvidia || 0) + (lm.mistral || 0) + (lm.openrouter || 0) + (lm.gemini || 0);
+                    const pill = document.getElementById('f3d-stage-pill');
+                    if (pill && !f3d.liveScanning) pill.innerText = `✅ Онлайн · ${tot} живых моделей`;
+                    const stream = document.getElementById('f3d-log-stream');
+                    if (stream && !f3d.liveScanning) {
+                        const row = document.createElement('div');
+                        row.className = 'f3d-log-row';
+                        row.innerHTML = `<span class="f3d-log-t">LIVE</span><span class="f3d-log-m"><b>Auto-Discovery v5.1:</b> Groq(${lm.groq||0}) · NVIDIA(${lm.nvidia||0}) · OpenRouter(${lm.openrouter||0}) · Gemini(${lm.gemini||0}) · Mistral(${lm.mistral||0})</span><span class="f3d-log-s">${tot} API</span>`;
+                        stream.appendChild(row);
+                    }
+                }
+            } catch (_) {}
+        }
         document.addEventListener('DOMContentLoaded', () => {
             applyThemeV5(localStorage.getItem('b2b_theme_v5') || 'dark');
             initFactory3D();
             syncCloudHistoryToHome();
+            pingFactoryHealthV5();
         });
 
     </script>

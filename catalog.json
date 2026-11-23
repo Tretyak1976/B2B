@@ -1,5 +1,16 @@
 [
   {
+    "id": "1a6n75y3QgpCd93ECOKxTzEurdhLZk-Rd",
+    "name": "Токио Парк Хотелл",
+    "niche": "отель среднего класса",
+    "country": "Япония",
+    "city": "Токио",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T13:28:21.509Z"
+  },
+  {
     "id": "12TTTEvOPyTUBPOGifCo3Yy7-1cCgp5Wi",
     "name": "American Hospital Dubai",
     "niche": "многопрофильный частный госпиталь",

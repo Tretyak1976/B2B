@@ -1,5 +1,16 @@
 [
   {
+    "id": "1w8HlX16u8_OBR4qz8uXqkd9KgZPPiNzW",
+    "name": "TotalEnergies Station Kleve",
+    "niche": "Автозаправочная станция с сервисом",
+    "country": "Германия",
+    "city": "Клеве",
+    "rating": "N/A",
+    "score": 61,
+    "modelsUsed": 5,
+    "createdAt": "2026-11-23T15:31:18.220Z"
+  },
+  {
     "id": "1AT5GWedxRlWoFKVOtGTtTwy_2OHlJ-Z5",
     "name": "ستاد اّل مكتوم",
     "niche": "Спортивный клуб и стадион",

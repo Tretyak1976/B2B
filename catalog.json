@@ -1,5 +1,16 @@
 [
   {
+    "id": "1elIm9OG7YjQ6141Yr2HIN4MOqd3wdNUB",
+    "name": "MrBeast Burger Greenville",
+    "niche": "ghost‑kitchen фаст‑фуд",
+    "country": "США",
+    "city": "Greenville",
+    "rating": "N/A",
+    "score": 66,
+    "modelsUsed": 5,
+    "createdAt": "2026-11-23T15:00:36.690Z"
+  },
+  {
     "id": "1BkLHnFxdPm6DgGILzDLXERs6W__hVw9A",
     "name": "N/A",
     "niche": "B2B консалтинг и цифровизация для SMB",

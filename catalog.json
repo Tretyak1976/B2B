@@ -1,5 +1,16 @@
 [
   {
+    "id": "1ovZ8ux8R5g2bjrmeEMxYmMLednnB8Bxn",
+    "name": "Horsthemke",
+    "niche": "кафе быстрого обслуживания",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 50,
+    "modelsUsed": 7,
+    "createdAt": "2026-11-23T14:04:16.877Z"
+  },
+  {
     "id": "1u0ReG0SqwwKNZ4dAT1tS-9Xl3YRZ1hQA",
     "name": "TotalEnergies",
     "niche": "Автомобильная заправка с магазином и сервисом",

@@ -1,5 +1,16 @@
 [
   {
+    "id": "1jwHOh_9pdcRvP7WwLwhDU90tHYWXcVOr",
+    "name": "Uzhhorod International Airport",
+    "niche": "Международный аэропорт регионального значения",
+    "country": "Украина",
+    "city": "Ужгород",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T17:44:30.710Z"
+  },
+  {
     "id": "1v2bPCEvRjWFeBaVaSLkt9u7iIT-nuWzn",
     "name": "Вопак",
     "niche": "Супермаркет масс-маркета",

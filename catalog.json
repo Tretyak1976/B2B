@@ -1,5 +1,16 @@
 [
   {
+    "id": "1vde8nBRq5ikT5nGNt-0xrCK6tRjaoAV-",
+    "name": "TotalEnergies",
+    "niche": "топливная станция с сервисом",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T13:48:22.386Z"
+  },
+  {
     "id": "1T2R4f34jP8CF4HJ-hD3hAO9ww05EJyHU",
     "name": "MrBeast Burger",
     "niche": "фаст‑фуд ghost kitchen",

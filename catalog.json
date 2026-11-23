@@ -1,5 +1,16 @@
 [
   {
+    "id": "1KH9URpWPA_4PJXQQe7YSSZhucFD9fR85",
+    "name": "TOTAL Gas Station Emmericher Straße",
+    "niche": "автозаправочная станция с мини‑магазином",
+    "country": "Германия",
+    "city": "Клеве",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 5,
+    "createdAt": "2026-11-23T13:50:50.714Z"
+  },
+  {
     "id": "1vde8nBRq5ikT5nGNt-0xrCK6tRjaoAV-",
     "name": "TotalEnergies",
     "niche": "топливная станция с сервисом",

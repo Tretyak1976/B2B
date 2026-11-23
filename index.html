@@ -811,9 +811,9 @@
                     <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
                 </select>
                 <select id="engine-mode">
-                    <option value="swarm_30">⚡ Завод 30 моделей (Параллельный ALL-IN · 5 API)</option>
-                    <option value="argon_pro" selected>🧠 Боевой Рой v5 (12 моделей параллельно + OSINT)</option>
-                    <option value="fast_flash">🚀 Турбо-Рой (5 моделей параллельно)</option>
+                    <option value="swarm_30">⚡ Завод 30 моделей (8 быстрых моделей · 5 API)</option>
+                    <option value="argon_pro" selected>🧠 Боевой Рой v5.2 (6 быстрых моделей · 5 API + OSINT)</option>
+                    <option value="fast_flash">🚀 Турбо-Рой (4 сверхбыстрые модели · Groq/Mistral/Gemini)</option>
                 </select>
             </div>
 
@@ -3221,7 +3221,7 @@
             } catch (err) {
                 stopLiveProgressStrip();
                 resetToHome(false);
-                msg.innerText = err.name === "AbortError" ? "Превышен таймаут (95 сек). Попробуйте Турбо-режим." : "Ошибка сети GAS.";
+                msg.innerText = err.name === "AbortError" ? "Превышен таймаут (120 сек). Переключите режим на «Турбо-Рой» или повторите запуск." : "Ошибка сети GAS.";
                 msg.style.color = "#ff4d4f";
             } finally {
                 btn.disabled = false;
@@ -3950,7 +3950,7 @@
                     if (stream && !f3d.liveScanning) {
                         const row = document.createElement('div');
                         row.className = 'f3d-log-row';
-                        row.innerHTML = `<span class="f3d-log-t">LIVE</span><span class="f3d-log-m"><b>Auto-Discovery v5.1:</b> Groq(${lm.groq||0}) · NVIDIA(${lm.nvidia||0}) · OpenRouter(${lm.openrouter||0}) · Gemini(${lm.gemini||0}) · Mistral(${lm.mistral||0})</span><span class="f3d-log-s">${tot} API</span>`;
+                        row.innerHTML = `<span class="f3d-log-t">LIVE</span><span class="f3d-log-m"><b>Fast-Swarm v5.2:</b> Groq(${lm.groq||0}) · NVIDIA(${lm.nvidia||0}) · OpenRouter(${lm.openrouter||0}) · Gemini(${lm.gemini||0}) · Mistral(${lm.mistral||0})</span><span class="f3d-log-s">${tot} API</span>`;
                         stream.appendChild(row);
                     }
                 }

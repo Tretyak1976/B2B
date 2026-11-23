@@ -1,5 +1,16 @@
 [
   {
+    "id": "1KUdaPQH8u5jsub-VvRLAkOr-8qTueKwj",
+    "name": "TotalEnergies",
+    "niche": "АЗС с кафе и сервисом мойки",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-23T18:28:54.244Z"
+  },
+  {
     "id": "1jwHOh_9pdcRvP7WwLwhDU90tHYWXcVOr",
     "name": "Uzhhorod International Airport",
     "niche": "Международный аэропорт регионального значения",
@@ -31,17 +42,6 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T17:24:08.657Z"
-  },
-  {
-    "id": "1dv1b_yZUROz1EAD20vp6h2TBUB7uuUlk",
-    "name": "TotalEnergies",
-    "niche": "Автомобильная заправка с магазином и сервисом",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 74,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T17:06:02.690Z"
   },
   {
     "id": "1zuEeHVghl63UojDjQUM_6-v8imsl8Z0X",

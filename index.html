@@ -812,7 +812,7 @@
                 </select>
                 <select id="engine-mode">
                     <option value="swarm_30">⚡ Завод 30 моделей (8 быстрых моделей · 5 API)</option>
-                    <option value="argon_pro" selected>🧠 Боевой Рой v5.3 (6 быстрых моделей · 5 API + OSINT)</option>
+                    <option value="argon_pro" selected>🧠 Боевой Рой v5.4 (6 быстрых моделей · 5 API + OSINT)</option>
                     <option value="fast_flash">🚀 Турбо-Рой (4 сверхбыстрые модели · Groq/Mistral/Gemini)</option>
                 </select>
             </div>
@@ -3993,7 +3993,7 @@
                     if (stream && !f3d.liveScanning) {
                         const row = document.createElement('div');
                         row.className = 'f3d-log-row';
-                        row.innerHTML = `<span class="f3d-log-t">LIVE</span><span class="f3d-log-m"><b>Fast-Swarm v5.3:</b> Groq(${lm.groq||0}) · NVIDIA(${lm.nvidia||0}) · OpenRouter(${lm.openrouter||0}) · Gemini(${lm.gemini||0}) · Mistral(${lm.mistral||0})</span><span class="f3d-log-s">${tot} API</span>`;
+                        row.innerHTML = `<span class="f3d-log-t">LIVE</span><span class="f3d-log-m"><b>Hot-Reload v5.4:</b> Groq(${lm.groq||0}) · NVIDIA(${lm.nvidia||0}) · OpenRouter(${lm.openrouter||0}) · Gemini(${lm.gemini||0}) · Mistral(${lm.mistral||0})</span><span class="f3d-log-s">${tot} API</span>`;
                         stream.appendChild(row);
                     }
                 }

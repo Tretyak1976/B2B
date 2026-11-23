@@ -1,5 +1,16 @@
 [
   {
+    "id": "1T2R4f34jP8CF4HJ-hD3hAO9ww05EJyHU",
+    "name": "MrBeast Burger",
+    "niche": "фаст‑фуд ghost kitchen",
+    "country": "США",
+    "city": "Greenville",
+    "rating": "N/A",
+    "score": 66,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T13:40:14.221Z"
+  },
+  {
     "id": "17SUEpzr3nfiXbwsrmTI3ovvud4nwQDnD",
     "name": "TOTAL Gas Station Emmericher Straße",
     "niche": "АЗС с дополнительными сервисами",

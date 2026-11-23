@@ -1,5 +1,16 @@
 [
   {
+    "id": "1Qt767UcayD2c2nD1cqJydFCOnYIgwx5s",
+    "name": "TotalEnergies GmbH – филиал Клеве",
+    "niche": "Топливный ретейлер и автосервис",
+    "country": "Германия",
+    "city": "Клеве",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 6,
+    "createdAt": "2026-11-23T12:11:12.978Z"
+  },
+  {
     "jobId": "Job_20261123_104930_747",
     "slug": "daggis-hundesnacks-barf-shop-audit-1571",
     "title": "Аудит B2B Daggis Hundesnacks & BARF-Shop",

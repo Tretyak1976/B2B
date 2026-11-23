@@ -1,5 +1,15 @@
 [
   {
+    "jobId": "Job_20261123_094203_690",
+    "slug": "kitchen-studio-peter-boekesteijn-audit-7100",
+    "title": "Аудит B2B для Küchen Studio Peter Boekesteijn (Kleve)",
+    "missionType": "b2b_audit",
+    "liveUrl": "https://tretyak1976.github.io/B2B/projects/kitchen-studio-peter-boekesteijn-audit-7100/",
+    "driveUrl": "https://drive.google.com/drive/folders/1NOkZLmdcEFCIdS_GNiZtr6RkNCnOWDpC",
+    "modelsCount": 12,
+    "createdAt": "2026-11-23T09:42:08.143Z"
+  },
+  {
     "jobId": "Job_20261123_100156_435",
     "slug": "kitchen-studio-peter-boekesteijn-b2b-audit-1024",
     "title": "B2B‑аудит Küchen Studio Peter Boekesteijn",

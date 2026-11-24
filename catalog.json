@@ -1,5 +1,17 @@
 [
   {
+    "id": "11Hw7hWEV8O492C4NZYZ3r0IXXRh847Ar",
+    "name": "Dr. Pascal Schnabel MSc, Zahnarzt",
+    "niche": "Стоматологические услуги",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 62,
+    "modelsUsed": 6,
+    "schemaVersion": "7.2",
+    "createdAt": "2026-11-24T13:48:02.141Z"
+  },
+  {
     "id": "1yvZ217Rf-lXmzZnKO5iyqcm8JgYHa-Rk",
     "name": "TotalEnergies",
     "niche": "АЗС и мультиэнергетический сервис",

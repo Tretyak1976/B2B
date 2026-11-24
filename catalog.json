@@ -1,5 +1,20 @@
 [
   {
+    "id": "1R9cY7KwGTQp7ifjOrJa3-oP4JQ8AUzUd",
+    "name": "Lidl",
+    "niche": "Супермаркет",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Van-den-Bergh-Straße 60-62",
+    "website": "https://lidl.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=lidl.de",
+    "rating": "4.4/5.0",
+    "score": 79,
+    "modelsUsed": 8,
+    "schemaVersion": "7.8",
+    "createdAt": "2026-11-24T16:16:11.259Z"
+  },
+  {
     "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",
     "name": "Klümpenweg",
     "niche": "Уличный объект без подтверждённого коммерческого статуса",

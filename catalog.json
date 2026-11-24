@@ -1,5 +1,17 @@
 [
   {
+    "id": "1-txWrcACsj0PPwPCnyXlrUuZ0nYREH2t",
+    "name": "Horsthemke",
+    "niche": "Business",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 74,
+    "modelsUsed": 8,
+    "schemaVersion": "7.5",
+    "createdAt": "2026-11-24T14:28:18.230Z"
+  },
+  {
     "id": "16Dw_aQQgM3zs62QP8d8rfqb5EE3eWe32",
     "name": "TotalEnergies",
     "niche": "gas_station",
@@ -257,17 +269,6 @@
     "score": 57,
     "modelsUsed": 7,
     "createdAt": "2026-11-23T14:07:17.620Z"
-  },
-  {
-    "id": "1ovZ8ux8R5g2bjrmeEMxYmMLednnB8Bxn",
-    "name": "Horsthemke",
-    "niche": "кафе быстрого обслуживания",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 50,
-    "modelsUsed": 7,
-    "createdAt": "2026-11-23T14:04:16.877Z"
   },
   {
     "id": "1FFnGE2tBwSKCrkd7kDo0ovw6t4r0IGdX",

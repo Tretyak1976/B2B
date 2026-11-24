@@ -1,5 +1,16 @@
 [
   {
+    "id": "1v8X_9iHbTPZ85a4L4XqscPpV7r9zd_-D",
+    "name": "TotalEnergies",
+    "niche": "АЗС с кафе‑бистро и зарядкой электромобилей",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 78,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-24T07:24:30.227Z"
+  },
+  {
     "id": "183ng2JqwlVKnoZ4F857UZJ7W4YiVP8YA",
     "name": "Too Good To Go Берлин",
     "niche": "платформа по спасению пищевых отходов (B2C)",
@@ -20,17 +31,6 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-24T07:16:51.722Z"
-  },
-  {
-    "id": "1KUdaPQH8u5jsub-VvRLAkOr-8qTueKwj",
-    "name": "TotalEnergies",
-    "niche": "АЗС с кафе и сервисом мойки",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T18:28:54.244Z"
   },
   {
     "id": "1jwHOh_9pdcRvP7WwLwhDU90tHYWXcVOr",

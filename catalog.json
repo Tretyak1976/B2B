@@ -1,5 +1,20 @@
 [
   {
+    "id": "1I4OIDBtf82lQ-Gdve_x9Tc6NVnXjqxkM",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Производство и дизайн премиальных кухонь под ключ",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "N/A",
+    "website": "N/A",
+    "logoUrl": "https://ui-avatars.com/api/?background=00c853&color=000&bold=true&size=128&name=K%C3%BCchen%20Studio%20Peter%20Boekesteijn",
+    "rating": "N/A",
+    "score": 62,
+    "modelsUsed": 6,
+    "schemaVersion": "7.7",
+    "createdAt": "2026-11-24T15:11:24.408Z"
+  },
+  {
     "id": "1Ey4TQg_hHZXuzYSVslT9B8Mhm_Ur6tPk",
     "name": "TotalEnergies",
     "niche": "Топливно-энергетический сервисный центр с кафе и зарядными станциями для электромобилей",
@@ -82,17 +97,6 @@
     "modelsUsed": 6,
     "schemaVersion": "7.0",
     "createdAt": "2026-11-24T09:23:09.538Z"
-  },
-  {
-    "id": "1sLEbI9RPmwSBQtFXKthld4tqYRbabBZY",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "кухонные студии на заказ",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.9/5.0",
-    "score": 75,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-24T09:13:02.172Z"
   },
   {
     "id": "1x8ES5MtZBd-AYkFkOjJNLNJ2XBJ3yxWA",

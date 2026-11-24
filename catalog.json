@@ -1,5 +1,16 @@
 [
   {
+    "id": "1sLEbI9RPmwSBQtFXKthld4tqYRbabBZY",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "кухонные студии на заказ",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.9/5.0",
+    "score": 75,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-24T09:13:02.172Z"
+  },
+  {
     "id": "1x8ES5MtZBd-AYkFkOjJNLNJ2XBJ3yxWA",
     "name": "Immobilienmakler Immobilien Losch Kleve",
     "niche": "агентство недвижимости премиум‑класса",
@@ -97,17 +108,6 @@
     "score": 64,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T16:18:41.784Z"
-  },
-  {
-    "id": "153ckI7fEiGVjgIHzbtLapqeY6Naa9ZeS",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Custom kitchen design and installation",
-    "country": "Germany",
-    "city": "Kleve",
-    "rating": "4.9/5.0",
-    "score": 74,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T16:08:12.411Z"
   },
   {
     "id": "18yoUS1WRbKhUO8pGI9hv41Ee3rc7tQT8",

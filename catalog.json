@@ -1,5 +1,20 @@
 [
   {
+    "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",
+    "name": "Klümpenweg",
+    "niche": "Уличный объект без подтверждённого коммерческого статуса",
+    "country": "Германия",
+    "city": "Geldern",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 7,
+    "schemaVersion": "7.8",
+    "createdAt": "2026-11-24T16:11:54.104Z"
+  },
+  {
     "id": "1zH6gYTc0y9uG8YLWgLktWjXjIdT5wq5k",
     "name": "Sportbedarf Kleve Stefan Klümpen",
     "niche": "Коммерческая компания",

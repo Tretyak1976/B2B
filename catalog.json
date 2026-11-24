@@ -1,5 +1,17 @@
 [
   {
+    "id": "1Ey4TQg_hHZXuzYSVslT9B8Mhm_Ur6tPk",
+    "name": "TotalEnergies",
+    "niche": "Топливно-энергетический сервисный центр с кафе и зарядными станциями для электромобилей",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "4.3/5.0",
+    "score": 76,
+    "modelsUsed": 6,
+    "schemaVersion": "7.6",
+    "createdAt": "2026-11-24T14:38:30.347Z"
+  },
+  {
     "id": "1gvtPIOk4NfcwJOiMPCSFY9yE0NXaoZPY",
     "name": "Horsthemke",
     "niche": "Business",
@@ -10,18 +22,6 @@
     "modelsUsed": 8,
     "schemaVersion": "7.5",
     "createdAt": "2026-11-24T14:30:28.765Z"
-  },
-  {
-    "id": "16Dw_aQQgM3zs62QP8d8rfqb5EE3eWe32",
-    "name": "TotalEnergies",
-    "niche": "gas_station",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 71,
-    "modelsUsed": 6,
-    "schemaVersion": "7.4",
-    "createdAt": "2026-11-24T14:20:32.260Z"
   },
   {
     "id": "11Hw7hWEV8O492C4NZYZ3r0IXXRh847Ar",

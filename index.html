@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>B2B Nexus v7.0 — Executive Business Audit OS</title>
+  <title>B2B Nexus — Executive Business Audit OS</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310b981'/%3E%3Cpath d='M18 44V20h14c7 0 11 3.5 11 9.5 0 4-2 6.8-5.5 8 4.2 1 6.5 4 6.5 8.5 0 6.2-4.6 10-12 10H18zm8-15h5.5c2.6 0 4.2-1.2 4.2-3.4s-1.6-3.3-4.2-3.3H26V29zm0 11h6.2c2.9 0 4.6-1.3 4.6-3.7s-1.7-3.6-4.6-3.6H26V40z' fill='%23051018'/%3E%3C/svg%3E">
   <style>
     :root {
       --bg: #070b14;
       --bg-grad: radial-gradient(circle at 20% 0%, rgba(16, 185, 129, 0.09), transparent 45%), radial-gradient(circle at 85% 10%, rgba(56, 189, 248, 0.08), transparent 42%), #070b14;
-      --bg-elev: rgba(15, 23, 42, 0.86);
+      --bg-elev: rgba(15, 23, 42, 0.88);
       --bg-solid: #0f172a;
       --bg-subtle: rgba(30, 41, 59, 0.72);
       --border: rgba(148, 163, 184, 0.16);
@@ -87,7 +87,7 @@
     /* Topbar */
     .topbar {
       position: sticky; top: 0; z-index: 70;
-      height: 58px; padding: 0 20px;
+      height: 56px; padding: 0 20px;
       background: color-mix(in srgb, var(--bg-solid) 86%, transparent);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
@@ -131,12 +131,28 @@
     }
     .btn-primary:hover { filter: brightness(1.08); color: #fff; background: linear-gradient(135deg, var(--accent-hover), var(--accent)); }
     .btn-sky { background: var(--sky-soft); color: var(--sky); border-color: var(--sky-border); }
+    .btn-active-pill { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-border); }
     .btn-sm { height: 30px; padding: 0 10px; font-size: 12px; }
     .btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .select-pill { padding: 0 8px; }
 
-    .container { max-width: 1180px; margin: 0 auto; padding: 24px 18px 96px; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 18px 18px 96px; }
     .hidden { display: none !important; }
+
+    /* Universal Company Logo Badge */
+    .co-logo {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 8px; border: 1px solid var(--border);
+      background: #fff; flex-shrink: 0; overflow: hidden;
+      vertical-align: middle;
+    }
+    .co-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; display: block; }
+    .co-logo-fb {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--accent-soft), var(--sky-soft));
+      color: var(--accent); font-weight: 800; letter-spacing: -0.02em;
+    }
+    .entity-row { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 
     /* Hero + Cascade Search Console */
     .hero { max-width: 900px; margin: 22px auto 28px; text-align: center; }
@@ -252,15 +268,15 @@
     /* Recent Catalog Grid */
     .section-hdr { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 26px 0 12px; }
     .section-hdr h2 { margin: 0; font-size: 14px; font-weight: 750; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
     .cat-card {
       background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 14px 15px; cursor: pointer; transition: all 0.15s; text-align: left;
+      padding: 13px 15px; cursor: pointer; transition: all 0.15s; text-align: left;
       display: flex; flex-direction: column; gap: 6px;
     }
     .cat-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .cat-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .cat-title { font-weight: 700; font-size: 14.5px; line-height: 1.3; }
+    .cat-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .cat-title { font-weight: 700; font-size: 14px; line-height: 1.25; }
     .score-pill {
       font-size: 11.5px; font-weight: 800; padding: 2px 8px; border-radius: 999px;
       background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); flex-shrink: 0;
@@ -301,24 +317,29 @@
     .feed-line { display: flex; justify-content: space-between; gap: 10px; color: var(--text-muted); }
     .feed-line b { color: var(--text); font-weight: 600; white-space: nowrap; }
 
-    /* Screen 3: Report */
+    /* Screen 3: Report Header + Collapsible Extra Info + Immediate Tabs */
     .rep-header {
       background: var(--bg-elev); border: 1px solid var(--border); border-radius: 16px;
-      padding: 18px 20px; box-shadow: var(--shadow-sm); margin-bottom: 14px;
+      padding: 16px 18px; box-shadow: var(--shadow-sm); margin-bottom: 10px;
     }
     .rep-header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
-    .rep-id { display: flex; align-items: flex-start; gap: 14px; min-width: 0; flex: 1; }
-    .rep-logo {
-      width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--border);
-      background: var(--bg-subtle); object-fit: contain; flex-shrink: 0;
-    }
-    .rep-title { margin: 0 0 4px; font-size: clamp(20px, 2.5vw, 26px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
-    .rep-sub { font-size: 13px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
-    .rep-toolbar { display: flex; flex-wrap: wrap; gap: 7px; }
+    .rep-id { display: flex; align-items: flex-start; gap: 13px; min-width: 0; flex: 1; }
+    .rep-title { margin: 0 0 4px; font-size: clamp(19px, 2.4vw, 25px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+    .rep-sub { font-size: 12.5px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 5px 8px; align-items: center; }
+    .rep-toolbar { display: flex; flex-wrap: wrap; gap: 6px; }
     .rep-contacts {
-      margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
-      display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; color: var(--text-muted);
+      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--text-muted); align-items: center;
     }
+    .rep-extra-panel {
+      margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-strong);
+      display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;
+    }
+    .extra-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .extra-box {
+      background: var(--bg-solid); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    }
+    .extra-box-title { font-size: 11.5px; font-weight: 750; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 4px;
@@ -331,43 +352,44 @@
     .badge.red { background: var(--red-soft); color: var(--red); border-color: var(--red-border); }
     .badge.violet { background: var(--violet-soft); color: var(--violet); border-color: var(--violet-border); }
 
-    .kpi-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
-    .kpi-card {
-      background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 14px 16px; box-shadow: var(--shadow-sm);
-    }
-    .kpi-label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
-    .kpi-val { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
-    .kpi-val.green { color: var(--accent); }
-    .kpi-val.sky { color: var(--sky); }
-    .kpi-sub { font-size: 12px; color: var(--text-soft); margin-top: 5px; }
-    .mini-bar { height: 6px; background: var(--bg-subtle); border-radius: 999px; overflow: hidden; margin-top: 8px; }
-    .mini-bar > div { height: 100%; background: var(--accent); transition: width 0.25s; }
-
-    /* Tabs */
+    /* Tabs immediately under Header */
     .tabs-bar {
-      display: flex; gap: 5px; padding: 5px; background: var(--bg-elev);
-      border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px;
+      display: flex; gap: 4px; padding: 5px; background: var(--bg-elev);
+      border: 1px solid var(--border); border-radius: 12px; margin-bottom: 14px;
       overflow-x: auto; box-shadow: var(--shadow-sm);
     }
     .tab-btn {
-      flex: 1; min-width: max-content; padding: 9px 11px; border: none; border-radius: 9px;
+      flex: 1; min-width: max-content; padding: 9px 10px; border: none; border-radius: 9px;
       background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 650;
       cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
     }
     .tab-btn:hover { color: var(--text); background: var(--bg-subtle); }
     .tab-btn.active { background: var(--accent); color: #fff; }
 
+    /* KPI Strip (inside Overview tab only) */
+    .kpi-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .kpi-card {
+      background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 13px 15px; box-shadow: var(--shadow-sm);
+    }
+    .kpi-label { font-size: 11.5px; font-weight: 650; color: var(--text-muted); margin-bottom: 4px; }
+    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+    .kpi-val.green { color: var(--accent); }
+    .kpi-val.sky { color: var(--sky); }
+    .kpi-sub { font-size: 11.5px; color: var(--text-soft); margin-top: 5px; }
+    .mini-bar { height: 6px; background: var(--bg-subtle); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+    .mini-bar > div { height: 100%; background: var(--accent); transition: width 0.25s; }
+
     /* Cards & Tables */
     .card {
       background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow-sm);
+      padding: 17px 19px; margin-bottom: 14px; box-shadow: var(--shadow-sm);
     }
     .card-hdr {
       display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
       margin-bottom: 12px;
     }
-    .card-hdr h3 { margin: 0; font-size: 16px; font-weight: 750; letter-spacing: -0.01em; }
+    .card-hdr h3 { margin: 0; font-size: 15.5px; font-weight: 750; letter-spacing: -0.01em; }
 
     .alert-box {
       padding: 11px 14px; border-radius: 10px; margin-bottom: 10px; font-size: 13px;
@@ -389,7 +411,7 @@
     .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
     table.data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
     table.data-tbl th, table.data-tbl td {
-      padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top;
+      padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle;
     }
     table.data-tbl th { background: var(--bg-subtle); font-weight: 700; font-size: 12px; color: var(--text-muted); }
     table.data-tbl tr:last-child td { border-bottom: none; }
@@ -399,7 +421,7 @@
       padding: 12px 16px; margin-bottom: 12px;
     }
     details.fold > summary {
-      cursor: pointer; font-weight: 700; font-size: 14.5px; list-style: none;
+      cursor: pointer; font-weight: 700; font-size: 14px; list-style: none;
       display: flex; justify-content: space-between; align-items: center; gap: 10px;
     }
     details.fold > summary::-webkit-details-marker { display: none; }
@@ -440,7 +462,7 @@
       background: var(--sky-soft); color: var(--sky); border: 1px solid var(--sky-border); margin-bottom: 6px;
     }
 
-    /* Rich Risk Cards */
+    /* Rich Risk & Ecosystem Cards */
     .risk-card {
       background: var(--bg-solid); border: 1px solid var(--border); border-radius: 10px;
       padding: 10px 12px; margin-bottom: 8px; font-size: 12.5px;
@@ -459,9 +481,7 @@
     }
 
     /* AI Board of Directors Chat */
-    .board-shell {
-      display: flex; flex-direction: column; gap: 12px;
-    }
+    .board-shell { display: flex; flex-direction: column; gap: 12px; }
     .board-messages {
       min-height: 260px; max-height: 520px; overflow-y: auto;
       background: var(--bg-solid); border: 1px solid var(--border); border-radius: 12px;
@@ -535,8 +555,7 @@
       .cascade-grid { grid-template-columns: 1fr 1fr; }
       .cascade-grid .ac-field.biz-col { grid-column: 1 / -1; }
       .cascade-grid .scan-go-btn { grid-column: 1 / -1; width: 100%; height: 42px; }
-      .flow-strip { grid-template-columns: 1fr; }
-      .board-opinions { grid-template-columns: 1fr; }
+      .flow-strip, .board-opinions, .extra-grid { grid-template-columns: 1fr; }
       .dr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
@@ -556,8 +575,7 @@
     @media print {
       .topbar, .tabs-bar, .rep-toolbar, .no-print { display: none !important; }
       .container { max-width: 100%; padding: 0; }
-      .tab-pane { display: block !important; page-break-inside: avoid; }
-      .step-body { display: block !important; }
+      .tab-pane, .step-body, .rep-extra-panel { display: block !important; page-break-inside: avoid; }
       details.fold { display: block !important; }
       .card, .rep-header, .kpi-card { box-shadow: none; border-color: #cbd5e1; }
     }
@@ -570,7 +588,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v7.0</span>
+      <span class="ver-pill" id="verPill">v7.7</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -595,13 +613,12 @@
     <!-- ==================== SCREEN 1: START & CASCADE SEARCH ==================== -->
     <section id="screenStart">
       <div class="hero">
-        <div class="hero-eyebrow">&#9889; Argon v7.1 Executive OS · 5 Директоров + Суд Присяжных + AI-Совет</div>
-        <h1 id="heroTitle">Умный B2B-аудит бизнеса за 25 секунд</h1>
-        <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: честный P&amp;L, 18-месячный Cash Flow, 10 шагов роста, коммерческий Playbook и AI-Совет Директоров.</p>
+        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет</div>
+        <h1 id="heroTitle">Умный B2B-аудит бизнеса за 30 секунд</h1>
+        <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: проверенные факты, P&amp;L, 18-мес. Cash Flow, 10 шагов роста и Playbook.</p>
 
         <div class="cascade-panel" id="cascadePanel">
           <div class="cascade-grid">
-            <!-- STEP 1: COUNTRY -->
             <div class="ac-field">
               <div class="ac-label">
                 <span><span class="ac-step-num">1</span>Страна</span>
@@ -614,7 +631,6 @@
               <div class="ac-dropdown hidden" id="acCountry"></div>
             </div>
 
-            <!-- STEP 2: CITY -->
             <div class="ac-field">
               <div class="ac-label">
                 <span><span class="ac-step-num">2</span>Город</span>
@@ -627,27 +643,25 @@
               <div class="ac-dropdown hidden" id="acCity"></div>
             </div>
 
-            <!-- STEP 3: BUSINESS -->
             <div class="ac-field biz-col">
               <div class="ac-label">
-                <span><span class="ac-step-num">3</span>Компания, адрес или сайт</span>
+                <span><span class="ac-step-num">3</span>Компания, улица + дом или сайт</span>
                 <span id="bizSrcBadge" style="font-size:10.5px; color:var(--text-soft);"></span>
               </div>
               <div class="ac-input-wrap biz-wrap" id="wrapBiz">
-                <input id="qInput" class="ac-input" type="text" autocomplete="off" placeholder="Название компании, улица или домен...">
+                <input id="qInput" class="ac-input" type="text" autocomplete="off" placeholder="Название, улица и номер дома или домен...">
                 <button class="ac-voice-mini" id="voiceBtn" type="button" title="Голосовой ввод">&#127897;</button>
                 <button class="ac-clear" id="clrBiz" type="button" title="Очистить">&#10005;</button>
               </div>
               <div class="ac-dropdown hidden" id="acBiz"></div>
             </div>
 
-            <!-- LAUNCH -->
             <button class="btn btn-primary scan-go-btn" id="startScanBtn" style="height:42px; padding:0 20px; font-size:14.5px;">&#128640; Аудит</button>
           </div>
 
           <div class="cascade-meta-bar">
             <div class="geo-pills" id="geoSelectionBar">
-              <span>Контур поиска: <b style="color:var(--text);">Весь мир (Авто)</b></span>
+              <span>Контур: <b style="color:var(--text);">Весь мир (Авто)</b></span>
             </div>
             <div class="chip-row">
               <button class="chip" id="chipBrief">&#128196; + Бриф / ТЗ</button>
@@ -657,7 +671,6 @@
           </div>
         </div>
 
-        <!-- Optional Brief Drawer -->
         <div class="drawer-box hidden" id="drawerBrief">
           <div class="field">
             <label for="briefInput">Дополнительный контекст, цели собственника или выдержки из документов (до 60 000 симв.)</label>
@@ -669,11 +682,9 @@
           </div>
         </div>
 
-        <!-- Preflight Preview Card -->
         <div class="drawer-box hidden" id="preflightCard"></div>
       </div>
 
-      <!-- Recent Reports -->
       <div class="section-hdr">
         <h2 id="recentTitle">Недавние отчёты</h2>
         <span style="font-size:12px; color:var(--text-soft);" id="catalogMeta"></span>
@@ -686,7 +697,7 @@
       <div class="scan-card">
         <div class="scan-top">
           <div>
-            <div style="font-size:12px; font-weight:700; color:var(--sky); text-transform:uppercase;">Конвейер Нулевых Галлюцинаций v7.1</div>
+            <div style="font-size:12px; font-weight:700; color:var(--sky); text-transform:uppercase;">Конвейер верификации фактов</div>
             <h2 id="scanTargetTitle" style="margin:2px 0 0; font-size:20px;">&mdash;</h2>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
@@ -713,16 +724,16 @@
     <!-- ==================== SCREEN 3: REPORT ==================== -->
     <section id="screenReport" class="hidden">
       <div class="rep-header" id="repHeader"></div>
-      <div class="kpi-strip" id="kpiStrip"></div>
 
+      <!-- Navigation immediately below Header -->
       <nav class="tabs-bar" id="tabsBar" role="tablist">
-        <button class="tab-btn active" data-tab="overview"><span>&#128202;</span><span>Обзор и P&amp;L</span></button>
-        <button class="tab-btn" data-tab="plan"><span>&#128640;</span><span>План 10 шагов</span></button>
-        <button class="tab-btn" data-tab="playbook"><span>&#128188;</span><span>Playbook и Скрипты</span></button>
-        <button class="tab-btn" data-tab="market"><span>&#9876;&#65039;</span><span>Рынок и Партнёры</span></button>
-        <button class="tab-btn" data-tab="diag"><span>&#128300;</span><span>Диагностика и Риски</span></button>
+        <button class="tab-btn active" data-tab="overview"><span>&#128202;</span><span>Обзор</span></button>
+        <button class="tab-btn" data-tab="plan"><span>&#128640;</span><span>План</span></button>
+        <button class="tab-btn" data-tab="playbook"><span>&#128188;</span><span>Playbook</span></button>
+        <button class="tab-btn" data-tab="market"><span>&#9876;&#65039;</span><span>Рынок</span></button>
+        <button class="tab-btn" data-tab="diag"><span>&#128300;</span><span>Диагностика</span></button>
         <button class="tab-btn" data-tab="board"><span>&#129302;</span><span>AI-Совет</span></button>
-        <button class="tab-btn" data-tab="swarm"><span>&#128736;</span><span>Рой и Утилиты</span></button>
+        <button class="tab-btn" data-tab="swarm"><span>&#128736;</span><span>Рой</span></button>
       </nav>
 
       <div id="tab-overview" class="tab-pane"></div>
@@ -746,9 +757,36 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "7.0";
+  const UI_VERSION = "7.7";
 
-  // 35-country local instant dictionary (synced with backend POPULAR_COUNTRIES_V7)
+  const KNOWN_BRAND_DOMAINS = [
+    [/\btotalenergies\b|\btotal\s+(gas|tankstelle|station)/i, "totalenergies.de"],
+    [/\baral\b/i, "aral.de"], [/\bshell\b/i, "shell.de"], [/\besso\b/i, "esso.de"],
+    [/\bjet\s*(tankstelle|fuel|gas)?\b/i, "jet-tankstellen.de"],
+    [/\bstar\s+tankstelle\b|\borlen\b/i, "star.de"], [/\bhem\s*(tankstelle)?\b/i, "hem-tankstelle.de"],
+    [/\bwestfalen\b/i, "westfalen.com"], [/\bavia\b/i, "avia.de"], [/\bbft\b/i, "bft.de"],
+    [/\bomv\b/i, "omv.de"], [/\braiffeisen\b/i, "raiffeisen.com"], [/\bclassic\s+tankstelle\b/i, "classic-oil.de"],
+    [/\bhorsthemke\b/i, "baeckerei-horsthemke.de"], [/\bkamps\b/i, "kamps.de"], [/\bbackwerk\b/i, "back-werk.de"],
+    [/\baldi\b/i, "aldi-sued.de"], [/\blidl\b/i, "lidl.de"], [/\brewe\b/i, "rewe.de"], [/\bedeka\b/i, "edeka.de"],
+    [/\bkaufland\b/i, "kaufland.de"], [/\bnetto\b/i, "netto-online.de"], [/\bpenny\b/i, "penny.de"],
+    [/\bdm[-\s]drogerie\b/i, "dm.de"], [/\brossmann\b/i, "rossmann.de"], [/\bhornbach\b/i, "hornbach.de"],
+    [/\bobi\b/i, "obi.de"], [/\bbauhaus\b/i, "bauhaus.info"], [/\bikea\b/i, "ikea.com"],
+    [/\bmcdonald/i, "mcdonalds.de"], [/\bburger\s*king\b/i, "burgerking.de"], [/\bkfc\b/i, "kfc.de"],
+    [/\bsubway\b/i, "subway.com"], [/\bstarbucks\b/i, "starbucks.de"],
+    [/\bdhl\b/i, "dhl.de"], [/\bhermes\b/i, "myhermes.de"], [/\bdpd\b/i, "dpd.com"],
+    [/\bgls\b/i, "gls-pakete.de"], [/\bups\b/i, "ups.com"],
+    [/\bsparkasse\b/i, "sparkasse.de"], [/\bvolksbank\b/i, "vr.de"], [/\bdeutsche\s*bank\b/i, "deutsche-bank.de"],
+    [/\bmediamarkt\b/i, "mediamarkt.de"], [/\bsaturn\b/i, "saturn.de"], [/\bdeichmann\b/i, "deichmann.com"],
+    [/\bfressnapf\b/i, "fressnapf.de"], [/\baction\b/i, "action.com"], [/\btedi\b/i, "tedi.com"],
+    [/\bkik\b/i, "kik.de"], [/\bdecathlon\b/i, "decathlon.de"],
+    [/\btoogoodtogo\b|\btoo\s+good\s+to\s+go\b/i, "toogoodtogo.com"],
+    [/\busercentrics\b/i, "usercentrics.com"], [/\bbrevo\b/i, "brevo.com"], [/\bpipedrive\b/i, "pipedrive.com"],
+    [/\bmatomo\b/i, "matomo.org"], [/\bsuperchat\b/i, "superchat.de"], [/\bmollie\b/i, "mollie.com"],
+    [/\bdoctolib\b/i, "doctolib.de"], [/\bonoffice\b/i, "onoffice.com"], [/\bpropstack\b/i, "propstack.de"],
+    [/\bcal\.com\b/i, "cal.com"], [/\bcalendly\b/i, "calendly.com"], [/\bcloudflare\b/i, "cloudflare.com"],
+    [/\bupdraftplus\b/i, "updraftplus.com"], [/\bborlabs\b/i, "borlabs.io"], [/\btidio\b/i, "tidio.com"]
+  ];
+
   const LOCAL_COUNTRIES = [
     { code: "DE", ru: "Германия", en: "Germany", de: "Deutschland", es: "Alemania", fr: "Allemagne", zh: "德国", lat: 51.1657, lng: 10.4515 },
     { code: "UA", ru: "Украина", en: "Ukraine", de: "Ukraine", es: "Ucrania", fr: "Ukraine", zh: "乌克兰", lat: 48.3794, lng: 31.1656 },
@@ -796,17 +834,16 @@
     autoEmailOn: localStorage.getItem("b2b_auto_email_on") === "1",
     partnerId: new URLSearchParams(location.search).get("partner") || "",
     partner: null,
-    // Cascade Geo State
     geo: { country: "", countryCode: "", city: "", lat: null, lng: null, bbox: "", selectedBiz: "" },
     fileId: null,
     report: null,
     solvedSteps: [],
     ownerDataRoom: null,
+    extraInfoOpen: false,
     activeTab: "overview",
     scenario: "base",
     stepFilter: "all",
     docFilter: "all",
-    // AI Board State
     boardMode: "board",
     boardRole: "cfo",
     boardHistory: [],
@@ -845,10 +882,67 @@
     return "";
   };
 
+  const uniqStrings = (arr) => {
+    const out = [], seen = new Set();
+    (Array.isArray(arr) ? arr : []).forEach((x) => {
+      const s = safeText(x);
+      const k = s.toLowerCase().replace(/\s+/g, " ").trim();
+      if (k && !seen.has(k)) { seen.add(k); out.push(s); }
+    });
+    return out;
+  };
+
   const safeHref = (u) => {
     const s = String(u || "").trim();
     if (!s || s === "N/A") return "";
     return /^https?:\/\//i.test(s) ? s : ("https://" + s);
+  };
+
+  const extractDomain = (u) => {
+    const s = String(u || "").trim();
+    if (!s || s === "N/A") return "";
+    const d = s.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0].split("?")[0].toLowerCase().trim();
+    if (!d || d.indexOf(".") === -1 || /google\./i.test(d)) return "";
+    return d;
+  };
+
+  const resolveKnownDomain = (name) => {
+    const s = String(name || "").trim();
+    if (!s) return "";
+    for (let i = 0; i < KNOWN_BRAND_DOMAINS.length; i++) {
+      if (KNOWN_BRAND_DOMAINS[i][0].test(s)) return KNOWN_BRAND_DOMAINS[i][1];
+    }
+    return "";
+  };
+
+  const resolveLogoUrl = (explicitLogo, website, name) => {
+    if (explicitLogo && /^https?:\/\//i.test(explicitLogo) && !/ui-avatars\.com/i.test(explicitLogo)) return explicitLogo;
+    const dom = extractDomain(website) || resolveKnownDomain(name);
+    if (dom) return `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(dom)}`;
+    return "";
+  };
+
+  const companyLogoHtml = (explicitLogo, website, name, sizePx) => {
+    const sz = Number(sizePx) || 28;
+    const cleanNm = String(name || "B2B").trim();
+    const initials = cleanNm.split(/[\s\-&]+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "B";
+    const fontSize = Math.max(10, Math.round(sz * 0.40));
+    const url = resolveLogoUrl(explicitLogo, website, cleanNm);
+    if (!url) {
+      return `<span class="co-logo" style="width:${sz}px;height:${sz}px;background:transparent;"><span class="co-logo-fb" style="font-size:${fontSize}px;">${esc(initials)}</span></span>`;
+    }
+    return `<span class="co-logo" style="width:${sz}px;height:${sz}px;"><img src="${esc(url)}" alt="" loading="lazy" onerror="this.parentElement.style.background='transparent';this.outerHTML='<span class=\\'co-logo-fb\\' style=\\'font-size:${fontSize}px;\\'>${esc(initials)}</span>'"></span>`;
+  };
+
+  const formatAddr = (street, city, country) => {
+    const parts = [];
+    const seen = new Set();
+    [street, city, country].forEach((p) => {
+      const s = String(p || "").trim();
+      const k = s.toLowerCase();
+      if (s && k !== "n/a" && !seen.has(k)) { seen.add(k); parts.push(s); }
+    });
+    return parts.join(", ");
   };
 
   const fmtMoney = (n, sym) => {
@@ -870,9 +964,7 @@
     $("modalContent").innerHTML = html;
     $("modalBackdrop").classList.remove("hidden");
   }
-  function closeModal() {
-    $("modalBackdrop").classList.add("hidden");
-  }
+  function closeModal() { $("modalBackdrop").classList.add("hidden"); }
   $("modalBackdrop").addEventListener("click", (e) => { if (e.target === $("modalBackdrop")) closeModal(); });
 
   function applyTheme(th) {
@@ -916,7 +1008,7 @@
     return res.json();
   }
 
-  // ---------- CASCADE AUTOCOMPLETE v7.0 (COUNTRY -> CITY -> BUSINESS) ----------
+  // ---------- CASCADE AUTOCOMPLETE (COUNTRY -> CITY -> BUSINESS WITH LOGOS & HOUSE NUMBERS) ----------
   function syncGeoUi() {
     const g = STATE.geo;
     $("wrapCountry").classList.toggle("has-val", Boolean($("countryInput").value.trim()));
@@ -930,10 +1022,9 @@
     const parts = [];
     if (g.country) parts.push(`<span class="badge green">${esc(g.country)}${g.countryCode ? " (" + esc(g.countryCode) + ")" : ""}</span>`);
     if (g.city) parts.push(`<span class="badge sky">${esc(g.city)}</span>`);
-    if (g.bbox) parts.push(`<span class="badge">BBOX</span>`);
     $("geoSelectionBar").innerHTML = parts.length
-      ? (`<span>Контур поиска:</span> ` + parts.join(" &rarr; "))
-      : `<span>Контур поиска: <b style="color:var(--text);">Весь мир (Авто)</b> — выберите страну или сразу введите компанию</span>`;
+      ? (`<span>Контур:</span> ` + parts.join(" &rarr; "))
+      : `<span>Контур: <b style="color:var(--text);">Весь мир (Авто)</b></span>`;
   }
 
   function closeAllAcDropdowns(exceptId) {
@@ -966,7 +1057,7 @@
     const list = $("acCountry");
     const items = filterCountriesLocal(q);
     if (items.length === 0) {
-      list.innerHTML = `<div class="ac-empty">Страна не найдена в быстром списке — можно ввести вручную</div>`;
+      list.innerHTML = `<div class="ac-empty">Страна не найдена — можно ввести вручную</div>`;
       list.classList.remove("hidden");
       return;
     }
@@ -985,7 +1076,6 @@
         STATE.geo.countryCode = picked.countryCode;
         STATE.geo.lat = picked.lat;
         STATE.geo.lng = picked.lng;
-        // Reset city when country changes
         STATE.geo.city = "";
         STATE.geo.bbox = "";
         $("cityInput").value = "";
@@ -1008,10 +1098,7 @@
     let items = [];
     try {
       const res = await apiGet({
-        action: "autocomplete",
-        mode: "city",
-        q: trimmed,
-        lang: STATE.lang,
+        action: "autocomplete", mode: "city", q: trimmed, lang: STATE.lang,
         country: STATE.geo.country || $("countryInput").value.trim(),
         countryCode: STATE.geo.countryCode || ""
       });
@@ -1019,7 +1106,6 @@
       if (res && res.status === "success" && Array.isArray(res.items)) items = res.items;
     } catch (e) {}
 
-    // Fast direct Photon fallback if GAS returned 0 or failed
     if (items.length === 0 && reqId === STATE.acSeq.city) {
       try {
         const ctry = STATE.geo.country || $("countryInput").value.trim();
@@ -1098,13 +1184,8 @@
     let items = [];
     try {
       const params = {
-        action: "autocomplete",
-        mode: "business",
-        q: trimmed,
-        lang: STATE.lang,
-        country: curCountry,
-        countryCode: STATE.geo.countryCode || "",
-        city: curCity
+        action: "autocomplete", mode: "business", q: trimmed, lang: STATE.lang,
+        country: curCountry, countryCode: STATE.geo.countryCode || "", city: curCity
       };
       if (STATE.geo.lat && STATE.geo.lng) {
         params.lat = String(STATE.geo.lat);
@@ -1117,7 +1198,6 @@
       if (res && res.status === "success" && Array.isArray(res.items)) items = res.items;
     } catch (e) {}
 
-    // Direct Photon fallback if backend returned empty
     if (items.length === 0 && reqId === STATE.acSeq.business) {
       try {
         const loc = [curCity, curCountry].filter(Boolean).join(", ");
@@ -1132,15 +1212,15 @@
             const p = f.properties || {};
             const pcc = String(p.countrycode || "").toUpperCase();
             if (ccFilter && pcc && pcc !== ccFilter) return;
-            const nm = p.name || [p.street, p.housenumber].filter(Boolean).join(" ");
-            if (!nm) return;
             const st = [p.street, p.housenumber].filter(Boolean).join(" ");
+            const nm = p.name || st;
+            if (!nm) return;
             const ct = p.city || p.locality || curCity;
             items.push({
               mode: "business", name: nm, street: st, city: ct, country: p.country || curCountry,
               countryCode: pcc || ccFilter,
               category: (p.osm_value && !/^(yes|no|house|building)$/i.test(p.osm_value)) ? p.osm_value : "POI",
-              rating: "", formattedAddress: [st, ct, p.country || curCountry].filter(Boolean).join(", "),
+              rating: "", website: "", formattedAddress: formatAddr(st, ct, p.country || curCountry),
               source: "photon"
             });
           });
@@ -1150,15 +1230,18 @@
     if (reqId !== STATE.acSeq.business) return;
 
     if (items.length === 0) {
-      list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Аудит», чтобы запустить анализ по введённому названию/сайту</div>`;
+      list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Аудит» для запуска по введённому названию/сайту</div>`;
       return;
     }
 
     list.innerHTML = items.slice(0, 8).map((it, i) => `
       <div class="ac-item" data-ac-biz="${i}">
-        <div style="min-width:0; flex:1;">
-          <div class="ac-name">${esc(it.name)}${it.rating ? ` <span style="color:var(--amber); font-size:12px;">&#9733; ${esc(it.rating)}</span>` : ""}</div>
-          <div class="ac-sub">${esc(it.formattedAddress || [it.street, it.city, it.country].filter(Boolean).join(", "))}</div>
+        <div class="entity-row" style="flex:1; min-width:0;">
+          ${companyLogoHtml(it.logoUrl, it.website, it.name, 26)}
+          <div style="min-width:0; flex:1;">
+            <div class="ac-name">${esc(it.name)}${it.rating ? ` <span style="color:var(--amber); font-size:12px;">&#9733; ${esc(it.rating)}</span>` : ""}</div>
+            <div class="ac-sub">${esc(it.formattedAddress || formatAddr(it.street, it.city, it.country))}</div>
+          </div>
         </div>
         <span class="badge">${esc(it.category || "Business")}</span>
       </div>`).join("");
@@ -1191,8 +1274,8 @@
         dot.className = "dot ok";
         const lm = d.liveModels || {};
         const total = (lm.groq || 0) + (lm.nvidia || 0) + (lm.mistral || 0) + (lm.openrouter || 0) + (lm.gemini || 0);
-        txt.textContent = `v${d.version || "7.1"} · ${total} ИИ`;
-        $("verPill").textContent = `UI v${UI_VERSION} / Core v${d.version || "7.1"}`;
+        txt.textContent = `Онлайн · ${total} ИИ`;
+        $("verPill").textContent = `v${d.version || UI_VERSION}`;
         return;
       }
     } catch (e) {}
@@ -1235,21 +1318,21 @@
     }
 
     grid.innerHTML = STATE.catalog.map((it) => {
-      const loc = [it.city, it.country].filter(Boolean).join(", ");
+      const loc = formatAddr(it.street, it.city, it.country);
       const dt = it.createdAt ? new Date(it.createdAt).toLocaleDateString() : "";
-      const verTag = it.schemaVersion ? `<span class="badge sky" style="font-size:10px;">v${esc(it.schemaVersion)}</span>` : "";
       return `
         <div class="cat-card" data-open-id="${esc(it.id)}">
           <div class="cat-top">
-            <div class="cat-title">${esc(it.name)}</div>
+            <div class="entity-row" style="flex:1; min-width:0;">
+              ${companyLogoHtml(it.logoUrl, it.website, it.name, 30)}
+              <div class="cat-title" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${esc(it.name)}</div>
+            </div>
             ${it.score ? `<span class="score-pill">${esc(it.score)}/100</span>` : ""}
           </div>
-          <div class="cat-meta" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <span>${esc(it.niche || "Business")}</span> ${verTag}
-          </div>
-          <div class="cat-meta" style="display:flex; justify-content:space-between; margin-top:auto; padding-top:4px;">
-            <span>${esc(loc || "—")}</span>
-            <span>${esc(dt)}</span>
+          <div class="cat-meta">${esc(it.niche || "Business")}</div>
+          <div class="cat-meta" style="display:flex; justify-content:space-between; gap:8px; margin-top:auto; padding-top:4px;">
+            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${esc(loc || "—")}</span>
+            <span style="flex-shrink:0;">${esc(dt)}</span>
           </div>
         </div>`;
     }).join("");
@@ -1263,14 +1346,19 @@
     try {
       const list = JSON.parse(localStorage.getItem("b2b_local_history") || "[]");
       const filtered = list.filter((x) => x.id !== fileId);
+      const meta = rep.companyMeta || {};
+      const c = rep.contacts || {};
       filtered.unshift({
         id: fileId,
         name: rep.businessName || "Audit",
-        niche: (rep.companyMeta && rep.companyMeta.niche) || "Business",
-        country: rep.searchCountry || "",
-        city: rep.searchCity || "",
+        niche: meta.niche || "Business",
+        country: rep.searchCountry || meta.detectedCountry || "",
+        city: rep.searchCity || meta.detectedCity || "",
+        street: meta.detectedStreet || c.street || "",
+        website: c.website || "",
+        logoUrl: rep.logoUrl || "",
         score: (rep.nexusRanking && rep.nexusRanking.score) || 0,
-        schemaVersion: rep.schemaVersion || "7.1",
+        schemaVersion: rep.schemaVersion || UI_VERSION,
         createdAt: new Date().toISOString()
       });
       localStorage.setItem("b2b_local_history", JSON.stringify(filtered.slice(0, 20)));
@@ -1286,14 +1374,11 @@
     }
     const card = $("preflightCard");
     card.classList.remove("hidden");
-    card.innerHTML = `<div style="font-size:13px; color:var(--text-muted);">&#9889; Быстрая проверка точки, сайта и OSINT-алертов...</div>`;
+    card.innerHTML = `<div style="font-size:13px; color:var(--text-muted);">&#9889; Быстрая проверка точки, сайта и OSINT-фактов...</div>`;
     try {
       const res = await apiPost({
-        action: "preflight",
-        url: q,
-        language: STATE.lang,
-        country: $("countryInput").value.trim(),
-        city: $("cityInput").value.trim()
+        action: "preflight", url: q, language: STATE.lang,
+        country: $("countryInput").value.trim(), city: $("cityInput").value.trim()
       });
       if (!res || res.status !== "success") throw new Error((res && res.message) || "Ошибка");
       const d = res.data || {};
@@ -1302,17 +1387,20 @@
       const alerts = d.osintAlerts || [];
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
-          <strong style="font-size:15px;">${esc((pl && pl.name) || q)}</strong>
+          <div class="entity-row">
+            ${companyLogoHtml("", pl && pl.website, (pl && pl.name) || q, 30)}
+            <strong style="font-size:15px;">${esc((pl && pl.name) || q)}</strong>
+          </div>
           <span class="badge green">Префлайт ${(d.elapsedMs / 1000).toFixed(1)}с</span>
         </div>
         <div style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">
-          ${pl ? `&#128205; ${esc(pl.address || "")} · &#127760; ${esc(pl.website || "Нет сайта")} · &#9876;&#65039; Конкурентов рядом: ${(pl.competitors || []).length} · &#127970; Соседей 150м: ${(pl.nearbyNeighbors150m || []).length}` : "Точка на карте не найдена — аудит пойдёт в аналитическом режиме [БЕНЧМАРК]."}
+          ${pl ? `&#128205; ${esc(pl.address || "")} · &#127760; ${esc(pl.website || "Нет сайта")} ${pl.hours && pl.hours !== "N/A" ? `· &#128338; ${esc(pl.hours)}` : ""} · &#9876;&#65039; Конкурентов: ${(pl.competitors || []).length} · &#127970; Соседей: ${(pl.nearbyNeighbors150m || []).length}` : "Точка на карте не найдена — аудит пойдёт в аналитическом режиме [БЕНЧМАРК]."}
         </div>
-        ${web.detectedTech && web.detectedTech.length ? `<div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;">${web.detectedTech.slice(0, 7).map((t) => `<span class="badge sky">${esc(t)}</span>`).join("")}</div>` : ""}
+        ${web.detectedTech && web.detectedTech.length ? `<div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;">${uniqStrings(web.detectedTech).slice(0, 7).map((t) => `<span class="badge sky">${esc(t)}</span>`).join("")}</div>` : ""}
         ${alerts.map((a) => `<div class="alert-box ${a.severity === "danger" ? "danger" : (a.severity === "info" ? "info" : "")}" style="margin-bottom:6px;"><strong>${esc(a.title)}</strong> — ${esc(a.detail)}</div>`).join("")}
         <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
           <button class="btn btn-sm" onclick="document.getElementById('preflightCard').classList.add('hidden')">Скрыть</button>
-          <button class="btn btn-sm btn-primary" id="pfLaunchBtn">Запустить полный аудит &rarr;</button>
+          <button class="btn btn-sm btn-primary" id="pfLaunchBtn">Запустить аудит &rarr;</button>
         </div>`;
       $("pfLaunchBtn").addEventListener("click", () => startFullScan());
     } catch (e) {
@@ -1372,7 +1460,7 @@
       ).join("");
     };
 
-    addFeed("Запуск Argon v7.1 Executive OS (5 Директоров + Суд Присяжных + 2x Синтез)...", "START");
+    addFeed("Запуск конвейера верификации фактов (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
 
     STATE.clockTimer = setInterval(() => {
       const s = Math.floor((Date.now() - t0) / 1000);
@@ -1409,15 +1497,10 @@
     STATE.scanAbort = new AbortController();
     try {
       const payload = {
-        action: "scan",
-        url: q,
-        language: STATE.lang,
-        country: $("countryInput").value.trim(),
-        city: $("cityInput").value.trim(),
-        engineMode: STATE.engineMode,
-        scopeMode: STATE.scopeMode,
-        partnerId: STATE.partnerId || "",
-        jobId: jobId,
+        action: "scan", url: q, language: STATE.lang,
+        country: $("countryInput").value.trim(), city: $("cityInput").value.trim(),
+        engineMode: STATE.engineMode, scopeMode: STATE.scopeMode,
+        partnerId: STATE.partnerId || "", jobId: jobId,
         customBrief: $("briefInput").value.trim(),
         autoSendEmail: Boolean(STATE.autoEmailOn && STATE.autoEmail),
         autoSendTo: STATE.autoEmail || ""
@@ -1432,6 +1515,7 @@
       STATE.report = res.reportData;
       STATE.solvedSteps = Array.isArray(res.reportData.solvedSteps) ? res.reportData.solvedSteps.map(Number) : [];
       STATE.ownerDataRoom = null;
+      STATE.extraInfoOpen = false;
       STATE.boardHistory = [];
       saveLocalHistoryEntry(res.fileId, res.reportData);
 
@@ -1441,7 +1525,7 @@
 
       renderReport();
       setScreen("report");
-      showToast("Аудит v7.1 успешно завершён!");
+      showToast("Аудит успешно завершён!");
     } catch (err) {
       stopTimers();
       if (err && err.name === "AbortError") showToast("Скан отменён");
@@ -1464,6 +1548,7 @@
       STATE.report = res.data;
       STATE.solvedSteps = Array.isArray(res.data.solvedSteps) ? res.data.solvedSteps.map(Number) : [];
       STATE.ownerDataRoom = null;
+      STATE.extraInfoOpen = false;
       STATE.boardHistory = [];
       if (res.data.whiteLabel) applyWhiteLabel(res.data.whiteLabel);
 
@@ -1507,7 +1592,6 @@
     const r = STATE.report;
     if (!r) return;
     renderHeader(r);
-    renderKpiStrip(r);
     renderTabOverview(r);
     renderTabPlan(r);
     renderTabPlaybook(r);
@@ -1518,39 +1602,103 @@
     activateTab(STATE.activeTab || "overview");
   }
 
+  // ---------- HEADER WITH LOGOS, COMPACT SOCIALS & "ДОП. ИНФОРМАЦИЯ О КОМПАНИИ" ----------
   function renderHeader(r) {
     const meta = r.companyMeta || {};
     const c = r.contacts || {};
     const ev = r.evidenceSummary || {};
-    const loc = [meta.detectedCountry || r.searchCountry, meta.detectedCity || r.searchCity, meta.detectedStreet || c.street].filter(Boolean).join(", ");
+    const sig = r.digitalSignals || {};
+    const ext = (r.meta && r.meta.externalLinks) || {};
+    const vf = r.verifiedFacts || null;
+    const streetWithHouse = meta.detectedStreet || c.street || "";
+    const loc = formatAddr(streetWithHouse, meta.detectedCity || r.searchCity, meta.detectedCountry || r.searchCountry);
     const repVer = extractReportVersion(r);
     const dur = extractReportDuration(r);
-    const isFreshV7 = /^v7\./.test(repVer);
-    const dom = (r.digitalSignals && r.digitalSignals.finalDomain) || "";
-    const logo = (r.whiteLabel && r.whiteLabel.logoUrl)
-      ? r.whiteLabel.logoUrl
-      : (dom ? `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(dom)}`
-        : `https://ui-avatars.com/api/?background=10b981&color=051018&bold=true&size=128&name=${encodeURIComponent(r.businessName || "B2B")}`);
+    const showLegacyVer = repVer !== ("v" + UI_VERSION);
+    const dom = sig.finalDomain || extractDomain(c.website);
+    const headerLogo = (r.whiteLabel && r.whiteLabel.logoUrl) ? r.whiteLabel.logoUrl : (r.logoUrl || "");
+
+    // Deduplicated techStack
+    const seenTech = new Set();
+    const techList = (Array.isArray(r.techStack) ? r.techStack : []).filter((t) => {
+      const nm = String((t && t.name) || t || "").trim();
+      const k = nm.toLowerCase();
+      if (!k || seenTech.has(k)) return false;
+      seenTech.add(k);
+      return true;
+    });
+    const socials = Array.isArray(r.socialProfiles) ? r.socialProfiles : [];
+    const infra = uniqStrings(r.infrastructure || []);
+
+    const osmFactBadges = vf ? [
+      `<span class="badge ${vf.hasEvCharging ? "green" : ""}">EV-зарядка (80м): ${vf.hasEvCharging ? "Есть" : "Нет в OSM"}</span>`,
+      vf.hasShop ? `<span class="badge green">Магазин: Есть</span>` : "",
+      vf.hasCafe ? `<span class="badge green">Кафе: Есть</span>` : "",
+      vf.hasCarWash ? `<span class="badge green">Автомойка: Есть</span>` : "",
+      vf.hasHydrogen ? `<span class="badge green">Водород: Есть</span>` : ""
+    ].filter(Boolean).join("") : "";
+
+    const extraPanelHtml = `
+      <div class="rep-extra-panel ${STATE.extraInfoOpen ? "" : "hidden"}" id="repExtraPanel">
+        <div class="extra-grid">
+          <div class="extra-box">
+            <div class="extra-box-title">&#127970; Профиль и юридические данные</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+              ${meta.ownershipType && meta.ownershipType !== "N/A" ? `<span class="badge">${esc(meta.ownershipType)}</span>` : ""}
+              ${meta.owner && meta.owner !== "N/A" && meta.owner !== "Не раскрыто" ? `<span class="badge">Владелец: ${esc(meta.owner)}</span>` : ""}
+              ${meta.ceoName && meta.ceoName !== "N/A" && meta.ceoName !== "Не раскрыто" ? `<span class="badge">Руководитель: ${esc(meta.ceoName)}</span>` : ""}
+              ${meta.founded ? `<span class="badge">Основана: ${esc(meta.founded)}</span>` : ""}
+            </div>
+            ${meta.legalIssues && meta.legalIssues !== "N/A" ? `<div style="color:var(--text-muted); margin-bottom:6px;"><b>Комплаенс:</b> ${esc(meta.legalIssues)}</div>` : ""}
+            ${osmFactBadges ? `<div style="display:flex; flex-wrap:wrap; gap:5px;">${osmFactBadges}</div>` : ""}
+          </div>
+
+          <div class="extra-box">
+            <div class="extra-box-title">&#128187; Технический стек (${techList.length})${infra.length ? " и инфраструктура" : ""}</div>
+            <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:${infra.length ? "6px" : "0"};">
+              ${techList.map((t) => `<span class="badge ${t.source === "verified_http" ? "green" : ""}" title="${esc(t.details || "")}">${esc(t.name || t)}</span>`).join("") || `<span style="color:var(--text-soft);">Нет данных</span>`}
+            </div>
+            ${infra.length ? `<div style="color:var(--text-muted); font-size:12px;">${esc(infra.join(" · "))}</div>` : ""}
+          </div>
+        </div>
+
+        <div class="extra-box" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span class="extra-box-title" style="margin:0;">&#127760; Соцсети:</span>
+            ${socials.length ? socials.map((s) => `<a class="badge sky" href="${esc(s.url)}" target="_blank" rel="noopener">${esc((s.icon || "") + " " + s.label)}</a>`).join("") : `<span style="color:var(--text-soft);">Не обнаружены</span>`}
+          </div>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span class="extra-box-title" style="margin:0;">OSINT:</span>
+            ${ext.googleAds ? `<a class="btn btn-sm" href="${esc(ext.googleAds)}" target="_blank" rel="noopener">Google Ads</a>` : ""}
+            ${ext.metaAds ? `<a class="btn btn-sm" href="${esc(ext.metaAds)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
+            ${ext.trustpilot ? `<a class="btn btn-sm" href="${esc(ext.trustpilot)}" target="_blank" rel="noopener">Trustpilot</a>` : ""}
+            ${ext.kununu ? `<a class="btn btn-sm" href="${esc(ext.kununu)}" target="_blank" rel="noopener">Kununu</a>` : ""}
+            ${ext.linkedinJobs ? `<a class="btn btn-sm" href="${esc(ext.linkedinJobs)}" target="_blank" rel="noopener">LinkedIn Jobs</a>` : ""}
+            ${sig.careersUrl ? `<a class="btn btn-sm" href="${esc(sig.careersUrl)}" target="_blank" rel="noopener">Вакансии</a>` : ""}
+          </div>
+        </div>
+      </div>`;
 
     $("repHeader").innerHTML = `
       <div class="rep-header-top">
         <div class="rep-id">
-          <img class="rep-logo" src="${esc(logo)}" alt="">
+          ${companyLogoHtml(headerLogo, c.website, r.businessName, 50)}
           <div style="min-width:0;">
             <h1 class="rep-title">${esc(r.businessName || "Бизнес-аудит")}</h1>
             <div class="rep-sub">
               <span>&#128205; ${esc(loc || "Локация не указана")}</span>
               <span class="badge sky">${esc(meta.niche || "Business")}</span>
               <span class="badge">${esc(modeLabel(r.entityMode))}</span>
-              <span class="badge ${isFreshV7 ? "green" : "amber"}">Движок ${esc(repVer)}${dur ? ` · ${esc(dur)}` : ""}</span>
+              ${showLegacyVer ? `<span class="badge amber">Архив ${esc(repVer)}</span>` : ""}
+              ${dur ? `<span class="badge">&#9201; ${esc(dur)}</span>` : ""}
               ${ev.confidenceScore ? `<span class="badge violet">&#9878;&#65039; Доверие ${esc(ev.confidenceScore)}%</span>` : ""}
             </div>
           </div>
         </div>
         <div class="rep-toolbar no-print">
           <button class="btn btn-sm" id="btnBackHome">&larr; Поиск</button>
-          <button class="btn btn-sm" id="btnRescan" title="Запустить свежий скан на v7.1">&#128260; Обновить скан</button>
-          <button class="btn btn-sm btn-sky" id="btnAskBoardTop">&#129302; Спросить Совет</button>
+          <button class="btn btn-sm ${STATE.extraInfoOpen ? "btn-active-pill" : ""}" id="btnExtraInfo">&#8505;&#65039; Доп. информация</button>
+          <button class="btn btn-sm" id="btnRescan" title="Запустить свежий скан">&#128260; Обновить</button>
           <button class="btn btn-sm" id="btnCopyLink">&#128279; Ссылка</button>
           <button class="btn btn-sm" id="btnPrintPdf">&#128424; PDF</button>
           <button class="btn btn-sm btn-primary" id="btnEmailReport">&#9993;&#65039; На почту</button>
@@ -1562,9 +1710,9 @@
         ${c.phone && c.phone !== "N/A" ? `<span>&#128222; ${esc(c.phone)}</span>` : ""}
         ${c.hours && c.hours !== "N/A" ? `<span>&#128338; ${esc(c.hours)}</span>` : ""}
         ${r.rating && r.rating !== "N/A" ? `<span>&#11088; ${esc(r.rating)} (${esc(r.reviewCount || 0)})</span>` : `<span>&#11088; Нет публичного рейтинга</span>`}
-        ${meta.ceoName && meta.ceoName !== "N/A" ? `<span>&#128100; ${esc(meta.ceoName)}</span>` : ""}
-        ${meta.founded ? `<span>&#128197; с ${esc(meta.founded)}</span>` : ""}
-      </div>`;
+        ${socials.length ? `<span style="display:inline-flex; gap:6px; align-items:center; margin-left:auto;">${socials.slice(0, 5).map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.label)}" style="font-size:13px;">${esc(s.icon || s.label)}</a>`).join("")}</span>` : ""}
+      </div>
+      ${extraPanelHtml}`;
 
     $("btnBackHome").onclick = () => {
       const u = new URL(location.href);
@@ -1573,8 +1721,13 @@
       setScreen("start");
       loadCatalog();
     };
+    $("btnExtraInfo").onclick = () => {
+      STATE.extraInfoOpen = !STATE.extraInfoOpen;
+      $("repExtraPanel").classList.toggle("hidden", !STATE.extraInfoOpen);
+      $("btnExtraInfo").classList.toggle("btn-active-pill", STATE.extraInfoOpen);
+    };
     $("btnRescan").onclick = () => {
-      const q = [r.businessName, meta.detectedStreet, meta.detectedCity, meta.detectedCountry].filter(Boolean).join(", ");
+      const q = [r.businessName, streetWithHouse, meta.detectedCity, meta.detectedCountry].filter(Boolean).join(", ");
       $("qInput").value = q;
       if (meta.detectedCountry) { $("countryInput").value = meta.detectedCountry; STATE.geo.country = meta.detectedCountry; }
       if (meta.countryCode) STATE.geo.countryCode = meta.countryCode;
@@ -1582,7 +1735,6 @@
       syncGeoUi();
       startFullScan(q);
     };
-    $("btnAskBoardTop").onclick = () => activateTab("board");
     $("btnCopyLink").onclick = async () => {
       try { await navigator.clipboard.writeText(location.href); showToast("Ссылка на отчёт скопирована"); }
       catch (e) { showToast(location.href); }
@@ -1657,7 +1809,7 @@
     };
   }
 
-  function renderKpiStrip(r) {
+  function buildKpiStripHtml(r) {
     const cal = getCalibratedFinancials(r);
     const rank = r.nexusRanking || {};
     const sig = r.digitalSignals || {};
@@ -1676,19 +1828,19 @@
     const scoreDeltaChip = (diff.hasPrevious && diff.scoreDelta)
       ? `<span class="badge ${diff.scoreDelta > 0 ? "green" : "red"}">${diff.scoreDelta > 0 ? "+" : ""}${diff.scoreDelta}</span>` : "";
 
-    $("kpiStrip").innerHTML = `
+    return `
       <div class="kpi-card">
-        <div class="kpi-label">${isCivic ? "Экономия бюджета (OpEx / год)" : "Потенциал чистой прибыли / год"} ${cal.isCustom ? '<span class="badge sky">Live DR</span>' : ""}</div>
+        <div class="kpi-label">${isCivic ? "Экономия бюджета / год" : "Потенциал чистой прибыли / год"} ${cal.isCustom ? '<span class="badge sky">DR</span>' : ""}</div>
         <div class="kpi-val green">${esc(cal.profitFormatted)}</div>
-        <div class="kpi-sub">CapEx: <b>${esc(cal.capExFormatted)}</b> · ROI: <b>${esc(cal.paybackPeriod)}</b> · Цена паузы: <b>${esc(fmtMoney(cal.monthlyInaction, sym))}/мес</b></div>
+        <div class="kpi-sub">CapEx: <b>${esc(cal.capExFormatted)}</b> · ROI: <b>${esc(cal.paybackPeriod)}</b></div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Индекс зрелости и позиция</div>
+        <div class="kpi-label">Индекс зрелости</div>
         <div class="kpi-val">${esc(rank.score || 0)}<span style="font-size:14px; font-weight:600; color:var(--text-soft);">/100</span> <span class="badge green">${esc(rank.grade || "B")}</span> ${scoreDeltaChip}</div>
         <div class="kpi-sub">Место <b>#${esc(rank.cityRank || 1)}</b> из ${esc(rank.cityPeerTotal || 1)} · Top ${esc(rank.localPercentile || 50)}%</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">ИИ-видимость (GEO) и сайт</div>
+        <div class="kpi-label">ИИ-видимость (GEO)</div>
         <div class="kpi-val sky">${esc(geo.aiVisibilityScore || 0)}<span style="font-size:14px; font-weight:600; color:var(--text-soft);">/100</span></div>
         <div class="kpi-sub">${sig.hasWebsite ? (sig.wafProtected ? "WAF-защита сайта" : `Пробелов воронки: ${(sig.missing || []).length}`) : "Сайт не обнаружен"}</div>
       </div>
@@ -1697,6 +1849,11 @@
         <div class="kpi-val">${solvedPct}% <span style="font-size:13px; font-weight:700; color:var(--accent);">+${esc(fmtMoney(unlockedRaw, sym))}</span></div>
         <div class="mini-bar"><div style="width:${solvedPct}%"></div></div>
       </div>`;
+  }
+
+  function updateOverviewKpiStrip(r) {
+    const el = $("overviewKpiStrip");
+    if (el) el.innerHTML = buildKpiStripHtml(r);
   }
 
   function buildCashFlow18mSvg(series, sym) {
@@ -1733,12 +1890,11 @@
       </svg>`;
   }
 
-  // ---------- TAB 1: OVERVIEW, DEEP DIFF, JURY & DATA ROOM ----------
+  // ---------- TAB 1: OVERVIEW (WITH KPI STRIP INSIDE), DEEP DIFF, JURY & DATA ROOM ----------
   function renderTabOverview(r) {
     const fin = r.financials || {};
     const cal = getCalibratedFinancials(r);
     const mkt = r.marketIntelligence || {};
-    const meta = r.companyMeta || {};
     const ev = r.evidenceSummary || {};
     const diff = r.diffSinceLastScan || {};
     const dr = STATE.ownerDataRoom || r.dataRoomDefaults || {};
@@ -1748,6 +1904,7 @@
     const scData = sens[STATE.scenario] || sens.base || {};
     const alerts = r.osintAlerts || [];
     const scens = Array.isArray(r.strategyScenarios) ? r.strategyScenarios : [];
+    const quickWins = uniqStrings(mkt.quickWins || []);
 
     const diffBannerHtml = diff.hasPrevious ? `
       <div class="alert-box success">
@@ -1763,18 +1920,17 @@
     const juryHtml = ev.jurorVerdict ? `
       <div class="card" style="border-color:var(--violet-border);">
         <div class="card-hdr">
-          <h3>&#9878;&#65039; Вердикт Адверсариального Суда Присяжных (Волна 1.5)</h3>
+          <h3>&#9878;&#65039; Вердикт Суда Присяжных</h3>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <span class="badge green">Фактов: ${esc(ev.verifiedFactsCount || 0)}</span>
             <span class="badge sky">Бенчмарков: ${esc(ev.benchmarksCount || 0)}</span>
             <span class="badge ${ev.jurorVetoedClaims > 0 ? "amber" : "green"}">ВЕТО: ${esc(ev.jurorVetoedClaims || 0)}</span>
-            <span class="badge violet">Доверие: ${esc(ev.confidenceScore || 78)}%</span>
           </div>
         </div>
         <p style="margin:0; font-size:13.5px; color:var(--text-muted);">${esc(ev.jurorVerdict)}</p>
         ${Array.isArray(ev.vetoedList) && ev.vetoedList.length ? `
           <div style="margin-top:8px; font-size:12.5px; color:var(--amber);">
-            <b>Отклонено присяжными:</b> ${esc(ev.vetoedList.join(" · "))}
+            <b>Отклонено ВЕТО:</b> ${esc(ev.vetoedList.join(" · "))}
           </div>` : ""}
       </div>` : "";
 
@@ -1809,27 +1965,22 @@
       </div>` : "";
 
     $("tab-overview").innerHTML = `
+      <div class="kpi-strip" id="overviewKpiStrip">${buildKpiStripHtml(r)}</div>
       ${diffBannerHtml}
       ${alertsHtml}
       ${juryHtml}
 
+      ${mkt.positioning ? `
       <div class="card">
-        <div class="card-hdr">
-          <h3>Позиционирование и профиль</h3>
-          <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            ${meta.ownershipType ? `<span class="badge">${esc(meta.ownershipType)}</span>` : ""}
-            ${meta.owner && meta.owner !== "N/A" ? `<span class="badge">Владелец: ${esc(meta.owner)}</span>` : ""}
-          </div>
-        </div>
-        <p style="margin:0 0 10px; font-size:14.5px; line-height:1.6;">${esc(mkt.positioning || "—")}</p>
-        ${meta.legalIssues && meta.legalIssues !== "N/A" ? `<div style="font-size:12.5px; color:var(--text-muted);">&#9878;&#65039; Регулирование и комплаенс: ${esc(meta.legalIssues)}</div>` : ""}
-      </div>
+        <div class="card-hdr"><h3>Позиционирование</h3></div>
+        <p style="margin:0; font-size:14px; line-height:1.6;">${esc(mkt.positioning)}</p>
+      </div>` : ""}
 
       <div class="card">
         <div class="card-hdr">
           <div>
-            <h3>Финансовая модель (Двухконтурный P&amp;L + 18-мес. Cash Flow)</h3>
-            <div style="font-size:12px; color:var(--text-soft);">Окупаемость в сделках: <b>${esc(cal.breakEvenDeals || 0)} сд./год</b> · Средний чек: <b>${esc(fmtMoney(cal.avgTicket, sym))}</b> · Экономия времени: <b>${esc(fin.timeSaved || "—")}</b></div>
+            <h3>Финансовая модель (P&amp;L и 18-мес. Cash Flow)</h3>
+            <div style="font-size:12px; color:var(--text-soft);">Окупаемость: <b>${esc(cal.breakEvenDeals || 0)} сд./год</b> · Чек: <b>${esc(fmtMoney(cal.avgTicket, sym))}</b> · Цена паузы: <b>${esc(fmtMoney(cal.monthlyInaction, sym))}/мес</b> · Время: <b>${esc(fin.timeSaved || "—")}</b></div>
           </div>
           <div class="seg-group" id="scenSwitch">
             <button class="seg-btn ${STATE.scenario === "pessimistic" ? "active" : ""}" data-sc="pessimistic">Пессимист (55%)</button>
@@ -1850,28 +2001,28 @@
             <div class="kpi-sub">${isCivic ? `${esc(fin.costSavingsPct || 0)}% бюджета` : `+${esc(fin.revenueLiftPct || 0)}% · OpEx: ${esc(fin.costSavingsFormatted || "—")}`}</div>
           </div>
           <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:12px;">
-            <div class="kpi-label">Прирост EBITDA / прибыли</div>
+            <div class="kpi-label">Прирост EBITDA (${STATE.scenario === "base" ? "База" : (STATE.scenario === "pessimistic" ? "55%" : "145%")})</div>
             <div style="font-size:16px; font-weight:750; color:var(--accent);">${esc(cal.isCustom ? cal.profitFormatted : (scData.ebitdaGrowthFormatted || fin.profitIncrease || "—"))}</div>
             <div class="kpi-sub">${!isCivic ? `Маржа: ${esc(cal.marginPct || "—")}% &rarr; ${esc(fin.newMargin || "—")}` : "Прямая экономия"}</div>
           </div>
           <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:12px;">
             <div class="kpi-label">Чистый поток (Год 1 - CapEx)</div>
             <div style="font-size:16px; font-weight:750; color:${(cal.isCustom ? (cal.profitRaw - cal.capExRaw < 0) : scData.netCashflowPositive === false) ? "var(--red)" : "var(--sky)"};">${esc(cal.isCustom ? fmtMoney(cal.profitRaw - cal.capExRaw, sym) : (scData.netCashflowYear1Formatted || "—"))}</div>
-            <div class="kpi-sub">CapEx: ${esc(cal.capExFormatted)} · ROI: ${esc(cal.paybackPeriod)}</div>
+            <div class="kpi-sub">После вычета инвестиций</div>
           </div>
         </div>
 
         ${cal.cashFlow18m.length >= 2 ? `
           <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:12px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12.5px;">
-              <b>Накопленный денежный поток (18 месяцев с учётом лага внедрения)</b>
+              <b>Накопленный денежный поток (18 мес.)</b>
               <span class="badge sky">Месяц 18: ${esc(fmtMoney(cal.cashFlow18m[cal.cashFlow18m.length - 1], sym))}</span>
             </div>
             ${buildCashFlow18mSvg(cal.cashFlow18m, sym)}
           </div>` : ""}
 
         <details class="fold" style="margin-bottom:0; background:var(--bg-solid);">
-          <summary>&#128295; Живая калибровка Data Room (подставьте ваши реальные цифры — P&amp;L и AI-Совет пересчитаются мгновенно)</summary>
+          <summary>&#128295; Живая калибровка Data Room (подставьте ваши реальные цифры)</summary>
           <div class="fold-body">
             <div class="dr-grid">
               <div class="dr-item"><label>Годовой оборот (${esc(sym)})</label><input type="number" id="drRev" value="${esc(dr.annualRevenueLocal || fin.currentRevenueBase || 0)}"></div>
@@ -1884,7 +2035,7 @@
               <div class="dr-item"><label>Штат (чел.)</label><input type="number" id="drStaff" value="${esc(dr.staffCount || 4)}"></div>
             </div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
-              ${STATE.ownerDataRoom ? `<button class="btn btn-sm" id="btnResetDr">Сбросить к бенчмаркам</button>` : ""}
+              ${STATE.ownerDataRoom ? `<button class="btn btn-sm" id="btnResetDr">Сбросить</button>` : ""}
               <button class="btn btn-sm btn-primary" id="btnApplyDr">Применить и пересчитать</button>
             </div>
           </div>
@@ -1895,9 +2046,9 @@
 
       <div class="grid-2">
         <details class="fold" open>
-          <summary>&#9889; 4 быстрые победы на первые 30 дней</summary>
+          <summary>&#9889; Быстрые победы (30 дней)</summary>
           <div class="fold-body">
-            <ul class="clean-list">${(mkt.quickWins || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+            <ul class="clean-list">${quickWins.map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
           </div>
         </details>
 
@@ -1919,7 +2070,7 @@
       <details class="fold">
         <summary>&#128203; Вопросы собственнику / Data Room (${(r.discoveryQuestions || []).length})</summary>
         <div class="fold-body">
-          <ul class="clean-list">${(r.discoveryQuestions || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${uniqStrings(r.discoveryQuestions || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
       </details>`;
 
@@ -1944,7 +2095,6 @@
           deliveryLagWeeks: Number($("drLag").value) || 2,
           staffCount: Number($("drStaff").value) || 3
         };
-        renderKpiStrip(r);
         renderTabOverview(r);
         showToast("Data Room применён! P&L, Cash Flow и контекст AI-Совета обновлены.");
       };
@@ -1952,7 +2102,6 @@
     if ($("btnResetDr")) {
       $("btnResetDr").onclick = () => {
         STATE.ownerDataRoom = null;
-        renderKpiStrip(r);
         renderTabOverview(r);
         showToast("Сброшено к отраслевым бенчмаркам");
       };
@@ -2001,7 +2150,7 @@
           const isComp = s.impactChannel === "compliance";
           const isOpex = s.impactChannel === "opex";
           const chBadge = isComp
-            ? `<span class="badge violet">&#128737;&#65039; Комплаенс · 0</span>`
+            ? `<span class="badge violet">&#128737;&#65039; Комплаенс</span>`
             : (isOpex ? `<span class="badge sky">&#9881;&#65039; OpEx +${esc(s.impactPct || 0)}%</span>`
               : `<span class="badge green">&#128200; Выручка +${esc(s.impactPct || 0)}%</span>`);
           const profitBadge = isComp
@@ -2032,15 +2181,18 @@
                   ${(s.stepByStepGuide || []).map((g) => `<li>${esc(safeText(g))}</li>`).join("")}
                 </ol>
                 ${contractors.length > 0 ? `
-                  <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:10px;">Подобранные подрядчики / решения:</div>
+                  <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:10px;">Подобранные подрядчики:</div>
                   ${contractors.map((c, ci) => `
                     <div class="contractor-box">
-                      <div style="min-width:0; flex:1;">
-                        <div style="font-weight:700; font-size:13.5px;">${esc(c.name || "")} ${c.rating ? `· &#11088; ${esc(c.rating)}` : ""}</div>
-                        <div style="font-size:12px; color:var(--text-muted);">${esc([c.country, c.city].filter(Boolean).join(", "))}${c.description ? ` — ${esc(c.description)}` : ""}</div>
-                        <div style="font-size:12px; margin-top:2px;">
-                          ${c.website ? `<a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
-                          ${c.email ? ` · &#128231; ${esc(c.email)}` : ""}
+                      <div class="entity-row" style="flex:1; min-width:0; align-items:flex-start;">
+                        ${companyLogoHtml(c.logoUrl, c.website, c.name, 30)}
+                        <div style="min-width:0; flex:1;">
+                          <div style="font-weight:700; font-size:13.5px;">${esc(c.name || "")} ${c.rating ? `· &#11088; ${esc(c.rating)}` : ""}</div>
+                          <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(c.street, c.city, c.country))}${c.description ? ` — ${esc(c.description)}` : ""}</div>
+                          <div style="font-size:12px; margin-top:2px;">
+                            ${c.website ? `<a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
+                            ${c.email ? ` · &#128231; ${esc(c.email)}` : ""}
+                          </div>
                         </div>
                       </div>
                       ${c.email ? `<button class="btn btn-sm btn-primary" data-rfp-step="${sid}" data-rfp-ci="${ci}">&#128232; Отправить ТЗ</button>` : ""}
@@ -2053,7 +2205,7 @@
 
       ${flowNodes.length > 0 ? `
         <div class="card" style="margin-top:16px;">
-          <div class="card-hdr"><h3>&#128279; Архитектура IT-потока клиента (5 узлов)</h3><span class="badge sky">От клика до повторной продажи</span></div>
+          <div class="card-hdr"><h3>&#128279; Архитектура IT-потока клиента (${flowNodes.length})</h3><span class="badge sky">От клика до повторной продажи</span></div>
           <div class="flow-strip">
             ${flowNodes.slice(0, 5).map((n, i) => `
               <div class="flow-node">
@@ -2085,7 +2237,7 @@
             <div class="card-hdr"><h3>&#128203; Ежемесячные KPI директора</h3><span class="badge">${dKpis.length}</span></div>
             <div class="tbl-wrap">
               <table class="data-tbl">
-                <thead><tr><th>Показатель</th><th>Целевой ориентир</th></tr></thead>
+                <thead><tr><th>Показатель</th><th>Цель</th></tr></thead>
                 <tbody>
                   ${dKpis.map((k) => `<tr><td><b>${esc(k.metric || safeText(k))}</b></td><td style="color:var(--accent); font-weight:650;">${esc(k.target || "—")}</td></tr>`).join("")}
                 </tbody>
@@ -2112,7 +2264,7 @@
           STATE.solvedSteps = STATE.solvedSteps.filter((x) => x !== sid);
         }
         chk.closest(".step-item").classList.toggle("solved", chk.checked);
-        renderKpiStrip(r);
+        updateOverviewKpiStrip(r);
         if (STATE.fileId) {
           try { await apiPost({ action: "saveProgress", fileId: STATE.fileId, solvedSteps: STATE.solvedSteps }); } catch (e) {}
         }
@@ -2130,7 +2282,7 @@
     });
   }
 
-  // ---------- TAB 3: COMMERCIAL PLAYBOOK (ICP / SEO / MEDIA / OBJECTIONS / DOCS) ----------
+  // ---------- TAB 3: COMMERCIAL PLAYBOOK ----------
   function renderTabPlaybook(r) {
     const icps = Array.isArray(r.icpSegments) ? r.icpSegments : [];
     const seos = Array.isArray(r.seoKeywords) ? r.seoKeywords : [];
@@ -2143,7 +2295,7 @@
 
     const hasAny = icps.length || seos.length || medias.length || objs.length || docs.length;
     if (!hasAny) {
-      $("tab-playbook").innerHTML = `<div class="card" style="color:var(--text-muted);">Этот отчёт создан старой версией движка без Commercial Playbook v7. Нажмите «Обновить скан» в шапке, чтобы собрать ICP, SEO-ключи, медиапланы, тренажёр возражений и библиотеку документов.</div>`;
+      $("tab-playbook").innerHTML = `<div class="card" style="color:var(--text-muted);">Коммерческий Playbook не сформирован для этого отчёта. Нажмите «Обновить» в шапке для свежего скана.</div>`;
       return;
     }
 
@@ -2158,13 +2310,13 @@
     $("tab-playbook").innerHTML = `
       ${icps.length > 0 ? `
         <div class="card">
-          <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP)</h3><span class="badge">${icps.length} сегмента</span></div>
+          <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP)</h3><span class="badge">${icps.length}</span></div>
           <div class="grid-2">
             ${icps.map((c) => `
               <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:14px; font-size:13px;">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;">
                   <b style="font-size:14px;">${esc(c.title || c.tag || "")}</b>
-                  ${c.sharePct ? `<span class="badge green">${esc(c.sharePct)}% доли</span>` : ""}
+                  ${c.sharePct ? `<span class="badge green">${esc(c.sharePct)}%</span>` : ""}
                 </div>
                 ${c.budgetRange ? `<div style="margin-bottom:6px;"><span class="badge sky">Бюджет: ${esc(c.budgetRange)}</span></div>` : ""}
                 <div style="margin-bottom:4px; color:var(--text-muted);"><b>Боль:</b> ${esc(c.pain || "—")}</div>
@@ -2177,7 +2329,7 @@
       ${docs.length > 0 ? `
         <div class="card">
           <div class="card-hdr">
-            <h3>&#128196; Библиотека готовых документов под ключ (Execution Library)</h3>
+            <h3>&#128196; Библиотека готовых документов</h3>
             <div style="display:flex; flex-wrap:wrap; gap:5px;">
               <button class="chip ${STATE.docFilter === "all" ? "active" : ""}" data-df="all">Все (${docs.length})</button>
               ${cats.map((ct) => `<button class="chip ${STATE.docFilter === ct ? "active" : ""}" data-df="${esc(ct)}">${esc(ct)}</button>`).join("")}
@@ -2193,7 +2345,7 @@
                 </div>
                 <div style="display:flex; gap:6px;">
                   <button class="btn btn-sm" data-copy-doc="${idx}">&#128203; Копировать</button>
-                  <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; Переписать в AI-Совете</button>
+                  <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; В AI-Совет</button>
                 </div>
               </div>
               <div class="doc-body">${esc(d.body || "")}</div>
@@ -2202,7 +2354,7 @@
 
       ${objs.length > 0 ? `
         <div class="card">
-          <div class="card-hdr"><h3>&#128172; Тренажёр отработки возражений клиентов</h3><span class="badge">${objs.length} сценариев</span></div>
+          <div class="card-hdr"><h3>&#128172; Тренажёр возражений клиентов</h3><span class="badge">${objs.length}</span></div>
           <div class="grid-2">
             ${objs.map((o, idx) => `
               <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:13px; font-size:13px; display:flex; flex-direction:column; gap:6px;">
@@ -2212,7 +2364,7 @@
                   ${esc(o.winningScript || "")}
                 </div>
                 <div style="display:flex; justify-content:flex-end;">
-                  <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать ответ</button>
+                  <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать</button>
                 </div>
               </div>`).join("")}
           </div>
@@ -2220,7 +2372,7 @@
 
       ${medias.length > 0 ? `
         <div class="card">
-          <div class="card-hdr"><h3>&#128226; Медиапланы продвижения (3 тира)</h3></div>
+          <div class="card-hdr"><h3>&#128226; Медиапланы продвижения</h3></div>
           <div class="grid-3">
             ${medias.map((m, idx) => `
               <div class="scen-card ${idx === 1 ? "rec" : ""}">
@@ -2244,14 +2396,14 @@
 
       ${seos.length > 0 ? `
         <details class="fold" open>
-          <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов с CPC и посадочными)</summary>
+          <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов)</summary>
           <div class="fold-body">
             <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
-              <button class="btn btn-sm" id="btnCopySeo">&#128203; Скопировать все ключи</button>
+              <button class="btn btn-sm" id="btnCopySeo">&#128203; Скопировать ключи</button>
             </div>
             <div class="tbl-wrap">
               <table class="data-tbl">
-                <thead><tr><th>Ключевой запрос</th><th>Интент</th><th>Оценка CPC</th><th>Посадочная страница</th></tr></thead>
+                <thead><tr><th>Запрос</th><th>Интент</th><th>CPC</th><th>Посадочная</th></tr></thead>
                 <tbody>
                   ${seos.map((k) => `
                     <tr>
@@ -2300,46 +2452,63 @@
     if ($("btnCopySeo")) {
       $("btnCopySeo").onclick = async () => {
         const txt = seos.map((k) => `${k.keyword}\t${k.intent}\t${k.estCpc}\t${k.targetPage}`).join("\n");
-        try { await navigator.clipboard.writeText(txt); showToast("SEO-ядро скопировано (таблица TSV)"); } catch (e) {}
+        try { await navigator.clipboard.writeText(txt); showToast("SEO-ядро скопировано"); } catch (e) {}
       };
     }
   }
 
-  // ---------- TAB 4: MARKET, COMPETITORS, PARTNERS & GDPR VENDORS ----------
+  // ---------- TAB 4: MARKET, COMPETITORS (ZERO DUPLICATES + LOGOS + HOUSE NUMBERS), PARTNERS & VENDORS ----------
   function renderTabMarket(r) {
     const ci = r.competitiveIntel || {};
     const h2h = Array.isArray(ci.headToHead) ? ci.headToHead : [];
     const kill = Array.isArray(ci.killSheet) ? ci.killSheet : [];
     const comps = Array.isArray(r.competitors) ? r.competitors : [];
+    const remainingComps = comps.slice(h2h.length);
     const nbrs = Array.isArray(r.nearbyNeighbors150m) ? r.nearbyNeighbors150m : [];
     const partners = Array.isArray(r.strategicPartnerships) ? r.strategicPartnerships : [];
     const vendors = Array.isArray(r.itVendors) ? r.itVendors : [];
     const mkt = r.marketIntelligence || {};
+    const meta = r.companyMeta || {};
+    const c = r.contacts || {};
+    const ownAddr = formatAddr(meta.detectedStreet || c.street, meta.detectedCity || r.searchCity, "");
+
+    const trends = uniqStrings(mkt.industryTrends || []);
+    const upsells = uniqStrings(mkt.upsellDrivers || []);
 
     $("tab-market").innerHTML = `
       <div class="card">
         <div class="card-hdr">
-          <h3>Сравнение Head-to-Head (Вы vs ТОП-3)</h3>
-          <span class="badge">${comps.length} конкурентов</span>
+          <h3>Сравнение Head-to-Head (Вы vs ТОП-${h2h.length || 3})</h3>
+          <span class="badge">Всего конкурентов: ${comps.length}</span>
         </div>
         ${h2h.length > 0 ? `
           <div class="tbl-wrap">
             <table class="data-tbl">
-              <thead><tr><th>Компания</th><th>Роль</th><th>Город</th><th>Рейтинг</th><th>Домен</th><th>Реклама</th></tr></thead>
+              <thead><tr><th>Компания</th><th>Роль</th><th>Адрес</th><th>Рейтинг</th><th>Домен</th><th>Реклама</th></tr></thead>
               <tbody>
                 <tr style="background:var(--accent-soft);">
-                  <td><b>${esc(r.businessName)} (Вы)</b></td>
+                  <td>
+                    <div class="entity-row">
+                      ${companyLogoHtml(r.logoUrl, c.website, r.businessName, 24)}
+                      <b>${esc(r.businessName)} (Вы)</b>
+                    </div>
+                  </td>
                   <td><span class="badge green">Объект</span></td>
-                  <td>${esc(r.searchCity || "—")}</td>
+                  <td>${esc(ownAddr || "—")}</td>
                   <td>${esc(r.rating || "—")} (${esc(r.reviewCount || 0)})</td>
-                  <td>${esc((r.digitalSignals && r.digitalSignals.finalDomain) || "—")}</td>
+                  <td>${esc((r.digitalSignals && r.digitalSignals.finalDomain) || extractDomain(c.website) || "—")}</td>
                   <td>—</td>
                 </tr>
                 ${h2h.map((h) => `
                   <tr>
-                    <td><b>${esc(h.name || "")}</b></td>
+                    <td>
+                      <div class="entity-row">
+                        ${companyLogoHtml(h.logoUrl, h.domain, h.name, 24)}
+                        <b>${esc(h.name || "")}</b>
+                      </div>
+                    </td>
                     <td><span class="badge sky">${esc(h.roleLabel || "Конкурент")}</span></td>
-                    <td>${esc(h.city || "—")}</td>
+                    <td>${esc(formatAddr(h.street, h.city, "") || "—")}</td>
                     <td>${esc(h.rating || "—")} (${esc(h.reviewCount || 0)})</td>
                     <td>${h.domain ? `<a href="${esc(safeHref(h.domain))}" target="_blank" rel="noopener">${esc(h.domain)}</a>` : "—"}</td>
                     <td style="white-space:nowrap;">
@@ -2349,15 +2518,41 @@
                   </tr>`).join("")}
               </tbody>
             </table>
-          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Прямые верифицированные конкуренты в локации не зафиксированы (анти-фейк фильтр активен).</div>`}
+          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Прямые верифицированные конкуренты в локации не зафиксированы.</div>`}
       </div>
+
+      ${remainingComps.length > 0 ? `
+        <details class="fold">
+          <summary>&#128203; Остальные конкуренты в радиусе (${remainingComps.length})</summary>
+          <div class="fold-body">
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${remainingComps.map((cp) => `
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:9px 12px; font-size:13px;">
+                  <div class="entity-row" style="flex:1; min-width:200px;">
+                    ${companyLogoHtml(cp.logoUrl, cp.website, cp.name, 24)}
+                    <div>
+                      <b>${esc(cp.name)}</b>
+                      <span class="badge ${cp.roleTone === "danger" ? "red" : (cp.roleTone === "amber" ? "amber" : "sky")}" style="margin-left:5px;">${esc(cp.roleLabel || "Конкурент")}</span>
+                      ${cp.rating ? ` · &#11088; ${esc(cp.rating)} (${esc(cp.reviewCount || 0)})` : ""}
+                      <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(cp.street, cp.city, cp.country) || "—")}</div>
+                    </div>
+                  </div>
+                  ${cp.website ? `<a class="btn btn-sm" href="${esc(safeHref(cp.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
+                </div>`).join("")}
+            </div>
+          </div>
+        </details>` : ""}
 
       ${kill.length > 0 ? `
         <div class="card">
-          <div class="card-hdr"><h3>&#9876;&#65039; Kill-Sheet: Слабые места конкурентов и офферы перехвата</h3></div>
+          <div class="card-hdr"><h3>&#9876;&#65039; Kill-Sheet: Слабые места конкурентов</h3></div>
           ${kill.map((k) => `
             <div class="alert-box" style="margin-bottom:8px;">
-              <div><strong>${esc(k.competitor)} (${esc(k.rating)}&#9733;):</strong> «${esc(k.verifiedNegativeQuote)}»</div>
+              <div class="entity-row" style="margin-bottom:4px;">
+                ${companyLogoHtml(k.logoUrl, "", k.competitor, 22)}
+                <strong>${esc(k.competitor)} (${esc(k.rating)}&#9733;)</strong>
+              </div>
+              <div>«${esc(k.verifiedNegativeQuote)}»</div>
               ${k.counterOfferHint ? `<div style="color:var(--accent); margin-top:4px;"><b>&#128161; Оффер перехвата:</b> ${esc(k.counterOfferHint)}</div>` : ""}
             </div>`).join("")}
         </div>` : ""}
@@ -2366,40 +2561,70 @@
         <div class="card">
           <div class="card-hdr"><h3>&#129309; Стратегические партнёры (${partners.length})</h3></div>
           ${r.partnersSummaryDelta ? `<div class="alert-box info" style="font-size:12.5px;">${esc(r.partnersSummaryDelta)}</div>` : ""}
-          ${partners.length > 0 ? partners.map((p) => `
+          ${partners.length > 0 ? partners.map((p) => {
+            const pName = safeText(p.cleanName || p.name);
+            const pLoc = formatAddr(p.street, p.city, p.country);
+            return `
             <div class="risk-card">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                <b style="font-size:13.5px;">${esc(safeText(p.cleanName || p.name))}</b>
-                <span class="badge">${esc([p.city, p.country].filter(Boolean).join(", "))}</span>
+                <div class="entity-row">
+                  ${companyLogoHtml(p.logoUrl, p.website, pName, 26)}
+                  <b style="font-size:13.5px;">${esc(pName)}</b>
+                </div>
+                ${pLoc ? `<span class="badge">${esc(pLoc)}</span>` : ""}
               </div>
-              <div style="color:var(--text-muted); margin:4px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
+              <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
               ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; Открыть</a>` : ""}
-            </div>`).join("") : `<div style="color:var(--text-muted); font-size:13px;">Партнёры не указаны.</div>`}
+            </div>`;
+          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Партнёры не указаны.</div>`}
         </div>
 
         <div class="card">
           <div class="card-hdr"><h3>&#128187; GDPR IT-вендоры и SaaS (${vendors.length})</h3></div>
           ${r.vendorsSummaryDelta ? `<div class="alert-box info" style="font-size:12.5px;">${esc(r.vendorsSummaryDelta)}</div>` : ""}
-          ${vendors.length > 0 ? vendors.map((v) => `
+          ${vendors.length > 0 ? vendors.map((v) => {
+            const vName = safeText(v.cleanName || v.name);
+            return `
             <div class="risk-card">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                <b style="font-size:13.5px;">${esc(safeText(v.cleanName || v.name))}</b>
+                <div class="entity-row">
+                  ${companyLogoHtml(v.logoUrl, v.website, vName, 26)}
+                  <b style="font-size:13.5px;">${esc(vName)}</b>
+                </div>
                 ${v.integrationTarget ? `<span class="badge sky">${esc(v.integrationTarget)}</span>` : ""}
               </div>
-              <div style="color:var(--text-muted); margin:4px 0;">${esc(safeText(v.description || v.reason || ""))}</div>
+              <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(v.description || v.reason || ""))}</div>
               ${v.website ? `<a href="${esc(safeHref(v.website))}" target="_blank" rel="noopener">&#127760; Официальный сайт</a>` : ""}
-            </div>`).join("") : `<div style="color:var(--text-muted); font-size:13px;">Вендоры не указаны.</div>`}
+            </div>`;
+          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Вендоры не указаны.</div>`}
         </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hdr"><h3>&#127970; B2B-соседи рядом (150–350 м)</h3><span class="badge">${nbrs.length}</span></div>
+        ${nbrs.length > 0 ? `
+          <div class="grid-2">
+            ${nbrs.map((n) => `
+              <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:13px;">
+                <div class="entity-row">
+                  ${companyLogoHtml(n.logoUrl, n.website, n.name, 26)}
+                  <div>
+                    <b>${esc(n.name)}</b> <span class="badge">${esc(n.niche || "B2B")}</span>
+                    <div style="color:var(--text-muted); font-size:12px; margin-top:2px;">${esc(n.address || formatAddr(n.street, n.city, ""))}</div>
+                  </div>
+                </div>
+              </div>`).join("")}
+          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Коммерческих соседей в ближайшем радиусе не зафиксировано.</div>`}
       </div>
 
       <div class="grid-2">
         <div class="card">
           <div class="card-hdr"><h3>&#128200; Тренды отрасли</h3></div>
-          <ul class="clean-list">${(mkt.industryTrends || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${trends.map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
         <div class="card">
           <div class="card-hdr"><h3>&#128142; Драйверы апселла и чека</h3></div>
-          <ul class="clean-list">${(mkt.upsellDrivers || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${upsells.map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
       </div>
 
@@ -2408,31 +2633,10 @@
           <div class="card-hdr"><h3>&#128269; Спрос SEO / CPC и сезонность</h3></div>
           ${mkt.seoCpcOverview && mkt.seoCpcOverview !== "N/A" ? `<p style="margin:0 0 6px; font-size:13.5px;"><b>SEO / CPC:</b> ${esc(mkt.seoCpcOverview)}</p>` : ""}
           ${mkt.seasonalityNotes ? `<p style="margin:0; font-size:13.5px; color:var(--text-muted);"><b>Сезонность:</b> ${esc(mkt.seasonalityNotes)}</p>` : ""}
-        </div>` : ""}
-
-      <div class="card">
-        <div class="card-hdr"><h3>&#127970; B2B-соседи рядом (кросс-маркетинг в 150–350 м)</h3><span class="badge">${nbrs.length}</span></div>
-        ${nbrs.length > 0 ? `
-          <div class="grid-2">
-            ${nbrs.map((n) => `
-              <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:13px;">
-                <b>${esc(n.name)}</b> <span class="badge">${esc(n.niche || "")}</span>
-                <div style="color:var(--text-muted); font-size:12px; margin-top:3px;">${esc(n.address || "")}</div>
-              </div>`).join("")}
-          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Коммерческих соседей в ближайшем радиусе не зафиксировано.</div>`}
-      </div>
-
-      <details class="fold">
-        <summary>&#128203; Все конкуренты (${comps.length})</summary>
-        <div class="fold-body">
-          <ul class="clean-list">
-            ${comps.map((c) => `<li><b>${esc(c.name)}</b> <span class="badge ${c.roleTone === "danger" ? "red" : (c.roleTone === "amber" ? "amber" : "sky")}">${esc(c.roleLabel || "Конкурент")}</span>${c.rating ? ` · &#11088; ${esc(c.rating)} (${esc(c.reviewCount || 0)})` : ""} · ${esc([c.city, c.street].filter(Boolean).join(", "))}${c.website ? ` · <a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">сайт</a>` : ""}${c.summary ? ` — <span style="color:var(--text-muted);">${esc(c.summary)}</span>` : ""}</li>`).join("") || "<li>—</li>"}
-          </ul>
-        </div>
-      </details>`;
+        </div>` : ""}`;
   }
 
-  // ---------- TAB 5: DIAGNOSTICS, RADAR, 4 RICH RISK CONTOURS & REPUTATION ----------
+  // ---------- TAB 5: DIAGNOSTICS (NO DUPLICATE TECH STACK / SOCIALS — THEY ARE IN HEADER!) ----------
   function buildRadarSvg(scores, avg, target12m) {
     const cx = 135, cy = 122, R = 80;
     const pts = (obj) => {
@@ -2471,7 +2675,7 @@
             <span class="badge ${sevCls}">${esc(sev.toUpperCase())}</span>
           </div>
           ${item.damage ? `<div style="color:var(--red); margin-bottom:3px;"><b>Ущерб:</b> ${esc(item.damage)}</div>` : ""}
-          ${item.check5min ? `<div style="color:var(--text-muted); margin-bottom:3px;"><b>Проверка за 5 мин:</b> ${esc(item.check5min)}</div>` : ""}
+          ${item.check5min ? `<div style="color:var(--text-muted); margin-bottom:3px;"><b>Проверка (5 мин):</b> ${esc(item.check5min)}</div>` : ""}
           ${item.fix ? `<div style="color:var(--accent);"><b>Фикс:</b> ${esc(item.fix)}</div>` : ""}
         </div>`;
     }).join("");
@@ -2485,7 +2689,7 @@
     const legal = sig.legalSignals || {};
     const rep = r.reputation || {};
     const rc = r.riskContours || {};
-    const ext = (r.meta && r.meta.externalLinks) || {};
+    const missList = uniqStrings(sig.missing || []);
 
     $("tab-diag").innerHTML = `
       <div class="grid-2">
@@ -2504,7 +2708,7 @@
         <div class="card">
           <div class="card-hdr">
             <h3>Светофор сайта, GDPR и GEO</h3>
-            ${sig.hasWebsite && r.contacts && r.contacts.website && r.contacts.website !== "N/A" ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; Замерить PageSpeed</button>` : ""}
+            ${sig.hasWebsite && r.contacts && r.contacts.website && r.contacts.website !== "N/A" ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; PageSpeed</button>` : ""}
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
             <span class="badge ${sig.httpsActive ? "green" : "red"}">${sig.httpsActive ? "&#9989; HTTPS" : "&#10060; Нет HTTPS"}</span>
@@ -2520,13 +2724,13 @@
           </div>
           <div style="font-size:13px;">
             <b>Пробелы воронки:</b>
-            <ul class="clean-list" style="margin-top:4px;">${(sig.missing || []).map((m) => `<li style="color:var(--red);">${esc(m)}</li>`).join("") || `<li style="color:var(--accent);">Критических пробелов не найдено</li>`}</ul>
+            <ul class="clean-list" style="margin-top:4px;">${missList.map((m) => `<li style="color:var(--red);">${esc(m)}</li>`).join("") || `<li style="color:var(--accent);">Критических пробелов не найдено</li>`}</ul>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-hdr"><h3>&#9888;&#65039; 4 контура рисков (A / B / C / D) — с ущербом, проверкой за 5 минут и фиксом</h3></div>
+        <div class="card-hdr"><h3>&#9888;&#65039; 4 контура рисков (A / B / C / D)</h3></div>
         <div class="grid-2">
           <div>
             <div style="font-weight:750; margin-bottom:8px; color:var(--red);">&#9878;&#65039; Контур A: Право, налоги, GDPR / Impressum</div>
@@ -2537,7 +2741,7 @@
             ${renderRiskBlockHtml(rc.marketingSeo)}
           </div>
           <div>
-            <div style="font-weight:750; margin-bottom:8px; color:var(--sky);">&#9881;&#65039; Контур C: IT-архитектура и Bus Factor = 1</div>
+            <div style="font-weight:750; margin-bottom:8px; color:var(--sky);">&#9881;&#65039; Контур C: IT-архитектура и Bus Factor</div>
             ${renderRiskBlockHtml(rc.itBusFactor)}
           </div>
           <div>
@@ -2550,11 +2754,11 @@
       <div class="grid-2">
         <div class="card">
           <div class="card-hdr"><h3>&#128187; Узкие места: IT и Цифра</h3></div>
-          <ul class="clean-list">${(r.bottlenecksIt || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${uniqStrings(r.bottlenecksIt || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
         <div class="card">
           <div class="card-hdr"><h3>&#127970; Узкие места: Офлайн и Процессы</h3></div>
-          <ul class="clean-list">${(r.bottlenecksPhys || []).map((x) => `<li>${esc(safeText(x))}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${uniqStrings(r.bottlenecksPhys || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
       </div>
 
@@ -2567,8 +2771,8 @@
               <div style="color:var(--accent); margin-top:3px;"><b>&#128161; Решение:</b> ${esc(p.solution || "")}</div>
             </div>`).join("")}
           <div class="grid-2" style="margin-top:10px;">
-            <div><b>&#128077; Сильные стороны:</b><ul class="clean-list" style="margin-top:4px;">${(rep.positive || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
-            <div><b>&#128269; Точки роста / жалобы:</b><ul class="clean-list" style="margin-top:4px;">${((rep.realComplaints && rep.realComplaints.length) ? rep.realComplaints : (rep.auditGaps || [])).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
+            <div><b>&#128077; Сильные стороны:</b><ul class="clean-list" style="margin-top:4px;">${uniqStrings(rep.positive || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
+            <div><b>&#128269; Точки роста / жалобы:</b><ul class="clean-list" style="margin-top:4px;">${uniqStrings((rep.realComplaints && rep.realComplaints.length) ? rep.realComplaints : (rep.auditGaps || [])).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
           </div>
           ${(rep.structuredReviews && rep.structuredReviews.length) ? `
             <div style="margin-top:12px;">
@@ -2583,27 +2787,6 @@
                   <div id="revReply_${ri}" style="margin-top:6px; font-size:12.5px; color:var(--accent);"></div>
                 </div>`).join("")}
             </div>` : ""}
-        </div>
-      </details>
-
-      <details class="fold">
-        <summary>&#128187; Технический стек (${(r.techStack || []).length}), Соцсети и OSINT-ссылки</summary>
-        <div class="fold-body">
-          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-            ${(r.techStack || []).map((t) => `<span class="badge ${t.source === "verified_http" ? "green" : ""}" title="${esc(t.details || "")}">${esc(t.name || t)}</span>`).join("") || "—"}
-          </div>
-          <div style="margin-bottom:10px; font-size:13px;">
-            <b>Соцсети и видео:</b>
-            ${(r.socialProfiles || []).length ? (r.socialProfiles || []).map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener" style="margin-right:10px;">${esc((s.icon || "") + " " + s.label)}</a>`).join("") : "Не обнаружены"}
-          </div>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            ${ext.googleAds ? `<a class="btn btn-sm" href="${esc(ext.googleAds)}" target="_blank" rel="noopener">Google Ads</a>` : ""}
-            ${ext.metaAds ? `<a class="btn btn-sm" href="${esc(ext.metaAds)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
-            ${ext.trustpilot ? `<a class="btn btn-sm" href="${esc(ext.trustpilot)}" target="_blank" rel="noopener">Trustpilot</a>` : ""}
-            ${ext.kununu ? `<a class="btn btn-sm" href="${esc(ext.kununu)}" target="_blank" rel="noopener">Kununu</a>` : ""}
-            ${ext.linkedinJobs ? `<a class="btn btn-sm" href="${esc(ext.linkedinJobs)}" target="_blank" rel="noopener">LinkedIn Jobs</a>` : ""}
-            ${sig.careersUrl ? `<a class="btn btn-sm" href="${esc(sig.careersUrl)}" target="_blank" rel="noopener">Вакансии сайта</a>` : ""}
-          </div>
         </div>
       </details>`;
 
@@ -2636,11 +2819,8 @@
         out.textContent = "Генерация ответа...";
         try {
           const res = await apiPost({
-            action: "replyReview",
-            businessName: r.businessName,
-            reviewText: rv.text,
-            rating: rv.rating,
-            language: r.reportLanguage || STATE.lang
+            action: "replyReview", businessName: r.businessName,
+            reviewText: rv.text, rating: rv.rating, language: r.reportLanguage || STATE.lang
           });
           out.textContent = res.reply || "—";
         } catch (e) {
@@ -2651,7 +2831,7 @@
     });
   }
 
-  // ---------- TAB 6: AI BOARD OF DIRECTORS (action = "chatReport") ----------
+  // ---------- TAB 6: AI BOARD OF DIRECTORS ----------
   function renderTabBoard(r) {
     const roles = [
       ["general", "Управляющий партнёр"],
@@ -2671,11 +2851,11 @@
 
     const msgsHtml = STATE.boardHistory.length === 0
       ? `<div style="color:var(--text-muted); font-size:13.5px; text-align:center; padding:36px 12px;">
-           <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
-           <b>AI-Совет Директоров подключён к досье «${esc(r.businessName || "")}»</b>
-           <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши реальные цифры Data Room</span>' : '<span class="badge sky">Бенчмарки и факты аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
-           <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» ваш вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
-         </div>`
+          <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
+          <b>AI-Совет подключён к досье «${esc(r.businessName || "")}»</b>
+          <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши цифры Data Room</span>' : '<span class="badge sky">Факты и бенчмарки аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
+          <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
+        </div>`
       : STATE.boardHistory.map((m, idx) => {
           if (m.role === "user") {
             return `<div class="msg-user"><div style="font-size:11px; color:var(--accent); font-weight:700; margin-bottom:3px;">Вы</div><div style="white-space:pre-wrap;">${esc(m.text)}</div></div>`;
@@ -2684,8 +2864,8 @@
             return `
               <div class="msg-ai">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-                  <span class="badge violet">&#127963; Заседание Совета Директоров · ${(m.elapsedMs / 1000).toFixed(1)}с</span>
-                  <button class="btn btn-sm" data-copy-msg="${idx}">&#128203; Копировать всё</button>
+                  <span class="badge violet">&#127963; Заседание Совета · ${(m.elapsedMs / 1000).toFixed(1)}с</span>
+                  <button class="btn btn-sm" data-copy-msg="${idx}">&#128203; Копировать</button>
                 </div>
                 <div class="board-opinions">
                   ${m.boardOpinions.map((op) => `
@@ -2711,13 +2891,13 @@
       <div class="card">
         <div class="card-hdr">
           <div>
-            <h3>&#129302; AI-Совет Директоров по этому отчёту</h3>
-            <div style="font-size:12px; color:var(--text-soft);">Знает все факты Слой 0, ваши галочки внедрения и живые цифры Data Room</div>
+            <h3>&#129302; AI-Совет Директоров</h3>
+            <div style="font-size:12px; color:var(--text-soft);">Опирается на факты отчёта, ваши отметки внедрения и Data Room</div>
           </div>
           <div class="seg-group" id="boardModeSwitch">
-            <button class="seg-btn ${STATE.boardMode === "board" ? "active" : ""}" data-bm="board">&#127963; Совет 3x (CFO+CMO+CLO)</button>
+            <button class="seg-btn ${STATE.boardMode === "board" ? "active" : ""}" data-bm="board">&#127963; Совет 3x</button>
             <button class="seg-btn ${STATE.boardMode === "single" ? "active" : ""}" data-bm="single">&#128100; 1 Директор</button>
-            <button class="seg-btn ${STATE.boardMode === "rewrite" ? "active" : ""}" data-bm="rewrite">&#9998; Копирайтер / Rewrite</button>
+            <button class="seg-btn ${STATE.boardMode === "rewrite" ? "active" : ""}" data-bm="rewrite">&#9998; Копирайтер</button>
           </div>
         </div>
 
@@ -2784,23 +2964,17 @@
     try {
       const histPayload = STATE.boardHistory.slice(-7, -1).map((h) => ({ role: h.role, text: (h.text || "").slice(0, 450) }));
       const res = await apiPost({
-        action: "chatReport",
-        fileId: STATE.fileId,
-        message: txt,
-        advisorMode: STATE.boardMode,
-        role: STATE.boardRole,
+        action: "chatReport", fileId: STATE.fileId, message: txt,
+        advisorMode: STATE.boardMode, role: STATE.boardRole,
         language: r.reportLanguage || STATE.lang,
         ownerDataRoom: STATE.ownerDataRoom || null,
-        solvedSteps: STATE.solvedSteps,
-        history: histPayload
+        solvedSteps: STATE.solvedSteps, history: histPayload
       });
       if (!res || res.status !== "success") throw new Error((res && res.message) || "Ошибка ответа Совета");
       STATE.boardHistory.push({
-        role: "assistant",
-        text: res.answer || "",
-        boardOpinions: res.boardOpinions || [],
-        usedModels: res.usedModels || [],
-        roleLabel: res.mode === "rewrite" ? "Копирайтер / Rewrite" : (res.role || "Советник").toUpperCase(),
+        role: "assistant", text: res.answer || "",
+        boardOpinions: res.boardOpinions || [], usedModels: res.usedModels || [],
+        roleLabel: res.mode === "rewrite" ? "Копирайтер" : (res.role || "Советник").toUpperCase(),
         elapsedMs: res.elapsedMs || 0
       });
     } catch (err) {
@@ -2821,14 +2995,12 @@
       <div class="card">
         <div class="card-hdr">
           <div>
-            <h3>&#129504; Прозрачность роя ИИ (5 Директоров + Суд Присяжных + 2x Синтез)</h3>
+            <h3>&#129504; Прозрачность роя ИИ</h3>
             <div style="font-size:12.5px; color:var(--text-muted);">
-              Моделей участвовало: <b>${esc(r.swarmModelsCount || 1)}</b> · Синтезатор Core: <b>${esc(r.usedModel || "—")}</b> · Версия: <b>${esc(extractReportVersion(r))}</b>
+              Моделей: <b>${esc(r.swarmModelsCount || 1)}</b> · Синтезатор Core: <b>${esc(r.usedModel || "—")}</b> · Схема: <b>${esc(extractReportVersion(r))}</b>
             </div>
           </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-sm" id="btnDlJson">&#11015;&#65039; Скачать JSON</button>
-          </div>
+          <button class="btn btn-sm" id="btnDlJson">&#11015;&#65039; Скачать JSON</button>
         </div>
 
         ${trace.length > 0 ? trace.map((t, idx) => `
@@ -2847,7 +3019,7 @@
             <img src="${esc(qrSrc)}" width="120" height="120" style="border-radius:10px; border:1px solid var(--border); background:#fff; padding:6px;" alt="QR">
             <div style="flex:1; min-width:180px; font-size:13px;">
               <div style="font-weight:700; margin-bottom:4px;">${esc(r.businessName)}</div>
-              <div style="color:var(--text-muted); margin-bottom:8px;">Разместите QR на кассе или стойке — клиент сразу попадёт на карточку отзывов.</div>
+              <div style="color:var(--text-muted); margin-bottom:8px;">Разместите QR на кассе или стойке для быстрого перехода к отзывам.</div>
               <a class="btn btn-sm" href="${esc(reviewUrl)}" target="_blank" rel="noopener">Открыть ссылку &#8599;</a>
             </div>
           </div>
@@ -2855,14 +3027,14 @@
 
         <div class="card">
           <div class="card-hdr"><h3>&#128202; Локальный RFM-анализ базы (CSV)</h3></div>
-          <p style="margin:0 0 8px; font-size:12.5px; color:var(--text-muted);">Загрузите CSV (колонки: клиент, дата, сумма) — расчёт идёт 100% в браузере без отправки на сервер.</p>
+          <p style="margin:0 0 8px; font-size:12.5px; color:var(--text-muted);">Загрузите CSV (клиент, дата, сумма) — расчёт идёт 100% в браузере.</p>
           <input type="file" id="rfmCsvInput" accept=".csv,.txt" style="font-size:12.5px; margin-bottom:8px;">
           <div id="rfmResult" style="font-size:12.5px;"></div>
         </div>
       </div>
 
       <details class="fold">
-        <summary>&#128736; Инженерные логи выполнения (${logs.length} строк)</summary>
+        <summary>&#128736; Инженерные логи (${logs.length} строк)</summary>
         <div class="fold-body">
           <pre class="log-box">${esc(logs.join("\n") || "Нет логов")}</pre>
         </div>
@@ -2872,7 +3044,7 @@
       const blob = new Blob([JSON.stringify(r, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `B2B_Nexus_v7_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
+      a.download = `B2B_Nexus_v77_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
       a.click();
     };
 
@@ -2913,7 +3085,7 @@
     const defEmail = STATE.autoEmail || "";
     showModal(`
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <h3 style="margin:0;">&#9993;&#65039; Отправить 100% отчёт (HTML + JSON)</h3>
+        <h3 style="margin:0;">&#9993;&#65039; Отправить полный отчёт (HTML + JSON)</h3>
         <button class="btn btn-sm" id="mClose">&#10005;</button>
       </div>
       <div class="field" style="margin-bottom:12px;">
@@ -2937,9 +3109,7 @@
       $("mSendMail").textContent = "Отправка...";
       try {
         const res = await apiPost({
-          action: "sendEmail",
-          fileId: STATE.fileId,
-          email: to,
+          action: "sendEmail", fileId: STATE.fileId, email: to,
           language: r.reportLanguage || STATE.lang
         });
         if (res && res.status === "success") {
@@ -2964,11 +3134,11 @@
         <button class="btn btn-sm" id="mClose">&#10005;</button>
       </div>
       <div class="field" style="margin-bottom:10px;">
-        <label>Кому (верифицированный email из отчёта)</label>
+        <label>Кому (верифицированный email)</label>
         <input type="text" value="${esc(contractor.email)}" readonly>
       </div>
       <div class="field" style="margin-bottom:10px;">
-        <label for="rfpContact">Ваш контакт для ответа (телефон / email)</label>
+        <label for="rfpContact">Ваш контакт для ответа</label>
         <input id="rfpContact" type="text" placeholder="+49 ... или owner@company.de">
       </div>
       <div class="field" style="margin-bottom:14px;">
@@ -2986,15 +3156,10 @@
       $("mSendRfp").disabled = true;
       try {
         const res = await apiPost({
-          action: "sendProposal",
-          fileId: STATE.fileId,
-          toEmail: contractor.email,
-          vendorName: contractor.name,
-          vendorWebsite: contractor.website || "",
-          stepTitle: step.title,
-          senderContact: $("rfpContact").value.trim(),
-          messageBody: $("rfpBody").value.trim(),
-          language: r.reportLanguage || STATE.lang
+          action: "sendProposal", fileId: STATE.fileId, toEmail: contractor.email,
+          vendorName: contractor.name, vendorWebsite: contractor.website || "",
+          stepTitle: step.title, senderContact: $("rfpContact").value.trim(),
+          messageBody: $("rfpBody").value.trim(), language: r.reportLanguage || STATE.lang
         });
         if (res && res.status === "success") {
           showToast("ТЗ отправлено на " + (res.resolvedEmail || contractor.email));
@@ -3012,13 +3177,13 @@
   function openSettingsModal() {
     showModal(`
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3 style="margin:0;">&#9881;&#65039; Настройки сканера v7.0</h3>
+        <h3 style="margin:0;">&#9881;&#65039; Настройки сканера</h3>
         <button class="btn btn-sm" id="mClose">&#10005;</button>
       </div>
       <div class="field" style="margin-bottom:12px;">
         <label for="setEngine">Режим роя моделей</label>
         <select id="setEngine">
-          <option value="argon_pro" ${STATE.engineMode === "argon_pro" ? "selected" : ""}>Argon Pro v7.1 (5 Директоров + Суд Присяжных + 2x Синтез)</option>
+          <option value="argon_pro" ${STATE.engineMode === "argon_pro" ? "selected" : ""}>Argon Pro (5 Директоров + Суд Присяжных + 2x Синтез)</option>
           <option value="fast_flash" ${STATE.engineMode === "fast_flash" ? "selected" : ""}>Turbo Flash (3 Директора · ~15–20 сек)</option>
         </select>
       </div>
@@ -3031,12 +3196,12 @@
         </select>
       </div>
       <div class="field" style="margin-bottom:10px;">
-        <label for="setAutoEmail">Ваш email для автоотправки отчётов (хранится локально)</label>
+        <label for="setAutoEmail">Дополнительный email для автоотправки</label>
         <input id="setAutoEmail" type="email" value="${esc(STATE.autoEmail)}" placeholder="you@domain.com">
       </div>
       <label style="display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:16px; cursor:pointer;">
         <input type="checkbox" id="setAutoOn" ${STATE.autoEmailOn ? "checked" : ""}>
-        <span>Автоматически присылать 100% отчёт (HTML + JSON) на этот email после каждого скана</span>
+        <span>Присылать копию отчёта на этот email после каждого скана</span>
       </label>
       <div style="display:flex; justify-content:flex-end; gap:8px;">
         <button class="btn" id="mCancel">Отмена</button>
@@ -3080,7 +3245,6 @@
       loadCatalog();
     };
 
-    // Cascade Autocomplete Step 1: Country (instant first-letter + focus dropdown)
     $("countryInput").addEventListener("focus", () => {
       closeAllAcDropdowns("acCountry");
       showCountryDropdown($("countryInput").value);
@@ -3104,7 +3268,6 @@
       $("countryInput").focus();
     };
 
-    // Cascade Autocomplete Step 2: City (ISO-filtered via GAS + Photon fallback)
     $("cityInput").addEventListener("focus", () => {
       closeAllAcDropdowns("acCity");
       if ($("cityInput").value.trim().length >= 1) fetchCitySuggestions($("cityInput").value);
@@ -3127,7 +3290,6 @@
       $("cityInput").focus();
     };
 
-    // Cascade Autocomplete Step 3: Business (bbox + lat/lng + countryCode filtered)
     $("qInput").addEventListener("focus", () => {
       closeAllAcDropdowns("acBiz");
       if ($("qInput").value.trim().length >= 2) fetchBusinessSuggestions($("qInput").value);
@@ -3157,7 +3319,6 @@
       if (!e.target.closest(".ac-field")) closeAllAcDropdowns();
     });
 
-    // Drawers & Chips
     $("chipBrief").onclick = () => {
       $("drawerBrief").classList.toggle("hidden");
       $("chipBrief").classList.toggle("active");

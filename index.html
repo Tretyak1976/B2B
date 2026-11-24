@@ -588,7 +588,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v7.7</span>
+      <span class="ver-pill" id="verPill">v7.8</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -757,7 +757,7 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "7.7";
+  const UI_VERSION = "7.8";
 
   const KNOWN_BRAND_DOMAINS = [
     [/\btotalenergies\b|\btotal\s+(gas|tankstelle|station)/i, "totalenergies.de"],
@@ -784,7 +784,9 @@
     [/\bmatomo\b/i, "matomo.org"], [/\bsuperchat\b/i, "superchat.de"], [/\bmollie\b/i, "mollie.com"],
     [/\bdoctolib\b/i, "doctolib.de"], [/\bonoffice\b/i, "onoffice.com"], [/\bpropstack\b/i, "propstack.de"],
     [/\bcal\.com\b/i, "cal.com"], [/\bcalendly\b/i, "calendly.com"], [/\bcloudflare\b/i, "cloudflare.com"],
-    [/\bupdraftplus\b/i, "updraftplus.com"], [/\bborlabs\b/i, "borlabs.io"], [/\btidio\b/i, "tidio.com"]
+    [/\bupdraftplus\b/i, "updraftplus.com"], [/\bborlabs\b/i, "borlabs.io"], [/\btidio\b/i, "tidio.com"],
+    [/\bnobilia\b/i, "nobilia.de"], [/\bh[aä]cker\b/i, "haecker-kuechen.de"],
+    [/\bmarquardt\s*k[uü]chen\b/i, "marquardt-kuechen.de"], [/\bk[uü]chen\s*aktuell\b/i, "kuechen-aktuell.de"]
   ];
 
   const LOCAL_COUNTRIES = [
@@ -882,25 +884,27 @@
     return "";
   };
 
+  const stripLeadNum = (s) => String(s || "").replace(/^\s*(?:\d+[.)]\s+|[-•*]\s+)/, "").trim();
+
   const uniqStrings = (arr) => {
     const out = [], seen = new Set();
     (Array.isArray(arr) ? arr : []).forEach((x) => {
-      const s = safeText(x);
+      const s = stripLeadNum(safeText(x));
       const k = s.toLowerCase().replace(/\s+/g, " ").trim();
-      if (k && !seen.has(k)) { seen.add(k); out.push(s); }
+      if (k && k !== "n/a" && !seen.has(k)) { seen.add(k); out.push(s); }
     });
     return out;
   };
 
   const safeHref = (u) => {
     const s = String(u || "").trim();
-    if (!s || s === "N/A") return "";
+    if (!s || /^n\/a$/i.test(s)) return "";
     return /^https?:\/\//i.test(s) ? s : ("https://" + s);
   };
 
   const extractDomain = (u) => {
     const s = String(u || "").trim();
-    if (!s || s === "N/A") return "";
+    if (!s || /^n\/a$/i.test(s)) return "";
     const d = s.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0].split("?")[0].toLowerCase().trim();
     if (!d || d.indexOf(".") === -1 || /google\./i.test(d)) return "";
     return d;
@@ -940,7 +944,7 @@
     [street, city, country].forEach((p) => {
       const s = String(p || "").trim();
       const k = s.toLowerCase();
-      if (s && k !== "n/a" && !seen.has(k)) { seen.add(k); parts.push(s); }
+      if (s && k !== "n/a" && k !== "none" && !seen.has(k)) { seen.add(k); parts.push(s); }
     });
     return parts.join(", ");
   };
@@ -1355,7 +1359,7 @@
         country: rep.searchCountry || meta.detectedCountry || "",
         city: rep.searchCity || meta.detectedCity || "",
         street: meta.detectedStreet || c.street || "",
-        website: c.website || "",
+        website: (c.website && !/^n\/a$/i.test(c.website)) ? c.website : "",
         logoUrl: rep.logoUrl || "",
         score: (rep.nexusRanking && rep.nexusRanking.score) || 0,
         schemaVersion: rep.schemaVersion || UI_VERSION,
@@ -1460,7 +1464,7 @@
       ).join("");
     };
 
-    addFeed("Запуск конвейера верификации фактов (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
+    addFeed("Запуск конвейера верификации фактов v7.8 (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
 
     STATE.clockTimer = setInterval(() => {
       const s = Math.floor((Date.now() - t0) / 1000);
@@ -1610,15 +1614,17 @@
     const sig = r.digitalSignals || {};
     const ext = (r.meta && r.meta.externalLinks) || {};
     const vf = r.verifiedFacts || null;
-    const streetWithHouse = meta.detectedStreet || c.street || "";
+    const streetWithHouse = (meta.detectedStreet && !/^n\/a$/i.test(meta.detectedStreet))
+      ? meta.detectedStreet
+      : ((c.street && !/^n\/a$/i.test(c.street)) ? c.street : "");
     const loc = formatAddr(streetWithHouse, meta.detectedCity || r.searchCity, meta.detectedCountry || r.searchCountry);
     const repVer = extractReportVersion(r);
     const dur = extractReportDuration(r);
     const showLegacyVer = repVer !== ("v" + UI_VERSION);
-    const dom = sig.finalDomain || extractDomain(c.website);
+    const hasRealSite = Boolean(c.website && !/^n\/a$/i.test(String(c.website).trim()));
+    const dom = hasRealSite ? (sig.finalDomain || extractDomain(c.website)) : "";
     const headerLogo = (r.whiteLabel && r.whiteLabel.logoUrl) ? r.whiteLabel.logoUrl : (r.logoUrl || "");
 
-    // Deduplicated techStack
     const seenTech = new Set();
     const techList = (Array.isArray(r.techStack) ? r.techStack : []).filter((t) => {
       const nm = String((t && t.name) || t || "").trim();
@@ -1629,6 +1635,8 @@
     });
     const socials = Array.isArray(r.socialProfiles) ? r.socialProfiles : [];
     const infra = uniqStrings(r.infrastructure || []);
+    const confScore = Number(ev.confidenceScore) || 0;
+    const confClass = confScore >= 70 ? "violet" : (confScore >= 45 ? "amber" : "red");
 
     const osmFactBadges = vf ? [
       `<span class="badge ${vf.hasEvCharging ? "green" : ""}">EV-зарядка (80м): ${vf.hasEvCharging ? "Есть" : "Нет в OSM"}</span>`,
@@ -1644,19 +1652,19 @@
           <div class="extra-box">
             <div class="extra-box-title">&#127970; Профиль и юридические данные</div>
             <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
-              ${meta.ownershipType && meta.ownershipType !== "N/A" ? `<span class="badge">${esc(meta.ownershipType)}</span>` : ""}
-              ${meta.owner && meta.owner !== "N/A" && meta.owner !== "Не раскрыто" ? `<span class="badge">Владелец: ${esc(meta.owner)}</span>` : ""}
-              ${meta.ceoName && meta.ceoName !== "N/A" && meta.ceoName !== "Не раскрыто" ? `<span class="badge">Руководитель: ${esc(meta.ceoName)}</span>` : ""}
+              ${meta.ownershipType && !/^n\/a$/i.test(meta.ownershipType) ? `<span class="badge">${esc(meta.ownershipType)}</span>` : ""}
+              ${meta.owner && !/^(n\/a|не раскрыто)$/i.test(meta.owner) ? `<span class="badge">Владелец: ${esc(meta.owner)}</span>` : ""}
+              ${meta.ceoName && !/^(n\/a|не раскрыто)$/i.test(meta.ceoName) ? `<span class="badge">Руководитель: ${esc(meta.ceoName)}</span>` : ""}
               ${meta.founded ? `<span class="badge">Основана: ${esc(meta.founded)}</span>` : ""}
             </div>
-            ${meta.legalIssues && meta.legalIssues !== "N/A" ? `<div style="color:var(--text-muted); margin-bottom:6px;"><b>Комплаенс:</b> ${esc(meta.legalIssues)}</div>` : ""}
+            ${meta.legalIssues && !/^n\/a$/i.test(meta.legalIssues) ? `<div style="color:var(--text-muted); margin-bottom:6px;"><b>Комплаенс:</b> ${esc(meta.legalIssues)}</div>` : ""}
             ${osmFactBadges ? `<div style="display:flex; flex-wrap:wrap; gap:5px;">${osmFactBadges}</div>` : ""}
           </div>
 
           <div class="extra-box">
             <div class="extra-box-title">&#128187; Технический стек (${techList.length})${infra.length ? " и инфраструктура" : ""}</div>
             <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:${infra.length ? "6px" : "0"};">
-              ${techList.map((t) => `<span class="badge ${t.source === "verified_http" ? "green" : ""}" title="${esc(t.details || "")}">${esc(t.name || t)}</span>`).join("") || `<span style="color:var(--text-soft);">Нет данных</span>`}
+              ${techList.map((t) => `<span class="badge ${t.source === "verified_http" ? "green" : ""}" title="${esc(t.details || "")}">${esc(t.name || t)}</span>`).join("") || `<span style="color:var(--text-soft);">Нет подтверждённых HTTP-сигналов</span>`}
             </div>
             ${infra.length ? `<div style="color:var(--text-muted); font-size:12px;">${esc(infra.join(" · "))}</div>` : ""}
           </div>
@@ -1665,7 +1673,7 @@
         <div class="extra-box" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <span class="extra-box-title" style="margin:0;">&#127760; Соцсети:</span>
-            ${socials.length ? socials.map((s) => `<a class="badge sky" href="${esc(s.url)}" target="_blank" rel="noopener">${esc((s.icon || "") + " " + s.label)}</a>`).join("") : `<span style="color:var(--text-soft);">Не обнаружены</span>`}
+            ${socials.length ? socials.map((s) => `<a class="badge sky" href="${esc(s.url)}" target="_blank" rel="noopener">${esc((s.icon || "") + " " + s.label)}</a>`).join("") : `<span style="color:var(--text-soft);">Не обнаружены на сайте</span>`}
           </div>
           <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
             <span class="extra-box-title" style="margin:0;">OSINT:</span>
@@ -1682,16 +1690,17 @@
     $("repHeader").innerHTML = `
       <div class="rep-header-top">
         <div class="rep-id">
-          ${companyLogoHtml(headerLogo, c.website, r.businessName, 50)}
+          ${companyLogoHtml(headerLogo, hasRealSite ? c.website : "", r.businessName, 50)}
           <div style="min-width:0;">
             <h1 class="rep-title">${esc(r.businessName || "Бизнес-аудит")}</h1>
             <div class="rep-sub">
               <span>&#128205; ${esc(loc || "Локация не указана")}</span>
               <span class="badge sky">${esc(meta.niche || "Business")}</span>
               <span class="badge">${esc(modeLabel(r.entityMode))}</span>
+              ${r.realDataMissing ? `<span class="badge amber">Бенчмарк-режим (нет в OSM)</span>` : ""}
               ${showLegacyVer ? `<span class="badge amber">Архив ${esc(repVer)}</span>` : ""}
               ${dur ? `<span class="badge">&#9201; ${esc(dur)}</span>` : ""}
-              ${ev.confidenceScore ? `<span class="badge violet">&#9878;&#65039; Доверие ${esc(ev.confidenceScore)}%</span>` : ""}
+              ${confScore ? `<span class="badge ${confClass}">&#9878;&#65039; Доверие ${esc(confScore)}%</span>` : ""}
             </div>
           </div>
         </div>
@@ -1705,11 +1714,11 @@
         </div>
       </div>
       <div class="rep-contacts">
-        ${c.website && c.website !== "N/A" ? `<span>&#127760; <a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">${esc(dom || c.website)}</a></span>` : `<span>&#127760; Сайт не обнаружен</span>`}
+        ${hasRealSite ? `<span>&#127760; <a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">${esc(dom || c.website)}</a></span>` : `<span>&#127760; Сайт не обнаружен</span>`}
         ${c.email ? `<span>&#128231; ${esc(c.email)} ${c.emailVerified ? "&#9989;" : ""}</span>` : ""}
-        ${c.phone && c.phone !== "N/A" ? `<span>&#128222; ${esc(c.phone)}</span>` : ""}
-        ${c.hours && c.hours !== "N/A" ? `<span>&#128338; ${esc(c.hours)}</span>` : ""}
-        ${r.rating && r.rating !== "N/A" ? `<span>&#11088; ${esc(r.rating)} (${esc(r.reviewCount || 0)})</span>` : `<span>&#11088; Нет публичного рейтинга</span>`}
+        ${c.phone && !/^n\/a$/i.test(c.phone) ? `<span>&#128222; ${esc(c.phone)}</span>` : ""}
+        ${c.hours && !/^n\/a$/i.test(c.hours) ? `<span>&#128338; ${esc(c.hours)}</span>` : ""}
+        ${r.rating && !/^n\/a$/i.test(String(r.rating)) ? `<span>&#11088; ${esc(r.rating)} (${esc(r.reviewCount || 0)})</span>` : `<span>&#11088; Нет публичного рейтинга</span>`}
         ${socials.length ? `<span style="display:inline-flex; gap:6px; align-items:center; margin-left:auto;">${socials.slice(0, 5).map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.label)}" style="font-size:13px;">${esc(s.icon || s.label)}</a>`).join("")}</span>` : ""}
       </div>
       ${extraPanelHtml}`;
@@ -1905,6 +1914,7 @@
     const alerts = r.osintAlerts || [];
     const scens = Array.isArray(r.strategyScenarios) ? r.strategyScenarios : [];
     const quickWins = uniqStrings(mkt.quickWins || []);
+    const discQs = uniqStrings(r.discoveryQuestions || []);
 
     const diffBannerHtml = diff.hasPrevious ? `
       <div class="alert-box success">
@@ -1971,10 +1981,10 @@
       ${juryHtml}
 
       ${mkt.positioning ? `
-      <div class="card">
-        <div class="card-hdr"><h3>Позиционирование</h3></div>
-        <p style="margin:0; font-size:14px; line-height:1.6;">${esc(mkt.positioning)}</p>
-      </div>` : ""}
+        <div class="card">
+          <div class="card-hdr"><h3>Позиционирование</h3></div>
+          <p style="margin:0; font-size:14px; line-height:1.6;">${esc(mkt.positioning)}</p>
+        </div>` : ""}
 
       <div class="card">
         <div class="card-hdr">
@@ -2057,20 +2067,20 @@
           <div class="fold-body">
             <ul class="clean-list">${(r.kpi12Months || []).map((x) => {
               if (x && typeof x === "object") {
-                const t = safeText(x.kpi || x.metric || x.title);
+                const t = stripLeadNum(safeText(x.kpi || x.metric || x.title));
                 const v = x.targetPct !== undefined ? ` (${x.targetPct}%)` : (x.target ? ` (${x.target})` : "");
                 return `<li><b>${esc(t)}</b>${esc(v)}</li>`;
               }
-              return `<li>${esc(safeText(x))}</li>`;
+              return `<li>${esc(stripLeadNum(safeText(x)))}</li>`;
             }).join("") || "<li>—</li>"}</ul>
           </div>
         </details>
       </div>
 
       <details class="fold">
-        <summary>&#128203; Вопросы собственнику / Data Room (${(r.discoveryQuestions || []).length})</summary>
+        <summary>&#128203; Вопросы собственнику / Data Room (${discQs.length})</summary>
         <div class="fold-body">
-          <ul class="clean-list">${uniqStrings(r.discoveryQuestions || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
+          <ul class="clean-list">${discQs.map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul>
         </div>
       </details>`;
 
@@ -2178,7 +2188,7 @@
                 ${s.evidence && s.evidence !== "N/A" ? `<div style="font-size:12.5px; color:var(--amber); margin-bottom:6px;">&#128270; <b>Основание:</b> ${esc(s.evidence)}</div>` : ""}
                 <p style="margin:0 0 8px; font-size:13.5px;">${esc(s.plainExplanation || "")}</p>
                 <ol class="step-guide">
-                  ${(s.stepByStepGuide || []).map((g) => `<li>${esc(safeText(g))}</li>`).join("")}
+                  ${(s.stepByStepGuide || []).map((g) => `<li>${esc(stripLeadNum(safeText(g)))}</li>`).join("")}
                 </ol>
                 ${contractors.length > 0 ? `
                   <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:10px;">Подобранные подрядчики:</div>
@@ -2565,18 +2575,18 @@
             const pName = safeText(p.cleanName || p.name);
             const pLoc = formatAddr(p.street, p.city, p.country);
             return `
-            <div class="risk-card">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                <div class="entity-row">
-                  ${companyLogoHtml(p.logoUrl, p.website, pName, 26)}
-                  <b style="font-size:13.5px;">${esc(pName)}</b>
+              <div class="risk-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <div class="entity-row">
+                    ${companyLogoHtml(p.logoUrl, p.website, pName, 26)}
+                    <b style="font-size:13.5px;">${esc(pName)}</b>
+                  </div>
+                  ${pLoc ? `<span class="badge">${esc(pLoc)}</span>` : ""}
                 </div>
-                ${pLoc ? `<span class="badge">${esc(pLoc)}</span>` : ""}
-              </div>
-              <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
-              ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; Открыть</a>` : ""}
-            </div>`;
-          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Партнёры не указаны.</div>`}
+                <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
+                ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; Открыть</a>` : ""}
+              </div>`;
+          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Верифицированные локальные партнёры не найдены (фейковые компании скрыты).</div>`}
         </div>
 
         <div class="card">
@@ -2585,17 +2595,17 @@
           ${vendors.length > 0 ? vendors.map((v) => {
             const vName = safeText(v.cleanName || v.name);
             return `
-            <div class="risk-card">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                <div class="entity-row">
-                  ${companyLogoHtml(v.logoUrl, v.website, vName, 26)}
-                  <b style="font-size:13.5px;">${esc(vName)}</b>
+              <div class="risk-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <div class="entity-row">
+                    ${companyLogoHtml(v.logoUrl, v.website, vName, 26)}
+                    <b style="font-size:13.5px;">${esc(vName)}</b>
+                  </div>
+                  ${v.integrationTarget ? `<span class="badge sky">${esc(v.integrationTarget)}</span>` : ""}
                 </div>
-                ${v.integrationTarget ? `<span class="badge sky">${esc(v.integrationTarget)}</span>` : ""}
-              </div>
-              <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(v.description || v.reason || ""))}</div>
-              ${v.website ? `<a href="${esc(safeHref(v.website))}" target="_blank" rel="noopener">&#127760; Официальный сайт</a>` : ""}
-            </div>`;
+                <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(v.description || v.reason || ""))}</div>
+                ${v.website ? `<a href="${esc(safeHref(v.website))}" target="_blank" rel="noopener">&#127760; Официальный сайт</a>` : ""}
+              </div>`;
           }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Вендоры не указаны.</div>`}
         </div>
       </div>
@@ -2628,11 +2638,11 @@
         </div>
       </div>
 
-      ${(mkt.seoCpcOverview && mkt.seoCpcOverview !== "N/A") || mkt.seasonalityNotes ? `
+      ${(mkt.seoCpcOverview && !/^n\/a$/i.test(mkt.seoCpcOverview)) || (mkt.seasonalityNotes && !/^n\/a$/i.test(mkt.seasonalityNotes)) ? `
         <div class="card">
           <div class="card-hdr"><h3>&#128269; Спрос SEO / CPC и сезонность</h3></div>
-          ${mkt.seoCpcOverview && mkt.seoCpcOverview !== "N/A" ? `<p style="margin:0 0 6px; font-size:13.5px;"><b>SEO / CPC:</b> ${esc(mkt.seoCpcOverview)}</p>` : ""}
-          ${mkt.seasonalityNotes ? `<p style="margin:0; font-size:13.5px; color:var(--text-muted);"><b>Сезонность:</b> ${esc(mkt.seasonalityNotes)}</p>` : ""}
+          ${mkt.seoCpcOverview && !/^n\/a$/i.test(mkt.seoCpcOverview) ? `<p style="margin:0 0 6px; font-size:13.5px;"><b>SEO / CPC:</b> ${esc(mkt.seoCpcOverview)}</p>` : ""}
+          ${mkt.seasonalityNotes && !/^n\/a$/i.test(mkt.seasonalityNotes) ? `<p style="margin:0; font-size:13.5px; color:var(--text-muted);"><b>Сезонность:</b> ${esc(mkt.seasonalityNotes)}</p>` : ""}
         </div>` : ""}`;
   }
 
@@ -2708,7 +2718,7 @@
         <div class="card">
           <div class="card-hdr">
             <h3>Светофор сайта, GDPR и GEO</h3>
-            ${sig.hasWebsite && r.contacts && r.contacts.website && r.contacts.website !== "N/A" ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; PageSpeed</button>` : ""}
+            ${sig.hasWebsite && r.contacts && r.contacts.website && !/^n\/a$/i.test(r.contacts.website) ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; PageSpeed</button>` : ""}
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
             <span class="badge ${sig.httpsActive ? "green" : "red"}">${sig.httpsActive ? "&#9989; HTTPS" : "&#10060; Нет HTTPS"}</span>
@@ -3044,7 +3054,7 @@
       const blob = new Blob([JSON.stringify(r, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `B2B_Nexus_v77_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
+      a.download = `B2B_Nexus_v78_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
       a.click();
     };
 

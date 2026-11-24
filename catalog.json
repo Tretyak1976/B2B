@@ -1,5 +1,20 @@
 [
   {
+    "id": "134cJWJUuWOqREp8_VfMeu8KynqtUOOkC",
+    "name": "TotalEnergies",
+    "niche": "Заправочная станция (АЗС)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "https://totalenergies.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=totalenergies.de",
+    "rating": "4.3/5.0",
+    "score": 75,
+    "modelsUsed": 7,
+    "schemaVersion": "7.8",
+    "createdAt": "2026-11-24T15:56:48.371Z"
+  },
+  {
     "id": "1sUH4JS3qQ50cHeGgjZvvvXMiiJ37hegs",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Кухонные студии премиум‑сегмента",
@@ -13,18 +28,6 @@
     "modelsUsed": 6,
     "schemaVersion": "7.8",
     "createdAt": "2026-11-24T15:51:13.469Z"
-  },
-  {
-    "id": "1Ey4TQg_hHZXuzYSVslT9B8Mhm_Ur6tPk",
-    "name": "TotalEnergies",
-    "niche": "Топливно-энергетический сервисный центр с кафе и зарядными станциями для электромобилей",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 76,
-    "modelsUsed": 6,
-    "schemaVersion": "7.6",
-    "createdAt": "2026-11-24T14:38:30.347Z"
   },
   {
     "id": "1gvtPIOk4NfcwJOiMPCSFY9yE0NXaoZPY",

@@ -1,5 +1,16 @@
 [
   {
+    "id": "1U6n7r1uMXDc-1QgPVCRuL13qlQ0GGM2X",
+    "name": "CLASSIC Tankstelle Kleve",
+    "niche": "АЗС с базовыми услугами",
+    "country": "Германия",
+    "city": "Kleve",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 4,
+    "createdAt": "2026-11-24T07:16:51.722Z"
+  },
+  {
     "id": "1KUdaPQH8u5jsub-VvRLAkOr-8qTueKwj",
     "name": "TotalEnergies",
     "niche": "АЗС с кафе и сервисом мойки",

@@ -1,15 +1,15 @@
 [
   {
-    "id": "16rjD9FE66wSyXbNmmrtjOMKiUlxkoLDz",
+    "id": "1nP8Cx8S2u980xSC2PT4OmvUfAVfIF4XX",
     "name": "TotalEnergies",
-    "niche": "АЗС",
+    "niche": "Заправочная станция с кофейным бистро",
     "country": "Германия",
     "city": "Kleve",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 6,
-    "schemaVersion": "7.2",
-    "createdAt": "2026-11-24T14:02:17.913Z"
+    "rating": "4.3/5.0",
+    "score": 76,
+    "modelsUsed": 8,
+    "schemaVersion": "7.3",
+    "createdAt": "2026-11-24T14:12:13.594Z"
   },
   {
     "id": "11Hw7hWEV8O492C4NZYZ3r0IXXRh847Ar",

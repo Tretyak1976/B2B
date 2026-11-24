@@ -1,5 +1,20 @@
 [
   {
+    "id": "1XM-23V-cKGK7bWT0Z8Y_-GQ6uwQ0gC5k",
+    "name": "Samsung Electronics",
+    "niche": "корпоративные IT-решения и электроника",
+    "country": "Южная Корея",
+    "city": "Seoul",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 63,
+    "modelsUsed": 6,
+    "schemaVersion": "7.8",
+    "createdAt": "2026-11-24T16:06:50.064Z"
+  },
+  {
     "id": "134cJWJUuWOqREp8_VfMeu8KynqtUOOkC",
     "name": "TotalEnergies",
     "niche": "Заправочная станция (АЗС)",

@@ -1,18 +1,18 @@
 [
   {
-    "id": "1R9cY7KwGTQp7ifjOrJa3-oP4JQ8AUzUd",
+    "id": "1XzhnoGuf7EmXhVdeMiLuJf0BvbACjRGj",
     "name": "Lidl",
-    "niche": "Супермаркет",
+    "niche": "продуктовый дисконтный супермаркет",
     "country": "Германия",
     "city": "Kleve",
-    "street": "Van-den-Bergh-Straße 60-62",
-    "website": "https://lidl.de",
+    "street": "",
+    "website": "",
     "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=lidl.de",
-    "rating": "4.4/5.0",
-    "score": 79,
-    "modelsUsed": 8,
+    "rating": "N/A",
+    "score": 62,
+    "modelsUsed": 6,
     "schemaVersion": "7.8",
-    "createdAt": "2026-11-24T16:16:11.259Z"
+    "createdAt": "2026-11-24T18:55:07.376Z"
   },
   {
     "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",

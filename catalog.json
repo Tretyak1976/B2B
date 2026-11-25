@@ -1,5 +1,20 @@
 [
   {
+    "id": "1D9biz5gaOXl0eAUXQgGKtKNRCxalK5uJ",
+    "name": "TotalEnergies",
+    "niche": "Розничная продажа топлива и сопутствующих услуг",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 7,
+    "schemaVersion": "8.0",
+    "createdAt": "2026-11-25T08:13:56.548Z"
+  },
+  {
     "id": "1C9LYW5BnnrBYyAKkqeZh5Oa6c53E4pVd",
     "name": "Lidl",
     "niche": "Супермаркет повседневных товаров",
@@ -13,21 +28,6 @@
     "modelsUsed": 6,
     "schemaVersion": "8.0",
     "createdAt": "2026-11-25T08:12:07.720Z"
-  },
-  {
-    "id": "1jOq3NA6lCmG4afQgk4H2SpXM_Anlopuj",
-    "name": "TotalEnergies",
-    "niche": "Заправочная станция (АЗС)",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße",
-    "website": "https://totalenergies.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=totalenergies.de",
-    "rating": "4.3/5.0",
-    "score": 77,
-    "modelsUsed": 6,
-    "schemaVersion": "7.8",
-    "createdAt": "2026-11-25T06:10:02.185Z"
   },
   {
     "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",

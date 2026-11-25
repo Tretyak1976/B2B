@@ -1,5 +1,20 @@
 [
   {
+    "id": "1_6K0UebJsxrmxyiswPbGiAAOKoJ5kKKZ",
+    "name": "Shopping Manaus ViaNorte",
+    "niche": "Торговый центр (молл) среднего размера",
+    "country": "Бразилия",
+    "city": "Manaus",
+    "street": "Avenida Arquiteto José Henriques B. Rodrigues",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 54,
+    "modelsUsed": 6,
+    "schemaVersion": "8.2",
+    "createdAt": "2026-11-25T10:41:17.659Z"
+  },
+  {
     "id": "1O7XtW27nbD6uDoVTPUjUravLBM3dlq_P",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Индивидуальные кухонные решения под ключ",

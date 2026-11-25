@@ -588,7 +588,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v8.0</span>
+      <span class="ver-pill" id="verPill">v8.1</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -757,7 +757,7 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "8.0";
+  const UI_VERSION = "8.1";
 
   const DACH_CC = new Set(["DE", "AT", "CH"]);
   const EU_UK_CC = new Set([
@@ -770,18 +770,18 @@
   const LOCAL_COUNTRIES = [
     { code: "DE", ru: "Германия", en: "Germany", de: "Deutschland", es: "Alemania", fr: "Allemagne", zh: "德国", lat: 51.1657, lng: 10.4515 },
     { code: "UA", ru: "Украина", en: "Ukraine", de: "Ukraine", es: "Ucrania", fr: "Ukraine", zh: "乌克兰", lat: 48.3794, lng: 31.1656 },
-    { code: "US", ru: "США", en: "United States", de: "USA", es: "Estados Unidos", fr: "États-Unis", zh: "美国", lat: 39.8283, lng: -98.5795 },
-    { code: "NL", ru: "Нидерланды", en: "Netherlands", de: "Niederlande", es: "Países Bajos", fr: "Pays-Bas", zh: "荷兰", lat: 52.1326, lng: 5.2913 },
+    { code: "US", ru: "США", en: "United States", de: "USA", es: "Estados Unidos", fr: "États-Unis", zh: "美国", lat: 39.8283, lng: -98.5795, aliases: ["usa", "соединенные штаты"] },
+    { code: "NL", ru: "Нидерланды", en: "Netherlands", de: "Niederlande", es: "Países Bajos", fr: "Pays-Bas", zh: "荷兰", lat: 52.1326, lng: 5.2913, aliases: ["голландия", "holland"] },
     { code: "PL", ru: "Польша", en: "Poland", de: "Polen", es: "Polonia", fr: "Pologne", zh: "波兰", lat: 51.9194, lng: 19.1451 },
-    { code: "GB", ru: "Великобритания", en: "United Kingdom", de: "Großbritannien", es: "Reino Unido", fr: "Royaume-Uni", zh: "英国", lat: 55.3781, lng: -3.4360 },
+    { code: "GB", ru: "Великобритания", en: "United Kingdom", de: "Großbritannien", es: "Reino Unido", fr: "Royaume-Uni", zh: "英国", lat: 55.3781, lng: -3.4360, aliases: ["uk", "англия", "england"] },
     { code: "FR", ru: "Франция", en: "France", de: "Frankreich", es: "Francia", fr: "France", zh: "法国", lat: 46.2276, lng: 2.2137 },
     { code: "ES", ru: "Испания", en: "Spain", de: "Spanien", es: "España", fr: "Espagne", zh: "西班牙", lat: 40.4637, lng: -3.7492 },
     { code: "IT", ru: "Италия", en: "Italy", de: "Italien", es: "Italia", fr: "Italie", zh: "意大利", lat: 41.8719, lng: 12.5674 },
     { code: "AT", ru: "Австрия", en: "Austria", de: "Österreich", es: "Austria", fr: "Autriche", zh: "奥地利", lat: 47.5162, lng: 14.5501 },
     { code: "CH", ru: "Швейцария", en: "Switzerland", de: "Schweiz", es: "Suiza", fr: "Suisse", zh: "瑞士", lat: 46.8182, lng: 8.2275 },
     { code: "BE", ru: "Бельгия", en: "Belgium", de: "Belgien", es: "Bélgica", fr: "Belgique", zh: "比利时", lat: 50.5039, lng: 4.4699 },
-    { code: "CZ", ru: "Чехия", en: "Czechia", de: "Tschechien", es: "Chequia", fr: "Tchéquie", zh: "捷克", lat: 49.8175, lng: 15.4730 },
-    { code: "AE", ru: "ОАЭ", en: "United Arab Emirates", de: "Vereinigte Arabische Emirate", es: "Emiratos Árabes Unidos", fr: "Émirats arabes unis", zh: "阿联酋", lat: 23.4241, lng: 53.8478 },
+    { code: "CZ", ru: "Чехия", en: "Czechia", de: "Tschechien", es: "Chequia", fr: "Tchéquie", zh: "捷克", lat: 49.8175, lng: 15.4730, aliases: ["czech republic"] },
+    { code: "AE", ru: "ОАЭ", en: "United Arab Emirates", de: "Vereinigte Arabische Emirate", es: "Emiratos Árabes Unidos", fr: "Émirats arabes unis", zh: "阿联酋", lat: 23.4241, lng: 53.8478, aliases: ["uae", "дубай", "dubai", "эмираты"] },
     { code: "TR", ru: "Турция", en: "Turkey", de: "Türkei", es: "Turquía", fr: "Turquie", zh: "土耳其", lat: 38.9637, lng: 35.2433 },
     { code: "CA", ru: "Канада", en: "Canada", de: "Kanada", es: "Canadá", fr: "Canada", zh: "加拿大", lat: 56.1304, lng: -106.3468 },
     { code: "AU", ru: "Австралия", en: "Australia", de: "Australien", es: "Australia", fr: "Australie", zh: "澳大利亚", lat: 25.2744, lng: 133.7751 },
@@ -789,7 +789,7 @@
     { code: "IL", ru: "Израиль", en: "Israel", de: "Israel", es: "Israel", fr: "Israël", zh: "以色列", lat: 31.0461, lng: 34.8516 },
     { code: "JP", ru: "Япония", en: "Japan", de: "Japan", es: "Japón", fr: "Japon", zh: "日本", lat: 36.2048, lng: 138.2529 },
     { code: "CN", ru: "Китай", en: "China", de: "China", es: "China", fr: "Chine", zh: "中国", lat: 35.8617, lng: 104.1954 },
-    { code: "KR", ru: "Южная Корея", en: "South Korea", de: "Südkorea", es: "Corea del Sur", fr: "Corée du Sud", zh: "韩国", lat: 35.9078, lng: 127.7669 },
+    { code: "KR", ru: "Южная Корея", en: "South Korea", de: "Südkorea", es: "Corea del Sur", fr: "Corée du Sud", zh: "韩国", lat: 35.9078, lng: 127.7669, aliases: ["корея", "korea"] },
     { code: "SG", ru: "Сингапур", en: "Singapore", de: "Singapur", es: "Singapur", fr: "Singapour", zh: "新加坡", lat: 1.3521, lng: 103.8198 },
     { code: "BR", ru: "Бразилия", en: "Brazil", de: "Brasilien", es: "Brasil", fr: "Brésil", zh: "巴西", lat: -14.2350, lng: -51.9253 },
     { code: "PT", ru: "Португалия", en: "Portugal", de: "Portugal", es: "Portugal", fr: "Portugal", zh: "葡萄牙", lat: 39.3999, lng: -8.2245 },
@@ -802,8 +802,17 @@
     { code: "GR", ru: "Греция", en: "Greece", de: "Griechenland", es: "Grecia", fr: "Grèce", zh: "希腊", lat: 39.0742, lng: 21.8243 },
     { code: "GE", ru: "Грузия", en: "Georgia", de: "Georgien", es: "Georgia", fr: "Géorgie", zh: "格鲁吉亚", lat: 42.3154, lng: 43.3569 },
     { code: "IN", ru: "Индия", en: "India", de: "Indien", es: "India", fr: "Inde", zh: "印度", lat: 20.5937, lng: 78.9629 },
-    { code: "MX", ru: "Мексика", en: "Mexico", de: "Mexiko", es: "México", fr: "Mexique", zh: "墨西哥", lat: 23.6345, lng: -102.5528 }
+    { code: "MX", ru: "Мексика", en: "Mexico", de: "Mexiko", es: "México", fr: "Mexique", zh: "墨西哥", lat: 23.6345, lng: -102.5528 },
+    { code: "ZA", ru: "Южная Африка", en: "South Africa", de: "Südafrika", es: "Sudáfrica", fr: "Afrique du Sud", zh: "南非", lat: -30.5595, lng: 22.9375, aliases: ["юар", "южно-африканская республика", "republic of south africa"] }
   ];
+
+  const CCTLD_COUNTRY_MAP = {
+    de: "DE", ua: "UA", uk: "GB", nl: "NL", pl: "PL", fr: "FR", es: "ES", it: "IT",
+    at: "AT", ch: "CH", be: "BE", cz: "CZ", ae: "AE", tr: "TR", ca: "CA", au: "AU",
+    kz: "KZ", il: "IL", jp: "JP", cn: "CN", kr: "KR", sg: "SG", br: "BR", pt: "PT",
+    se: "SE", no: "NO", dk: "DK", ro: "RO", bg: "BG", hu: "HU", gr: "GR", ge: "GE",
+    in: "IN", mx: "MX", za: "ZA"
+  };
 
   const STATE = {
     lang: localStorage.getItem("b2b_lang") || "ru-RU",
@@ -982,6 +991,91 @@
     return res.json();
   }
 
+  // ---------- v8.1: AUTO-DETECT & AUTO-RESET STALE COUNTRY WHEN USER ENTERS ANOTHER ----------
+  function findCountryObjByExactName(val) {
+    const low = String(val || "").trim().toLowerCase();
+    if (!low) return null;
+    for (let i = 0; i < LOCAL_COUNTRIES.length; i++) {
+      const c = LOCAL_COUNTRIES[i];
+      const names = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].concat(c.aliases || [])
+        .map((x) => String(x || "").toLowerCase()).filter(Boolean);
+      if (names.includes(low)) return c;
+    }
+    return null;
+  }
+
+  function detectExplicitCountryInQuery(rawText) {
+    const text = String(rawText || "").trim();
+    if (!text) return null;
+    const low = text.toLowerCase();
+
+    // 1. Check comma-separated segments or explicit country mentions
+    const segments = low.split(/[,;|/()]+/).map((s) => s.trim()).filter(Boolean);
+    for (let sIdx = segments.length - 1; sIdx >= 0; sIdx--) {
+      const exact = findCountryObjByExactName(segments[sIdx]);
+      if (exact) return exact;
+    }
+
+    // 2. Check multi-letter country names inside the text (safe boundary matching for Latin + Cyrillic)
+    for (let i = 0; i < LOCAL_COUNTRIES.length; i++) {
+      const c = LOCAL_COUNTRIES[i];
+      const names = [c.ru, c.en, c.de, c.es, c.fr, c.zh].concat(c.aliases || [])
+        .map((x) => String(x || "").toLowerCase()).filter((x) => x.length >= 3);
+      for (let j = 0; j < names.length; j++) {
+        const nm = names[j];
+        const idx = low.indexOf(nm);
+        if (idx === -1) continue;
+        const before = idx === 0 ? " " : low[idx - 1];
+        const after = (idx + nm.length >= low.length) ? " " : low[idx + nm.length];
+        if (!/[a-zа-яё0-9]/i.test(before) && !/[a-zа-яё0-9]/i.test(after)) {
+          return c;
+        }
+      }
+    }
+
+    // 3. Check explicit ccTLD if user typed a domain (e.g. company.co.za / company.de / company.jp)
+    const dom = extractDomain(text);
+    if (dom) {
+      const tld = dom.split(".").pop().toLowerCase();
+      const mappedCC = CCTLD_COUNTRY_MAP[tld];
+      if (mappedCC) {
+        return LOCAL_COUNTRIES.find((c) => c.code === mappedCC) || null;
+      }
+    }
+    return null;
+  }
+
+  function maybeAutoSwitchCountryFromQuery(qText, silent) {
+    const detected = detectExplicitCountryInQuery(qText);
+    if (!detected) return false;
+    const curCountryVal = $("countryInput").value.trim();
+    const curObj = STATE.geo.countryCode
+      ? { code: STATE.geo.countryCode }
+      : findCountryObjByExactName(curCountryVal);
+    const curCC = curObj ? String(curObj.code || "").toUpperCase() : "";
+
+    // If a different country was previously selected (or none selected yet), switch cleanly and wipe stale city/bbox
+    if (curCC !== detected.code || (!curCC && curCountryVal)) {
+      const lang2 = String(STATE.lang || "ru-RU").substring(0, 2).toLowerCase();
+      const dispName = detected[lang2] || detected.en;
+      const hadDifferent = Boolean(curCountryVal && curCC !== detected.code);
+      $("countryInput").value = dispName;
+      $("cityInput").value = "";
+      STATE.geo.country = dispName;
+      STATE.geo.countryCode = detected.code;
+      STATE.geo.city = "";
+      STATE.geo.lat = detected.lat;
+      STATE.geo.lng = detected.lng;
+      STATE.geo.bbox = "";
+      syncGeoUi();
+      if (hadDifferent && !silent) {
+        showToast(`Контур переключён на: ${dispName} (${detected.code})`, 2400);
+      }
+      return true;
+    }
+    return false;
+  }
+
   // ---------- CASCADE AUTOCOMPLETE (COUNTRY -> CITY -> BUSINESS, STRICTLY NO STREETS) ----------
   function syncGeoUi() {
     const g = STATE.geo;
@@ -1014,7 +1108,7 @@
     LOCAL_COUNTRIES.forEach((c, idx) => {
       const disp = c[lang2] || c.en;
       if (!low) { scored.push({ c, disp, sc: 100 - idx }); return; }
-      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].map((x) => String(x || "").toLowerCase());
+      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].concat(c.aliases || []).map((x) => String(x || "").toLowerCase());
       let sc = 0;
       if (all.some((n) => n === low)) sc = 200;
       else if (all.some((n) => n.startsWith(low))) sc = 150 - idx;
@@ -1045,6 +1139,7 @@
       el.addEventListener("mousedown", (e) => {
         e.preventDefault();
         const picked = items[Number(el.getAttribute("data-ac-c"))];
+        const prevCC = STATE.geo.countryCode;
         $("countryInput").value = picked.name;
         STATE.geo.country = picked.name;
         STATE.geo.countryCode = picked.countryCode;
@@ -1053,6 +1148,10 @@
         STATE.geo.city = "";
         STATE.geo.bbox = "";
         $("cityInput").value = "";
+        if (prevCC && prevCC !== picked.countryCode) {
+          STATE.geo.selectedBiz = "";
+          $("bizSrcBadge").textContent = "";
+        }
         list.classList.add("hidden");
         syncGeoUi();
         $("cityInput").focus();
@@ -1128,11 +1227,11 @@
         const picked = items[Number(el.getAttribute("data-ac-city"))];
         $("cityInput").value = picked.city || picked.name;
         STATE.geo.city = picked.city || picked.name;
-        if (picked.country && !$("countryInput").value.trim()) {
+        if (picked.country && (!$("countryInput").value.trim() || (picked.countryCode && picked.countryCode !== STATE.geo.countryCode))) {
           $("countryInput").value = picked.country;
           STATE.geo.country = picked.country;
         }
-        if (picked.countryCode && !STATE.geo.countryCode) STATE.geo.countryCode = picked.countryCode;
+        if (picked.countryCode) STATE.geo.countryCode = picked.countryCode;
         STATE.geo.lat = picked.lat || STATE.geo.lat;
         STATE.geo.lng = picked.lng || STATE.geo.lng;
         STATE.geo.bbox = picked.bbox || "";
@@ -1148,8 +1247,11 @@
     const trimmed = String(q || "").trim();
     if (trimmed.length < 2) { list.classList.add("hidden"); return; }
 
+    // v8.1: Auto-switch country if user typed another country directly in the business field
+    maybeAutoSwitchCountryFromQuery(trimmed, true);
+
     const reqId = ++STATE.acSeq.business;
-    list.innerHTML = `<div class="ac-empty">&#9203; Поиск компаний${STATE.geo.city ? " в " + esc(STATE.geo.city) : ""}...</div>`;
+    list.innerHTML = `<div class="ac-empty">&#9203; Поиск компаний${STATE.geo.city ? " в " + esc(STATE.geo.city) : (STATE.geo.country ? " (" + esc(STATE.geo.country) + ")" : "")}...</div>`;
     list.classList.remove("hidden");
 
     const curCountry = STATE.geo.country || $("countryInput").value.trim();
@@ -1228,10 +1330,14 @@
       el.addEventListener("mousedown", (e) => {
         e.preventDefault();
         const picked = items[Number(el.getAttribute("data-ac-biz"))];
+        const prevCC = STATE.geo.countryCode;
         const fullLabel = [picked.name, picked.street, picked.city].filter(Boolean).join(", ");
         $("qInput").value = fullLabel || picked.name;
         if (picked.country) { $("countryInput").value = picked.country; STATE.geo.country = picked.country; }
-        if (picked.countryCode) STATE.geo.countryCode = picked.countryCode;
+        if (picked.countryCode) {
+          if (prevCC && prevCC !== picked.countryCode) STATE.geo.bbox = "";
+          STATE.geo.countryCode = picked.countryCode;
+        }
         if (picked.city) { $("cityInput").value = picked.city; STATE.geo.city = picked.city; }
         if (picked.lat && picked.lng) { STATE.geo.lat = picked.lat; STATE.geo.lng = picked.lng; }
         STATE.geo.selectedBiz = picked.name;
@@ -1349,6 +1455,7 @@
       showToast("Введите название компании или сайт");
       return;
     }
+    maybeAutoSwitchCountryFromQuery(q, false);
     const card = $("preflightCard");
     card.classList.remove("hidden");
     card.innerHTML = `<div style="font-size:13px; color:var(--text-muted);">&#9889; Быстрая проверка точки, сайта и OSINT-фактов...</div>`;
@@ -1410,6 +1517,9 @@
       return;
     }
 
+    // v8.1: Auto-reset stale country/city if query explicitly references another country
+    maybeAutoSwitchCountryFromQuery(q, false);
+
     closeAllAcDropdowns();
     setScreen("scan");
     $("scanTargetTitle").textContent = q;
@@ -1437,7 +1547,7 @@
       ).join("");
     };
 
-    addFeed("Запуск глобального конвейера v8.0 (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
+    addFeed(`Запуск глобального конвейера v${UI_VERSION} (Слой 0 + 5 Директоров + Суд Присяжных)...`, "START");
 
     STATE.clockTimer = setInterval(() => {
       const s = Math.floor((Date.now() - t0) / 1000);
@@ -1545,7 +1655,7 @@
     if (rep.schemaVersion) return "v" + rep.schemaVersion;
     const logs = (rep.executionLogs || []).join("\n");
     const m = logs.match(/Argon\s+v(\d+\.\d+)/i);
-    return m ? ("v" + m[1]) : "v8.0";
+    return m ? ("v" + m[1]) : ("v" + UI_VERSION);
   }
 
   function extractReportDuration(rep) {
@@ -1954,10 +2064,10 @@
       ${juryHtml}
 
       ${mkt.positioning ? `
-        <div class="card">
-          <div class="card-hdr"><h3>Позиционирование</h3></div>
-          <p style="margin:0; font-size:14px; line-height:1.6;">${esc(mkt.positioning)}</p>
-        </div>` : ""}
+      <div class="card">
+        <div class="card-hdr"><h3>Позиционирование</h3></div>
+        <p style="margin:0; font-size:14px; line-height:1.6;">${esc(mkt.positioning)}</p>
+      </div>` : ""}
 
       <div class="card">
         <div class="card-hdr">
@@ -1996,13 +2106,13 @@
         </div>
 
         ${cal.cashFlow18m.length >= 2 ? `
-          <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12.5px;">
-              <b>Накопленный денежный поток (18 мес.)</b>
-              <span class="badge sky">Месяц 18: ${esc(fmtMoney(cal.cashFlow18m[cal.cashFlow18m.length - 1], sym))}</span>
-            </div>
-            ${buildCashFlow18mSvg(cal.cashFlow18m, sym)}
-          </div>` : ""}
+        <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12.5px;">
+            <b>Накопленный денежный поток (18 мес.)</b>
+            <span class="badge sky">Месяц 18: ${esc(fmtMoney(cal.cashFlow18m[cal.cashFlow18m.length - 1], sym))}</span>
+          </div>
+          ${buildCashFlow18mSvg(cal.cashFlow18m, sym)}
+        </div>` : ""}
 
         <details class="fold" style="margin-bottom:0; background:var(--bg-solid);">
           <summary>&#128295; Живая калибровка Data Room (подставьте ваши реальные цифры)</summary>
@@ -2187,46 +2297,46 @@
       </div>
 
       ${flowNodes.length > 0 ? `
-        <div class="card" style="margin-top:16px;">
-          <div class="card-hdr"><h3>&#128279; Архитектура IT-потока клиента (${flowNodes.length})</h3><span class="badge sky">От клика до повторной продажи</span></div>
-          <div class="flow-strip">
-            ${flowNodes.slice(0, 5).map((n, i) => `
-              <div class="flow-node">
-                <div class="flow-step">${esc(n.step || (i + 1))}</div>
-                <div style="font-weight:750; margin-bottom:2px;">${esc(n.label || "")}</div>
-                <div style="font-size:11.5px; color:var(--sky); margin-bottom:6px;">${esc(n.sub || "")}</div>
-                <div style="color:var(--text-muted); font-size:12px; margin-bottom:6px;">${esc(n.detail || "")}</div>
-                ${n.estCost ? `<span class="badge green">${esc(n.estCost)}</span>` : ""}
-              </div>`).join("")}
-          </div>
-        </div>` : ""}
+      <div class="card" style="margin-top:16px;">
+        <div class="card-hdr"><h3>&#128279; Архитектура IT-потока клиента (${flowNodes.length})</h3><span class="badge sky">От клика до повторной продажи</span></div>
+        <div class="flow-strip">
+          ${flowNodes.slice(0, 5).map((n, i) => `
+            <div class="flow-node">
+              <div class="flow-step">${esc(n.step || (i + 1))}</div>
+              <div style="font-weight:750; margin-bottom:2px;">${esc(n.label || "")}</div>
+              <div style="font-size:11.5px; color:var(--sky); margin-bottom:6px;">${esc(n.sub || "")}</div>
+              <div style="color:var(--text-muted); font-size:12px; margin-bottom:6px;">${esc(n.detail || "")}</div>
+              ${n.estCost ? `<span class="badge green">${esc(n.estCost)}</span>` : ""}
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
 
       <div class="grid-2">
         ${pkgs.length > 0 ? `
-          <div class="card">
-            <div class="card-hdr"><h3>&#128230; Модули запуска под ключ</h3><span class="badge">${pkgs.length}</span></div>
-            <div class="tbl-wrap">
-              <table class="data-tbl">
-                <thead><tr><th>Модуль</th><th>Срок</th><th>Бюджет</th></tr></thead>
-                <tbody>
-                  ${pkgs.map((p) => `<tr><td><b>${esc(p.title || "")}</b></td><td>${esc(p.days || "—")}</td><td><span class="badge green">${esc(p.priceFormatted || p.priceRaw || "—")}</span></td></tr>`).join("")}
-                </tbody>
-              </table>
-            </div>
-          </div>` : ""}
+        <div class="card">
+          <div class="card-hdr"><h3>&#128230; Модули запуска под ключ</h3><span class="badge">${pkgs.length}</span></div>
+          <div class="tbl-wrap">
+            <table class="data-tbl">
+              <thead><tr><th>Модуль</th><th>Срок</th><th>Бюджет</th></tr></thead>
+              <tbody>
+                ${pkgs.map((p) => `<tr><td><b>${esc(p.title || "")}</b></td><td>${esc(p.days || "—")}</td><td><span class="badge green">${esc(p.priceFormatted || p.priceRaw || "—")}</span></td></tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>` : ""}
 
         ${dKpis.length > 0 ? `
-          <div class="card">
-            <div class="card-hdr"><h3>&#128203; Ежемесячные KPI директора</h3><span class="badge">${dKpis.length}</span></div>
-            <div class="tbl-wrap">
-              <table class="data-tbl">
-                <thead><tr><th>Показатель</th><th>Цель</th></tr></thead>
-                <tbody>
-                  ${dKpis.map((k) => `<tr><td><b>${esc(k.metric || safeText(k))}</b></td><td style="color:var(--accent); font-weight:650;">${esc(k.target || "—")}</td></tr>`).join("")}
-                </tbody>
-              </table>
-            </div>
-          </div>` : ""}
+        <div class="card">
+          <div class="card-hdr"><h3>&#128203; Ежемесячные KPI директора</h3><span class="badge">${dKpis.length}</span></div>
+          <div class="tbl-wrap">
+            <table class="data-tbl">
+              <thead><tr><th>Показатель</th><th>Цель</th></tr></thead>
+              <tbody>
+                ${dKpis.map((k) => `<tr><td><b>${esc(k.metric || safeText(k))}</b></td><td style="color:var(--accent); font-weight:650;">${esc(k.target || "—")}</td></tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>` : ""}
       </div>`;
 
     $("tab-plan").querySelectorAll("[data-sf]").forEach((b) => {
@@ -2292,114 +2402,114 @@
 
     $("tab-playbook").innerHTML = `
       ${icps.length > 0 ? `
-        <div class="card">
-          <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP)</h3><span class="badge">${icps.length}</span></div>
-          <div class="grid-2">
-            ${icps.map((c) => `
-              <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:14px; font-size:13px;">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;">
-                  <b style="font-size:14px;">${esc(c.title || c.tag || "")}</b>
-                  ${c.sharePct ? `<span class="badge green">${esc(c.sharePct)}%</span>` : ""}
-                </div>
-                ${c.budgetRange ? `<div style="margin-bottom:6px;"><span class="badge sky">Бюджет: ${esc(c.budgetRange)}</span></div>` : ""}
-                <div style="margin-bottom:4px; color:var(--text-muted);"><b>Боль:</b> ${esc(c.pain || "—")}</div>
-                <div style="margin-bottom:4px; color:var(--text-muted);"><b>Триггер:</b> ${esc(c.trigger || "—")}</div>
-                <div style="color:var(--text-soft); font-size:12px;"><b>Путь (CJM):</b> ${esc(c.cjm || "—")}</div>
-              </div>`).join("")}
-          </div>
-        </div>` : ""}
+      <div class="card">
+        <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP)</h3><span class="badge">${icps.length}</span></div>
+        <div class="grid-2">
+          ${icps.map((c) => `
+            <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:14px; font-size:13px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;">
+                <b style="font-size:14px;">${esc(c.title || c.tag || "")}</b>
+                ${c.sharePct ? `<span class="badge green">${esc(c.sharePct)}%</span>` : ""}
+              </div>
+              ${c.budgetRange ? `<div style="margin-bottom:6px;"><span class="badge sky">Бюджет: ${esc(c.budgetRange)}</span></div>` : ""}
+              <div style="margin-bottom:4px; color:var(--text-muted);"><b>Боль:</b> ${esc(c.pain || "—")}</div>
+              <div style="margin-bottom:4px; color:var(--text-muted);"><b>Триггер:</b> ${esc(c.trigger || "—")}</div>
+              <div style="color:var(--text-soft); font-size:12px;"><b>Путь (CJM):</b> ${esc(c.cjm || "—")}</div>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
 
       ${docs.length > 0 ? `
-        <div class="card">
-          <div class="card-hdr">
-            <h3>&#128196; Библиотека готовых документов</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:5px;">
-              <button class="chip ${STATE.docFilter === "all" ? "active" : ""}" data-df="all">Все (${docs.length})</button>
-              ${cats.map((ct) => `<button class="chip ${STATE.docFilter === ct ? "active" : ""}" data-df="${esc(ct)}">${esc(ct)}</button>`).join("")}
-            </div>
+      <div class="card">
+        <div class="card-hdr">
+          <h3>&#128196; Библиотека готовых документов</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:5px;">
+            <button class="chip ${STATE.docFilter === "all" ? "active" : ""}" data-df="all">Все (${docs.length})</button>
+            ${cats.map((ct) => `<button class="chip ${STATE.docFilter === ct ? "active" : ""}" data-df="${esc(ct)}">${esc(ct)}</button>`).join("")}
           </div>
-          ${filteredDocs.map((d, idx) => `
-            <div class="doc-card">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-                <div>
-                  <span class="badge sky">${esc(d.category || "Doc")}</span>
-                  <strong style="margin-left:6px; font-size:14px;">${esc(d.title || "")}</strong>
-                  ${d.targetEntity ? `<span style="font-size:12px; color:var(--text-soft); margin-left:6px;">&rarr; ${esc(d.targetEntity)}</span>` : ""}
-                </div>
-                <div style="display:flex; gap:6px;">
-                  <button class="btn btn-sm" data-copy-doc="${idx}">&#128203; Копировать</button>
-                  <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; В AI-Совет</button>
-                </div>
+        </div>
+        ${filteredDocs.map((d, idx) => `
+          <div class="doc-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+              <div>
+                <span class="badge sky">${esc(d.category || "Doc")}</span>
+                <strong style="margin-left:6px; font-size:14px;">${esc(d.title || "")}</strong>
+                ${d.targetEntity ? `<span style="font-size:12px; color:var(--text-soft); margin-left:6px;">&rarr; ${esc(d.targetEntity)}</span>` : ""}
               </div>
-              <div class="doc-body">${esc(d.body || "")}</div>
-            </div>`).join("")}
-        </div>` : ""}
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-sm" data-copy-doc="${idx}">&#128203; Копировать</button>
+                <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; В AI-Совет</button>
+              </div>
+            </div>
+            <div class="doc-body">${esc(d.body || "")}</div>
+          </div>`).join("")}
+      </div>` : ""}
 
       ${objs.length > 0 ? `
-        <div class="card">
-          <div class="card-hdr"><h3>&#128172; Тренажёр возражений клиентов</h3><span class="badge">${objs.length}</span></div>
-          <div class="grid-2">
-            ${objs.map((o, idx) => `
-              <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:13px; font-size:13px; display:flex; flex-direction:column; gap:6px;">
-                <div style="color:var(--amber); font-weight:700;">«${esc(o.objection || "")}»</div>
-                <div style="font-size:12px; color:var(--text-soft);"><b>Причина:</b> ${esc(o.rootCause || "—")}</div>
-                <div style="background:var(--accent-soft); border:1px solid var(--accent-border); border-radius:8px; padding:9px 11px; color:var(--text); line-height:1.5;">
-                  ${esc(o.winningScript || "")}
-                </div>
-                <div style="display:flex; justify-content:flex-end;">
-                  <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать</button>
-                </div>
-              </div>`).join("")}
-          </div>
-        </div>` : ""}
+      <div class="card">
+        <div class="card-hdr"><h3>&#128172; Тренажёр возражений клиентов</h3><span class="badge">${objs.length}</span></div>
+        <div class="grid-2">
+          ${objs.map((o, idx) => `
+            <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:13px; font-size:13px; display:flex; flex-direction:column; gap:6px;">
+              <div style="color:var(--amber); font-weight:700;">«${esc(o.objection || "")}»</div>
+              <div style="font-size:12px; color:var(--text-soft);"><b>Причина:</b> ${esc(o.rootCause || "—")}</div>
+              <div style="background:var(--accent-soft); border:1px solid var(--accent-border); border-radius:8px; padding:9px 11px; color:var(--text); line-height:1.5;">
+                ${esc(o.winningScript || "")}
+              </div>
+              <div style="display:flex; justify-content:flex-end;">
+                <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать</button>
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
 
       ${medias.length > 0 ? `
-        <div class="card">
-          <div class="card-hdr"><h3>&#128226; Медиапланы продвижения</h3></div>
-          <div class="grid-3">
-            ${medias.map((m, idx) => `
-              <div class="scen-card ${idx === 1 ? "rec" : ""}">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <strong style="font-size:15px;">${esc(m.tier || "")}</strong>
-                  <span class="badge green">${esc(m.monthlyBudget || "—")}/мес</span>
-                </div>
-                <div style="font-size:12.5px; color:var(--sky); font-weight:650;">Прогноз: ${esc(m.estLeadsMonth || "—")} лидов/мес</div>
-                <div style="margin-top:6px; display:flex; flex-direction:column; gap:7px;">
-                  ${(m.channels || []).map((ch) => `
-                    <div>
-                      <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px;">
-                        <span>${esc(ch.name || "")}</span><b>${esc(ch.amount || "")} (${esc(ch.pct || 0)}%)</b>
-                      </div>
-                      <div class="mini-bar" style="margin-top:0;"><div style="width:${Math.min(100, Number(ch.pct) || 0)}%"></div></div>
-                    </div>`).join("")}
-                </div>
-              </div>`).join("")}
-          </div>
-        </div>` : ""}
+      <div class="card">
+        <div class="card-hdr"><h3>&#128226; Медиапланы продвижения</h3></div>
+        <div class="grid-3">
+          ${medias.map((m, idx) => `
+            <div class="scen-card ${idx === 1 ? "rec" : ""}">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:15px;">${esc(m.tier || "")}</strong>
+                <span class="badge green">${esc(m.monthlyBudget || "—")}/мес</span>
+              </div>
+              <div style="font-size:12.5px; color:var(--sky); font-weight:650;">Прогноз: ${esc(m.estLeadsMonth || "—")} лидов/мес</div>
+              <div style="margin-top:6px; display:flex; flex-direction:column; gap:7px;">
+                ${(m.channels || []).map((ch) => `
+                  <div>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px;">
+                      <span>${esc(ch.name || "")}</span><b>${esc(ch.amount || "")} (${esc(ch.pct || 0)}%)</b>
+                    </div>
+                    <div class="mini-bar" style="margin-top:0;"><div style="width:${Math.min(100, Number(ch.pct) || 0)}%"></div></div>
+                  </div>`).join("")}
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
 
       ${seos.length > 0 ? `
-        <details class="fold" open>
-          <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов)</summary>
-          <div class="fold-body">
-            <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
-              <button class="btn btn-sm" id="btnCopySeo">&#128203; Скопировать ключи</button>
-            </div>
-            <div class="tbl-wrap">
-              <table class="data-tbl">
-                <thead><tr><th>Запрос</th><th>Интент</th><th>CPC</th><th>Посадочная</th></tr></thead>
-                <tbody>
-                  ${seos.map((k) => `
-                    <tr>
-                      <td><b>${esc(k.keyword || "")}</b></td>
-                      <td><span class="badge ${intentColor(k.intent)}">${esc(k.intent || "—")}</span></td>
-                      <td style="font-family:var(--mono);">${esc(k.estCpc || "—")}</td>
-                      <td style="font-family:var(--mono); font-size:12px; color:var(--text-muted);">${esc(k.targetPage || "/")}</td>
-                    </tr>`).join("")}
-                </tbody>
-              </table>
-            </div>
+      <details class="fold" open>
+        <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов)</summary>
+        <div class="fold-body">
+          <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+            <button class="btn btn-sm" id="btnCopySeo">&#128203; Скопировать ключи</button>
           </div>
-        </details>` : ""}`;
+          <div class="tbl-wrap">
+            <table class="data-tbl">
+              <thead><tr><th>Запрос</th><th>Интент</th><th>CPC</th><th>Посадочная</th></tr></thead>
+              <tbody>
+                ${seos.map((k) => `
+                  <tr>
+                    <td><b>${esc(k.keyword || "")}</b></td>
+                    <td><span class="badge ${intentColor(k.intent)}">${esc(k.intent || "—")}</span></td>
+                    <td style="font-family:var(--mono);">${esc(k.estCpc || "—")}</td>
+                    <td style="font-family:var(--mono); font-size:12px; color:var(--text-muted);">${esc(k.targetPage || "/")}</td>
+                  </tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>` : ""}`;
 
     $("tab-playbook").querySelectorAll("[data-df]").forEach((b) => {
       b.onclick = () => { STATE.docFilter = b.getAttribute("data-df"); renderTabPlaybook(r); };
@@ -2465,80 +2575,80 @@
           <span class="badge">Всего конкурентов: ${comps.length}</span>
         </div>
         ${h2h.length > 0 ? `
-          <div class="tbl-wrap">
-            <table class="data-tbl">
-              <thead><tr><th>Компания</th><th>Роль</th><th>Адрес</th><th>Рейтинг</th><th>Домен</th><th>Реклама</th></tr></thead>
-              <tbody>
-                <tr style="background:var(--accent-soft);">
+        <div class="tbl-wrap">
+          <table class="data-tbl">
+            <thead><tr><th>Компания</th><th>Роль</th><th>Адрес</th><th>Рейтинг</th><th>Домен</th><th>Реклама</th></tr></thead>
+            <tbody>
+              <tr style="background:var(--accent-soft);">
+                <td>
+                  <div class="entity-row">
+                    ${companyLogoHtml(r.logoUrl, c.website, r.businessName, 24)}
+                    <b>${esc(r.businessName)} (Вы)</b>
+                  </div>
+                </td>
+                <td><span class="badge green">Объект</span></td>
+                <td>${esc(ownAddr || "—")}</td>
+                <td>${esc(r.rating || "—")} (${esc(r.reviewCount || 0)})</td>
+                <td>${esc((r.digitalSignals && r.digitalSignals.finalDomain) || extractDomain(c.website) || "—")}</td>
+                <td>—</td>
+              </tr>
+              ${h2h.map((h) => `
+                <tr>
                   <td>
                     <div class="entity-row">
-                      ${companyLogoHtml(r.logoUrl, c.website, r.businessName, 24)}
-                      <b>${esc(r.businessName)} (Вы)</b>
+                      ${companyLogoHtml(h.logoUrl, h.domain, h.name, 24)}
+                      <b>${esc(h.name || "")}</b>
                     </div>
                   </td>
-                  <td><span class="badge green">Объект</span></td>
-                  <td>${esc(ownAddr || "—")}</td>
-                  <td>${esc(r.rating || "—")} (${esc(r.reviewCount || 0)})</td>
-                  <td>${esc((r.digitalSignals && r.digitalSignals.finalDomain) || extractDomain(c.website) || "—")}</td>
-                  <td>—</td>
-                </tr>
-                ${h2h.map((h) => `
-                  <tr>
-                    <td>
-                      <div class="entity-row">
-                        ${companyLogoHtml(h.logoUrl, h.domain, h.name, 24)}
-                        <b>${esc(h.name || "")}</b>
-                      </div>
-                    </td>
-                    <td><span class="badge sky">${esc(h.roleLabel || "Конкурент")}</span></td>
-                    <td>${esc(formatAddr(h.street, h.city, "") || "—")}</td>
-                    <td>${esc(h.rating || "—")} (${esc(h.reviewCount || 0)})</td>
-                    <td>${h.domain ? `<a href="${esc(safeHref(h.domain))}" target="_blank" rel="noopener">${esc(h.domain)}</a>` : "—"}</td>
-                    <td style="white-space:nowrap;">
-                      ${h.googleAdsLibraryUrl ? `<a class="badge sky" href="${esc(h.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google Ads</a> ` : ""}
-                      ${h.metaAdLibraryUrl ? `<a class="badge" href="${esc(h.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
-                    </td>
-                  </tr>`).join("")}
-              </tbody>
-            </table>
-          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Прямые верифицированные конкуренты в локации не зафиксированы.</div>`}
+                  <td><span class="badge sky">${esc(h.roleLabel || "Конкурент")}</span></td>
+                  <td>${esc(formatAddr(h.street, h.city, "") || "—")}</td>
+                  <td>${esc(h.rating || "—")} (${esc(h.reviewCount || 0)})</td>
+                  <td>${h.domain ? `<a href="${esc(safeHref(h.domain))}" target="_blank" rel="noopener">${esc(h.domain)}</a>` : "—"}</td>
+                  <td style="white-space:nowrap;">
+                    ${h.googleAdsLibraryUrl ? `<a class="badge sky" href="${esc(h.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google Ads</a> ` : ""}
+                    ${h.metaAdLibraryUrl ? `<a class="badge" href="${esc(h.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
+                  </td>
+                </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>` : `<div style="color:var(--text-muted); font-size:13px;">Прямые верифицированные конкуренты в локации не зафиксированы.</div>`}
       </div>
 
       ${remainingComps.length > 0 ? `
-        <details class="fold">
-          <summary>&#128203; Остальные конкуренты в радиусе (${remainingComps.length})</summary>
-          <div class="fold-body">
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              ${remainingComps.map((cp) => `
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:9px 12px; font-size:13px;">
-                  <div class="entity-row" style="flex:1; min-width:200px;">
-                    ${companyLogoHtml(cp.logoUrl, cp.website, cp.name, 24)}
-                    <div>
-                      <b>${esc(cp.name)}</b>
-                      <span class="badge ${cp.roleTone === "danger" ? "red" : (cp.roleTone === "amber" ? "amber" : "sky")}" style="margin-left:5px;">${esc(cp.roleLabel || "Конкурент")}</span>
-                      ${cp.rating ? ` · &#11088; ${esc(cp.rating)} (${esc(cp.reviewCount || 0)})` : ""}
-                      <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(cp.street, cp.city, cp.country) || "—")}</div>
-                    </div>
+      <details class="fold">
+        <summary>&#128203; Остальные конкуренты в радиусе (${remainingComps.length})</summary>
+        <div class="fold-body">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${remainingComps.map((cp) => `
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:9px 12px; font-size:13px;">
+                <div class="entity-row" style="flex:1; min-width:200px;">
+                  ${companyLogoHtml(cp.logoUrl, cp.website, cp.name, 24)}
+                  <div>
+                    <b>${esc(cp.name)}</b>
+                    <span class="badge ${cp.roleTone === "danger" ? "red" : (cp.roleTone === "amber" ? "amber" : "sky")}" style="margin-left:5px;">${esc(cp.roleLabel || "Конкурент")}</span>
+                    ${cp.rating ? ` · &#11088; ${esc(cp.rating)} (${esc(cp.reviewCount || 0)})` : ""}
+                    <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(cp.street, cp.city, cp.country) || "—")}</div>
                   </div>
-                  ${cp.website ? `<a class="btn btn-sm" href="${esc(safeHref(cp.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
-                </div>`).join("")}
-            </div>
+                </div>
+                ${cp.website ? `<a class="btn btn-sm" href="${esc(safeHref(cp.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
+              </div>`).join("")}
           </div>
-        </details>` : ""}
+        </div>
+      </details>` : ""}
 
       ${kill.length > 0 ? `
-        <div class="card">
-          <div class="card-hdr"><h3>&#9876;&#65039; Kill-Sheet: Слабые места конкурентов</h3></div>
-          ${kill.map((k) => `
-            <div class="alert-box" style="margin-bottom:8px;">
-              <div class="entity-row" style="margin-bottom:4px;">
-                ${companyLogoHtml(k.logoUrl, "", k.competitor, 22)}
-                <strong>${esc(k.competitor)} (${esc(k.rating)}&#9733;)</strong>
-              </div>
-              <div>«${esc(k.verifiedNegativeQuote)}»</div>
-              ${k.counterOfferHint ? `<div style="color:var(--accent); margin-top:4px;"><b>&#128161; Оффер перехвата:</b> ${esc(k.counterOfferHint)}</div>` : ""}
-            </div>`).join("")}
-        </div>` : ""}
+      <div class="card">
+        <div class="card-hdr"><h3>&#9876;&#65039; Kill-Sheet: Слабые места конкурентов</h3></div>
+        ${kill.map((k) => `
+          <div class="alert-box" style="margin-bottom:8px;">
+            <div class="entity-row" style="margin-bottom:4px;">
+              ${companyLogoHtml(k.logoUrl, "", k.competitor, 22)}
+              <strong>${esc(k.competitor)} (${esc(k.rating)}&#9733;)</strong>
+            </div>
+            <div>«${esc(k.verifiedNegativeQuote)}»</div>
+            ${k.counterOfferHint ? `<div style="color:var(--accent); margin-top:4px;"><b>&#128161; Оффер перехвата:</b> ${esc(k.counterOfferHint)}</div>` : ""}
+          </div>`).join("")}
+      </div>` : ""}
 
       <div class="grid-2">
         <div class="card">
@@ -2586,18 +2696,18 @@
       <div class="card">
         <div class="card-hdr"><h3>&#127970; B2B-соседи рядом (150–350 м)</h3><span class="badge">${nbrs.length}</span></div>
         ${nbrs.length > 0 ? `
-          <div class="grid-2">
-            ${nbrs.map((n) => `
-              <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:13px;">
-                <div class="entity-row">
-                  ${companyLogoHtml(n.logoUrl, n.website, n.name, 26)}
-                  <div>
-                    <b>${esc(n.name)}</b> <span class="badge">${esc(n.niche || "B2B")}</span>
-                    <div style="color:var(--text-muted); font-size:12px; margin-top:2px;">${esc(n.address || formatAddr(n.street, n.city, ""))}</div>
-                  </div>
+        <div class="grid-2">
+          ${nbrs.map((n) => `
+            <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:13px;">
+              <div class="entity-row">
+                ${companyLogoHtml(n.logoUrl, n.website, n.name, 26)}
+                <div>
+                  <b>${esc(n.name)}</b> <span class="badge">${esc(n.niche || "B2B")}</span>
+                  <div style="color:var(--text-muted); font-size:12px; margin-top:2px;">${esc(n.address || formatAddr(n.street, n.city, ""))}</div>
                 </div>
-              </div>`).join("")}
-          </div>` : `<div style="color:var(--text-muted); font-size:13px;">Коммерческих соседей в ближайшем радиусе не зафиксировано.</div>`}
+              </div>
+            </div>`).join("")}
+        </div>` : `<div style="color:var(--text-muted); font-size:13px;">Коммерческих соседей в ближайшем радиусе не зафиксировано.</div>`}
       </div>
 
       <div class="grid-2">
@@ -2612,11 +2722,11 @@
       </div>
 
       ${(mkt.seoCpcOverview && !/^n\/a$/i.test(mkt.seoCpcOverview)) || (mkt.seasonalityNotes && !/^n\/a$/i.test(mkt.seasonalityNotes)) ? `
-        <div class="card">
-          <div class="card-hdr"><h3>&#128269; Спрос SEO / CPC и сезонность</h3></div>
-          ${mkt.seoCpcOverview && !/^n\/a$/i.test(mkt.seoCpcOverview) ? `<p style="margin:0 0 6px; font-size:13.5px;"><b>SEO / CPC:</b> ${esc(mkt.seoCpcOverview)}</p>` : ""}
-          ${mkt.seasonalityNotes && !/^n\/a$/i.test(mkt.seasonalityNotes) ? `<p style="margin:0; font-size:13.5px; color:var(--text-muted);"><b>Сезонность:</b> ${esc(mkt.seasonalityNotes)}</p>` : ""}
-        </div>` : ""}`;
+      <div class="card">
+        <div class="card-hdr"><h3>&#128269; Спрос SEO / CPC и сезонность</h3></div>
+        ${mkt.seoCpcOverview && !/^n\/a$/i.test(mkt.seoCpcOverview) ? `<p style="margin:0 0 6px; font-size:13.5px;"><b>SEO / CPC:</b> ${esc(mkt.seoCpcOverview)}</p>` : ""}
+        ${mkt.seasonalityNotes && !/^n\/a$/i.test(mkt.seasonalityNotes) ? `<p style="margin:0; font-size:13.5px; color:var(--text-muted);"><b>Сезонность:</b> ${esc(mkt.seasonalityNotes)}</p>` : ""}
+      </div>` : ""}`;
   }
 
   // ---------- TAB 5: DIAGNOSTICS (JURISDICTION-ADAPTIVE TRAFFIC LIGHT) ----------
@@ -2839,11 +2949,11 @@
 
     const msgsHtml = STATE.boardHistory.length === 0
       ? `<div style="color:var(--text-muted); font-size:13.5px; text-align:center; padding:36px 12px;">
-           <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
-           <b>AI-Совет подключён к досье «${esc(r.businessName || "")}»</b>
-           <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши цифры Data Room</span>' : '<span class="badge sky">Факты и бенчмарки аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
-           <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
-         </div>`
+          <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
+          <b>AI-Совет подключён к досье «${esc(r.businessName || "")}»</b>
+          <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши цифры Data Room</span>' : '<span class="badge sky">Факты и бенчмарки аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
+          <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
+        </div>`
       : STATE.boardHistory.map((m, idx) => {
           if (m.role === "user") {
             return `<div class="msg-user"><div style="font-size:11px; color:var(--accent); font-weight:700; margin-bottom:3px;">Вы</div><div style="white-space:pre-wrap;">${esc(m.text)}</div></div>`;
@@ -3032,7 +3142,7 @@
       const blob = new Blob([JSON.stringify(r, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `B2B_Nexus_v80_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
+      a.download = `B2B_Nexus_v81_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
       a.click();
     };
 
@@ -3239,11 +3349,20 @@
     });
     $("countryInput").addEventListener("input", () => {
       const val = $("countryInput").value.trim();
+      const prevCountry = STATE.geo.country;
+      const exactMatch = findCountryObjByExactName(val);
       STATE.geo.country = val;
-      STATE.geo.countryCode = "";
-      STATE.geo.lat = null;
-      STATE.geo.lng = null;
+      STATE.geo.countryCode = exactMatch ? exactMatch.code : "";
+      STATE.geo.lat = exactMatch ? exactMatch.lat : null;
+      STATE.geo.lng = exactMatch ? exactMatch.lng : null;
       STATE.geo.bbox = "";
+      // v8.1: Auto-reset stale city when user changes country
+      if (prevCountry && prevCountry.toLowerCase() !== val.toLowerCase()) {
+        $("cityInput").value = "";
+        STATE.geo.city = "";
+        STATE.geo.selectedBiz = "";
+        $("bizSrcBadge").textContent = "";
+      }
       syncGeoUi();
       showCountryDropdown(val);
     });
@@ -3285,6 +3404,7 @@
     $("qInput").addEventListener("input", () => {
       const val = $("qInput").value.trim();
       $("bizSrcBadge").textContent = "";
+      maybeAutoSwitchCountryFromQuery(val, false);
       syncGeoUi();
       clearTimeout(STATE.acTimers.business);
       if (val.length < 2) { $("acBiz").classList.add("hidden"); return; }
@@ -3339,6 +3459,7 @@
         const text = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : "";
         if (text) {
           $("qInput").value = text;
+          maybeAutoSwitchCountryFromQuery(text, false);
           syncGeoUi();
           fetchBusinessSuggestions(text);
         }

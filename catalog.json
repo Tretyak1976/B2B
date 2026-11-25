@@ -1,5 +1,20 @@
 [
   {
+    "id": "1ZS9zzZ67FNs5IZW6K7a2chGwB9HKi2OC",
+    "name": "Montessorischule der Stadt Kleve",
+    "niche": "Монтессори школа для детей 3-12 лет",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Spyckstraße 24",
+    "website": "montessorischule-kleve.eu",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=montessorischule-kleve.eu",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-25T18:56:01.805Z"
+  },
+  {
     "id": "1A-JwhScM-hprNAtmpNwINxqfyiR4fNlI",
     "name": "Kaufland",
     "niche": "Супермаркет широкого ассортимента",
@@ -610,16 +625,5 @@
     "score": 57,
     "modelsUsed": 3,
     "createdAt": "2026-11-23T12:35:53.117Z"
-  },
-  {
-    "id": "1Td-rdM177rbvM2PNhbSIscwrwBDcJVMX",
-    "name": "TOTAL Gas Station",
-    "niche": "Топливная станция с магазином и кафе",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 6,
-    "createdAt": "2026-11-23T12:17:46.674Z"
   }
 ]

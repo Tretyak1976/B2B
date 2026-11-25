@@ -1,5 +1,20 @@
 [
   {
+    "id": "1b1C1sTVnbMbgX_x1sF94-y5IPO_iatQP",
+    "name": "Lidl",
+    "niche": "Супермаркет продуктового ритейла",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 64,
+    "modelsUsed": 7,
+    "schemaVersion": "8.3",
+    "createdAt": "2026-11-25T10:57:16.531Z"
+  },
+  {
     "id": "1FDeIWd5FebYTF236cIZnQX-nSlzRpA-w",
     "name": "TotalEnergies",
     "niche": "Топливно-энергетический сервис для автотранспорта",
@@ -43,21 +58,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.2",
     "createdAt": "2026-11-25T10:30:51.959Z"
-  },
-  {
-    "id": "13MiWvQnYViAC-V971Hu-t9n-D-spacws",
-    "name": "Lidl",
-    "niche": "Супермаркет / продуктовый ритейл",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Van-den-Bergh-Straße",
-    "website": "https://lidl.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=lidl.de",
-    "rating": "4.4/5.0",
-    "score": 81,
-    "modelsUsed": 7,
-    "schemaVersion": "8.2",
-    "createdAt": "2026-11-25T10:20:13.017Z"
   },
   {
     "id": "1OyvN1Fjg_n4lWjes1YCgI-Iu87ZGBfvL",

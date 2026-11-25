@@ -1,5 +1,20 @@
 [
   {
+    "id": "13MiWvQnYViAC-V971Hu-t9n-D-spacws",
+    "name": "Lidl",
+    "niche": "Супермаркет / продуктовый ритейл",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Van-den-Bergh-Straße",
+    "website": "https://lidl.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=lidl.de",
+    "rating": "4.4/5.0",
+    "score": 81,
+    "modelsUsed": 7,
+    "schemaVersion": "8.2",
+    "createdAt": "2026-11-25T10:20:13.017Z"
+  },
+  {
     "id": "1OyvN1Fjg_n4lWjes1YCgI-Iu87ZGBfvL",
     "name": "Dr. Pascal Schnabel MSc, Zahnarzt",
     "niche": "Стоматологическая практика частного сектора",
@@ -43,21 +58,6 @@
     "modelsUsed": 8,
     "schemaVersion": "8.0",
     "createdAt": "2026-11-25T08:15:53.567Z"
-  },
-  {
-    "id": "1C9LYW5BnnrBYyAKkqeZh5Oa6c53E4pVd",
-    "name": "Lidl",
-    "niche": "Супермаркет повседневных товаров",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 61,
-    "modelsUsed": 6,
-    "schemaVersion": "8.0",
-    "createdAt": "2026-11-25T08:12:07.720Z"
   },
   {
     "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",

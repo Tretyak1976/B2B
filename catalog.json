@@ -1,5 +1,20 @@
 [
   {
+    "id": "1O7XtW27nbD6uDoVTPUjUravLBM3dlq_P",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Индивидуальные кухонные решения под ключ",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 57,
+    "modelsUsed": 7,
+    "schemaVersion": "8.2",
+    "createdAt": "2026-11-25T10:30:51.959Z"
+  },
+  {
     "id": "13MiWvQnYViAC-V971Hu-t9n-D-spacws",
     "name": "Lidl",
     "niche": "Супермаркет / продуктовый ритейл",
@@ -103,21 +118,6 @@
     "modelsUsed": 6,
     "schemaVersion": "7.8",
     "createdAt": "2026-11-24T16:06:50.064Z"
-  },
-  {
-    "id": "1sUH4JS3qQ50cHeGgjZvvvXMiiJ37hegs",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Кухонные студии премиум‑сегмента",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 6,
-    "schemaVersion": "7.8",
-    "createdAt": "2026-11-24T15:51:13.469Z"
   },
   {
     "id": "1gvtPIOk4NfcwJOiMPCSFY9yE0NXaoZPY",

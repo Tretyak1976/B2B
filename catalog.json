@@ -1,5 +1,20 @@
 [
   {
+    "id": "1HUf0kNjGiXwmxcfqf0QMLrQ_YVCwkbgQ",
+    "name": "Horsthemke Backbetriebe",
+    "niche": "Пекарня и кафе",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Flutstraße 81",
+    "website": "www.baeckerei-horsthemke.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=www.baeckerei-horsthemke.de",
+    "rating": "4.3/5.0",
+    "score": 71,
+    "modelsUsed": 8,
+    "schemaVersion": "8.5",
+    "createdAt": "2026-11-25T17:26:51.466Z"
+  },
+  {
     "id": "1aIKzv91Q86UMyGHOKJ61rJf7J-pnMR_3",
     "name": "TotalEnergies",
     "niche": "Топливно-энергетический сервис с магазином",

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>B2B Nexus v8.7 — Executive Business Audit OS</title>
+  <title>B2B Nexus v8.8 — Executive Business Audit OS</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310b981'/%3E%3Cpath d='M18 44V20h14c7 0 11 3.5 11 9.5 0 4-2 6.8-5.5 8 4.2 1 6.5 4 6.5 8.5 0 6.2-4.6 10-12 10H18zm8-15h5.5c2.6 0 4.2-1.2 4.2-3.4s-1.6-3.3-4.2-3.3H26V29zm0 11h6.2c2.9 0 4.6-1.3 4.6-3.7s-1.7-3.6-4.6-3.6H26V40z' fill='%23051018'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -659,7 +659,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v8.7</span>
+      <span class="ver-pill" id="verPill">v8.8</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -684,7 +684,7 @@
     <!-- ==================== SCREEN 1: START & CASCADE SEARCH ==================== -->
     <section id="screenStart">
       <div class="hero">
-        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет · v8.7</div>
+        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет · v8.8</div>
         <h1 id="heroTitle">Умный B2B-аудит бизнеса по всему миру</h1>
         <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: проверенные факты, P&amp;L, 18-мес. Cash Flow, 10 шагов роста и Playbook.</p>
 
@@ -828,7 +828,7 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "8.7";
+  const UI_VERSION = "8.8";
 
   const DACH_CC = new Set(["DE", "AT", "CH"]);
   const EU_UK_CC = new Set([
@@ -1713,7 +1713,7 @@
       $("scanTimer").textContent = `${mm}:${ss}`;
     }, 500);
 
-    // B2B_V87_RECOVERY
+    // B2B_V88_RECOVERY
     let pollBusy = false;
     let discoveredFileId = null;
     const seenTelSeqs = new Set();
@@ -1784,7 +1784,7 @@
 
       renderReport();
       setScreen("report");
-      showToast("Аудит v8.7 успешно завершён!");
+      showToast("Аудит v8.8 успешно завершён!");
     } catch (err) {
       if (err && err.name === "AbortError") {
         stopTimers();

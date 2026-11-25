@@ -588,7 +588,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v7.8</span>
+      <span class="ver-pill" id="verPill">v8.0</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -614,7 +614,7 @@
     <section id="screenStart">
       <div class="hero">
         <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет</div>
-        <h1 id="heroTitle">Умный B2B-аудит бизнеса за 30 секунд</h1>
+        <h1 id="heroTitle">Умный B2B-аудит бизнеса по всему миру</h1>
         <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: проверенные факты, P&amp;L, 18-мес. Cash Flow, 10 шагов роста и Playbook.</p>
 
         <div class="cascade-panel" id="cascadePanel">
@@ -625,7 +625,7 @@
                 <span id="ccBadge" style="font-family:var(--mono); color:var(--accent);"></span>
               </div>
               <div class="ac-input-wrap" id="wrapCountry">
-                <input id="countryInput" class="ac-input" type="text" autocomplete="off" placeholder="Германия, Украина, США...">
+                <input id="countryInput" class="ac-input" type="text" autocomplete="off" placeholder="Выберите страну...">
                 <button class="ac-clear" id="clrCountry" type="button" title="Очистить">&#10005;</button>
               </div>
               <div class="ac-dropdown hidden" id="acCountry"></div>
@@ -637,7 +637,7 @@
                 <span id="cityGeoBadge" style="font-size:10.5px; color:var(--sky);"></span>
               </div>
               <div class="ac-input-wrap" id="wrapCity">
-                <input id="cityInput" class="ac-input" type="text" autocomplete="off" placeholder="Клеве, Берлин, Киев...">
+                <input id="cityInput" class="ac-input" type="text" autocomplete="off" placeholder="Введите город...">
                 <button class="ac-clear" id="clrCity" type="button" title="Очистить">&#10005;</button>
               </div>
               <div class="ac-dropdown hidden" id="acCity"></div>
@@ -645,11 +645,11 @@
 
             <div class="ac-field biz-col">
               <div class="ac-label">
-                <span><span class="ac-step-num">3</span>Компания, улица + дом или сайт</span>
+                <span><span class="ac-step-num">3</span>Компания или сайт</span>
                 <span id="bizSrcBadge" style="font-size:10.5px; color:var(--text-soft);"></span>
               </div>
               <div class="ac-input-wrap biz-wrap" id="wrapBiz">
-                <input id="qInput" class="ac-input" type="text" autocomplete="off" placeholder="Название, улица и номер дома или домен...">
+                <input id="qInput" class="ac-input" type="text" autocomplete="off" placeholder="Название компании или домен сайта...">
                 <button class="ac-voice-mini" id="voiceBtn" type="button" title="Голосовой ввод">&#127897;</button>
                 <button class="ac-clear" id="clrBiz" type="button" title="Очистить">&#10005;</button>
               </div>
@@ -674,7 +674,7 @@
         <div class="drawer-box hidden" id="drawerBrief">
           <div class="field">
             <label for="briefInput">Дополнительный контекст, цели собственника или выдержки из документов (до 60 000 симв.)</label>
-            <textarea id="briefInput" rows="4" placeholder="Например: планируем запуск онлайн-записи, бюджет до 15 000 EUR, хотим обойти конкурентов в радиусе 10 км..."></textarea>
+            <textarea id="briefInput" rows="4" placeholder="Опишите ваши цели, бюджет, ограничения или специфику продукта..."></textarea>
           </div>
           <div style="margin-top:8px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
             <input type="file" id="briefFile" accept=".txt,.md,.csv,.json" style="font-size:12px;">
@@ -757,37 +757,15 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "7.8";
+  const UI_VERSION = "8.0";
 
-  const KNOWN_BRAND_DOMAINS = [
-    [/\btotalenergies\b|\btotal\s+(gas|tankstelle|station)/i, "totalenergies.de"],
-    [/\baral\b/i, "aral.de"], [/\bshell\b/i, "shell.de"], [/\besso\b/i, "esso.de"],
-    [/\bjet\s*(tankstelle|fuel|gas)?\b/i, "jet-tankstellen.de"],
-    [/\bstar\s+tankstelle\b|\borlen\b/i, "star.de"], [/\bhem\s*(tankstelle)?\b/i, "hem-tankstelle.de"],
-    [/\bwestfalen\b/i, "westfalen.com"], [/\bavia\b/i, "avia.de"], [/\bbft\b/i, "bft.de"],
-    [/\bomv\b/i, "omv.de"], [/\braiffeisen\b/i, "raiffeisen.com"], [/\bclassic\s+tankstelle\b/i, "classic-oil.de"],
-    [/\bhorsthemke\b/i, "baeckerei-horsthemke.de"], [/\bkamps\b/i, "kamps.de"], [/\bbackwerk\b/i, "back-werk.de"],
-    [/\baldi\b/i, "aldi-sued.de"], [/\blidl\b/i, "lidl.de"], [/\brewe\b/i, "rewe.de"], [/\bedeka\b/i, "edeka.de"],
-    [/\bkaufland\b/i, "kaufland.de"], [/\bnetto\b/i, "netto-online.de"], [/\bpenny\b/i, "penny.de"],
-    [/\bdm[-\s]drogerie\b/i, "dm.de"], [/\brossmann\b/i, "rossmann.de"], [/\bhornbach\b/i, "hornbach.de"],
-    [/\bobi\b/i, "obi.de"], [/\bbauhaus\b/i, "bauhaus.info"], [/\bikea\b/i, "ikea.com"],
-    [/\bmcdonald/i, "mcdonalds.de"], [/\bburger\s*king\b/i, "burgerking.de"], [/\bkfc\b/i, "kfc.de"],
-    [/\bsubway\b/i, "subway.com"], [/\bstarbucks\b/i, "starbucks.de"],
-    [/\bdhl\b/i, "dhl.de"], [/\bhermes\b/i, "myhermes.de"], [/\bdpd\b/i, "dpd.com"],
-    [/\bgls\b/i, "gls-pakete.de"], [/\bups\b/i, "ups.com"],
-    [/\bsparkasse\b/i, "sparkasse.de"], [/\bvolksbank\b/i, "vr.de"], [/\bdeutsche\s*bank\b/i, "deutsche-bank.de"],
-    [/\bmediamarkt\b/i, "mediamarkt.de"], [/\bsaturn\b/i, "saturn.de"], [/\bdeichmann\b/i, "deichmann.com"],
-    [/\bfressnapf\b/i, "fressnapf.de"], [/\baction\b/i, "action.com"], [/\btedi\b/i, "tedi.com"],
-    [/\bkik\b/i, "kik.de"], [/\bdecathlon\b/i, "decathlon.de"],
-    [/\btoogoodtogo\b|\btoo\s+good\s+to\s+go\b/i, "toogoodtogo.com"],
-    [/\busercentrics\b/i, "usercentrics.com"], [/\bbrevo\b/i, "brevo.com"], [/\bpipedrive\b/i, "pipedrive.com"],
-    [/\bmatomo\b/i, "matomo.org"], [/\bsuperchat\b/i, "superchat.de"], [/\bmollie\b/i, "mollie.com"],
-    [/\bdoctolib\b/i, "doctolib.de"], [/\bonoffice\b/i, "onoffice.com"], [/\bpropstack\b/i, "propstack.de"],
-    [/\bcal\.com\b/i, "cal.com"], [/\bcalendly\b/i, "calendly.com"], [/\bcloudflare\b/i, "cloudflare.com"],
-    [/\bupdraftplus\b/i, "updraftplus.com"], [/\bborlabs\b/i, "borlabs.io"], [/\btidio\b/i, "tidio.com"],
-    [/\bnobilia\b/i, "nobilia.de"], [/\bh[aä]cker\b/i, "haecker-kuechen.de"],
-    [/\bmarquardt\s*k[uü]chen\b/i, "marquardt-kuechen.de"], [/\bk[uü]chen\s*aktuell\b/i, "kuechen-aktuell.de"]
-  ];
+  const DACH_CC = new Set(["DE", "AT", "CH"]);
+  const EU_UK_CC = new Set([
+    "DE", "AT", "CH", "FR", "NL", "BE", "LU", "ES", "IT", "PT", "PL", "CZ", "SK", "HU",
+    "RO", "BG", "HR", "SI", "GR", "IE", "FI", "SE", "DK", "EE", "LV", "LT", "MT", "CY", "NO", "IS", "LI", "GB", "UK"
+  ]);
+  const NON_BIZ_OSM_KEYS = /^(highway|boundary|place|landuse|natural|waterway|railway|route|barrier|man_made|power|aerialway|geological|mountain_pass)$/i;
+  const ALLOWED_POI_KEYS = /^(amenity|shop|tourism|leisure|healthcare|office|craft|aeroway|industrial|sport|club)$/i;
 
   const LOCAL_COUNTRIES = [
     { code: "DE", ru: "Германия", en: "Germany", de: "Deutschland", es: "Alemania", fr: "Allemagne", zh: "德国", lat: 51.1657, lng: 10.4515 },
@@ -910,18 +888,10 @@
     return d;
   };
 
-  const resolveKnownDomain = (name) => {
-    const s = String(name || "").trim();
-    if (!s) return "";
-    for (let i = 0; i < KNOWN_BRAND_DOMAINS.length; i++) {
-      if (KNOWN_BRAND_DOMAINS[i][0].test(s)) return KNOWN_BRAND_DOMAINS[i][1];
-    }
-    return "";
-  };
-
-  const resolveLogoUrl = (explicitLogo, website, name) => {
+  // Universal logo resolver: strictly from verified logoUrl or real website domain (zero hardcoded brand tables)
+  const resolveLogoUrl = (explicitLogo, website) => {
     if (explicitLogo && /^https?:\/\//i.test(explicitLogo) && !/ui-avatars\.com/i.test(explicitLogo)) return explicitLogo;
-    const dom = extractDomain(website) || resolveKnownDomain(name);
+    const dom = extractDomain(website);
     if (dom) return `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(dom)}`;
     return "";
   };
@@ -931,7 +901,7 @@
     const cleanNm = String(name || "B2B").trim();
     const initials = cleanNm.split(/[\s\-&]+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "B";
     const fontSize = Math.max(10, Math.round(sz * 0.40));
-    const url = resolveLogoUrl(explicitLogo, website, cleanNm);
+    const url = resolveLogoUrl(explicitLogo, website);
     if (!url) {
       return `<span class="co-logo" style="width:${sz}px;height:${sz}px;background:transparent;"><span class="co-logo-fb" style="font-size:${fontSize}px;">${esc(initials)}</span></span>`;
     }
@@ -1012,7 +982,7 @@
     return res.json();
   }
 
-  // ---------- CASCADE AUTOCOMPLETE (COUNTRY -> CITY -> BUSINESS WITH LOGOS & HOUSE NUMBERS) ----------
+  // ---------- CASCADE AUTOCOMPLETE (COUNTRY -> CITY -> BUSINESS, STRICTLY NO STREETS) ----------
   function syncGeoUi() {
     const g = STATE.geo;
     $("wrapCountry").classList.toggle("has-val", Boolean($("countryInput").value.trim()));
@@ -1205,7 +1175,7 @@
     if (items.length === 0 && reqId === STATE.acSeq.business) {
       try {
         const loc = [curCity, curCountry].filter(Boolean).join(", ");
-        let url = `https://photon.komoot.io/api/?q=${encodeURIComponent(loc ? trimmed + ", " + loc : trimmed)}&limit=8`;
+        let url = `https://photon.komoot.io/api/?q=${encodeURIComponent(loc ? trimmed + ", " + loc : trimmed)}&limit=10`;
         if (STATE.geo.lat && STATE.geo.lng) url += `&lat=${STATE.geo.lat.toFixed(4)}&lon=${STATE.geo.lng.toFixed(4)}`;
         if (STATE.geo.bbox) url += `&bbox=${encodeURIComponent(STATE.geo.bbox)}`;
         const r = await fetch(url);
@@ -1214,14 +1184,17 @@
           const ccFilter = (STATE.geo.countryCode || "").toUpperCase();
           ((pd && pd.features) || []).forEach((f) => {
             const p = f.properties || {};
+            const oKey = String(p.osm_key || "").toLowerCase();
+            // Strictly reject bare streets/highways/places on client fallback too
+            if (NON_BIZ_OSM_KEYS.test(oKey)) return;
+            if (!ALLOWED_POI_KEYS.test(oKey) && !(oKey === "building" && p.name && p.name !== p.street)) return;
             const pcc = String(p.countrycode || "").toUpperCase();
             if (ccFilter && pcc && pcc !== ccFilter) return;
+            if (!p.name) return;
             const st = [p.street, p.housenumber].filter(Boolean).join(" ");
-            const nm = p.name || st;
-            if (!nm) return;
             const ct = p.city || p.locality || curCity;
             items.push({
-              mode: "business", name: nm, street: st, city: ct, country: p.country || curCountry,
+              mode: "business", name: p.name, street: st, city: ct, country: p.country || curCountry,
               countryCode: pcc || ccFilter,
               category: (p.osm_value && !/^(yes|no|house|building)$/i.test(p.osm_value)) ? p.osm_value : "POI",
               rating: "", website: "", formattedAddress: formatAddr(st, ct, p.country || curCountry),
@@ -1373,7 +1346,7 @@
   async function runPreflight() {
     const q = $("qInput").value.trim();
     if (!q || q.length < 2 || /^n\/a$/i.test(q)) {
-      showToast("Введите название компании, адрес или сайт");
+      showToast("Введите название компании или сайт");
       return;
     }
     const card = $("preflightCard");
@@ -1432,7 +1405,7 @@
   async function startFullScan(overrideQuery) {
     const q = (overrideQuery || $("qInput").value || "").trim();
     if (!q || q.length < 2 || /^(n\/a|none|null|-+)$/i.test(q)) {
-      showToast("Введите название компании, адрес или сайт");
+      showToast("Введите название компании или сайт");
       $("qInput").focus();
       return;
     }
@@ -1464,7 +1437,7 @@
       ).join("");
     };
 
-    addFeed("Запуск конвейера верификации фактов v7.8 (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
+    addFeed("Запуск глобального конвейера v8.0 (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
 
     STATE.clockTimer = setInterval(() => {
       const s = Math.floor((Date.now() - t0) / 1000);
@@ -1533,7 +1506,7 @@
     } catch (err) {
       stopTimers();
       if (err && err.name === "AbortError") showToast("Скан отменён");
-      else showToast("Ошибка скана: " + (err.message || err), 5000);
+      else showToast("Ошибка скана: " + (err.message || err), 5500);
       setScreen("start");
     }
   }
@@ -1572,7 +1545,7 @@
     if (rep.schemaVersion) return "v" + rep.schemaVersion;
     const logs = (rep.executionLogs || []).join("\n");
     const m = logs.match(/Argon\s+v(\d+\.\d+)/i);
-    return m ? ("v" + m[1]) : "v7.0";
+    return m ? ("v" + m[1]) : "v8.0";
   }
 
   function extractReportDuration(rep) {
@@ -1606,7 +1579,7 @@
     activateTab(STATE.activeTab || "overview");
   }
 
-  // ---------- HEADER WITH LOGOS, COMPACT SOCIALS & "ДОП. ИНФОРМАЦИЯ О КОМПАНИИ" ----------
+  // ---------- HEADER WITH LOGOS, COMPACT SOCIALS & "ДОП. ИНФОРМАЦИЯ" ----------
   function renderHeader(r) {
     const meta = r.companyMeta || {};
     const c = r.contacts || {};
@@ -1639,7 +1612,7 @@
     const confClass = confScore >= 70 ? "violet" : (confScore >= 45 ? "amber" : "red");
 
     const osmFactBadges = vf ? [
-      `<span class="badge ${vf.hasEvCharging ? "green" : ""}">EV-зарядка (80м): ${vf.hasEvCharging ? "Есть" : "Нет в OSM"}</span>`,
+      vf.isFuelStation ? `<span class="badge ${vf.hasEvCharging ? "green" : ""}">EV (80м): ${vf.hasEvCharging ? "Есть" : "Нет в OSM"}</span>` : "",
       vf.hasShop ? `<span class="badge green">Магазин: Есть</span>` : "",
       vf.hasCafe ? `<span class="badge green">Кафе: Есть</span>` : "",
       vf.hasCarWash ? `<span class="badge green">Автомойка: Есть</span>` : "",
@@ -1697,7 +1670,7 @@
               <span>&#128205; ${esc(loc || "Локация не указана")}</span>
               <span class="badge sky">${esc(meta.niche || "Business")}</span>
               <span class="badge">${esc(modeLabel(r.entityMode))}</span>
-              ${r.realDataMissing ? `<span class="badge amber">Бенчмарк-режим (нет в OSM)</span>` : ""}
+              ${r.realDataMissing ? `<span class="badge amber">Бенчмарк-режим (нет в картах)</span>` : ""}
               ${showLegacyVer ? `<span class="badge amber">Архив ${esc(repVer)}</span>` : ""}
               ${dur ? `<span class="badge">&#9201; ${esc(dur)}</span>` : ""}
               ${confScore ? `<span class="badge ${confClass}">&#9878;&#65039; Доверие ${esc(confScore)}%</span>` : ""}
@@ -1776,7 +1749,7 @@
     }
     const dr = STATE.ownerDataRoom;
     const baseRev = Math.max(1000, Number(dr.annualRevenueLocal) || baseFin.currentRevenueBase || 500000);
-    const grossPct = Math.max(5, Math.min(85, Number(dr.grossMarginPct) || 35));
+    const grossPct = Math.max(5, Math.min(88, Number(dr.grossMarginPct) || 35));
     const netPct = Math.max(1, Math.min(60, Number(dr.netMarginPct) || 12));
     const ticket = Math.max(5, Number(dr.avgTicketLocal) || 150);
     const lagW = Math.max(1, Math.min(16, Number(dr.deliveryLagWeeks) || 2));
@@ -1867,7 +1840,7 @@
 
   function buildCashFlow18mSvg(series, sym) {
     if (!Array.isArray(series) || series.length < 2) return "";
-    const W = 680, H = 190, padL = 62, padR = 16, padT = 18, padB = 28;
+    const W = 680, H = 190, padL = 78, padR = 16, padT = 18, padB = 28;
     const minV = Math.min(0, ...series);
     const maxV = Math.max(100, ...series);
     const span = Math.max(1, maxV - minV);
@@ -1876,7 +1849,7 @@
     const zeroY = yOf(0);
     const pts = series.map((v, i) => `${xOf(i).toFixed(1)},${yOf(v).toFixed(1)}`).join(" ");
     const areaPts = `${xOf(0).toFixed(1)},${zeroY.toFixed(1)} ${pts} ${xOf(series.length - 1).toFixed(1)},${zeroY.toFixed(1)}`;
-    let beMonth = series.findIndex((v, i) => i > 0 && v >= 0);
+    const beMonth = series.findIndex((v, i) => i > 0 && v >= 0);
 
     return `
       <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">
@@ -1899,7 +1872,7 @@
       </svg>`;
   }
 
-  // ---------- TAB 1: OVERVIEW (WITH KPI STRIP INSIDE), DEEP DIFF, JURY & DATA ROOM ----------
+  // ---------- TAB 1: OVERVIEW ----------
   function renderTabOverview(r) {
     const fin = r.financials || {};
     const cal = getCalibratedFinancials(r);
@@ -2118,7 +2091,7 @@
     }
   }
 
-  // ---------- TAB 2: 10-STEP PLAN, IT FLOW, TURNKEY PACKAGES & DIRECTOR KPIs ----------
+  // ---------- TAB 2: PLAN ----------
   function renderTabPlan(r) {
     const steps = Array.isArray(r.newArchitecture) ? r.newArchitecture : [];
     const flowNodes = Array.isArray(r.itFlowNodes) ? r.itFlowNodes : [];
@@ -2177,7 +2150,7 @@
                   <div class="step-badges">
                     ${chBadge}
                     ${profitBadge}
-                    <span class="badge">CapEx: ${esc(s.estCapExFormatted || "0 €")}</span>
+                    <span class="badge">CapEx: ${esc(s.estCapExFormatted || "0")}</span>
                     <span class="badge">${esc(s.sprintPhase || "")} · ${esc(s.horizon || "30d")}</span>
                     ${s.effort ? `<span class="badge">${esc(s.effort)}</span>` : ""}
                   </div>
@@ -2292,7 +2265,7 @@
     });
   }
 
-  // ---------- TAB 3: COMMERCIAL PLAYBOOK ----------
+  // ---------- TAB 3: PLAYBOOK ----------
   function renderTabPlaybook(r) {
     const icps = Array.isArray(r.icpSegments) ? r.icpSegments : [];
     const seos = Array.isArray(r.seoKeywords) ? r.seoKeywords : [];
@@ -2467,7 +2440,7 @@
     }
   }
 
-  // ---------- TAB 4: MARKET, COMPETITORS (ZERO DUPLICATES + LOGOS + HOUSE NUMBERS), PARTNERS & VENDORS ----------
+  // ---------- TAB 4: MARKET ----------
   function renderTabMarket(r) {
     const ci = r.competitiveIntel || {};
     const h2h = Array.isArray(ci.headToHead) ? ci.headToHead : [];
@@ -2586,11 +2559,11 @@
                 <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
                 ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; Открыть</a>` : ""}
               </div>`;
-          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Верифицированные локальные партнёры не найдены (фейковые компании скрыты).</div>`}
+          }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Верифицированные локальные партнёры не зафиксированы.</div>`}
         </div>
 
         <div class="card">
-          <div class="card-hdr"><h3>&#128187; GDPR IT-вендоры и SaaS (${vendors.length})</h3></div>
+          <div class="card-hdr"><h3>&#128187; IT-вендоры и SaaS (${vendors.length})</h3></div>
           ${r.vendorsSummaryDelta ? `<div class="alert-box info" style="font-size:12.5px;">${esc(r.vendorsSummaryDelta)}</div>` : ""}
           ${vendors.length > 0 ? vendors.map((v) => {
             const vName = safeText(v.cleanName || v.name);
@@ -2646,7 +2619,7 @@
         </div>` : ""}`;
   }
 
-  // ---------- TAB 5: DIAGNOSTICS (NO DUPLICATE TECH STACK / SOCIALS — THEY ARE IN HEADER!) ----------
+  // ---------- TAB 5: DIAGNOSTICS (JURISDICTION-ADAPTIVE TRAFFIC LIGHT) ----------
   function buildRadarSvg(scores, avg, target12m) {
     const cx = 135, cy = 122, R = 80;
     const pts = (obj) => {
@@ -2699,6 +2672,10 @@
     const legal = sig.legalSignals || {};
     const rep = r.reputation || {};
     const rc = r.riskContours || {};
+    const meta = r.companyMeta || {};
+    const cc = String(meta.countryCode || "").toUpperCase();
+    const isDach = DACH_CC.has(cc);
+    const isEuUk = EU_UK_CC.has(cc);
     const missList = uniqStrings(sig.missing || []);
 
     $("tab-diag").innerHTML = `
@@ -2717,13 +2694,14 @@
 
         <div class="card">
           <div class="card-hdr">
-            <h3>Светофор сайта, GDPR и GEO</h3>
+            <h3>Светофор сайта, комплаенс и GEO</h3>
             ${sig.hasWebsite && r.contacts && r.contacts.website && !/^n\/a$/i.test(r.contacts.website) ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; PageSpeed</button>` : ""}
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
             <span class="badge ${sig.httpsActive ? "green" : "red"}">${sig.httpsActive ? "&#9989; HTTPS" : "&#10060; Нет HTTPS"}</span>
-            <span class="badge ${legal.hasImpressum ? "green" : "amber"}">${legal.hasImpressum ? "&#9989; Impressum" : "&#9888;&#65039; Нет Impressum"}</span>
-            <span class="badge ${legal.hasCookieBanner ? "green" : "amber"}">${legal.hasCookieBanner ? "&#9989; Cookie CMP" : "&#9888;&#65039; Нет Cookie CMP"}</span>
+            <span class="badge ${legal.hasPrivacy ? "green" : "amber"}">${legal.hasPrivacy ? "&#9989; Privacy" : "&#9888;&#65039; Нет Privacy"}</span>
+            ${(isDach || legal.hasImpressum) ? `<span class="badge ${legal.hasImpressum ? "green" : "amber"}">${legal.hasImpressum ? "&#9989; Impressum" : "&#9888;&#65039; Нет Impressum"}</span>` : ""}
+            ${(isEuUk || legal.hasCookieBanner) ? `<span class="badge ${legal.hasCookieBanner ? "green" : "amber"}">${legal.hasCookieBanner ? "&#9989; Cookie CMP" : "&#9888;&#65039; Нет Cookie CMP"}</span>` : ""}
             <span class="badge ${geo.hasSchemaOrg ? "green" : "amber"}">${geo.hasSchemaOrg ? "&#9989; Schema.org" : "&#9888;&#65039; Нет Schema"}</span>
             <span class="badge ${geo.robotsAllowsAi !== false ? "green" : "red"}">${geo.robotsAllowsAi !== false ? "&#9989; ИИ-боты открыты" : "&#9940; ИИ-боты заблок."}</span>
           </div>
@@ -2743,7 +2721,7 @@
         <div class="card-hdr"><h3>&#9888;&#65039; 4 контура рисков (A / B / C / D)</h3></div>
         <div class="grid-2">
           <div>
-            <div style="font-weight:750; margin-bottom:8px; color:var(--red);">&#9878;&#65039; Контур A: Право, налоги, GDPR / Impressum</div>
+            <div style="font-weight:750; margin-bottom:8px; color:var(--red);">&#9878;&#65039; Контур A: Право, налоги и комплаенс</div>
             ${renderRiskBlockHtml(rc.legalTax)}
           </div>
           <div>
@@ -2755,7 +2733,7 @@
             ${renderRiskBlockHtml(rc.itBusFactor)}
           </div>
           <div>
-            <div style="font-weight:750; margin-bottom:8px; color:var(--violet);">&#127970; Контур D: Физические активы и монетизация</div>
+            <div style="font-weight:750; margin-bottom:8px; color:var(--violet);">&#127970; Контур D: Активы, операции и монетизация</div>
             ${renderRiskBlockHtml(rc.physicalMonetization)}
           </div>
         </div>
@@ -2781,7 +2759,7 @@
               <div style="color:var(--accent); margin-top:3px;"><b>&#128161; Решение:</b> ${esc(p.solution || "")}</div>
             </div>`).join("")}
           <div class="grid-2" style="margin-top:10px;">
-            <div><b>&#128077; Сильные стороны:</b><ul class="clean-list" style="margin-top:4px;">${uniqStrings(rep.positive || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
+            <div><b>&#128077; Сильные стороны:</b><ul class="clean-list" style="margin-top:4px;">${uniqStrings(rep.positive || []).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>Нет подтверждённых отзывов</li>"}</ul></div>
             <div><b>&#128269; Точки роста / жалобы:</b><ul class="clean-list" style="margin-top:4px;">${uniqStrings((rep.realComplaints && rep.realComplaints.length) ? rep.realComplaints : (rep.auditGaps || [])).map((x) => `<li>${esc(x)}</li>`).join("") || "<li>—</li>"}</ul></div>
           </div>
           ${(rep.structuredReviews && rep.structuredReviews.length) ? `
@@ -2841,7 +2819,7 @@
     });
   }
 
-  // ---------- TAB 6: AI BOARD OF DIRECTORS ----------
+  // ---------- TAB 6: AI BOARD ----------
   function renderTabBoard(r) {
     const roles = [
       ["general", "Управляющий партнёр"],
@@ -2861,11 +2839,11 @@
 
     const msgsHtml = STATE.boardHistory.length === 0
       ? `<div style="color:var(--text-muted); font-size:13.5px; text-align:center; padding:36px 12px;">
-          <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
-          <b>AI-Совет подключён к досье «${esc(r.businessName || "")}»</b>
-          <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши цифры Data Room</span>' : '<span class="badge sky">Факты и бенчмарки аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
-          <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
-        </div>`
+           <div style="font-size:24px; margin-bottom:8px;">&#129302;</div>
+           <b>AI-Совет подключён к досье «${esc(r.businessName || "")}»</b>
+           <div style="font-size:12.5px; margin-top:4px;">Контекст: ${STATE.ownerDataRoom ? '<span class="badge green">Ваши цифры Data Room</span>' : '<span class="badge sky">Факты и бенчмарки аудита</span>'} · Закрыто шагов: <b>${STATE.solvedSteps.length}/${(r.newArchitecture || []).length}</b></div>
+           <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
+         </div>`
       : STATE.boardHistory.map((m, idx) => {
           if (m.role === "user") {
             return `<div class="msg-user"><div style="font-size:11px; color:var(--accent); font-weight:700; margin-bottom:3px;">Вы</div><div style="white-space:pre-wrap;">${esc(m.text)}</div></div>`;
@@ -2994,7 +2972,7 @@
     renderTabBoard(r);
   }
 
-  // ---------- TAB 7: SWARM TRACE, QR STAND, LOCAL RFM & LOGS ----------
+  // ---------- TAB 7: SWARM ----------
   function renderTabSwarm(r) {
     const trace = Array.isArray(r.swarmTrace) ? r.swarmTrace : [];
     const logs = Array.isArray(r.executionLogs) ? r.executionLogs : [];
@@ -3054,7 +3032,7 @@
       const blob = new Blob([JSON.stringify(r, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `B2B_Nexus_v78_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
+      a.download = `B2B_Nexus_v80_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
       a.click();
     };
 
@@ -3090,7 +3068,7 @@
     });
   }
 
-  // ---------- MODALS: EMAIL / RFP / SETTINGS ----------
+  // ---------- MODALS ----------
   function openEmailModal(r) {
     const defEmail = STATE.autoEmail || "";
     showModal(`
@@ -3149,7 +3127,7 @@
       </div>
       <div class="field" style="margin-bottom:10px;">
         <label for="rfpContact">Ваш контакт для ответа</label>
-        <input id="rfpContact" type="text" placeholder="+49 ... или owner@company.de">
+        <input id="rfpContact" type="text" placeholder="Телефон или email для ответа">
       </div>
       <div class="field" style="margin-bottom:14px;">
         <label for="rfpBody">Текст ТЗ и запроса</label>

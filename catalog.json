@@ -1,5 +1,20 @@
 [
   {
+    "id": "1zcGzbOkGZUoIeBgANwMBMICOa4MQk6Vc",
+    "name": "Krebber & Russ GmbH",
+    "niche": "производство и продажа специализированных химических реагентов",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 7,
+    "schemaVersion": "8.7",
+    "createdAt": "2026-11-25T18:04:30.901Z"
+  },
+  {
     "id": "1L47xwilrGtWKhXf7f2RDpuCosQkLavQD",
     "name": "sattelstuhl-arbeitsstuhl.de",
     "niche": "Эргономичные офисные кресла (Sattelstuhl) для B2B и B2C",
@@ -593,15 +608,5 @@
     "driveUrl": "https://drive.google.com/drive/folders/1-YhscfzpAcvJiCxbxN2l74WyIzOw9RBI",
     "modelsCount": 1,
     "createdAt": "2026-11-23T10:51:14.814Z"
-  },
-  {
-    "jobId": "Job_20261123_093611_296",
-    "slug": "greeting-response-8491",
-    "title": "Приветствие и базовый отклик",
-    "missionType": "deep_research",
-    "liveUrl": "https://tretyak1976.github.io/B2B/projects/greeting-response-8491/",
-    "driveUrl": "https://drive.google.com/drive/folders/1RHJaH0SgfHUGRyVFGF3XuNva41nbO5m0",
-    "modelsCount": 5,
-    "createdAt": "2026-11-23T09:36:14.805Z"
   }
 ]

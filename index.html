@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>B2B Nexus v8.1 — Executive Business Audit OS</title>
+  <title>B2B Nexus v8.2 — Executive Business Audit OS</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310b981'/%3E%3Cpath d='M18 44V20h14c7 0 11 3.5 11 9.5 0 4-2 6.8-5.5 8 4.2 1 6.5 4 6.5 8.5 0 6.2-4.6 10-12 10H18zm8-15h5.5c2.6 0 4.2-1.2 4.2-3.4s-1.6-3.3-4.2-3.3H26V29zm0 11h6.2c2.9 0 4.6-1.3 4.6-3.7s-1.7-3.6-4.6-3.6H26V40z' fill='%23051018'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -142,18 +142,17 @@
     /* Universal Company Logo Badge */
     .co-logo {
       display: inline-flex; align-items: center; justify-content: center;
-      border-radius: 9px; border: 1px solid var(--border);
+      border-radius: 8px; border: 1px solid var(--border);
       background: #fff; flex-shrink: 0; overflow: hidden;
-      vertical-align: middle; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
+      vertical-align: middle;
     }
-    .co-logo.is-fb { background: transparent; border-color: var(--accent-border); box-shadow: none; }
-    .co-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; display: block; }
+    .co-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; display: block; }
     .co-logo-fb {
       width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, var(--accent-soft), var(--sky-soft));
       color: var(--accent); font-weight: 800; letter-spacing: -0.02em;
     }
-    .entity-row { display: inline-flex; align-items: center; gap: 9px; min-width: 0; }
+    .entity-row { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 
     /* Hero + Cascade Search Console */
     .hero { max-width: 900px; margin: 22px auto 28px; text-align: center; }
@@ -374,7 +373,7 @@
       padding: 13px 15px; box-shadow: var(--shadow-sm);
     }
     .kpi-label { font-size: 11.5px; font-weight: 650; color: var(--text-muted); margin-bottom: 4px; }
-    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
     .kpi-val.green { color: var(--accent); }
     .kpi-val.sky { color: var(--sky); }
     .kpi-sub { font-size: 11.5px; color: var(--text-soft); margin-top: 5px; }
@@ -391,6 +390,8 @@
       margin-bottom: 12px;
     }
     .card-hdr h3 { margin: 0; font-size: 15.5px; font-weight: 750; letter-spacing: -0.01em; }
+
+    .print-sec-title { display: none; }
 
     .alert-box {
       padding: 11px 14px; border-radius: 10px; margin-bottom: 10px; font-size: 13px;
@@ -430,11 +431,21 @@
     details.fold[open] > summary::after { transform: rotate(180deg); }
     .fold-body { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
 
-    /* Steps */
+    /* Sprint Phase Divider & Steps */
+    .phase-divider {
+      margin: 16px 0 8px; padding: 6px 12px; border-radius: 8px;
+      background: var(--bg-subtle); border-left: 3px solid var(--accent);
+      font-size: 11.5px; font-weight: 800; color: var(--text);
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .phase-divider:first-child { margin-top: 0; }
     .step-item {
-      background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--bg-elev); border: 1px solid var(--border); border-left-width: 4px;
+      border-left-color: var(--accent); border-radius: var(--radius);
       margin-bottom: 10px; overflow: hidden; transition: border-color 0.15s;
     }
+    .step-item.ch-opex { border-left-color: var(--sky); }
+    .step-item.ch-compliance { border-left-color: var(--amber); }
     .step-item.solved { border-color: var(--accent-border); background: color-mix(in srgb, var(--accent-soft) 35%, var(--bg-elev)); }
     .step-head { padding: 13px 16px; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
     .step-chk { width: 20px; height: 20px; accent-color: var(--accent); margin-top: 2px; cursor: pointer; flex-shrink: 0; }
@@ -465,9 +476,12 @@
 
     /* Rich Risk & Ecosystem Cards */
     .risk-card {
-      background: var(--bg-solid); border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px 12px; margin-bottom: 8px; font-size: 12.5px;
+      background: var(--bg-solid); border: 1px solid var(--border); border-left-width: 3px;
+      border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; font-size: 12.5px;
     }
+    .risk-card.sev-high { border-left-color: var(--red); }
+    .risk-card.sev-medium { border-left-color: var(--amber); }
+    .risk-card.sev-low { border-left-color: var(--sky); }
     .risk-card:last-child { margin-bottom: 0; }
 
     /* Execution Library Doc */
@@ -573,12 +587,68 @@
       .tab-btn { flex-direction: column; gap: 2px; font-size: 10.5px; padding: 6px 4px; }
       .step-body { padding-left: 16px; }
     }
+
+    /* Executive A4 Print Styles (always clean light theme, proper pagination, no cut blocks) */
+    @page { size: A4; margin: 13mm 12mm; }
     @media print {
-      .topbar, .tabs-bar, .rep-toolbar, .no-print { display: none !important; }
+      :root, html[data-theme="dark"], html[data-theme="light"] {
+        --bg: #ffffff;
+        --bg-grad: #ffffff;
+        --bg-elev: #ffffff;
+        --bg-solid: #ffffff;
+        --bg-subtle: #f1f5f9;
+        --border: #cbd5e1;
+        --border-strong: #94a3b8;
+        --text: #0f172a;
+        --text-muted: #334155;
+        --text-soft: #475569;
+        --accent: #059669;
+        --accent-soft: #ecfdf5;
+        --accent-border: #a7f3d0;
+        --sky: #0284c7;
+        --sky-soft: #f0f9ff;
+        --sky-border: #bae6fd;
+        --amber: #b45309;
+        --amber-soft: #fffbeb;
+        --amber-border: #fde68a;
+        --red: #b91c1c;
+        --red-soft: #fef2f2;
+        --red-border: #fecaca;
+        --violet: #6d28d9;
+        --violet-soft: #f5f3ff;
+        --violet-border: #ddd6fe;
+      }
+      html, body {
+        background: #ffffff !important; color: #0f172a !important;
+        -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+      }
+      .topbar, .tabs-bar, .rep-toolbar, .no-print, #tab-board, .seg-group, .chip-row, .btn { display: none !important; }
       .container { max-width: 100%; padding: 0; }
-      .tab-pane, .step-body, .rep-extra-panel { display: block !important; page-break-inside: avoid; }
+      .tab-pane { display: block !important; }
+      #tab-plan, #tab-playbook, #tab-market, #tab-diag, #tab-swarm {
+        page-break-before: always; break-before: page;
+      }
+      .print-sec-title {
+        display: block !important;
+        margin: 0 0 12px 0; padding: 9px 14px;
+        background: #0f172a !important; color: #ffffff !important;
+        border-left: 5px solid #059669; border-radius: 7px;
+        font-size: 14px; font-weight: 800; letter-spacing: 0.02em;
+        page-break-after: avoid; break-after: avoid;
+      }
+      .rep-extra-panel, .step-body { display: block !important; }
+      .doc-body { max-height: none !important; overflow: visible !important; }
       details.fold { display: block !important; }
-      .card, .rep-header, .kpi-card { box-shadow: none; border-color: #cbd5e1; }
+      .card, .rep-header, .kpi-card, .step-item, .risk-card, .doc-card, .scen-card, .alert-box, .flow-node, tr {
+        box-shadow: none !important;
+        page-break-inside: avoid; break-inside: avoid;
+      }
+      h1, h2, h3, .card-hdr, .phase-divider, summary {
+        page-break-after: avoid; break-after: avoid;
+      }
+      thead { display: table-header-group; }
+      .flow-strip { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      pre.log-box { background: #f8fafc !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
     }
   </style>
 </head>
@@ -589,7 +659,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v8.1</span>
+      <span class="ver-pill" id="verPill">v8.2</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -614,7 +684,7 @@
     <!-- ==================== SCREEN 1: START & CASCADE SEARCH ==================== -->
     <section id="screenStart">
       <div class="hero">
-        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет</div>
+        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет · v8.2</div>
         <h1 id="heroTitle">Умный B2B-аудит бизнеса по всему миру</h1>
         <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: проверенные факты, P&amp;L, 18-мес. Cash Flow, 10 шагов роста и Playbook.</p>
 
@@ -698,7 +768,7 @@
       <div class="scan-card">
         <div class="scan-top">
           <div>
-            <div style="font-size:12px; font-weight:700; color:var(--sky); text-transform:uppercase;">Конвейер верификации фактов v8.1</div>
+            <div style="font-size:12px; font-weight:700; color:var(--sky); text-transform:uppercase;">Конвейер верификации фактов v8.2</div>
             <h2 id="scanTargetTitle" style="margin:2px 0 0; font-size:20px;">&mdash;</h2>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
@@ -758,7 +828,7 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "8.1";
+  const UI_VERSION = "8.2";
 
   const DACH_CC = new Set(["DE", "AT", "CH"]);
   const EU_UK_CC = new Set([
@@ -767,20 +837,25 @@
   ]);
   const NON_BIZ_OSM_KEYS = /^(highway|boundary|place|landuse|natural|waterway|railway|route|barrier|man_made|power|aerialway|geological|mountain_pass)$/i;
   const ALLOWED_POI_KEYS = /^(amenity|shop|tourism|leisure|healthcare|office|craft|aeroway|industrial|sport|club)$/i;
-  const SOCIAL_DIR_DOMAINS = [
-    "facebook.com", "fb.com", "instagram.com", "linkedin.com", "t.me", "telegram.org",
-    "youtube.com", "youtu.be", "tiktok.com", "twitter.com", "x.com", "vk.com", "ok.ru", "linktr.ee",
-    "xing.com", "pinterest.com", "google.com", "booking.com", "foursquare.com", "wikipedia.org",
-    "tripadvisor.", "yelp."
-  ];
+
+  const SEV_ORDER = { critical: 0, danger: 0, high: 0, warn: 1, medium: 1, info: 2, low: 2 };
+  const PHASE_ORDER = { PHASE_0: 0, SPRINT_1: 1, SPRINT_2: 2, SPRINT_3: 3 };
+  const PHASE_LABELS = {
+    PHASE_0: "Фаза 0 · Критический фундамент и комплаенс (0–14 дней)",
+    SPRINT_1: "Спринт 1 · Быстрый эффект и захват спроса (15–30 дней)",
+    SPRINT_2: "Спринт 2 · Системный рост и автоматизация (30–60 дней)",
+    SPRINT_3: "Спринт 3 · Масштабирование и капитализация (60–90+ дней)"
+  };
+  const INTENT_ORDER = { hot: 0, intercept: 1, warm: 2, niche: 3 };
+  const DOC_CAT_ORDER = { b2b: 0, sales: 1, ads: 2, reputation: 3, voip: 4, hr: 5, legal: 6 };
 
   const LOCAL_COUNTRIES = [
     { code: "DE", ru: "Германия", en: "Germany", de: "Deutschland", es: "Alemania", fr: "Allemagne", zh: "德国", lat: 51.1657, lng: 10.4515 },
     { code: "UA", ru: "Украина", en: "Ukraine", de: "Ukraine", es: "Ucrania", fr: "Ukraine", zh: "乌克兰", lat: 48.3794, lng: 31.1656 },
-    { code: "US", ru: "США", en: "United States", de: "USA", es: "Estados Unidos", fr: "États-Unis", zh: "美国", alt: ["usa"], lat: 39.8283, lng: -98.5795 },
-    { code: "NL", ru: "Нидерланды", en: "Netherlands", de: "Niederlande", es: "Países Bajos", fr: "Pays-Bas", zh: "荷兰", alt: ["голландия"], lat: 52.1326, lng: 5.2913 },
+    { code: "US", ru: "США", en: "United States", de: "USA", es: "Estados Unidos", fr: "États-Unis", zh: "美国", lat: 39.8283, lng: -98.5795 },
+    { code: "NL", ru: "Нидерланды", en: "Netherlands", de: "Niederlande", es: "Países Bajos", fr: "Pays-Bas", zh: "荷兰", lat: 52.1326, lng: 5.2913 },
     { code: "PL", ru: "Польша", en: "Poland", de: "Polen", es: "Polonia", fr: "Pologne", zh: "波兰", lat: 51.9194, lng: 19.1451 },
-    { code: "GB", ru: "Великобритания", en: "United Kingdom", de: "Großbritannien", es: "Reino Unido", fr: "Royaume-Uni", zh: "英国", alt: ["uk", "англия"], lat: 55.3781, lng: -3.4360 },
+    { code: "GB", ru: "Великобритания", en: "United Kingdom", de: "Großbritannien", es: "Reino Unido", fr: "Royaume-Uni", zh: "英国", lat: 55.3781, lng: -3.4360 },
     { code: "FR", ru: "Франция", en: "France", de: "Frankreich", es: "Francia", fr: "France", zh: "法国", lat: 46.2276, lng: 2.2137 },
     { code: "ES", ru: "Испания", en: "Spain", de: "Spanien", es: "España", fr: "Espagne", zh: "西班牙", lat: 40.4637, lng: -3.7492 },
     { code: "IT", ru: "Италия", en: "Italy", de: "Italien", es: "Italia", fr: "Italie", zh: "意大利", lat: 41.8719, lng: 12.5674 },
@@ -788,24 +863,21 @@
     { code: "CH", ru: "Швейцария", en: "Switzerland", de: "Schweiz", es: "Suiza", fr: "Suisse", zh: "瑞士", lat: 46.8182, lng: 8.2275 },
     { code: "BE", ru: "Бельгия", en: "Belgium", de: "Belgien", es: "Bélgica", fr: "Belgique", zh: "比利时", lat: 50.5039, lng: 4.4699 },
     { code: "CZ", ru: "Чехия", en: "Czechia", de: "Tschechien", es: "Chequia", fr: "Tchéquie", zh: "捷克", lat: 49.8175, lng: 15.4730 },
-    { code: "AE", ru: "ОАЭ", en: "United Arab Emirates", de: "Vereinigte Arabische Emirate", es: "Emiratos Árabes Unidos", fr: "Émirats arabes unis", zh: "阿联酋", alt: ["uae", "дубай", "dubai"], lat: 23.4241, lng: 53.8478 },
+    { code: "AE", ru: "ОАЭ", en: "United Arab Emirates", de: "Vereinigte Arabische Emirate", es: "Emiratos Árabes Unidos", fr: "Émirats arabes unis", zh: "阿联酋", lat: 23.4241, lng: 53.8478 },
     { code: "TR", ru: "Турция", en: "Turkey", de: "Türkei", es: "Turquía", fr: "Turquie", zh: "土耳其", lat: 38.9637, lng: 35.2433 },
     { code: "CA", ru: "Канада", en: "Canada", de: "Kanada", es: "Canadá", fr: "Canada", zh: "加拿大", lat: 56.1304, lng: -106.3468 },
-    { code: "AU", ru: "Австралия", en: "Australia", de: "Australien", es: "Australia", fr: "Australie", zh: "澳大利亚", lat: -25.2744, lng: 133.7751 },
-    { code: "ZA", ru: "Южная Африка", en: "South Africa", de: "Südafrika", es: "Sudáfrica", fr: "Afrique du Sud", zh: "南非", alt: ["юар", "rsa"], lat: -30.5595, lng: 22.9375 },
+    { code: "AU", ru: "Австралия", en: "Australia", de: "Australien", es: "Australia", fr: "Australie", zh: "澳大利亚", lat: 25.2744, lng: 133.7751 },
     { code: "KZ", ru: "Казахстан", en: "Kazakhstan", de: "Kasachstan", es: "Kazajistán", fr: "Kazakhstan", zh: "哈萨克斯坦", lat: 48.0196, lng: 66.9237 },
     { code: "IL", ru: "Израиль", en: "Israel", de: "Israel", es: "Israel", fr: "Israël", zh: "以色列", lat: 31.0461, lng: 34.8516 },
     { code: "JP", ru: "Япония", en: "Japan", de: "Japan", es: "Japón", fr: "Japon", zh: "日本", lat: 36.2048, lng: 138.2529 },
     { code: "CN", ru: "Китай", en: "China", de: "China", es: "China", fr: "Chine", zh: "中国", lat: 35.8617, lng: 104.1954 },
-    { code: "KR", ru: "Южная Корея", en: "South Korea", de: "Südkorea", es: "Corea del Sur", fr: "Corée du Sud", zh: "韩国", alt: ["корея"], lat: 35.9078, lng: 127.7669 },
+    { code: "KR", ru: "Южная Корея", en: "South Korea", de: "Südkorea", es: "Corea del Sur", fr: "Corée du Sud", zh: "韩国", lat: 35.9078, lng: 127.7669 },
     { code: "SG", ru: "Сингапур", en: "Singapore", de: "Singapur", es: "Singapur", fr: "Singapour", zh: "新加坡", lat: 1.3521, lng: 103.8198 },
     { code: "BR", ru: "Бразилия", en: "Brazil", de: "Brasilien", es: "Brasil", fr: "Brésil", zh: "巴西", lat: -14.2350, lng: -51.9253 },
     { code: "PT", ru: "Португалия", en: "Portugal", de: "Portugal", es: "Portugal", fr: "Portugal", zh: "葡萄牙", lat: 39.3999, lng: -8.2245 },
     { code: "SE", ru: "Швеция", en: "Sweden", de: "Schweden", es: "Suecia", fr: "Suède", zh: "瑞典", lat: 60.1282, lng: 18.6435 },
     { code: "NO", ru: "Норвегия", en: "Norway", de: "Norwegen", es: "Noruega", fr: "Norvège", zh: "挪威", lat: 60.4720, lng: 8.4689 },
     { code: "DK", ru: "Дания", en: "Denmark", de: "Dänemark", es: "Dinamarca", fr: "Danemark", zh: "丹麦", lat: 56.2639, lng: 9.5018 },
-    { code: "FI", ru: "Финляндия", en: "Finland", de: "Finnland", es: "Finlandia", fr: "Finlande", zh: "芬兰", lat: 61.9241, lng: 25.7482 },
-    { code: "IE", ru: "Ирландия", en: "Ireland", de: "Irland", es: "Irlanda", fr: "Irlande", zh: "爱尔兰", lat: 53.1424, lng: -7.6921 },
     { code: "RO", ru: "Румыния", en: "Romania", de: "Rumänien", es: "Rumanía", fr: "Roumanie", zh: "罗马尼亚", lat: 45.9432, lng: 24.9668 },
     { code: "BG", ru: "Болгария", en: "Bulgaria", de: "Bulgarien", es: "Bulgaria", fr: "Bulgarie", zh: "保加利亚", lat: 42.7339, lng: 25.4858 },
     { code: "HU", ru: "Венгрия", en: "Hungary", de: "Ungarn", es: "Hungría", fr: "Hongrie", zh: "匈牙利", lat: 47.1625, lng: 19.5033 },
@@ -813,14 +885,7 @@
     { code: "GE", ru: "Грузия", en: "Georgia", de: "Georgien", es: "Georgia", fr: "Géorgie", zh: "格鲁吉亚", lat: 42.3154, lng: 43.3569 },
     { code: "IN", ru: "Индия", en: "India", de: "Indien", es: "India", fr: "Inde", zh: "印度", lat: 20.5937, lng: 78.9629 },
     { code: "MX", ru: "Мексика", en: "Mexico", de: "Mexiko", es: "México", fr: "Mexique", zh: "墨西哥", lat: 23.6345, lng: -102.5528 },
-    { code: "SA", ru: "Саудовская Аравия", en: "Saudi Arabia", de: "Saudi-Arabien", es: "Arabia Saudita", fr: "Arabie saoudite", zh: "沙特阿拉伯", lat: 23.8859, lng: 45.0792 },
-    { code: "NZ", ru: "Новая Зеландия", en: "New Zealand", de: "Neuseeland", es: "Nueva Zelanda", fr: "Nouvelle-Zélande", zh: "新西兰", lat: -40.9006, lng: 174.8860 },
-    { code: "AR", ru: "Аргентина", en: "Argentina", de: "Argentinien", es: "Argentina", fr: "Argentine", zh: "阿根廷", lat: -38.4161, lng: -63.6167 },
-    { code: "CL", ru: "Чили", en: "Chile", de: "Chile", es: "Chile", fr: "Chili", zh: "智利", lat: -35.6751, lng: -71.5430 },
-    { code: "EG", ru: "Египет", en: "Egypt", de: "Ägypten", es: "Egipto", fr: "Égypte", zh: "埃及", lat: 26.8206, lng: 30.8025 },
-    { code: "TH", ru: "Таиланд", en: "Thailand", de: "Thailand", es: "Tailandia", fr: "Thaïlande", zh: "泰国", lat: 15.8700, lng: 100.9925 },
-    { code: "ID", ru: "Индонезия", en: "Indonesia", de: "Indonesien", es: "Indonesia", fr: "Indonésie", zh: "印度尼西亚", lat: -0.7893, lng: 113.9213 },
-    { code: "VN", ru: "Вьетнам", en: "Vietnam", de: "Vietnam", es: "Vietnam", fr: "Viêt Nam", zh: "越南", lat: 14.0583, lng: 108.2772 }
+    { code: "ZA", ru: "Южная Африка", en: "South Africa", de: "Südafrika", es: "Sudáfrica", fr: "Afrique du Sud", zh: "南非", lat: -30.5595, lng: 22.9375 }
   ];
 
   const STATE = {
@@ -898,12 +963,6 @@
     return /^https?:\/\//i.test(s) ? s : ("https://" + s);
   };
 
-  const isSocialOrDirDomain = (dom) => {
-    if (!dom) return true;
-    const d = String(dom).toLowerCase().trim();
-    return SOCIAL_DIR_DOMAINS.some((h) => h.endsWith(".") ? (d.startsWith(h) || d.includes("." + h)) : (d === h || d.endsWith("." + h)));
-  };
-
   const extractDomain = (u) => {
     const s = String(u || "").trim();
     if (!s || /^n\/a$/i.test(s)) return "";
@@ -912,61 +971,23 @@
     return d;
   };
 
-  // Universal logo resolver: strictly from verified logoUrl or real corporate domain (never social/directory icons)
   const resolveLogoUrl = (explicitLogo, website) => {
     if (explicitLogo && /^https?:\/\//i.test(explicitLogo) && !/ui-avatars\.com/i.test(explicitLogo)) return explicitLogo;
     const dom = extractDomain(website);
-    if (dom && !isSocialOrDirDomain(dom)) return `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(dom)}`;
+    if (dom) return `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(dom)}`;
     return "";
   };
 
   const companyLogoHtml = (explicitLogo, website, name, sizePx) => {
     const sz = Number(sizePx) || 28;
     const cleanNm = String(name || "B2B").trim();
-    const rawInit = cleanNm.split(/[\s\-&/]+/).filter(Boolean).slice(0, 2).map((w) => w.replace(/[^a-zA-Zа-яА-ЯёЁ0-9]/g, "")[0] || "").join("").toUpperCase() || "B";
-    const safeInit = rawInit.replace(/[^A-ZА-ЯЁ0-9]/g, "") || "B";
+    const initials = cleanNm.split(/[\s\-&]+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "B";
     const fontSize = Math.max(10, Math.round(sz * 0.40));
     const url = resolveLogoUrl(explicitLogo, website);
     if (!url) {
-      return `<span class="co-logo is-fb" style="width:${sz}px;height:${sz}px;"><span class="co-logo-fb" style="font-size:${fontSize}px;">${esc(safeInit)}</span></span>`;
+      return `<span class="co-logo" style="width:${sz}px;height:${sz}px;background:transparent;"><span class="co-logo-fb" style="font-size:${fontSize}px;">${esc(initials)}</span></span>`;
     }
-    return `<span class="co-logo" style="width:${sz}px;height:${sz}px;"><img src="${esc(url)}" alt="" loading="lazy" onerror="var p=this.parentElement;if(p){p.classList.add('is-fb');}this.outerHTML='<span class=&quot;co-logo-fb&quot; style=&quot;font-size:${fontSize}px;&quot;>${esc(safeInit)}</span>'"></span>`;
-  };
-
-  const getReportJurisdiction = (r) => {
-    const j = (r && r.meta && r.meta.jurisdiction) || null;
-    const meta = (r && r.companyMeta) || {};
-    const cc = String((j && j.cc) || meta.countryCode || "").toUpperCase();
-    const isDach = (j && typeof j.isDach === "boolean") ? j.isDach : DACH_CC.has(cc);
-    const isEuUk = (j && typeof j.isEuUk === "boolean") ? j.isEuUk : EU_UK_CC.has(cc);
-    let shortTag = "";
-    if (isDach) shortTag = "DACH · GDPR/DDG";
-    else if (cc === "GB" || cc === "UK") shortTag = "UK GDPR";
-    else if (isEuUk) shortTag = "EU · GDPR";
-    else if (cc === "US") shortTag = "US · CCPA/FTC";
-    else if (cc === "ZA") shortTag = "ZA · POPIA";
-    else if (cc === "KR") shortTag = "KR · PIPA";
-    else if (cc === "JP") shortTag = "JP · APPI";
-    else if (cc === "BR") shortTag = "BR · LGPD";
-    else if (cc === "UA") shortTag = "UA · Право";
-    else if (cc === "AE") shortTag = "UAE · PDPL";
-    else if (cc === "CA") shortTag = "CA · PIPEDA";
-    else if (cc === "AU") shortTag = "AU · Privacy Act";
-    else if (cc) shortTag = cc;
-    return {
-      cc: cc,
-      isDach: isDach,
-      isEuUk: isEuUk,
-      shortTag: shortTag,
-      regime: (j && j.regime) || ""
-    };
-  };
-
-  const evidenceTagPill = (tag) => {
-    const t = String(tag || "").toLowerCase();
-    if (t === "verified_fact") return `<span class="badge green" style="font-size:10.5px;">ФАКТ</span>`;
-    if (t === "industry_benchmark") return `<span class="badge" style="font-size:10.5px;">БЕНЧМАРК</span>`;
-    return "";
+    return `<span class="co-logo" style="width:${sz}px;height:${sz}px;"><img src="${esc(url)}" alt="" loading="lazy" onerror="this.parentElement.style.background='transparent';this.outerHTML='<span class=\\'co-logo-fb\\' style=\\'font-size:${fontSize}px;\\'>${esc(initials)}</span>'"></span>`;
   };
 
   const formatAddr = (street, city, country) => {
@@ -1075,7 +1096,7 @@
     LOCAL_COUNTRIES.forEach((c, idx) => {
       const disp = c[lang2] || c.en;
       if (!low) { scored.push({ c, disp, sc: 100 - idx }); return; }
-      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].concat(c.alt || []).map((x) => String(x || "").toLowerCase());
+      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].map((x) => String(x || "").toLowerCase());
       let sc = 0;
       if (all.some((n) => n === low)) sc = 200;
       else if (all.some((n) => n.startsWith(low))) sc = 150 - idx;
@@ -1312,8 +1333,7 @@
         const lm = d.liveModels || {};
         const total = (lm.groq || 0) + (lm.nvidia || 0) + (lm.mistral || 0) + (lm.openrouter || 0) + (lm.gemini || 0);
         txt.textContent = `Онлайн · ${total} ИИ`;
-        const backendVer = d.version || UI_VERSION;
-        $("verPill").textContent = backendVer === UI_VERSION ? `v${UI_VERSION}` : `v${UI_VERSION} / Core v${backendVer}`;
+        $("verPill").textContent = `v${d.version || UI_VERSION}`;
         return;
       }
     } catch (e) {}
@@ -1498,7 +1518,7 @@
       ).join("");
     };
 
-    addFeed("Запуск глобального конвейера v8.1 (Слой 0 + 5 Директоров + Суд Присяжных)...", "START");
+    addFeed("Запуск глобального конвейера v8.2 (Overpass OSM + 5 Директоров + Суд Присяжных)...", "START");
 
     STATE.clockTimer = setInterval(() => {
       const s = Math.floor((Date.now() - t0) / 1000);
@@ -1563,7 +1583,7 @@
 
       renderReport();
       setScreen("report");
-      showToast("Аудит успешно завершён!");
+      showToast("Аудит v8.2 успешно завершён!");
     } catch (err) {
       stopTimers();
       if (err && err.name === "AbortError") showToast("Скан отменён");
@@ -1640,7 +1660,7 @@
     activateTab(STATE.activeTab || "overview");
   }
 
-  // ---------- HEADER WITH CLEAN LOGOS, JURISDICTION & "ДОП. ИНФОРМАЦИЯ" ----------
+  // ---------- HEADER WITH LOGOS, COMPACT SOCIALS & "ДОП. ИНФОРМАЦИЯ" ----------
   function renderHeader(r) {
     const meta = r.companyMeta || {};
     const c = r.contacts || {};
@@ -1648,7 +1668,6 @@
     const sig = r.digitalSignals || {};
     const ext = (r.meta && r.meta.externalLinks) || {};
     const vf = r.verifiedFacts || null;
-    const juris = getReportJurisdiction(r);
     const streetWithHouse = (meta.detectedStreet && !/^n\/a$/i.test(meta.detectedStreet))
       ? meta.detectedStreet
       : ((c.street && !/^n\/a$/i.test(c.street)) ? c.street : "");
@@ -1685,15 +1704,13 @@
       <div class="rep-extra-panel ${STATE.extraInfoOpen ? "" : "hidden"}" id="repExtraPanel">
         <div class="extra-grid">
           <div class="extra-box">
-            <div class="extra-box-title">&#127970; Профиль, юрисдикция и право</div>
+            <div class="extra-box-title">&#127970; Профиль и юридические данные</div>
             <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
-              ${juris.shortTag ? `<span class="badge sky">${esc(juris.shortTag)}</span>` : ""}
               ${meta.ownershipType && !/^n\/a$/i.test(meta.ownershipType) ? `<span class="badge">${esc(meta.ownershipType)}</span>` : ""}
               ${meta.owner && !/^(n\/a|не раскрыто)$/i.test(meta.owner) ? `<span class="badge">Владелец: ${esc(meta.owner)}</span>` : ""}
               ${meta.ceoName && !/^(n\/a|не раскрыто)$/i.test(meta.ceoName) ? `<span class="badge">Руководитель: ${esc(meta.ceoName)}</span>` : ""}
               ${meta.founded ? `<span class="badge">Основана: ${esc(meta.founded)}</span>` : ""}
             </div>
-            ${juris.regime ? `<div style="color:var(--text-soft); font-size:11.5px; margin-bottom:5px;"><b>Режим права:</b> ${esc(juris.regime)}</div>` : ""}
             ${meta.legalIssues && !/^n\/a$/i.test(meta.legalIssues) ? `<div style="color:var(--text-muted); margin-bottom:6px;"><b>Комплаенс:</b> ${esc(meta.legalIssues)}</div>` : ""}
             ${osmFactBadges ? `<div style="display:flex; flex-wrap:wrap; gap:5px;">${osmFactBadges}</div>` : ""}
           </div>
@@ -1717,7 +1734,7 @@
             ${ext.googleAds ? `<a class="btn btn-sm" href="${esc(ext.googleAds)}" target="_blank" rel="noopener">Google Ads</a>` : ""}
             ${ext.metaAds ? `<a class="btn btn-sm" href="${esc(ext.metaAds)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
             ${ext.trustpilot ? `<a class="btn btn-sm" href="${esc(ext.trustpilot)}" target="_blank" rel="noopener">Trustpilot</a>` : ""}
-            ${(ext.kununu && juris.isDach) ? `<a class="btn btn-sm" href="${esc(ext.kununu)}" target="_blank" rel="noopener">Kununu</a>` : ""}
+            ${ext.kununu ? `<a class="btn btn-sm" href="${esc(ext.kununu)}" target="_blank" rel="noopener">Kununu</a>` : ""}
             ${ext.linkedinJobs ? `<a class="btn btn-sm" href="${esc(ext.linkedinJobs)}" target="_blank" rel="noopener">LinkedIn Jobs</a>` : ""}
             ${sig.careersUrl ? `<a class="btn btn-sm" href="${esc(sig.careersUrl)}" target="_blank" rel="noopener">Вакансии</a>` : ""}
           </div>
@@ -1734,7 +1751,6 @@
               <span>&#128205; ${esc(loc || "Локация не указана")}</span>
               <span class="badge sky">${esc(meta.niche || "Business")}</span>
               <span class="badge">${esc(modeLabel(r.entityMode))}</span>
-              ${juris.shortTag ? `<span class="badge">${esc(juris.shortTag)}</span>` : ""}
               ${r.realDataMissing ? `<span class="badge amber">Бенчмарк-режим (нет в картах)</span>` : ""}
               ${showLegacyVer ? `<span class="badge amber">Архив ${esc(repVer)}</span>` : ""}
               ${dur ? `<span class="badge">&#9201; ${esc(dur)}</span>` : ""}
@@ -1747,7 +1763,7 @@
           <button class="btn btn-sm ${STATE.extraInfoOpen ? "btn-active-pill" : ""}" id="btnExtraInfo">&#8505;&#65039; Доп. информация</button>
           <button class="btn btn-sm" id="btnRescan" title="Запустить свежий скан">&#128260; Обновить</button>
           <button class="btn btn-sm" id="btnCopyLink">&#128279; Ссылка</button>
-          <button class="btn btn-sm" id="btnPrintPdf">&#128424; PDF</button>
+          <button class="btn btn-sm" id="btnPrintPdf">&#128424; Печать / PDF</button>
           <button class="btn btn-sm btn-primary" id="btnEmailReport">&#9993;&#65039; На почту</button>
         </div>
       </div>
@@ -1861,7 +1877,6 @@
     const rank = r.nexusRanking || {};
     const sig = r.digitalSignals || {};
     const geo = sig.geoVisibility || {};
-    const juris = getReportJurisdiction(r);
     const sym = r.currencySymbol || "€";
     const isCivic = r.entityMode === "NON_PROFIT_CIVIC";
     const steps = r.newArchitecture || [];
@@ -1875,9 +1890,6 @@
     const diff = r.diffSinceLastScan || {};
     const scoreDeltaChip = (diff.hasPrevious && diff.scoreDelta)
       ? `<span class="badge ${diff.scoreDelta > 0 ? "green" : "red"}">${diff.scoreDelta > 0 ? "+" : ""}${diff.scoreDelta}</span>` : "";
-
-    const rawMiss = Array.isArray(sig.missing) ? sig.missing : [];
-    const cleanMissCount = (juris.isEuUk ? rawMiss : rawMiss.filter((m) => !/GDPR Cookie/i.test(String(m)))).length;
 
     return `
       <div class="kpi-card">
@@ -1893,7 +1905,7 @@
       <div class="kpi-card">
         <div class="kpi-label">ИИ-видимость (GEO)</div>
         <div class="kpi-val sky">${esc(geo.aiVisibilityScore || 0)}<span style="font-size:14px; font-weight:600; color:var(--text-soft);">/100</span></div>
-        <div class="kpi-sub">${sig.hasWebsite ? (sig.wafProtected ? "WAF-защита сайта" : `Пробелов воронки: ${cleanMissCount}`) : "Сайт не обнаружен"}</div>
+        <div class="kpi-sub">${sig.hasWebsite ? (sig.wafProtected ? "WAF-защита сайта" : `Пробелов воронки: ${(sig.missing || []).length}`) : "Сайт не обнаружен"}</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Внедрение плана (${STATE.solvedSteps.length}/${totalSteps})</div>
@@ -1935,7 +1947,7 @@
         <polygon points="${areaPts}" fill="url(#cfGrad)"/>
         <polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>
         ${beMonth > 0 ? `<circle cx="${xOf(beMonth).toFixed(1)}" cy="${yOf(series[beMonth]).toFixed(1)}" r="4.5" fill="var(--sky)" stroke="#fff" stroke-width="1.5"/>
-          <text x="${xOf(beMonth).toFixed(1)}" y="${Math.max(14, yOf(series[beMonth]) - 9).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--sky)">Окупаемость: М${beMonth}</text>` : ""}
+        <text x="${xOf(beMonth).toFixed(1)}" y="${Math.max(14, yOf(series[beMonth]) - 9).toFixed(1)}" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--sky)">Окупаемость: М${beMonth}</text>` : ""}
         ${[0, 3, 6, 9, 12, 15, 18].filter((m) => m < series.length).map((m) => `
           <text x="${xOf(m).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="10.5" fill="var(--text-soft)">М${m}</text>`).join("")}
       </svg>`;
@@ -1953,8 +1965,12 @@
     const isCivic = r.entityMode === "NON_PROFIT_CIVIC";
     const sens = fin.sensitivityTable || {};
     const scData = sens[STATE.scenario] || sens.base || {};
-    const alerts = r.osintAlerts || [];
-    const scens = Array.isArray(r.strategyScenarios) ? r.strategyScenarios : [];
+    const alerts = (Array.isArray(r.osintAlerts) ? r.osintAlerts : []).slice().sort((a, b) =>
+      (SEV_ORDER[a.severity] ?? 2) - (SEV_ORDER[b.severity] ?? 2)
+    );
+    const scens = (Array.isArray(r.strategyScenarios) ? r.strategyScenarios : []).slice().sort((a, b) =>
+      String(a.scenario || a.code || "").localeCompare(String(b.scenario || b.code || ""))
+    );
     const quickWins = uniqStrings(mkt.quickWins || []);
     const discQs = uniqStrings(r.discoveryQuestions || []);
 
@@ -1981,9 +1997,9 @@
         </div>
         <p style="margin:0; font-size:13.5px; color:var(--text-muted);">${esc(ev.jurorVerdict)}</p>
         ${Array.isArray(ev.vetoedList) && ev.vetoedList.length ? `
-          <div style="margin-top:8px; font-size:12.5px; color:var(--amber);">
-            <b>Отклонено ВЕТО:</b> ${esc(ev.vetoedList.join(" · "))}
-          </div>` : ""}
+        <div style="margin-top:8px; font-size:12.5px; color:var(--amber);">
+          <b>Отклонено ВЕТО:</b> ${esc(ev.vetoedList.join(" · "))}
+        </div>` : ""}
       </div>` : "";
 
     const alertsHtml = alerts.map((a) => `
@@ -2001,12 +2017,12 @@
             const body = s.focus || s.description || s.priority || "";
             const cap = s.capexRange || s.capex || "";
             const gate = s.gate || "";
-            const isRec = Boolean(s.recommended || idx === 0);
+            const isRec = Boolean(s.recommended || idx === 1);
             return `
               <div class="scen-card ${isRec ? "rec" : ""}">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
                   <strong>Сценарий ${esc(code)}${title ? ": " + esc(title) : ""}</strong>
-                  ${isRec ? `<span class="badge green">Приоритет</span>` : ""}
+                  ${isRec ? `<span class="badge green">Базовый</span>` : ""}
                 </div>
                 ${cap ? `<div><b>CapEx:</b> ${esc(cap)}</div>` : ""}
                 ${body ? `<div style="color:var(--text-muted);">${esc(body)}</div>` : ""}
@@ -2016,9 +2032,8 @@
         </div>
       </div>` : "";
 
-    const cfEndVal = cal.cashFlow18m.length >= 2 ? cal.cashFlow18m[cal.cashFlow18m.length - 1] : 0;
-
     $("tab-overview").innerHTML = `
+      <div class="print-sec-title">РАЗДЕЛ 1 · СТРАТЕГИЧЕСКОЕ РЕЗЮМЕ, P&amp;L И CASH FLOW 18 МЕС.</div>
       <div class="kpi-strip" id="overviewKpiStrip">${buildKpiStripHtml(r)}</div>
       ${diffBannerHtml}
       ${alertsHtml}
@@ -2068,14 +2083,14 @@
 
         ${cal.cashFlow18m.length >= 2 ? `
         <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12.5px; gap:8px; flex-wrap:wrap;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12.5px;">
             <b>Накопленный денежный поток (18 мес.)</b>
-            <span class="badge ${cfEndVal >= 0 ? "green" : "amber"}">Месяц 18: ${esc(fmtMoney(cfEndVal, sym))}</span>
+            <span class="badge sky">Месяц 18: ${esc(fmtMoney(cal.cashFlow18m[cal.cashFlow18m.length - 1], sym))}</span>
           </div>
           ${buildCashFlow18mSvg(cal.cashFlow18m, sym)}
         </div>` : ""}
 
-        <details class="fold" style="margin-bottom:0; background:var(--bg-solid);">
+        <details class="fold no-print" style="margin-bottom:0; background:var(--bg-solid);">
           <summary>&#128295; Живая калибровка Data Room (подставьте ваши реальные цифры)</summary>
           <div class="fold-body">
             <div class="dr-grid">
@@ -2162,9 +2177,14 @@
     }
   }
 
-  // ---------- TAB 2: PLAN ----------
+  // ---------- TAB 2: PLAN (GROUPED BY SPRINT PHASE) ----------
   function renderTabPlan(r) {
-    const steps = Array.isArray(r.newArchitecture) ? r.newArchitecture : [];
+    const steps = (Array.isArray(r.newArchitecture) ? r.newArchitecture : []).slice().sort((a, b) => {
+      const pa = PHASE_ORDER[a.sprintPhase] ?? 9;
+      const pb = PHASE_ORDER[b.sprintPhase] ?? 9;
+      if (pa !== pb) return pa - pb;
+      return (Number(a.id) || 0) - (Number(b.id) || 0);
+    });
     const flowNodes = Array.isArray(r.itFlowNodes) ? r.itFlowNodes : [];
     const pkgs = Array.isArray(r.turnkeyPackages) ? r.turnkeyPackages : [];
     const dKpis = Array.isArray(r.directorKpis) ? r.directorKpis : [];
@@ -2189,73 +2209,81 @@
       ["todo", "&#9744; Не решено"]
     ];
 
+    let lastPhase = "";
+    const stepsMarkup = filtered.map((s, idx) => {
+      const sid = Number(s.id || (idx + 1));
+      const isSolved = STATE.solvedSteps.includes(sid);
+      const isComp = s.impactChannel === "compliance";
+      const isOpex = s.impactChannel === "opex";
+      const ph = s.sprintPhase || "SPRINT_1";
+      const phaseHdr = (STATE.stepFilter === "all" && ph !== lastPhase)
+        ? `<div class="phase-divider">${esc(PHASE_LABELS[ph] || ph)}</div>` : "";
+      lastPhase = ph;
+
+      const chClass = isComp ? "ch-compliance" : (isOpex ? "ch-opex" : "ch-revenue");
+      const chBadge = isComp
+        ? `<span class="badge violet">&#128737;&#65039; Комплаенс</span>`
+        : (isOpex ? `<span class="badge sky">&#9881;&#65039; OpEx +${esc(s.impactPct || 0)}%</span>`
+          : `<span class="badge green">&#128200; Выручка +${esc(s.impactPct || 0)}%</span>`);
+      const profitBadge = isComp
+        ? `<span class="badge amber">${esc(s.stepNetProfitFormatted || "Щит от штрафа")}</span>`
+        : `<span class="badge green">Прибыль ${esc(s.stepNetProfitFormatted || "—")}</span>`;
+      const contractors = Array.isArray(s.contractors) ? s.contractors : [];
+
+      return phaseHdr + `
+        <div class="step-item ${chClass} ${isSolved ? "solved" : ""}" data-step-card="${sid}">
+          <div class="step-head">
+            <input type="checkbox" class="step-chk no-print" data-chk-step="${sid}" ${isSolved ? "checked" : ""} aria-label="Выполнено">
+            <div class="step-main">
+              <div class="step-title">${idx + 1}. ${esc(s.title || "")}</div>
+              <div class="step-badges">
+                ${chBadge}
+                ${profitBadge}
+                <span class="badge">CapEx: ${esc(s.estCapExFormatted || "0")}</span>
+                <span class="badge">${esc(s.sprintPhase || "")} · ${esc(s.horizon || "30d")}</span>
+                ${s.effort ? `<span class="badge">${esc(s.effort)}</span>` : ""}
+              </div>
+            </div>
+            <span class="no-print" style="color:var(--text-soft); font-size:13px;">&#9662;</span>
+          </div>
+          <div class="step-body">
+            ${s.evidence && s.evidence !== "N/A" ? `<div style="font-size:12.5px; color:var(--amber); margin-bottom:6px;">&#128270; <b>Основание:</b> ${esc(s.evidence)}</div>` : ""}
+            <p style="margin:0 0 8px; font-size:13.5px;">${esc(s.plainExplanation || "")}</p>
+            <ol class="step-guide">
+              ${(s.stepByStepGuide || []).map((g) => `<li>${esc(stripLeadNum(safeText(g)))}</li>`).join("")}
+            </ol>
+            ${contractors.length > 0 ? `
+              <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:10px;">Подобранные подрядчики:</div>
+              ${contractors.map((c, ci) => `
+                <div class="contractor-box">
+                  <div class="entity-row" style="flex:1; min-width:0; align-items:flex-start;">
+                    ${companyLogoHtml(c.logoUrl, c.website, c.name, 30)}
+                    <div style="min-width:0; flex:1;">
+                      <div style="font-weight:700; font-size:13.5px;">${esc(c.name || "")} ${c.rating ? `· &#11088; ${esc(c.rating)}` : ""}</div>
+                      <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(c.street, c.city, c.country))}${c.description ? ` — ${esc(c.description)}` : ""}</div>
+                      <div style="font-size:12px; margin-top:2px;">
+                        ${c.website ? `<a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
+                        ${c.email ? ` · &#128231; ${esc(c.email)}` : ""}
+                      </div>
+                    </div>
+                  </div>
+                  ${c.email ? `<button class="btn btn-sm btn-primary" data-rfp-step="${sid}" data-rfp-ci="${ci}">&#128232; Отправить ТЗ</button>` : ""}
+                </div>`).join("")}
+            ` : ""}
+          </div>
+        </div>`;
+    }).join("") || `<div class="card" style="color:var(--text-muted);">Нет шагов под выбранный фильтр.</div>`;
+
     $("tab-plan").innerHTML = `
-      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; align-items:center; justify-content:space-between;">
+      <div class="print-sec-title">РАЗДЕЛ 2 · ДОРОЖНАЯ КАРТА ВНЕДРЕНИЯ (${steps.length} ШАГОВ), IT-ПОТОК И KPI</div>
+      <div class="no-print" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; align-items:center; justify-content:space-between;">
         <div style="display:flex; flex-wrap:wrap; gap:6px;">
           ${filters.map(([k, lbl]) => `<button class="chip ${STATE.stepFilter === k ? "active" : ""}" data-sf="${k}">${lbl}</button>`).join("")}
         </div>
         <span style="font-size:12px; color:var(--text-soft);">Клик по шагу раскрывает инструкцию и подрядчиков</span>
       </div>
 
-      <div id="stepsList">
-        ${filtered.map((s, idx) => {
-          const sid = Number(s.id || (idx + 1));
-          const isSolved = STATE.solvedSteps.includes(sid);
-          const isComp = s.impactChannel === "compliance";
-          const isOpex = s.impactChannel === "opex";
-          const chBadge = isComp
-            ? `<span class="badge violet">&#128737;&#65039; Комплаенс</span>`
-            : (isOpex ? `<span class="badge sky">&#9881;&#65039; OpEx +${esc(s.impactPct || 0)}%</span>`
-              : `<span class="badge green">&#128200; Выручка +${esc(s.impactPct || 0)}%</span>`);
-          const profitBadge = isComp
-            ? `<span class="badge amber">${esc(s.stepNetProfitFormatted || "Щит от штрафа")}</span>`
-            : `<span class="badge green">Прибыль ${esc(s.stepNetProfitFormatted || "—")}</span>`;
-          const contractors = Array.isArray(s.contractors) ? s.contractors : [];
-
-          return `
-            <div class="step-item ${isSolved ? "solved" : ""}" data-step-card="${sid}">
-              <div class="step-head">
-                <input type="checkbox" class="step-chk" data-chk-step="${sid}" ${isSolved ? "checked" : ""} aria-label="Выполнено">
-                <div class="step-main">
-                  <div class="step-title">${sid}. ${esc(s.title || "")}</div>
-                  <div class="step-badges">
-                    ${chBadge}
-                    ${profitBadge}
-                    <span class="badge">CapEx: ${esc(s.estCapExFormatted || "0")}</span>
-                    <span class="badge">${esc(s.sprintPhase || "")} · ${esc(s.horizon || "30d")}</span>
-                    ${s.effort ? `<span class="badge">${esc(s.effort)}</span>` : ""}
-                  </div>
-                </div>
-                <span style="color:var(--text-soft); font-size:13px;">&#9662;</span>
-              </div>
-              <div class="step-body">
-                ${s.evidence && s.evidence !== "N/A" ? `<div style="font-size:12.5px; color:var(--amber); margin-bottom:6px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;"><span>&#128270; <b>Основание:</b> ${esc(s.evidence)}</span>${evidenceTagPill(s.evidenceTag)}</div>` : ""}
-                <p style="margin:0 0 8px; font-size:13.5px;">${esc(s.plainExplanation || "")}</p>
-                <ol class="step-guide">
-                  ${(s.stepByStepGuide || []).map((g) => `<li>${esc(stripLeadNum(safeText(g)))}</li>`).join("")}
-                </ol>
-                ${contractors.length > 0 ? `
-                  <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:10px;">Подобранные подрядчики:</div>
-                  ${contractors.map((c, ci) => `
-                    <div class="contractor-box">
-                      <div class="entity-row" style="flex:1; min-width:0; align-items:flex-start;">
-                        ${companyLogoHtml(c.logoUrl, c.website, c.name, 30)}
-                        <div style="min-width:0; flex:1;">
-                          <div style="font-weight:700; font-size:13.5px;">${esc(c.name || "")} ${c.rating ? `· &#11088; ${esc(c.rating)}` : ""}</div>
-                          <div style="font-size:12px; color:var(--text-muted);">${esc(formatAddr(c.street, c.city, c.country))}${c.description ? ` — ${esc(c.description)}` : ""}</div>
-                          <div style="font-size:12px; margin-top:2px;">
-                            ${c.website ? `<a href="${esc(safeHref(c.website))}" target="_blank" rel="noopener">&#127760; Сайт</a>` : ""}
-                            ${c.email ? ` · &#128231; ${esc(c.email)}` : ""}
-                          </div>
-                        </div>
-                      </div>
-                      ${c.email ? `<button class="btn btn-sm btn-primary" data-rfp-step="${sid}" data-rfp-ci="${ci}">&#128232; Отправить ТЗ</button>` : ""}
-                    </div>`).join("")}
-                ` : ""}
-              </div>
-            </div>`;
-        }).join("") || `<div class="card" style="color:var(--text-muted);">Нет шагов под выбранный фильтр.</div>`}
-      </div>
+      <div id="stepsList">${stepsMarkup}</div>
 
       ${flowNodes.length > 0 ? `
       <div class="card" style="margin-top:16px;">
@@ -2336,13 +2364,17 @@
     });
   }
 
-  // ---------- TAB 3: PLAYBOOK ----------
+  // ---------- TAB 3: PLAYBOOK (EXECUTIVE SORTED) ----------
   function renderTabPlaybook(r) {
-    const icps = Array.isArray(r.icpSegments) ? r.icpSegments : [];
-    const seos = Array.isArray(r.seoKeywords) ? r.seoKeywords : [];
+    const icps = (Array.isArray(r.icpSegments) ? r.icpSegments : []).slice().sort((a, b) => (Number(b.sharePct) || 0) - (Number(a.sharePct) || 0));
+    const seos = (Array.isArray(r.seoKeywords) ? r.seoKeywords : []).slice().sort((a, b) =>
+      (INTENT_ORDER[String(a.intent || "").toLowerCase()] ?? 9) - (INTENT_ORDER[String(b.intent || "").toLowerCase()] ?? 9)
+    );
     const medias = Array.isArray(r.mediaPlans) ? r.mediaPlans : [];
     const objs = Array.isArray(r.objectionTrainer) ? r.objectionTrainer : [];
-    const docs = Array.isArray(r.executionLibrary) ? r.executionLibrary : [];
+    const docs = (Array.isArray(r.executionLibrary) ? r.executionLibrary : []).slice().sort((a, b) =>
+      (DOC_CAT_ORDER[String(a.category || "").toLowerCase()] ?? 9) - (DOC_CAT_ORDER[String(b.category || "").toLowerCase()] ?? 9)
+    );
 
     const cats = Array.from(new Set(docs.map((d) => String(d.category || "Doc"))));
     const filteredDocs = STATE.docFilter === "all" ? docs : docs.filter((d) => String(d.category || "Doc") === STATE.docFilter);
@@ -2362,9 +2394,10 @@
     };
 
     $("tab-playbook").innerHTML = `
+      <div class="print-sec-title">РАЗДЕЛ 3 · КОММЕРЧЕСКИЙ PLAYBOOK: ICP, МЕДИАПЛАНЫ, SEO И ДОКУМЕНТЫ</div>
       ${icps.length > 0 ? `
       <div class="card">
-        <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP)</h3><span class="badge">${icps.length}</span></div>
+        <div class="card-hdr"><h3>&#127919; Портреты целевых клиентов (ICP · по убыванию доли)</h3><span class="badge">${icps.length}</span></div>
         <div class="grid-2">
           ${icps.map((c) => `
             <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:14px; font-size:13px;">
@@ -2376,50 +2409,6 @@
               <div style="margin-bottom:4px; color:var(--text-muted);"><b>Боль:</b> ${esc(c.pain || "—")}</div>
               <div style="margin-bottom:4px; color:var(--text-muted);"><b>Триггер:</b> ${esc(c.trigger || "—")}</div>
               <div style="color:var(--text-soft); font-size:12px;"><b>Путь (CJM):</b> ${esc(c.cjm || "—")}</div>
-            </div>`).join("")}
-        </div>
-      </div>` : ""}
-
-      ${docs.length > 0 ? `
-      <div class="card">
-        <div class="card-hdr">
-          <h3>&#128196; Библиотека готовых документов</h3>
-          <div style="display:flex; flex-wrap:wrap; gap:5px;">
-            <button class="chip ${STATE.docFilter === "all" ? "active" : ""}" data-df="all">Все (${docs.length})</button>
-            ${cats.map((ct) => `<button class="chip ${STATE.docFilter === ct ? "active" : ""}" data-df="${esc(ct)}">${esc(ct)}</button>`).join("")}
-          </div>
-        </div>
-        ${filteredDocs.map((d, idx) => `
-          <div class="doc-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-              <div>
-                <span class="badge sky">${esc(d.category || "Doc")}</span>
-                <strong style="margin-left:6px; font-size:14px;">${esc(d.title || "")}</strong>
-                ${d.targetEntity ? `<span style="font-size:12px; color:var(--text-soft); margin-left:6px;">&rarr; ${esc(d.targetEntity)}</span>` : ""}
-              </div>
-              <div style="display:flex; gap:6px;">
-                <button class="btn btn-sm" data-copy-doc="${idx}">&#128203; Копировать</button>
-                <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; В AI-Совет</button>
-              </div>
-            </div>
-            <div class="doc-body">${esc(d.body || "")}</div>
-          </div>`).join("")}
-      </div>` : ""}
-
-      ${objs.length > 0 ? `
-      <div class="card">
-        <div class="card-hdr"><h3>&#128172; Тренажёр возражений клиентов</h3><span class="badge">${objs.length}</span></div>
-        <div class="grid-2">
-          ${objs.map((o, idx) => `
-            <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:13px; font-size:13px; display:flex; flex-direction:column; gap:6px;">
-              <div style="color:var(--amber); font-weight:700;">«${esc(o.objection || "")}»</div>
-              <div style="font-size:12px; color:var(--text-soft);"><b>Причина:</b> ${esc(o.rootCause || "—")}</div>
-              <div style="background:var(--accent-soft); border:1px solid var(--accent-border); border-radius:8px; padding:9px 11px; color:var(--text); line-height:1.5;">
-                ${esc(o.winningScript || "")}
-              </div>
-              <div style="display:flex; justify-content:flex-end;">
-                <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать</button>
-              </div>
             </div>`).join("")}
         </div>
       </div>` : ""}
@@ -2450,9 +2439,9 @@
 
       ${seos.length > 0 ? `
       <details class="fold" open>
-        <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов)</summary>
+        <summary>&#128269; Коммерческое SEO-ядро (${seos.length} запросов · Hot &rarr; Niche)</summary>
         <div class="fold-body">
-          <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+          <div class="no-print" style="display:flex; justify-content:flex-end; margin-bottom:8px;">
             <button class="btn btn-sm" id="btnCopySeo">&#128203; Скопировать ключи</button>
           </div>
           <div class="tbl-wrap">
@@ -2470,7 +2459,51 @@
             </table>
           </div>
         </div>
-      </details>` : ""}`;
+      </details>` : ""}
+
+      ${objs.length > 0 ? `
+      <div class="card">
+        <div class="card-hdr"><h3>&#128172; Тренажёр возражений клиентов</h3><span class="badge">${objs.length}</span></div>
+        <div class="grid-2">
+          ${objs.map((o, idx) => `
+            <div style="background:var(--bg-solid); border:1px solid var(--border); border-radius:12px; padding:13px; font-size:13px; display:flex; flex-direction:column; gap:6px;">
+              <div style="color:var(--amber); font-weight:700;">«${esc(o.objection || "")}»</div>
+              <div style="font-size:12px; color:var(--text-soft);"><b>Причина:</b> ${esc(o.rootCause || "—")}</div>
+              <div style="background:var(--accent-soft); border:1px solid var(--accent-border); border-radius:8px; padding:9px 11px; color:var(--text); line-height:1.5;">
+                ${esc(o.winningScript || "")}
+              </div>
+              <div class="no-print" style="display:flex; justify-content:flex-end;">
+                <button class="btn btn-sm" data-copy-obj="${idx}">&#128203; Копировать</button>
+              </div>
+            </div>`).join("")}
+        </div>
+      </div>` : ""}
+
+      ${docs.length > 0 ? `
+      <div class="card">
+        <div class="card-hdr">
+          <h3>&#128196; Библиотека готовых документов</h3>
+          <div class="no-print" style="display:flex; flex-wrap:wrap; gap:5px;">
+            <button class="chip ${STATE.docFilter === "all" ? "active" : ""}" data-df="all">Все (${docs.length})</button>
+            ${cats.map((ct) => `<button class="chip ${STATE.docFilter === ct ? "active" : ""}" data-df="${esc(ct)}">${esc(ct)}</button>`).join("")}
+          </div>
+        </div>
+        ${filteredDocs.map((d, idx) => `
+          <div class="doc-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+              <div>
+                <span class="badge sky">${esc(d.category || "Doc")}</span>
+                <strong style="margin-left:6px; font-size:14px;">${esc(d.title || "")}</strong>
+                ${d.targetEntity ? `<span style="font-size:12px; color:var(--text-soft); margin-left:6px;">&rarr; ${esc(d.targetEntity)}</span>` : ""}
+              </div>
+              <div class="no-print" style="display:flex; gap:6px;">
+                <button class="btn btn-sm" data-copy-doc="${idx}">&#128203; Копировать</button>
+                <button class="btn btn-sm btn-sky" data-rewrite-doc="${idx}">&#9998; В AI-Совет</button>
+              </div>
+            </div>
+            <div class="doc-body">${esc(d.body || "")}</div>
+          </div>`).join("")}
+      </div>` : ""}`;
 
     $("tab-playbook").querySelectorAll("[data-df]").forEach((b) => {
       b.onclick = () => { STATE.docFilter = b.getAttribute("data-df"); renderTabPlaybook(r); };
@@ -2524,14 +2557,15 @@
     const mkt = r.marketIntelligence || {};
     const meta = r.companyMeta || {};
     const c = r.contacts || {};
-    const juris = getReportJurisdiction(r);
+    const cc = String(meta.countryCode || "").toUpperCase();
+    const isEuUk = EU_UK_CC.has(cc);
     const ownAddr = formatAddr(meta.detectedStreet || c.street, meta.detectedCity || r.searchCity, "");
 
     const trends = uniqStrings(mkt.industryTrends || []);
     const upsells = uniqStrings(mkt.upsellDrivers || []);
-    const vendorsHdr = juris.isEuUk ? `GDPR IT-вендоры и SaaS (${vendors.length})` : `IT-вендоры и SaaS (${vendors.length})`;
 
     $("tab-market").innerHTML = `
+      <div class="print-sec-title">РАЗДЕЛ 4 · РЫНОК, КОНКУРЕНТЫ, СОСЕДИ И IT-ВЕНДОРЫ</div>
       <div class="card">
         <div class="card-hdr">
           <h3>Сравнение Head-to-Head (Вы vs ТОП-${h2h.length || 3})</h3>
@@ -2540,7 +2574,7 @@
         ${h2h.length > 0 ? `
         <div class="tbl-wrap">
           <table class="data-tbl">
-            <thead><tr><th>Компания</th><th>Роль</th><th>Адрес</th><th>Рейтинг</th><th>Домен</th><th>Реклама</th></tr></thead>
+            <thead><tr><th>Компания</th><th>Роль</th><th>Адрес</th><th>Рейтинг</th><th>Домен</th><th class="no-print">Реклама</th></tr></thead>
             <tbody>
               <tr style="background:var(--accent-soft);">
                 <td>
@@ -2553,7 +2587,7 @@
                 <td>${esc(ownAddr || "—")}</td>
                 <td>${esc(r.rating || "—")} (${esc(r.reviewCount || 0)})</td>
                 <td>${esc((r.digitalSignals && r.digitalSignals.finalDomain) || extractDomain(c.website) || "—")}</td>
-                <td>—</td>
+                <td class="no-print">—</td>
               </tr>
               ${h2h.map((h) => `
                 <tr>
@@ -2567,7 +2601,7 @@
                   <td>${esc(formatAddr(h.street, h.city, "") || "—")}</td>
                   <td>${esc(h.rating || "—")} (${esc(h.reviewCount || 0)})</td>
                   <td>${h.domain ? `<a href="${esc(safeHref(h.domain))}" target="_blank" rel="noopener">${esc(h.domain)}</a>` : "—"}</td>
-                  <td style="white-space:nowrap;">
+                  <td class="no-print" style="white-space:nowrap;">
                     ${h.googleAdsLibraryUrl ? `<a class="badge sky" href="${esc(h.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google Ads</a> ` : ""}
                     ${h.metaAdLibraryUrl ? `<a class="badge" href="${esc(h.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta Ads</a>` : ""}
                   </td>
@@ -2620,7 +2654,6 @@
           ${partners.length > 0 ? partners.map((p) => {
             const pName = safeText(p.cleanName || p.name);
             const pLoc = formatAddr(p.street, p.city, p.country);
-            const pDom = extractDomain(p.website);
             return `
               <div class="risk-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
@@ -2631,17 +2664,16 @@
                   ${pLoc ? `<span class="badge">${esc(pLoc)}</span>` : ""}
                 </div>
                 <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(p.reason || p.description || ""))}</div>
-                ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; ${esc(pDom || "Открыть сайт")}</a>` : ""}
+                ${p.website ? `<a href="${esc(safeHref(p.website))}" target="_blank" rel="noopener">&#127760; Открыть</a>` : ""}
               </div>`;
           }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Верифицированные локальные партнёры не зафиксированы.</div>`}
         </div>
 
         <div class="card">
-          <div class="card-hdr"><h3>&#128187; ${esc(vendorsHdr)}</h3></div>
+          <div class="card-hdr"><h3>&#128187; ${isEuUk ? "GDPR IT-вендоры и SaaS" : "IT-вендоры и SaaS"} (${vendors.length})</h3></div>
           ${r.vendorsSummaryDelta ? `<div class="alert-box info" style="font-size:12.5px;">${esc(r.vendorsSummaryDelta)}</div>` : ""}
           ${vendors.length > 0 ? vendors.map((v) => {
             const vName = safeText(v.cleanName || v.name);
-            const vDom = extractDomain(v.website);
             return `
               <div class="risk-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
@@ -2652,7 +2684,7 @@
                   ${v.integrationTarget ? `<span class="badge sky">${esc(v.integrationTarget)}</span>` : ""}
                 </div>
                 <div style="color:var(--text-muted); margin:5px 0;">${esc(safeText(v.description || v.reason || ""))}</div>
-                ${v.website ? `<a href="${esc(safeHref(v.website))}" target="_blank" rel="noopener">&#127760; ${esc(vDom || "Официальный сайт")}</a>` : ""}
+                ${v.website ? `<a href="${esc(safeHref(v.website))}" target="_blank" rel="noopener">&#127760; Официальный сайт</a>` : ""}
               </div>`;
           }).join("") : `<div style="color:var(--text-muted); font-size:13px;">Вендоры не указаны.</div>`}
         </div>
@@ -2694,7 +2726,7 @@
       </div>` : ""}`;
   }
 
-  // ---------- TAB 5: DIAGNOSTICS (JURISDICTION-ADAPTIVE TRAFFIC LIGHT & RISKS) ----------
+  // ---------- TAB 5: DIAGNOSTICS (JURISDICTION-ADAPTIVE + SEVERITY SORTED RISKS) ----------
   function buildRadarSvg(scores, avg, target12m) {
     const cx = 135, cy = 122, R = 80;
     const pts = (obj) => {
@@ -2722,18 +2754,21 @@
 
   function renderRiskBlockHtml(arr) {
     if (!Array.isArray(arr) || arr.length === 0) return `<div style="color:var(--text-soft); font-size:12.5px;">Рисков не выявлено</div>`;
-    return arr.map((item) => {
+    const sorted = arr.slice().sort((a, b) => {
+      const sa = SEV_ORDER[String((a && a.severity) || "medium").toLowerCase()] ?? 1;
+      const sb = SEV_ORDER[String((b && b.severity) || "medium").toLowerCase()] ?? 1;
+      return sa - sb;
+    });
+    return sorted.map((item) => {
       if (typeof item === "string") return `<div class="risk-card">${esc(item)}</div>`;
-      const sev = String(item.severity || "high").toLowerCase();
+      const sev = String(item.severity || "medium").toLowerCase();
       const sevCls = sev === "high" || sev === "critical" ? "red" : (sev === "medium" ? "amber" : "sky");
+      const cardSev = sev === "high" || sev === "critical" ? "sev-high" : (sev === "medium" ? "sev-medium" : "sev-low");
       return `
-        <div class="risk-card">
+        <div class="risk-card ${cardSev}">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:4px;">
             <b>${esc(item.title || safeText(item))}</b>
-            <div style="display:inline-flex; gap:4px; flex-shrink:0;">
-              ${evidenceTagPill(item.evidenceTag)}
-              <span class="badge ${sevCls}">${esc(sev.toUpperCase())}</span>
-            </div>
+            <span class="badge ${sevCls}">${esc(sev.toUpperCase())}</span>
           </div>
           ${item.damage ? `<div style="color:var(--red); margin-bottom:3px;"><b>Ущерб:</b> ${esc(item.damage)}</div>` : ""}
           ${item.check5min ? `<div style="color:var(--text-muted); margin-bottom:3px;"><b>Проверка (5 мин):</b> ${esc(item.check5min)}</div>` : ""}
@@ -2750,14 +2785,18 @@
     const legal = sig.legalSignals || {};
     const rep = r.reputation || {};
     const rc = r.riskContours || {};
-    const juris = getReportJurisdiction(r);
-    const rawMiss = uniqStrings(sig.missing || []);
-    const missList = juris.isEuUk ? rawMiss : rawMiss.filter((m) => !/GDPR Cookie/i.test(m));
-    const contourATitle = juris.isDach
-      ? "&#9878;&#65039; Контур A: Право, налоги, GDPR / Impressum"
-      : (juris.isEuUk ? "&#9878;&#65039; Контур A: Право, налоги и GDPR" : "&#9878;&#65039; Контур A: Право, налоги и комплаенс");
+    const meta = r.companyMeta || {};
+    const juris = (r.meta && r.meta.jurisdiction) || null;
+    const cc = String(meta.countryCode || (juris && juris.cc) || "").toUpperCase();
+    const isDach = DACH_CC.has(cc);
+    const isEuUk = EU_UK_CC.has(cc);
+    const missList = uniqStrings(sig.missing || []);
+    const contourATitle = isDach
+      ? "Контур A: Право, налоги, GDPR / Impressum"
+      : (isEuUk ? "Контур A: Право, налоги, GDPR и комплаенс" : "Контур A: Право, налоги и комплаенс");
 
     $("tab-diag").innerHTML = `
+      <div class="print-sec-title">РАЗДЕЛ 5 · ДИАГНОСТИКА 360&deg;, 4 КОНТУРА РИСКОВ И РЕПУТАЦИЯ</div>
       <div class="grid-2">
         <div class="card">
           <div class="card-hdr">
@@ -2773,21 +2812,18 @@
 
         <div class="card">
           <div class="card-hdr">
-            <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-              <h3>Светофор сайта, комплаенс и GEO</h3>
-              ${juris.shortTag ? `<span class="badge sky">${esc(juris.shortTag)}</span>` : ""}
-            </div>
+            <h3>Светофор сайта, комплаенс и GEO</h3>
             ${sig.hasWebsite && r.contacts && r.contacts.website && !/^n\/a$/i.test(r.contacts.website) ? `<button class="btn btn-sm" id="btnRunPsi">&#9889; PageSpeed</button>` : ""}
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
             <span class="badge ${sig.httpsActive ? "green" : "red"}">${sig.httpsActive ? "&#9989; HTTPS" : "&#10060; Нет HTTPS"}</span>
             <span class="badge ${legal.hasPrivacy ? "green" : "amber"}">${legal.hasPrivacy ? "&#9989; Privacy" : "&#9888;&#65039; Нет Privacy"}</span>
-            ${(juris.isDach || legal.hasImpressum) ? `<span class="badge ${legal.hasImpressum ? "green" : "amber"}">${legal.hasImpressum ? "&#9989; Impressum" : "&#9888;&#65039; Нет Impressum"}</span>` : ""}
-            ${(juris.isEuUk || legal.hasCookieBanner) ? `<span class="badge ${legal.hasCookieBanner ? "green" : "amber"}">${legal.hasCookieBanner ? "&#9989; Cookie CMP" : "&#9888;&#65039; Нет Cookie CMP"}</span>` : ""}
+            ${(isDach || legal.hasImpressum) ? `<span class="badge ${legal.hasImpressum ? "green" : "amber"}">${legal.hasImpressum ? "&#9989; Impressum" : "&#9888;&#65039; Нет Impressum"}</span>` : ""}
+            ${(isEuUk || legal.hasCookieBanner) ? `<span class="badge ${legal.hasCookieBanner ? "green" : "amber"}">${legal.hasCookieBanner ? "&#9989; Cookie CMP" : "&#9888;&#65039; Нет Cookie CMP"}</span>` : ""}
             <span class="badge ${geo.hasSchemaOrg ? "green" : "amber"}">${geo.hasSchemaOrg ? "&#9989; Schema.org" : "&#9888;&#65039; Нет Schema"}</span>
             <span class="badge ${geo.robotsAllowsAi !== false ? "green" : "red"}">${geo.robotsAllowsAi !== false ? "&#9989; ИИ-боты открыты" : "&#9940; ИИ-боты заблок."}</span>
           </div>
-          ${juris.regime ? `<div style="font-size:11.5px; color:var(--text-soft); margin-bottom:8px;"><b>Применимая юрисдикция:</b> ${esc(juris.regime)}</div>` : ""}
+          ${juris && juris.regime ? `<div style="font-size:11.5px; color:var(--text-soft); margin-bottom:8px;"><b>Юрисдикция:</b> ${esc(juris.regime)}</div>` : ""}
           <div id="psiResultBox" style="margin-bottom:10px; font-size:12.5px;"></div>
           <div style="font-size:13px; margin-bottom:8px;">
             <b>Кого рекомендует ИИ (${esc(geo.probeQuery || "—")}):</b>
@@ -2801,10 +2837,10 @@
       </div>
 
       <div class="card">
-        <div class="card-hdr"><h3>&#9888;&#65039; 4 контура рисков (A / B / C / D)</h3></div>
+        <div class="card-hdr"><h3>&#9888;&#65039; 4 контура рисков (A / B / C / D · HIGH &rarr; LOW)</h3></div>
         <div class="grid-2">
           <div>
-            <div style="font-weight:750; margin-bottom:8px; color:var(--red);">${contourATitle}</div>
+            <div style="font-weight:750; margin-bottom:8px; color:var(--red);">&#9878;&#65039; ${esc(contourATitle)}</div>
             ${renderRiskBlockHtml(rc.legalTax)}
           </div>
           <div>
@@ -2928,35 +2964,35 @@
           <div style="font-size:12px; color:var(--text-soft); margin-top:6px;">В режиме «Совет 3x» вопрос параллельно разбирают CFO, CMO и CLO/COO.</div>
         </div>`
       : STATE.boardHistory.map((m, idx) => {
-        if (m.role === "user") {
-          return `<div class="msg-user"><div style="font-size:11px; color:var(--accent); font-weight:700; margin-bottom:3px;">Вы</div><div style="white-space:pre-wrap;">${esc(m.text)}</div></div>`;
-        }
-        if (Array.isArray(m.boardOpinions) && m.boardOpinions.length > 0) {
+          if (m.role === "user") {
+            return `<div class="msg-user"><div style="font-size:11px; color:var(--accent); font-weight:700; margin-bottom:3px;">Вы</div><div style="white-space:pre-wrap;">${esc(m.text)}</div></div>`;
+          }
+          if (Array.isArray(m.boardOpinions) && m.boardOpinions.length > 0) {
+            return `
+              <div class="msg-ai">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+                  <span class="badge violet">&#127963; Заседание Совета · ${(m.elapsedMs / 1000).toFixed(1)}с</span>
+                  <button class="btn btn-sm" data-copy-msg="${idx}">&#128203; Копировать</button>
+                </div>
+                <div class="board-opinions">
+                  ${m.boardOpinions.map((op) => `
+                    <div class="board-seat">
+                      <div style="font-weight:750; color:var(--sky); margin-bottom:4px;">${esc(op.title)}</div>
+                      <div>${esc(op.opinion)}</div>
+                      <div style="font-size:10.5px; color:var(--text-soft); margin-top:6px;">${esc(op.model || "")}</div>
+                    </div>`).join("")}
+                </div>
+              </div>`;
+          }
           return `
             <div class="msg-ai">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-                <span class="badge violet">&#127963; Заседание Совета · ${(m.elapsedMs / 1000).toFixed(1)}с</span>
+                <span class="badge sky">${esc(m.roleLabel || "Советник")} · ${esc((m.usedModels || []).join(", "))} ${m.elapsedMs ? `· ${(m.elapsedMs / 1000).toFixed(1)}с` : ""}</span>
                 <button class="btn btn-sm" data-copy-msg="${idx}">&#128203; Копировать</button>
               </div>
-              <div class="board-opinions">
-                ${m.boardOpinions.map((op) => `
-                  <div class="board-seat">
-                    <div style="font-weight:750; color:var(--sky); margin-bottom:4px;">${esc(op.title)}</div>
-                    <div>${esc(op.opinion)}</div>
-                    <div style="font-size:10.5px; color:var(--text-soft); margin-top:6px;">${esc(op.model || "")}</div>
-                  </div>`).join("")}
-              </div>
+              <div style="white-space:pre-wrap; line-height:1.6;">${esc(m.text)}</div>
             </div>`;
-        }
-        return `
-          <div class="msg-ai">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-              <span class="badge sky">${esc(m.roleLabel || "Советник")} · ${esc((m.usedModels || []).join(", "))} ${m.elapsedMs ? `· ${(m.elapsedMs / 1000).toFixed(1)}с` : ""}</span>
-              <button class="btn btn-sm" data-copy-msg="${idx}">&#128203; Копировать</button>
-            </div>
-            <div style="white-space:pre-wrap; line-height:1.6;">${esc(m.text)}</div>
-          </div>`;
-      }).join("");
+        }).join("");
 
     $("tab-board").innerHTML = `
       <div class="card">
@@ -3063,6 +3099,7 @@
     const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(reviewUrl)}`;
 
     $("tab-swarm").innerHTML = `
+      <div class="print-sec-title">ПРИЛОЖЕНИЕ · ПРОЗРАЧНОСТЬ РОЯ ИИ И ИНЖЕНЕРНЫЕ ЛОГИ</div>
       <div class="card">
         <div class="card-hdr">
           <div>
@@ -3083,7 +3120,7 @@
           </details>`).join("") : `<div style="color:var(--text-muted); font-size:13px;">Заметки параллельной волны не приложены.</div>`}
       </div>
 
-      <div class="grid-2">
+      <div class="grid-2 no-print">
         <div class="card">
           <div class="card-hdr"><h3>&#128241; QR-стенд для отзывов 5&#9733;</h3></div>
           <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
@@ -3115,7 +3152,7 @@
       const blob = new Blob([JSON.stringify(r, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `B2B_Nexus_v81_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
+      a.download = `B2B_Nexus_v82_${String(r.businessName || "audit").replace(/[^a-zA-Z0-9а-яА-ЯёЁ_-]+/g, "_").slice(0, 40)}.json`;
       a.click();
     };
 
@@ -3164,7 +3201,7 @@
         <input id="emailToInput" type="email" value="${esc(defEmail)}" placeholder="name@company.com">
       </div>
       <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">
-        Язык письма синхронизирован с отчётом (<b>${esc(r.reportLanguage || STATE.lang)}</b>).
+        Язык письма синхронизирован с отчётом (<b>${esc(r.reportLanguage || STATE.lang)}</b>). Письмо свёрстано под печать A4.
       </div>
       <div style="display:flex; justify-content:flex-end; gap:8px;">
         <button class="btn" id="mCancel">Отмена</button>
@@ -3184,7 +3221,7 @@
           language: r.reportLanguage || STATE.lang
         });
         if (res && res.status === "success") {
-          showToast("Отчёт отправлен на " + to);
+          showToast("Отчёт v8.2 отправлен на " + to);
           closeModal();
         } else {
           throw new Error((res && res.message) || "Ошибка отправки");

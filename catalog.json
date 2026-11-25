@@ -1,5 +1,20 @@
 [
   {
+    "id": "1mEQAHNF6FEIDq8WjhNDnla3dNE3X6yMO",
+    "name": "TotalEnergies",
+    "niche": "Заправочная станция с небольшим магазином и кафе",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "https://circlek-deutschland.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=circlek-deutschland.de",
+    "rating": "4.3/5.0",
+    "score": 74,
+    "modelsUsed": 6,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-25T18:31:17.158Z"
+  },
+  {
     "id": "1q_6-xvPE-kgV1w4P4nDIhxAVDPkbcn1G",
     "name": "More Than Music, Kleve",
     "niche": "Музыкальный магазин и кафе",
@@ -88,21 +103,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.5",
     "createdAt": "2026-11-25T17:36:50.287Z"
-  },
-  {
-    "id": "1aIKzv91Q86UMyGHOKJ61rJf7J-pnMR_3",
-    "name": "TotalEnergies",
-    "niche": "Топливно-энергетический сервис с магазином",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 99",
-    "website": "https://circlek-deutschland.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=circlek-deutschland.de",
-    "rating": "4.3/5.0",
-    "score": 74,
-    "modelsUsed": 7,
-    "schemaVersion": "8.5",
-    "createdAt": "2026-11-25T17:23:23.510Z"
   },
   {
     "id": "1CCEPPjhR4TaFrdqq-ojbIwpW9FmgN9bY",

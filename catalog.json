@@ -1,5 +1,20 @@
 [
   {
+    "id": "1NWUHYjmDyPOkbhP_hvoOC9W1HLY6J5Bd",
+    "name": "Shopping Manaus ViaNorte",
+    "niche": "Торговый центр розничной торговли",
+    "country": "Бразилия",
+    "city": "Manaus",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 58,
+    "modelsUsed": 7,
+    "schemaVersion": "8.3",
+    "createdAt": "2026-11-25T11:34:02.208Z"
+  },
+  {
     "id": "1peONPnXwd1DBMUCE7xU9q-bWAIkdZFvq",
     "name": "TotalEnergies",
     "niche": "Топливно‑энергетический сервис (АЗС)",
@@ -28,21 +43,6 @@
     "modelsUsed": 6,
     "schemaVersion": "8.3",
     "createdAt": "2026-11-25T11:30:10.339Z"
-  },
-  {
-    "id": "1_6K0UebJsxrmxyiswPbGiAAOKoJ5kKKZ",
-    "name": "Shopping Manaus ViaNorte",
-    "niche": "Торговый центр (молл) среднего размера",
-    "country": "Бразилия",
-    "city": "Manaus",
-    "street": "Avenida Arquiteto José Henriques B. Rodrigues",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 54,
-    "modelsUsed": 6,
-    "schemaVersion": "8.2",
-    "createdAt": "2026-11-25T10:41:17.659Z"
   },
   {
     "id": "1O7XtW27nbD6uDoVTPUjUravLBM3dlq_P",

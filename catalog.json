@@ -1,5 +1,20 @@
 [
   {
+    "id": "1vmm5m3jihwUgTnj0-DqhcdYUP37Rd_QK",
+    "name": "Lidl",
+    "niche": "Супермаркет повседневных товаров",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Van-den-Bergh-Straße 60-62",
+    "website": "https://lidl.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=lidl.de",
+    "rating": "4.4/5.0",
+    "score": 76,
+    "modelsUsed": 6,
+    "schemaVersion": "8.3",
+    "createdAt": "2026-11-25T17:08:11.064Z"
+  },
+  {
     "id": "1UxjEpl8vCf2oyDwMQzM6O3aL5vb3P3u6",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "премиальные кухонные студии",
@@ -43,21 +58,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.3",
     "createdAt": "2026-11-25T11:32:13.601Z"
-  },
-  {
-    "id": "1EDhW1UsVJ7f6Cgimymj9rhGS_ii39fW8",
-    "name": "Lidl",
-    "niche": "Супермаркет формата hard discount",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 6,
-    "schemaVersion": "8.3",
-    "createdAt": "2026-11-25T11:30:10.339Z"
   },
   {
     "id": "1OyvN1Fjg_n4lWjes1YCgI-Iu87ZGBfvL",

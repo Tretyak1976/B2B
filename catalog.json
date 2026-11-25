@@ -1,5 +1,20 @@
 [
   {
+    "id": "1aBhcHO9NYOIzugWOPn8Kn5Xtglfh6kxP",
+    "name": "Restaurant Akropolis in Kleve",
+    "niche": "Ресторанная индустрия",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Gruftstraße 26",
+    "website": "https://www.akropolis-kleve.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=akropolis-kleve.de",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 6,
+    "schemaVersion": "8.7",
+    "createdAt": "2026-11-25T17:52:07.319Z"
+  },
+  {
     "id": "1hGQaBTzaTjLcFplDXXxgCE7WzdGfuOb6",
     "name": "Horsthemke Backbetriebe",
     "niche": "Кофейня и пекарня местного уровня",
@@ -578,15 +593,5 @@
     "driveUrl": "https://drive.google.com/drive/folders/1hV87F57ZjWSxxrnCufFf9Il4ppXyvxIV",
     "modelsCount": 6,
     "createdAt": "2026-11-23T10:02:01.336Z"
-  },
-  {
-    "jobId": "Job_20261123_103614_493",
-    "slug": "daggis-hundesnacks-barf-shop-audit-kleve-1354",
-    "title": "Аудит B2B для Daggis Hundesnacks & BARF-Shop (Клеве)",
-    "missionType": "b2b_audit",
-    "liveUrl": "https://tretyak1976.github.io/B2B/projects/daggis-hundesnacks-barf-shop-audit-kleve-1354/",
-    "driveUrl": "https://drive.google.com/drive/folders/10eERS_Gjr79flrtq2Of-kDm5pK0tHD-k",
-    "modelsCount": 2,
-    "createdAt": "2026-11-23T10:36:16.544Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1pdw2Sf6Z6LUxnUEX1giuAHFZqy-LSvM5",
+    "name": "De Grendel Wine Estate and Restaurant",
+    "niche": "Винодельня и ресторан премиум‑класса",
+    "country": "Южная Африка",
+    "city": "Кейптаун",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 8,
+    "schemaVersion": "8.0",
+    "createdAt": "2026-11-25T08:15:53.567Z"
+  },
+  {
     "id": "1D9biz5gaOXl0eAUXQgGKtKNRCxalK5uJ",
     "name": "TotalEnergies",
     "niche": "Розничная продажа топлива и сопутствующих услуг",

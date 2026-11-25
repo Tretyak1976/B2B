@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>B2B Nexus v8.3 — Executive Business Audit OS</title>
+  <title>B2B Nexus v8.6 — Executive Business Audit OS</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310b981'/%3E%3Cpath d='M18 44V20h14c7 0 11 3.5 11 9.5 0 4-2 6.8-5.5 8 4.2 1 6.5 4 6.5 8.5 0 6.2-4.6 10-12 10H18zm8-15h5.5c2.6 0 4.2-1.2 4.2-3.4s-1.6-3.3-4.2-3.3H26V29zm0 11h6.2c2.9 0 4.6-1.3 4.6-3.7s-1.7-3.6-4.6-3.6H26V40z' fill='%23051018'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -660,7 +659,7 @@
     <div class="brand" id="brandHome" title="На главную">
       <div class="brand-logo" id="brandLogo">B</div>
       <div class="brand-name" id="brandName">B2B Nexus</div>
-      <span class="ver-pill" id="verPill">v8.3</span>
+      <span class="ver-pill" id="verPill">v8.6</span>
     </div>
     <div class="top-actions">
       <div class="status-dot" id="healthBtn" title="Проверить статус движка">
@@ -685,7 +684,7 @@
     <!-- ==================== SCREEN 1: START & CASCADE SEARCH ==================== -->
     <section id="screenStart">
       <div class="hero">
-        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет · v8.3</div>
+        <div class="hero-eyebrow">&#9889; 5 Директоров · Суд Присяжных · AI-Совет · v8.6</div>
         <h1 id="heroTitle">Умный B2B-аудит бизнеса по всему миру</h1>
         <p id="heroSub">Каскадный поиск <b>Страна &rarr; Город &rarr; Компания</b>: проверенные факты, P&amp;L, 18-мес. Cash Flow, 10 шагов роста и Playbook.</p>
 
@@ -697,7 +696,7 @@
                 <span id="ccBadge" style="font-family:var(--mono); color:var(--accent);"></span>
               </div>
               <div class="ac-input-wrap" id="wrapCountry">
-                <input id="countryInput" class="ac-input" type="text" autocomplete="off" placeholder="Выберите страну...">
+                <input id="countryInput" class="ac-input" type="text" autocomplete="off" placeholder="Все страны мира (с 1-й буквы)...">
                 <button class="ac-clear" id="clrCountry" type="button" title="Очистить">&#10005;</button>
               </div>
               <div class="ac-dropdown hidden" id="acCountry"></div>
@@ -709,7 +708,7 @@
                 <span id="cityGeoBadge" style="font-size:10.5px; color:var(--sky);"></span>
               </div>
               <div class="ac-input-wrap" id="wrapCity">
-                <input id="cityInput" class="ac-input" type="text" autocomplete="off" placeholder="Введите город...">
+                <input id="cityInput" class="ac-input" type="text" autocomplete="off" placeholder="Все города (с 1-й буквы)...">
                 <button class="ac-clear" id="clrCity" type="button" title="Очистить">&#10005;</button>
               </div>
               <div class="ac-dropdown hidden" id="acCity"></div>
@@ -829,7 +828,7 @@
   "use strict";
 
   const GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
-  const UI_VERSION = "8.3";
+  const UI_VERSION = "8.6";
 
   const DACH_CC = new Set(["DE", "AT", "CH"]);
   const EU_UK_CC = new Set([
@@ -1100,27 +1099,145 @@
     });
   }
 
+  // B2B_V86_WORLD_AC
+  const ISO2_TO_ISO3_FE = {
+    DE:"DEU", US:"USA", GB:"GBR", UA:"UKR", NL:"NLD", PL:"POL", FR:"FRA", ES:"ESP", IT:"ITA",
+    AT:"AUT", CH:"CHE", BE:"BEL", CZ:"CZE", AE:"ARE", TR:"TUR", CA:"CAN", AU:"AUS", KZ:"KAZ",
+    IL:"ISR", JP:"JPN", CN:"CHN", KR:"KOR", SG:"SGP", BR:"BRA", PT:"PRT", SE:"SWE", NO:"NOR",
+    DK:"DNK", RO:"ROU", BG:"BGR", HU:"HUN", GR:"GRC", GE:"GEO", IN:"IND", MX:"MEX", ZA:"ZAF",
+    RU:"RUS", BY:"BLR", UZ:"UZB", IE:"IRL", FI:"FIN", SK:"SVK", SI:"SVN", HR:"HRV", RS:"SRB",
+    AR:"ARG", CL:"CHL", CO:"COL", PE:"PER", MY:"MYS", TH:"THA", VN:"VNM", ID:"IDN", PH:"PHL",
+    SA:"SAU", QA:"QAT", EG:"EGY", MA:"MAR", NG:"NGA", KE:"KEN", NZ:"NZL", HK:"HKG", LU:"LUX"
+  };
+  const ISO3_TO_ISO2_FE = {};
+  Object.keys(ISO2_TO_ISO3_FE).forEach((k) => { ISO3_TO_ISO2_FE[ISO2_TO_ISO3_FE[k]] = k; });
+
+  const WORLD_GEO = { loaded: false, loading: false, countries: [], activeCities: [] };
+
+  function translitFe(str) {
+    const m = { "а":"a","б":"b","в":"v","г":"g","ґ":"g","д":"d","е":"e","ё":"e","є":"e","ж":"zh","з":"z","и":"i","і":"i","ї":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"shch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya" };
+    return String(str || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[а-яёіїєґ]/g, (c) => m[c] !== undefined ? m[c] : c).trim();
+  }
+
+  function getLocalizedCountryName(iso2, fallbackEn, langCode) {
+    try {
+      if (iso2 && typeof Intl !== "undefined" && Intl.DisplayNames) {
+        const dn = new Intl.DisplayNames([langCode || "ru"], { type: "region" });
+        const out = dn.of(iso2.toUpperCase());
+        if (out && out !== iso2.toUpperCase()) return out;
+      }
+    } catch (e) {}
+    return fallbackEn || iso2 || "";
+  }
+
+  function buildWorldGeoFromApi(rawList) {
+    const byCode = new Map();
+    LOCAL_COUNTRIES.forEach((c) => {
+      byCode.set(c.code, {
+        code: c.code, en: c.en, ru: c.ru, de: c.de, es: c.es, fr: c.fr, zh: c.zh,
+        lat: c.lat, lng: c.lng, cities: []
+      });
+    });
+    (Array.isArray(rawList) ? rawList : []).forEach((row) => {
+      const enName = String(row.country || "").trim();
+      const iso2 = String(row.iso2 || "").trim().toUpperCase();
+      if (!enName) return;
+      const key = iso2 || enName.toLowerCase();
+      const existing = byCode.get(key);
+      const cities = Array.isArray(row.cities) ? row.cities.filter(Boolean) : [];
+      if (existing) {
+        existing.cities = cities;
+        if (!existing.en) existing.en = enName;
+      } else {
+        byCode.set(key, {
+          code: iso2,
+          en: enName,
+          ru: getLocalizedCountryName(iso2, enName, "ru"),
+          de: getLocalizedCountryName(iso2, enName, "de"),
+          es: getLocalizedCountryName(iso2, enName, "es"),
+          fr: getLocalizedCountryName(iso2, enName, "fr"),
+          zh: getLocalizedCountryName(iso2, enName, "zh"),
+          lat: null, lng: null,
+          cities: cities
+        });
+      }
+    });
+    WORLD_GEO.countries = Array.from(byCode.values());
+    WORLD_GEO.loaded = true;
+    syncActiveCitiesList();
+  }
+
+  async function ensureWorldGeoLoaded() {
+    if (WORLD_GEO.loaded || WORLD_GEO.loading) return;
+    WORLD_GEO.loading = true;
+    try {
+      const cachedTs = Number(localStorage.getItem("b2b_world_geo_ts") || 0);
+      const cachedRaw = localStorage.getItem("b2b_world_geo_v1");
+      if (cachedRaw && (Date.now() - cachedTs) < 7 * 86400000) {
+        const parsed = JSON.parse(cachedRaw);
+        if (Array.isArray(parsed) && parsed.length > 100) {
+          buildWorldGeoFromApi(parsed);
+          WORLD_GEO.loading = false;
+          return;
+        }
+      }
+    } catch (e) {}
+    try {
+      const r = await fetch("https://countriesnow.space/api/v0.1/countries");
+      if (r.ok) {
+        const j = await r.json();
+        if (j && Array.isArray(j.data) && j.data.length > 50) {
+          buildWorldGeoFromApi(j.data);
+          try {
+            localStorage.setItem("b2b_world_geo_v1", JSON.stringify(j.data));
+            localStorage.setItem("b2b_world_geo_ts", String(Date.now()));
+          } catch (se) {}
+        }
+      }
+    } catch (e) {}
+    if (!WORLD_GEO.loaded) buildWorldGeoFromApi([]);
+    WORLD_GEO.loading = false;
+  }
+
+  function syncActiveCitiesList() {
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
+    const cname = String(STATE.geo.country || $("countryInput").value || "").trim().toLowerCase();
+    const hit = WORLD_GEO.countries.find((c) => {
+      if (cc && c.code && c.code === cc) return true;
+      if (!cname) return false;
+      return [c.en, c.ru, c.de, c.es, c.fr, c.zh].some((n) => String(n || "").toLowerCase() === cname);
+    });
+    WORLD_GEO.activeCities = (hit && Array.isArray(hit.cities)) ? hit.cities : [];
+    if (hit && hit.en) STATE.geo.countryEn = hit.en;
+  }
+
   function filterCountriesLocal(q) {
     const lang2 = String(STATE.lang || "ru-RU").substring(0, 2).toLowerCase();
     const low = String(q || "").trim().toLowerCase();
+    const tr = translitFe(low);
+    const pool = WORLD_GEO.countries.length > 0 ? WORLD_GEO.countries : LOCAL_COUNTRIES;
     const scored = [];
-    LOCAL_COUNTRIES.forEach((c, idx) => {
-      const disp = c[lang2] || c.en;
-      if (!low) { scored.push({ c, disp, sc: 100 - idx }); return; }
-      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].map((x) => String(x || "").toLowerCase());
+    pool.forEach((c, idx) => {
+      const disp = c[lang2] || c.en || "";
+      if (!disp) return;
+      if (!low) { scored.push({ c, disp, sc: 500 - idx }); return; }
+      const all = [c.ru, c.en, c.de, c.es, c.fr, c.zh, c.code].map((x) => String(x || "").toLowerCase()).filter(Boolean);
       let sc = 0;
-      if (all.some((n) => n === low)) sc = 200;
-      else if (all.some((n) => n.startsWith(low))) sc = 150 - idx;
-      else if (all.some((n) => n.includes(low))) sc = 80 - idx;
+      if (all.some((n) => n === low || n === tr)) sc = 1000;
+      else if (all.some((n) => n.startsWith(low) || translitFe(n).startsWith(tr))) sc = 700 - Math.min(idx, 200);
+      else if (all.some((n) => n.includes(low) || (tr.length >= 2 && translitFe(n).includes(tr)))) sc = 350 - Math.min(idx, 200);
       if (sc > 0) scored.push({ c, disp, sc });
     });
-    scored.sort((a, b) => b.sc - a.sc);
-    return scored.slice(0, 12).map((x) => ({
-      mode: "country", name: x.disp, country: x.disp, countryCode: x.c.code, lat: x.c.lat, lng: x.c.lng
+    scored.sort((a, b) => b.sc - a.sc || a.disp.localeCompare(b.disp));
+    return scored.slice(0, 35).map((x) => ({
+      mode: "country", name: x.disp, country: x.disp, countryEn: x.c.en || x.disp,
+      countryCode: x.c.code || "", lat: x.c.lat || null, lng: x.c.lng || null,
+      citiesCount: Array.isArray(x.c.cities) ? x.c.cities.length : 0
     }));
   }
 
   function showCountryDropdown(q) {
+    ensureWorldGeoLoaded();
     const list = $("acCountry");
     const items = filterCountriesLocal(q);
     if (items.length === 0) {
@@ -1130,8 +1247,11 @@
     }
     list.innerHTML = items.map((it, i) => `
       <div class="ac-item" data-ac-c="${i}">
-        <div><div class="ac-name">${esc(it.name)}</div></div>
-        <span class="badge green">${esc(it.countryCode)}</span>
+        <div>
+          <div class="ac-name">${esc(it.name)}</div>
+          ${it.countryEn && it.countryEn !== it.name ? `<div class="ac-sub">${esc(it.countryEn)}${it.citiesCount ? " · " + it.citiesCount + " городов" : ""}</div>` : ""}
+        </div>
+        <span class="badge green">${esc(it.countryCode || "WORLD")}</span>
       </div>`).join("");
     list.classList.remove("hidden");
     list.querySelectorAll("[data-ac-c]").forEach((el) => {
@@ -1140,12 +1260,14 @@
         const picked = items[Number(el.getAttribute("data-ac-c"))];
         $("countryInput").value = picked.name;
         STATE.geo.country = picked.name;
+        STATE.geo.countryEn = picked.countryEn || picked.name;
         STATE.geo.countryCode = picked.countryCode;
         STATE.geo.lat = picked.lat;
         STATE.geo.lng = picked.lng;
         STATE.geo.city = "";
         STATE.geo.bbox = "";
         $("cityInput").value = "";
+        syncActiveCitiesList();
         list.classList.add("hidden");
         syncGeoUi();
         $("cityInput").focus();
@@ -1154,86 +1276,118 @@
   }
 
   async function fetchCitySuggestions(q) {
+    await ensureWorldGeoLoaded();
+    syncActiveCitiesList();
     const list = $("acCity");
     const trimmed = String(q || "").trim();
     if (trimmed.length < 1) { list.classList.add("hidden"); return; }
 
     const reqId = ++STATE.acSeq.city;
-    list.innerHTML = `<div class="ac-empty">&#9203; Поиск городов${STATE.geo.country ? " (" + esc(STATE.geo.country) + ")" : ""}...</div>`;
-    list.classList.remove("hidden");
+    const low = trimmed.toLowerCase();
+    const tr = translitFe(trimmed);
+    const curCountry = STATE.geo.country || $("countryInput").value.trim();
+    const curCountryEn = STATE.geo.countryEn || curCountry;
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
 
-    let items = [];
-    try {
-      const res = await apiGet({
-        action: "autocomplete", mode: "city", q: trimmed, lang: STATE.lang,
-        country: STATE.geo.country || $("countryInput").value.trim(),
-        countryCode: STATE.geo.countryCode || ""
+    const items = [];
+    const seen = new Set();
+    if (WORLD_GEO.activeCities.length > 0) {
+      const starts = [];
+      const contains = [];
+      WORLD_GEO.activeCities.forEach((cityName) => {
+        const cLow = String(cityName).toLowerCase();
+        const cTr = translitFe(cityName);
+        if (cLow.startsWith(low) || (tr && cTr.startsWith(tr))) starts.push(cityName);
+        else if (low.length >= 2 && (cLow.includes(low) || (tr.length >= 2 && cTr.includes(tr)))) contains.push(cityName);
       });
-      if (reqId !== STATE.acSeq.city) return;
-      if (res && res.status === "success" && Array.isArray(res.items)) items = res.items;
-    } catch (e) {}
+      starts.sort((a, b) => a.localeCompare(b));
+      contains.sort((a, b) => a.localeCompare(b));
+      [].concat(starts, contains).slice(0, 30).forEach((cn) => {
+        const k = cn.toLowerCase();
+        if (seen.has(k)) return;
+        seen.add(k);
+        items.push({
+          mode: "city", name: cn, city: cn, state: "",
+          country: curCountry, countryCode: cc, lat: null, lng: null, bbox: ""
+        });
+      });
+    }
 
-    if (items.length === 0 && reqId === STATE.acSeq.city) {
+    const renderCityList = () => {
+      if (reqId !== STATE.acSeq.city) return;
+      if (items.length === 0) {
+        list.innerHTML = `<div class="ac-empty">Город не найден — оставьте текст, поиск учтёт его</div>`;
+        list.classList.remove("hidden");
+        return;
+      }
+      list.innerHTML = items.slice(0, 25).map((it, i) => `
+        <div class="ac-item" data-ac-city="${i}">
+          <div>
+            <div class="ac-name">${esc(it.name || it.city)}</div>
+            <div class="ac-sub">${esc([it.state, it.country].filter(Boolean).join(", "))}</div>
+          </div>
+          <span class="badge sky">${esc(it.countryCode || "CITY")}</span>
+        </div>`).join("");
+      list.classList.remove("hidden");
+      list.querySelectorAll("[data-ac-city]").forEach((el) => {
+        el.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          const picked = items[Number(el.getAttribute("data-ac-city"))];
+          $("cityInput").value = picked.city || picked.name;
+          STATE.geo.city = picked.city || picked.name;
+          if (picked.country && !$("countryInput").value.trim()) {
+            $("countryInput").value = picked.country;
+            STATE.geo.country = picked.country;
+          }
+          if (picked.countryCode && !STATE.geo.countryCode) STATE.geo.countryCode = picked.countryCode;
+          if (picked.lat && picked.lng) { STATE.geo.lat = picked.lat; STATE.geo.lng = picked.lng; }
+          STATE.geo.bbox = picked.bbox || "";
+          list.classList.add("hidden");
+          syncGeoUi();
+          $("qInput").focus();
+        });
+      });
+    };
+
+    if (items.length > 0) renderCityList();
+    else {
+      list.innerHTML = `<div class="ac-empty">&#9203; Поиск городов${curCountry ? " (" + esc(curCountry) + ")" : ""}...</div>`;
+      list.classList.remove("hidden");
+    }
+
+    if (items.length < 5 && trimmed.length >= 2) {
       try {
-        const ctry = STATE.geo.country || $("countryInput").value.trim();
-        const phQ = ctry ? `${trimmed}, ${ctry}` : trimmed;
-        const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(phQ)}&limit=8&osm_tag=place:city&osm_tag=place:town&osm_tag=place:village`);
+        const cc3 = ISO2_TO_ISO3_FE[cc] || "";
+        const qArc = [trimmed, curCountryEn].filter(Boolean).join(", ");
+        const url = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates" +
+          "?SingleLine=" + encodeURIComponent(qArc) +
+          "&category=Populated+Place" +
+          (cc3 ? ("&sourceCountry=" + encodeURIComponent(cc3)) : "") +
+          "&outFields=City,Region,Country,PlaceName&maxLocations=10&f=pjson";
+        const r = await fetch(url);
+        if (reqId !== STATE.acSeq.city) return;
         if (r.ok) {
-          const pd = await r.json();
-          const ccFilter = (STATE.geo.countryCode || "").toUpperCase();
-          ((pd && pd.features) || []).forEach((f) => {
-            const p = f.properties || {};
-            const crd = (f.geometry && f.geometry.coordinates) || [];
-            const pcc = String(p.countrycode || "").toUpperCase();
-            if (ccFilter && pcc && pcc !== ccFilter) return;
-            if (!p.name) return;
+          const d = await r.json();
+          ((d && d.candidates) || []).forEach((cand) => {
+            const a = cand.attributes || {}, loc = cand.location || {};
+            const cn = String(a.City || a.PlaceName || "").trim();
+            if (!cn) return;
+            const cIso2 = ISO3_TO_ISO2_FE[String(a.Country || "").toUpperCase()] || cc;
+            if (cc && cIso2 && cIso2 !== cc) return;
+            const k = cn.toLowerCase();
+            if (seen.has(k)) return;
+            seen.add(k);
+            const dispC = curCountry || getLocalizedCountryName(cIso2, a.Country || "", String(STATE.lang).slice(0, 2));
             items.push({
-              mode: "city", name: p.name, city: p.name, state: p.state || "",
-              country: p.country || ctry, countryCode: pcc || ccFilter,
-              lat: Number(crd[1]) || null, lng: Number(crd[0]) || null,
-              bbox: Array.isArray(p.extent) && p.extent.length === 4 ? p.extent.join(",") : "",
-              formattedAddress: [p.name, p.state, p.country].filter(Boolean).join(", ")
+              mode: "city", name: cn, city: cn, state: a.Region || "",
+              country: dispC, countryCode: cIso2,
+              lat: Number(loc.y) || null, lng: Number(loc.x) || null, bbox: ""
             });
           });
         }
-      } catch (e2) {}
+      } catch (e) {}
+      renderCityList();
     }
-    if (reqId !== STATE.acSeq.city) return;
-
-    if (items.length === 0) {
-      list.innerHTML = `<div class="ac-empty">Город не найден — оставьте текст, поиск учтёт его</div>`;
-      return;
-    }
-
-    list.innerHTML = items.slice(0, 8).map((it, i) => `
-      <div class="ac-item" data-ac-city="${i}">
-        <div>
-          <div class="ac-name">${esc(it.name || it.city)}</div>
-          <div class="ac-sub">${esc([it.state, it.country].filter(Boolean).join(", "))}</div>
-        </div>
-        <span class="badge sky">${esc(it.countryCode || "CITY")}</span>
-      </div>`).join("");
-    list.classList.remove("hidden");
-
-    list.querySelectorAll("[data-ac-city]").forEach((el) => {
-      el.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        const picked = items[Number(el.getAttribute("data-ac-city"))];
-        $("cityInput").value = picked.city || picked.name;
-        STATE.geo.city = picked.city || picked.name;
-        if (picked.country && !$("countryInput").value.trim()) {
-          $("countryInput").value = picked.country;
-          STATE.geo.country = picked.country;
-        }
-        if (picked.countryCode && !STATE.geo.countryCode) STATE.geo.countryCode = picked.countryCode;
-        STATE.geo.lat = picked.lat || STATE.geo.lat;
-        STATE.geo.lng = picked.lng || STATE.geo.lng;
-        STATE.geo.bbox = picked.bbox || "";
-        list.classList.add("hidden");
-        syncGeoUi();
-        $("qInput").focus();
-      });
-    });
   }
 
   async function fetchBusinessSuggestions(q) {
@@ -1242,74 +1396,89 @@
     if (trimmed.length < 2) { list.classList.add("hidden"); return; }
 
     const reqId = ++STATE.acSeq.business;
-    list.innerHTML = `<div class="ac-empty">&#9203; Поиск компаний${STATE.geo.city ? " в " + esc(STATE.geo.city) : ""}...</div>`;
+    const curCountry = STATE.geo.country || $("countryInput").value.trim();
+    const curCountryEn = STATE.geo.countryEn || curCountry;
+    const curCity = STATE.geo.city || $("cityInput").value.trim();
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
+    const cc3 = ISO2_TO_ISO3_FE[cc] || "";
+
+    list.innerHTML = `<div class="ac-empty">&#9203; Поиск компаний${curCity ? " в " + esc(curCity) : ""}...</div>`;
     list.classList.remove("hidden");
 
-    const curCountry = STATE.geo.country || $("countryInput").value.trim();
-    const curCity = STATE.geo.city || $("cityInput").value.trim();
+    const items = [];
+    const seen = new Set();
+    const pushBiz = (it) => {
+      const nm = String(it.name || "").trim();
+      if (!nm || nm.length < 2) return;
+      const k = (nm + "|" + String(it.street || "") + "|" + String(it.city || "")).toLowerCase();
+      if (seen.has(k)) return;
+      seen.add(k);
+      items.push(it);
+    };
 
-    let items = [];
     try {
-      const params = {
-        action: "autocomplete", mode: "business", q: trimmed, lang: STATE.lang,
-        country: curCountry, countryCode: STATE.geo.countryCode || "", city: curCity
-      };
+      const single = [trimmed, curCity, curCountryEn].filter(Boolean).join(", ");
+      let arcUrl = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates" +
+        "?SingleLine=" + encodeURIComponent(single) +
+        "&category=POI" +
+        (cc3 ? ("&sourceCountry=" + encodeURIComponent(cc3)) : "") +
+        "&outFields=PlaceName,StAddr,City,Region,Country,Type,Phone,URL" +
+        "&maxLocations=10&f=pjson";
       if (STATE.geo.lat && STATE.geo.lng) {
-        params.lat = String(STATE.geo.lat);
-        params.lng = String(STATE.geo.lng);
+        arcUrl += "&location=" + STATE.geo.lng.toFixed(4) + "," + STATE.geo.lat.toFixed(4);
       }
-      if (STATE.geo.bbox) params.bbox = STATE.geo.bbox;
-
-      const res = await apiGet(params);
+      const r = await fetch(arcUrl);
       if (reqId !== STATE.acSeq.business) return;
-      if (res && res.status === "success" && Array.isArray(res.items)) {
-        items = res.items.filter((it) => !INFRA_SUB_VAL_RE.test(String(it.category || "").trim()));
+      if (r.ok) {
+        const d = await r.json();
+        ((d && d.candidates) || []).forEach((cand) => {
+          const a = cand.attributes || {}, loc = cand.location || {};
+          const nm = String(a.PlaceName || "").trim();
+          if (!nm || nm.length < 2) return;
+          const cIso2 = ISO3_TO_ISO2_FE[String(a.Country || "").toUpperCase()] || cc;
+          if (cc && cIso2 && cIso2 !== cc) return;
+          const st = String(a.StAddr || "").trim();
+          const ct = String(a.City || curCity || "").trim();
+          const dispCountry = curCountry || getLocalizedCountryName(cIso2, a.Country || "", String(STATE.lang).slice(0, 2));
+          let rawUrl = String(a.URL || "").trim();
+          if (rawUrl && rawUrl.toLowerCase().indexOf("http") !== 0) rawUrl = "https://" + rawUrl;
+          pushBiz({
+            mode: "business", name: nm, street: st, city: ct,
+            country: dispCountry, countryCode: cIso2,
+            category: String(a.Type || "Business").trim(),
+            rating: "", website: rawUrl,
+            lat: Number(loc.y) || null, lng: Number(loc.x) || null,
+            formattedAddress: formatAddr(st, ct, dispCountry) || String(cand.address || ""),
+            source: "ArcGIS"
+          });
+        });
       }
     } catch (e) {}
 
-    if (items.length === 0 && reqId === STATE.acSeq.business) {
+    if (items.length < 3 && reqId === STATE.acSeq.business) {
       try {
-        const loc = [curCity, curCountry].filter(Boolean).join(", ");
-        let url = `https://photon.komoot.io/api/?q=${encodeURIComponent(loc ? trimmed + ", " + loc : trimmed)}&limit=10`;
-        if (STATE.geo.lat && STATE.geo.lng) url += `&lat=${STATE.geo.lat.toFixed(4)}&lon=${STATE.geo.lng.toFixed(4)}`;
-        if (STATE.geo.bbox) url += `&bbox=${encodeURIComponent(STATE.geo.bbox)}`;
-        const r = await fetch(url);
-        if (r.ok) {
-          const pd = await r.json();
-          const ccFilter = (STATE.geo.countryCode || "").toUpperCase();
-          ((pd && pd.features) || []).forEach((f) => {
-            const p = f.properties || {};
-            const oKey = String(p.osm_key || "").toLowerCase();
-            const oVal = String(p.osm_value || p.type || "").toLowerCase();
-            if (NON_BIZ_OSM_KEYS.test(oKey) || INFRA_SUB_VAL_RE.test(oVal)) return;
-            if (!ALLOWED_POI_KEYS.test(oKey) && !(oKey === "building" && p.name && p.name !== p.street)) return;
-            const pcc = String(p.countrycode || "").toUpperCase();
-            if (ccFilter && pcc && pcc !== ccFilter) return;
-            if (!p.name) return;
-            const st = [p.street, p.housenumber].filter(Boolean).join(" ");
-            const ct = p.city || p.locality || curCity;
-            items.push({
-              mode: "business", name: p.name, street: st, city: ct, country: p.country || curCountry,
-              countryCode: pcc || ccFilter,
-              category: (oVal && !/^(yes|no|house|building)$/i.test(oVal)) ? oVal : "POI",
-              rating: "", website: "", formattedAddress: formatAddr(st, ct, p.country || curCountry),
-              source: "photon"
-            });
-          });
+        const params = {
+          action: "autocomplete", mode: "business", q: trimmed, lang: STATE.lang,
+          country: curCountry, countryCode: cc, city: curCity
+        };
+        const res = await apiGet(params);
+        if (reqId !== STATE.acSeq.business) return;
+        if (res && res.status === "success" && Array.isArray(res.items)) {
+          res.items.forEach((it) => pushBiz(it));
         }
       } catch (e2) {}
     }
-    if (reqId !== STATE.acSeq.business) return;
 
+    if (reqId !== STATE.acSeq.business) return;
     if (items.length === 0) {
       list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Аудит» для запуска по введённому названию/сайту</div>`;
       return;
     }
 
-    list.innerHTML = items.slice(0, 8).map((it, i) => `
+    list.innerHTML = items.slice(0, 10).map((it, i) => `
       <div class="ac-item" data-ac-biz="${i}">
         <div class="entity-row" style="flex:1; min-width:0;">
-          ${companyLogoHtml(it.logoUrl, it.website, it.name, 26)}
+          ${companyLogoHtml(it.logoUrl, it.website, it.name, 28)}
           <div style="min-width:0; flex:1;">
             <div class="ac-name">${esc(it.name)}${it.rating ? ` <span style="color:var(--amber); font-size:12px;">&#9733; ${esc(it.rating)}</span>` : ""}</div>
             <div class="ac-sub">${esc(it.formattedAddress || formatAddr(it.street, it.city, it.country))}</div>
@@ -1336,6 +1505,8 @@
       });
     });
   }
+  setTimeout(() => { ensureWorldGeoLoaded(); }, 250);
+
 
   // ---------- Health Ping & Catalog ----------
   async function pingBackend() {
@@ -1542,12 +1713,20 @@
       $("scanTimer").textContent = `${mm}:${ss}`;
     }, 500);
 
+    let pollBusy = false;
+    const seenTelSeqs = new Set();
     STATE.pollTimer = setInterval(async () => {
+      if (pollBusy) return;
+      pollBusy = true;
       try {
         const res = await apiGet({ action: "telemetry", jobId: jobId, sinceSeq: lastSeq });
         const evs = (res && Array.isArray(res.events)) ? res.events : [];
         evs.forEach((ev) => {
-          lastSeq = Math.max(lastSeq, ev.seq || 0);
+          const sq = Number(ev.seq) || 0;
+          const dedupKey = sq > 0 ? ("s_" + sq) : ((ev.msg || "") + "|" + (ev.size || ""));
+          if (seenTelSeqs.has(dedupKey)) return;
+          seenTelSeqs.add(dedupKey);
+          lastSeq = Math.max(lastSeq, sq);
           addFeed(ev.msg || "", ev.size || "");
           if (ev.phase === "places" || ev.phase === "places_ok" || ev.phase === "web" || ev.phase === "web_ok") updateStage(1);
           if (ev.phase === "thinking" || ev.phase === "done" || ev.phase === "skip") {
@@ -1565,7 +1744,9 @@
           if (ev.phase === "saved" || ev.phase === "published" || ev.phase === "emailed") updateStage(5);
         });
       } catch (e) {}
+      finally { pollBusy = false; }
     }, 1600);
+
 
     STATE.scanAbort = new AbortController();
     try {

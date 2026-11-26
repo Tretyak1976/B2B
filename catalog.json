@@ -1,5 +1,20 @@
 [
   {
+    "id": "1XWxTzXtNv_hRQ6sS5yRIBEqXg6wTIb0G",
+    "name": "Giebels Möbel-Innenausbau",
+    "niche": "Мебель и внутренний дизайн",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Steinstraße 38",
+    "website": "https://www.inneneinrichtung.com",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=inneneinrichtung.com",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T14:31:49.677Z"
+  },
+  {
     "id": "1-U3akAXcOGmpXpBlBsgXq72Z3xYxHuB_",
     "name": "Polsterei Boogaars",
     "niche": "Реставрация и обивка мебели",
@@ -678,16 +693,5 @@
     "score": 61,
     "modelsUsed": 5,
     "createdAt": "2026-11-23T15:31:18.220Z"
-  },
-  {
-    "id": "1AT5GWedxRlWoFKVOtGTtTwy_2OHlJ-Z5",
-    "name": "ستاد اّل مكتوم",
-    "niche": "Спортивный клуб и стадион",
-    "country": "ОАЭ",
-    "city": "دبي",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T15:12:45.575Z"
   }
 ]

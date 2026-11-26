@@ -1,5 +1,20 @@
 [
   {
+    "id": "10B6Plq1wfK-Ki9c2RNrn3WGvGVfa6yAa",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Мебель и кухонные решения",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 88",
+    "website": "https://www.kspb.nl",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 70,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.2",
+    "createdAt": "2026-11-26T10:16:24.960Z"
+  },
+  {
     "id": "1prhcFtpsnH91W_GEGbEZZcw5F4N7hhVu",
     "name": "Kaufland",
     "niche": "Супермаркет повседневных товаров",
@@ -73,21 +88,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-26T07:40:59.570Z"
-  },
-  {
-    "id": "1lvlsnYh7iiWqX8faPQvIl9OGP8gWC8Mi",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Мебель и кухонные решения",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 88",
-    "website": "https://www.kspb.nl",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
-    "rating": "4.9/5.0",
-    "score": 71,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-26T07:37:16.276Z"
   },
   {
     "id": "15AzjOuuWKdUB2K5mMTMrer_BvsLd_6ph",

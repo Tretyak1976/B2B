@@ -1,5 +1,20 @@
 [
   {
+    "id": "1-U3akAXcOGmpXpBlBsgXq72Z3xYxHuB_",
+    "name": "Polsterei Boogaars",
+    "niche": "Реставрация и обивка мебели",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Bongert",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T14:15:13.267Z"
+  },
+  {
     "id": "1RkhS0wy4kW_igOqjBLSScIPJ0swQSe1U",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Производство и установка кухонь на заказ",
@@ -674,16 +689,5 @@
     "score": 60,
     "modelsUsed": 5,
     "createdAt": "2026-11-23T15:12:45.575Z"
-  },
-  {
-    "id": "1SXHYTprQLr4PhFS2RnGW08QYww9fxzWA",
-    "name": "SSHE",
-    "niche": "Неопределенный малый бизнес (SMB)",
-    "country": "США",
-    "city": "Virginia",
-    "rating": "N/A",
-    "score": 46,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T15:03:05.478Z"
   }
 ]

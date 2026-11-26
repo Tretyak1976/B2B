@@ -1,5 +1,20 @@
 [
   {
+    "id": "1fntigdoxUJtpmCsYfdXxobQ6AoMOfvpN",
+    "name": "Vodafone Shop",
+    "niche": "Местный розничный магазин мобильных и интернет-услуг",
+    "country": "Германия",
+    "city": "Überlingen",
+    "street": "Lippertsreuter Straße 60",
+    "website": "https://www.highspeed.deals/203359536/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=highspeed.deals",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-26T07:40:59.570Z"
+  },
+  {
     "id": "1lvlsnYh7iiWqX8faPQvIl9OGP8gWC8Mi",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Мебель и кухонные решения",
@@ -622,16 +637,5 @@
     "score": 53,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T13:19:26.102Z"
-  },
-  {
-    "id": "1bxrAshxWe1MlKSYnZWxtYwJB5RYHGgNj",
-    "name": "TOTAL Gas Station",
-    "niche": "Автозаправка с мини‑маркетом",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T13:01:36.759Z"
   }
 ]

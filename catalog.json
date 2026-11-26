@@ -1,5 +1,20 @@
 [
   {
+    "id": "1AUlyCzdOP1Jk96-Kx4uA61OZkcq4eT-0",
+    "name": "TEDi Gmbh & Co. KG",
+    "niche": "Сетевой магазин товаров для дома и хозтоваров (дискаунтер)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Hoffmannallee 2",
+    "website": "https://www.tedi.com/stores/4006/de/NORDRHEIN-WESTFALEN/Kleve/Hoffmannallee-2",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=tedi.com",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.6",
+    "createdAt": "2026-11-26T15:41:56.378Z"
+  },
+  {
     "id": "1Urz5ryqhzqKOGu3I2OCZGwEHMg-Ojzqy",
     "name": "Holzleitner",
     "niche": "Розничная торговля бытовой электроникой и крупной бытовой техникой",
@@ -706,16 +721,5 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-24T07:16:51.722Z"
-  },
-  {
-    "id": "1jwHOh_9pdcRvP7WwLwhDU90tHYWXcVOr",
-    "name": "Uzhhorod International Airport",
-    "niche": "Международный аэропорт регионального значения",
-    "country": "Украина",
-    "city": "Ужгород",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T17:44:30.710Z"
   }
 ]

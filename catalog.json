@@ -1,5 +1,20 @@
 [
   {
+    "id": "1pec5eE7yA88Y1ljnc1jCP-WphGHR18tA",
+    "name": "Mango",
+    "niche": "розничная торговля модой",
+    "country": "Испания",
+    "city": "Барселона",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T14:41:23.810Z"
+  },
+  {
     "id": "1OnhLlyOZ96lJOYm8ITo51bvDxyyWHY5O",
     "name": "KiK",
     "niche": "Дешёвая одежда и аксессуары (fast fashion)",
@@ -686,16 +701,5 @@
     "score": 64,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T16:18:41.784Z"
-  },
-  {
-    "id": "18yoUS1WRbKhUO8pGI9hv41Ee3rc7tQT8",
-    "name": "TotalEnergies Station Kleve",
-    "niche": "Автомобильная заправка с магазином и сервисом",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 69,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T15:44:58.926Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1RkhS0wy4kW_igOqjBLSScIPJ0swQSe1U",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Производство и установка кухонь на заказ",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 88",
+    "website": "https://www.kspb.nl",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 72,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T14:11:06.106Z"
+  },
+  {
     "id": "1kUvqvkEQMlo4wRMwwmeusGUoRuBCtiwi",
     "name": "McCafé",
     "niche": "Кофейня",
@@ -148,21 +163,6 @@
     "modelsUsed": 6,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T12:11:07.472Z"
-  },
-  {
-    "id": "10B6Plq1wfK-Ki9c2RNrn3WGvGVfa6yAa",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Мебель и кухонные решения",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 88",
-    "website": "https://www.kspb.nl",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
-    "rating": "4.9/5.0",
-    "score": 70,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.2",
-    "createdAt": "2026-11-26T10:16:24.960Z"
   },
   {
     "id": "1prhcFtpsnH91W_GEGbEZZcw5F4N7hhVu",

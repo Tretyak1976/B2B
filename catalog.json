@@ -1,5 +1,20 @@
 [
   {
+    "id": "1XKl57yp6kCmwJoCfjhtVYGmmZ4vC5rqy",
+    "name": "Hotel-Restaurant Zur Post",
+    "niche": "Ресторан-отель с фокусом на стейк-хаус и семейный обед",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Hagsche Straße 44",
+    "website": "https://www.hotel-zur-post-kleve.com/pages/restaurant.php?phpMyAdmin=R37wnpoL6va6AtSDeLL0IQrgAS5",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=hotel-zur-post-kleve.com",
+    "rating": "N/A",
+    "score": 55,
+    "modelsUsed": 6,
+    "schemaVersion": "8.8.3",
+    "createdAt": "2026-11-26T13:19:34.472Z"
+  },
+  {
     "id": "1haA4WIWKr6BLp0hsIlD0zQAN6vLH3rad",
     "name": "Hotel Der Holländer",
     "niche": "Бюджетный отель в пригороде",
@@ -654,16 +669,5 @@
     "score": 57,
     "modelsUsed": 7,
     "createdAt": "2026-11-23T14:07:17.620Z"
-  },
-  {
-    "id": "1FFnGE2tBwSKCrkd7kDo0ovw6t4r0IGdX",
-    "name": "ستاد اّل مكتوم",
-    "niche": "многодисциплинарный спортивный клуб",
-    "country": "ОАЭ",
-    "city": "دبي",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T13:53:33.924Z"
   }
 ]

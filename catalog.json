@@ -1,5 +1,20 @@
 [
   {
+    "id": "1lvlsnYh7iiWqX8faPQvIl9OGP8gWC8Mi",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Мебель и кухонные решения",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 88",
+    "website": "https://www.kspb.nl",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 71,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-26T07:37:16.276Z"
+  },
+  {
     "id": "15AzjOuuWKdUB2K5mMTMrer_BvsLd_6ph",
     "name": "Angelshop Verhey",
     "niche": "Товары для рыбалки и охоты",
@@ -193,21 +208,6 @@
     "modelsUsed": 8,
     "schemaVersion": "8.4",
     "createdAt": "2026-11-25T17:14:21.299Z"
-  },
-  {
-    "id": "1UxjEpl8vCf2oyDwMQzM6O3aL5vb3P3u6",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "премиальные кухонные студии",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 55,
-    "modelsUsed": 6,
-    "schemaVersion": "8.3",
-    "createdAt": "2026-11-25T11:36:46.680Z"
   },
   {
     "id": "1NWUHYjmDyPOkbhP_hvoOC9W1HLY6J5Bd",

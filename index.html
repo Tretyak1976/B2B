@@ -485,7 +485,7 @@ body { font-size: 14px; }
   <div class="top-right">
     <div class="status-pill" id="engineStatusPill" title="Проверить связь с Argon Engine">
       <span class="s-dot" id="engineDot"></span>
-      <span id="engineStatusText">Argon v8.8.4</span>
+      <span id="engineStatusText">Argon v8.8.5</span>
     </div>
     <button class="btn btn-sm" id="cmdOpenTopBtn" title="Быстрый поиск (Ctrl+K)">🔍 <span class="kbd">Ctrl+K</span></button>
     <select class="lang-sel" id="langSelect" title="Язык отчёта"><option value="ru-RU">RU</option><option value="en-US">EN</option><option value="de-DE">DE</option><option value="es-ES">ES</option><option value="fr-FR">FR</option><option value="zh-CN">ZH</option></select>
@@ -717,7 +717,7 @@ body { font-size: 14px; }
   const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
   const urlParams = new URLSearchParams(location.search);
   const STATE = {
-    version: "9.1", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
+    version: "9.1.1", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
     apiUrl: urlParams.get("api") || localStorage.getItem("b2b_nexus_api_url") || DEFAULT_GAS_URL,
     partnerId: urlParams.get("partner") || "",
     adminMode: urlParams.get("admin") === "1" || localStorage.getItem("b2b_v9_admin") === "1",
@@ -1013,7 +1013,7 @@ body { font-size: 14px; }
       "[2.3s] Web X-Ray: angelshop-verhey.de (HTTPS: OK, Impressum: OK, Privacy: OK, Cookie CMP: NO)",
       "[14.1s] Wave 1: 5 Directors completed (CFO, CMO, CLO, CRO, COO)",
       "[22.6s] Jury Fact-Check: 10 verified facts, 1 VETO (SAP ERP removed), Confidence: 92%",
-      "[38.8s] Argon v8.8.4 finalized in 38.8s (Core: true | Playbook: true)"
+      "[38.8s] Argon v8.8.5 finalized in 38.8s (Core: true | Playbook: true)"
     ]
   };
 
@@ -2163,7 +2163,7 @@ body { font-size: 14px; }
     return {
       mode: "osint",
       svg: `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:225px;">${grid}<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="rgba(148,163,184,0.35)"/><text x="${(padL + W - padR) / 2}" y="${H - 6}" fill="var(--muted)" font-size="10" text-anchor="middle">Удалённость от вас (км) →</text>${bubbles}</svg>`,
-      foot: "🟡 Звёзды Google Maps не переданы бесплатным ArcGIS/OSM — показана карта «Близость × Цифровой след» (без выдуманных звёзд)"
+      foot: "🟡 Звёзды Google Maps ещё не подключены — нажмите ⚙️ чтобы подключить бесплатный Serper.dev (2 500 сканов)"
     };
   }
 
@@ -2209,7 +2209,7 @@ body { font-size: 14px; }
         <div class="b-card span-5">
           <div class="b-card-top"><span class="b-lbl">${bubble.mode === "ratings" ? "🫧 Позиционирование (Рейтинг vs Охват)" : "📡 Карта «Близость × Цифровой след»"}</span>${truthDot("rating")}</div>
           ${bubble.svg}
-          <div class="b-foot"><span style="color:var(--muted);">${esc(bubble.foot)}</span></div>
+          <div class="b-foot"><span style="color:var(--muted);">${esc(bubble.foot)}</span>${bubble.mode === "osint" ? `<button class="b-link" id="connectRatingsBtn">⭐ Подключить рейтинги →</button>` : ""}</div>
         </div>
         <div class="b-card span-12">
           <div class="b-card-top"><span class="b-lbl">⚔️ Таблица Head-to-Head (Вы vs ТОП конкуренты)</span><span class="badge sky">Логотипы · Google Ads & Meta Ads</span></div>
@@ -2835,7 +2835,23 @@ body { font-size: 14px; }
   }
 
   function openApiSettingsDrawer() {
-    openDrawer("⚙️ Настройки Argon Engine v9", "API, режим роя, автопочта и режим Администратора", `
+    openDrawer("⚙️ Настройки Argon Engine v9.1", "API, живые рейтинги Google Maps (Serper.dev / Places) и режим роя", `
+      <div class="b-card" style="margin-bottom:14px; border-color:var(--accent-brd); background:color-mix(in srgb, var(--accent-soft) 35%, var(--bg));">
+        <div class="b-card-top">
+          <span class="b-lbl">⭐ Живые рейтинги Google Maps и отзывы 1–2★ (Kill-Sheet)</span>
+          <span class="badge amber" id="ratStatusBadge">Проверка...</span>
+        </div>
+        <div class="b-sub" style="line-height:1.45;">Подключите бесплатный ключ <a href="https://serper.dev" target="_blank" rel="noopener"><strong>Serper.dev</strong></a> (2 500 запросов бесплатно без карты — хватит на ~800 сканов с рейтингами конкурентов и реальными отзывами) <strong>или</strong> Google Places Free Tier. Ключ сохраняется в защищённом хранилище GAS.</div>
+        <div class="dr-grid">
+          <div class="dr-field"><label>Serper.dev API Key (рекомендуем · 2 500 free)</label><input id="serperKeyInp" type="password" autocomplete="off" placeholder="Вставьте ключ с serper.dev"></div>
+          <div class="dr-field"><label>Google Places API Key (опционально · $200/м free)</label><input id="gpKeyInp" type="password" autocomplete="off" placeholder="AIza..."></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:11.5px; color:var(--muted);" id="ratStatusHint">Schema.org рейтинги с сайтов работают бесплатно всегда.</span>
+          <button class="btn btn-primary btn-sm" id="saveRatingsKeyBtn">⭐ Сохранить ключ рейтингов</button>
+        </div>
+      </div>
+
       <div class="dr-field" style="margin-bottom:10px;"><label>GAS Web App URL</label><input id="apiUrlInput" type="url" value="${esc(STATE.apiUrl)}"></div>
       <div class="dr-grid" style="margin-bottom:10px;">
         <div class="dr-field"><label>Режим роя моделей</label><select id="setEngineSel" class="inp" style="height:38px;"><option value="argon_pro" ${STATE.engineMode === "argon_pro" ? "selected" : ""}>Argon Pro (5 Директоров + Суд)</option><option value="fast_flash" ${STATE.engineMode === "fast_flash" ? "selected" : ""}>Turbo Flash (~15–20 сек)</option></select></div>
@@ -2844,7 +2860,34 @@ body { font-size: 14px; }
       <label style="display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; cursor:pointer;"><input type="checkbox" id="setAutoMailOn" ${STATE.autoEmailOn ? "checked" : ""}> Автоматически присылать копию после каждого скана</label>
       <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;"><input type="checkbox" id="setAdminModeChk" ${STATE.adminMode ? "checked" : ""}> 🔐 Показать панель Admin Outreach (внутри Совета ИИ)</label>`, `
       <button class="btn btn-sm" id="resetApiDefBtn">Сбросить URL по умолчанию</button>
-      <button class="btn btn-primary" id="saveApiUrlBtn">Сохранить и проверить</button>`);
+      <button class="btn btn-primary" id="saveApiUrlBtn">Сохранить настройки</button>`);
+
+    const updateRatBadge = (st) => {
+      const b = $("ratStatusBadge"), h = $("ratStatusHint");
+      if (!b || !st) return;
+      if (st.hasSerper) { b.className = "badge green"; b.textContent = "🟢 Serper.dev (" + (st.serperMasked || "OK") + ")"; if (h) h.textContent = "Живые звёзды Google Maps + реальные 1–2★ отзывы для Kill-Sheet активны!"; }
+      else if (st.hasGooglePlaces) { b.className = "badge green"; b.textContent = "🟢 Google Places (" + (st.googleMasked || "OK") + ")"; if (h) h.textContent = "Google Places API Free Tier активен для рейтингов и отзывов."; }
+      else { b.className = "badge amber"; b.textContent = "🟡 Только ArcGIS + Реестр"; if (h) h.textContent = "Вставьте бесплатный ключ с serper.dev для живых звёзд Google Maps."; }
+    };
+    if (STATE.apiUrl) {
+      apiGet({ action: "ratings_status" }).then(updateRatBadge).catch(() => updateRatBadge({ hasSerper: false, hasGooglePlaces: false }));
+    } else updateRatBadge({ hasSerper: false, hasGooglePlaces: false });
+
+    $("saveRatingsKeyBtn").addEventListener("click", async () => {
+      const sk = $("serperKeyInp").value.trim(), gk = $("gpKeyInp").value.trim();
+      if (!sk && !gk) { showToast("Вставьте ключ Serper.dev или Google Places"); return; }
+      const btn = $("saveRatingsKeyBtn"); btn.disabled = true; btn.textContent = "Сохранение...";
+      try {
+        const res = await apiPost({ action: "save_ratings_key", serperKey: sk, googlePlacesKey: gk });
+        if (res && res.status === "success") {
+          $("serperKeyInp").value = ""; $("gpKeyInp").value = "";
+          updateRatBadge(res);
+          showToast("✅ Ключ сохранён! Следующий скан потянет живые рейтинги Google Maps.");
+        } else throw new Error((res && res.message) || "Ошибка сохранения");
+      } catch (e) { showToast("Ошибка: " + e.message, 4500); }
+      finally { btn.disabled = false; btn.textContent = "⭐ Сохранить ключ рейтингов"; }
+    });
+
     $("resetApiDefBtn").addEventListener("click", () => { $("apiUrlInput").value = DEFAULT_GAS_URL; });
     $("saveApiUrlBtn").addEventListener("click", () => {
       STATE.apiUrl = $("apiUrlInput").value.trim() || DEFAULT_GAS_URL;
@@ -2935,6 +2978,7 @@ body { font-size: 14px; }
     });
 
     if ($("arenaCsvBtn")) $("arenaCsvBtn").addEventListener("click", exportCsvBase);
+    if ($("connectRatingsBtn")) $("connectRatingsBtn").addEventListener("click", openApiSettingsDrawer);
     const bindMapPins = () => {
       mc.querySelectorAll("[data-map-kind]").forEach((el) => el.addEventListener("click", (ev) => {
         if (STATE.mapState._dragged) return;

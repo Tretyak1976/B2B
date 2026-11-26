@@ -1,5 +1,20 @@
 [
   {
+    "id": "14SaIDRCEEgl2ck0miOa-2IUTCaxbSr32",
+    "name": "C&A, Kleve",
+    "niche": "Розничная торговля одеждой и аксессуарами",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 61,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.5",
+    "createdAt": "2026-11-26T14:58:59.246Z"
+  },
+  {
     "id": "1pec5eE7yA88Y1ljnc1jCP-WphGHR18tA",
     "name": "Mango",
     "niche": "розничная торговля модой",
@@ -690,16 +705,5 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T17:02:06.813Z"
-  },
-  {
-    "id": "1MGabKk1r_jEWOBjxVTfHZSRp3P_HWDrs",
-    "name": "American Hospital Dubai",
-    "niche": "Частная многопрофильная больница премиум-сегмента",
-    "country": "ОАЭ",
-    "city": "Дубай",
-    "rating": "N/A",
-    "score": 64,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T16:18:41.784Z"
   }
 ]

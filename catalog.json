@@ -1,5 +1,20 @@
 [
   {
+    "id": "1wf5nd6QxZCKIR0iOVoQMQLHUTkCBEkdW",
+    "name": "C&A, Kleve",
+    "niche": "Розничная торговля одеждой и аксессуарами (масс-маркет)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 61,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.5",
+    "createdAt": "2026-11-26T15:11:50.207Z"
+  },
+  {
     "id": "1m43alTjjlSGJKiot82eWF6DGMGFETnGs",
     "name": "Zara, Kleve",
     "niche": "Быстрая мода (Fast Fashion)",
@@ -13,21 +28,6 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.5",
     "createdAt": "2026-11-26T15:08:41.043Z"
-  },
-  {
-    "id": "14SaIDRCEEgl2ck0miOa-2IUTCaxbSr32",
-    "name": "C&A, Kleve",
-    "niche": "Розничная торговля одеждой и аксессуарами",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 61,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.5",
-    "createdAt": "2026-11-26T14:58:59.246Z"
   },
   {
     "id": "1pec5eE7yA88Y1ljnc1jCP-WphGHR18tA",

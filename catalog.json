@@ -1,5 +1,20 @@
 [
   {
+    "id": "1Urz5ryqhzqKOGu3I2OCZGwEHMg-Ojzqy",
+    "name": "Holzleitner",
+    "niche": "Розничная торговля бытовой электроникой и крупной бытовой техникой",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 238",
+    "website": "https://www.holzleitner.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=holzleitner.de",
+    "rating": "N/A",
+    "score": 61,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.6",
+    "createdAt": "2026-11-26T15:33:59.617Z"
+  },
+  {
     "id": "1s7XTmyYULD0fZbvosVNMKnF1rnsUOGBa",
     "name": "Dm-Drogerie Markt, Harzweg 23, Quedlinburg",
     "niche": "Розничная торговля косметикой, парфюмерией и товарами для здоровья",
@@ -702,16 +717,5 @@
     "score": 59,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T17:44:30.710Z"
-  },
-  {
-    "id": "1v2bPCEvRjWFeBaVaSLkt9u7iIT-nuWzn",
-    "name": "Вопак",
-    "niche": "Супермаркет масс-маркета",
-    "country": "Украина",
-    "city": "Ужгород",
-    "rating": "3.2/5.0",
-    "score": 52,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T17:38:33.917Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1uxOxg_BtUnXk5pY4EulpMtXERKdFd-4L",
+    "name": "Circle K",
+    "niche": "Топливные станции и автосервисы",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "https://www.circlek-deutschland.de/tankstellenfinder",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=circlek-deutschland.de",
+    "rating": "N/A",
+    "score": 58,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.2",
+    "createdAt": "2026-11-26T12:10:35.322Z"
+  },
+  {
     "id": "10B6Plq1wfK-Ki9c2RNrn3WGvGVfa6yAa",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Мебель и кухонные решения",
@@ -638,16 +653,5 @@
     "score": 57,
     "modelsUsed": 6,
     "createdAt": "2026-11-23T13:35:12.105Z"
-  },
-  {
-    "id": "1R1OztMgFc4ai0G2j9ZD52Sa6cy7ZtYRz",
-    "name": "TOTAL Gas Station",
-    "niche": "АЗС с розничным сервисом",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 63,
-    "modelsUsed": 6,
-    "createdAt": "2026-11-23T13:29:58.794Z"
   }
 ]

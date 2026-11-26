@@ -1,5 +1,20 @@
 [
   {
+    "id": "1eBGaxA4z6j0V2BpYCHKG68zOc4xIyNMd",
+    "name": "Steakhaus El Poncho Inhaber Aleksandra Jovanovic",
+    "niche": "Ресторан стейков и гриль-бар",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 82",
+    "website": "https://elponcho.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=elponcho.de",
+    "rating": "N/A",
+    "score": 54,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T13:57:56.886Z"
+  },
+  {
     "id": "14YbbFFycbWjD11zVAyEZAESa35nB81jK",
     "name": "Grill Hit UG",
     "niche": "Ресторан гриль-кухни",
@@ -666,16 +681,5 @@
     "score": 66,
     "modelsUsed": 5,
     "createdAt": "2026-11-23T15:00:36.690Z"
-  },
-  {
-    "id": "1BkLHnFxdPm6DgGILzDLXERs6W__hVw9A",
-    "name": "N/A",
-    "niche": "B2B консалтинг и цифровизация для SMB",
-    "country": "Россия",
-    "city": "",
-    "rating": "N/A",
-    "score": 53,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T14:49:08.098Z"
   }
 ]

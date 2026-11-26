@@ -1,5 +1,20 @@
 [
   {
+    "id": "1iifPnoF7kXcDxGuykZLTL6Kh3BpnvJhj",
+    "name": "TotalEnergies",
+    "niche": "Автозаправочная станция с базовыми услугами топливозаправки",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "https://totalenergies.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=totalenergies.de",
+    "rating": "4.3/5.0",
+    "score": 72,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-26T16:48:05.710Z"
+  },
+  {
     "id": "1y3OF_bsW_5hhE7oDqPBRbnXCtQBLab9A",
     "name": "M & M Reifen",
     "niche": "Шиномонтаж и автосервис",
@@ -283,21 +298,6 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.3",
     "createdAt": "2026-11-26T12:50:09.677Z"
-  },
-  {
-    "id": "1wib3twE88bMZW5Uqm4f3k6IS1mMCDHdD",
-    "name": "TotalEnergies",
-    "niche": "Заправочная станция с небольшим магазином",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 99",
-    "website": "https://totalenergies.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=totalenergies.de",
-    "rating": "4.3/5.0",
-    "score": 72,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.3",
-    "createdAt": "2026-11-26T12:43:44.040Z"
   },
   {
     "id": "11U_3RUB4CxrR0W-8ydmkjcIceuFpvqo8",

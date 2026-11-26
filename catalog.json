@@ -1,5 +1,20 @@
 [
   {
+    "id": "1wakSCeuDaCBMiGMsyrlu5K5dD3SVZT6M",
+    "name": "Deutsche Post Total Tankstelle",
+    "niche": "Заправочная станция с небольшим магазином",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 52,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.2",
+    "createdAt": "2026-11-26T10:08:35.388Z"
+  },
+  {
     "id": "12CdKFSawv64-WP--vMkww5jT3e-nqkQm",
     "name": "Samsung",
     "niche": "Розничная электроника",
@@ -28,21 +43,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T09:49:45.558Z"
-  },
-  {
-    "id": "1fJRoowbXwg-nZbB9R9dhBwHFLLHQqf49",
-    "name": "Deutsche Post Total Tankstelle",
-    "niche": "Заправочная станция с небольшим магазином",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 99",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-26T08:54:47.491Z"
   },
   {
     "id": "1fntigdoxUJtpmCsYfdXxobQ6AoMOfvpN",

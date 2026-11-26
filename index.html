@@ -910,15 +910,11 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     ],
     executionLibrary: [
       { category: "b2b", title: "Кросс-промо предложение соседям (Emmericher Str.)", targetEntity: "Carglass Kleve / Локальные сервисы", body: "Добрый день! Мы ваши соседи — Angelshop Verhey (Emmericher Str. 189). Предлагаем бесплатный обмен аудиторией: разместим ваш QR-купон на нашей кассе в обмен на информационную стойку для автолюбителей-рыболовов. Бюджет 0 €, старт за 1 день." },
-      { category: "ads", title: "Объявления Google Ads: Angelschein Kleve", targetEntity: "Google Search (20 км)", body: "Заголовок 1: Angelschein Kleve — Beratung & Sets
-Заголовок 2: Frische Köder täglich · 4.4★ (168)
-Описание: Стартовые комплекты, помощь с лицензией NRW и ремонт снастей на Emmericher Str. 189. Парковка у входа — заезжайте сегодня!" },
+      { category: "ads", title: "Объявления Google Ads: Angelschein Kleve", targetEntity: "Google Search (20 км)", body: "Заголовок 1: Angelschein Kleve — Beratung & Sets\nЗаголовок 2: Frische Köder täglich · 4.4★ (168)\nОписание: Стартовые комплекты, помощь с лицензией NRW и ремонт снастей на Emmericher Str. 189. Парковка у входа — заезжайте сегодня!" },
       { category: "sales", title: "Скрипт допродажи на кассе (+12% к среднему чеку)", targetEntity: "Продавцы магазина", body: "«Отличный выбор удилища! Чтобы не потерять трофей на первой рыбалке, рекомендую сразу взять запасную шпулю флюорокарбона и набор карабинов — в комплекте к спиннингу сделаем −10% и намотаем прямо сейчас за 2 минуты.»" },
       { category: "reputation", title: "Скрипт вежливого ответа на нейтральный отзыв (3★)", targetEntity: "Google Business Profile", body: "Благодарим за честный отзыв и визит! Нам жаль, что пришлось ждать в субботу — мы уже запустили онлайн-запись на слоты и публикацию наличия живой наживки каждую пятницу. Будем рады показать изменения в ваш следующий визит!" },
       { category: "legal", title: "ТЗ веб-мастеру на внедрение Cookie Consent (TTDSG)", targetEntity: "IT-подрядчик", body: "Задача: внедрить сертифицированный CMP (Cookiebot / Real Cookie Banner) на angelshop-verhey.de с жёсткой блокировкой сторонних скриптов (GA4, Meta) до явного Opt-In пользователя, кнопкой «Только необходимые» на первом слое и ссылкой в футере." },
-      { category: "hr", title: "Мини-регламент смены (выход из Bus Factor = 1)", targetEntity: "Старший продавец", body: "1. 08:45 — проверка кассы и статуса свежей наживки (пост в GBP).
-2. 13:00 — сверка топ-20 SKU в sevDesk, автозаявка поставщику при остатке < 5 шт.
-3. 17:50 — Z-отчёт и облачный бэкап. Резервный контакт поставщиков закреплён в папке SOP." }
+      { category: "hr", title: "Мини-регламент смены (выход из Bus Factor = 1)", targetEntity: "Старший продавец", body: "1. 08:45 — проверка кассы и статуса свежей наживки (пост в GBP).\n2. 13:00 — сверка топ-20 SKU в sevDesk, автозаявка поставщику при остатке < 5 шт.\n3. 17:50 — Z-отчёт и облачный бэкап. Резервный контакт поставщиков закреплён в папке SOP." }
     ],
     swarmTrace: [
       { name: "llama-3.3-70b-versatile", provider: "Groq", track: "CFO & Banking Math", preview: "Нормализация EBITDA с вычетом рыночной зарплаты директора 46 500 € и расчёт 4 стресс-тестов." },
@@ -971,135 +967,274 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     return `<span class="truth-dot ${meta.cls}" title="${esc(meta.tip)}"${clickAttr}>${meta.lbl}</span>`;
   }
 
-  // ==================== WORLD CASCADE AUTOCOMPLETE ====================
+  // ==================== WORLD CASCADE AUTOCOMPLETE (v9.0.1 ROCK-SOLID) ====================
   const LOCAL_COUNTRIES = [
-    { code:"DE", ru:"Германия", en:"Germany", lat:51.16, lng:10.45 },
-    { code:"UA", ru:"Украина", en:"Ukraine", lat:48.38, lng:31.17 },
-    { code:"US", ru:"США", en:"United States", lat:39.83, lng:-98.58 },
-    { code:"NL", ru:"Нидерланды", en:"Netherlands", lat:52.13, lng:5.29 },
-    { code:"PL", ru:"Польша", en:"Poland", lat:51.92, lng:19.15 },
-    { code:"GB", ru:"Великобритания", en:"United Kingdom", lat:55.38, lng:-3.44 },
-    { code:"FR", ru:"Франция", en:"France", lat:46.23, lng:2.21 },
-    { code:"ES", ru:"Испания", en:"Spain", lat:40.46, lng:-3.75 },
-    { code:"IT", ru:"Италия", en:"Italy", lat:41.87, lng:12.57 },
-    { code:"AT", ru:"Австрия", en:"Austria", lat:47.52, lng:14.55 },
-    { code:"CH", ru:"Швейцария", en:"Switzerland", lat:46.82, lng:8.23 },
-    { code:"AE", ru:"ОАЭ", en:"United Arab Emirates", lat:23.42, lng:53.85 }
+    { code:"DE", ru:"Германия", en:"Germany", de:"Deutschland", lat:51.16, lng:10.45, cities:["Berlin","Hamburg","München","Köln","Frankfurt am Main","Stuttgart","Düsseldorf","Dortmund","Essen","Leipzig","Bremen","Dresden","Hannover","Nürnberg","Duisburg","Bochum","Wuppertal","Bielefeld","Bonn","Münster","Kleve","Krefeld","Emmerich am Rhein","Goch","Geldern","Wesel","Moers","Aachen","Mönchengladbach","Oberhausen"] },
+    { code:"UA", ru:"Украина", en:"Ukraine", de:"Ukraine", lat:48.38, lng:31.17, cities:["Kyiv","Kharkiv","Odesa","Dnipro","Lviv","Zaporizhzhia","Kryvyi Rih","Mykolaiv","Vinnytsia","Poltava","Chernihiv","Cherkasy","Khmelnytskyi","Zhytomyr","Sumy","Rivne","Ivano-Frankivsk","Ternopil","Lutsk","Uzhhorod"] },
+    { code:"US", ru:"США", en:"United States", de:"USA", lat:39.83, lng:-98.58, cities:["New York","Los Angeles","Chicago","Houston","Phoenix","Philadelphia","San Antonio","San Diego","Dallas","San Jose","Austin","Miami","Seattle","Boston","Denver","Atlanta","San Francisco"] },
+    { code:"NL", ru:"Нидерланды", en:"Netherlands", de:"Niederlande", lat:52.13, lng:5.29, cities:["Amsterdam","Rotterdam","Den Haag","Utrecht","Eindhoven","Groningen","Tilburg","Almere","Breda","Nijmegen","Arnhem","Enschede","Maastricht","Venlo","Doetinchem"] },
+    { code:"PL", ru:"Польша", en:"Poland", de:"Polen", lat:51.92, lng:19.15, cities:["Warszawa","Kraków","Łódź","Wrocław","Poznań","Gdańsk","Szczecin","Bydgoszcz","Lublin","Katowice"] },
+    { code:"GB", ru:"Великобритания", en:"United Kingdom", de:"Großbritannien", lat:55.38, lng:-3.44, cities:["London","Birmingham","Manchester","Glasgow","Liverpool","Leeds","Bristol","Edinburgh","Sheffield","Cardiff"] },
+    { code:"FR", ru:"Франция", en:"France", de:"Frankreich", lat:46.23, lng:2.21, cities:["Paris","Marseille","Lyon","Toulouse","Nice","Nantes","Strasbourg","Montpellier","Bordeaux","Lille"] },
+    { code:"ES", ru:"Испания", en:"Spain", de:"Spanien", lat:40.46, lng:-3.75, cities:["Madrid","Barcelona","Valencia","Sevilla","Zaragoza","Málaga","Murcia","Palma","Bilbao","Alicante"] },
+    { code:"IT", ru:"Италия", en:"Italy", de:"Italien", lat:41.87, lng:12.57, cities:["Roma","Milano","Napoli","Torino","Palermo","Genova","Bologna","Firenze","Venezia","Verona"] },
+    { code:"AT", ru:"Австрия", en:"Austria", de:"Österreich", lat:47.52, lng:14.55, cities:["Wien","Graz","Linz","Salzburg","Innsbruck","Klagenfurt"] },
+    { code:"CH", ru:"Швейцария", en:"Switzerland", de:"Schweiz", lat:46.82, lng:8.23, cities:["Zürich","Genf","Basel","Bern","Lausanne","Luzern","Winterthur"] },
+    { code:"BE", ru:"Бельгия", en:"Belgium", de:"Belgien", lat:50.50, lng:4.47, cities:["Brussels","Antwerp","Ghent","Charleroi","Liège","Bruges"] },
+    { code:"CZ", ru:"Чехия", en:"Czechia", de:"Tschechien", lat:49.82, lng:15.47, cities:["Prague","Brno","Ostrava","Plzeň","Liberec"] },
+    { code:"AE", ru:"ОАЭ", en:"United Arab Emirates", de:"VAE", lat:23.42, lng:53.85, cities:["Dubai","Abu Dhabi","Sharjah","Ajman","Ras Al Khaimah"] },
+    { code:"TR", ru:"Турция", en:"Turkey", de:"Türkei", lat:38.96, lng:35.24, cities:["Istanbul","Ankara","Izmir","Antalya","Bursa"] },
+    { code:"CA", ru:"Канада", en:"Canada", de:"Kanada", lat:56.13, lng:-106.35, cities:["Toronto","Montreal","Vancouver","Calgary","Ottawa","Edmonton"] },
+    { code:"AU", ru:"Австралия", en:"Australia", de:"Australien", lat:-25.27, lng:133.78, cities:["Sydney","Melbourne","Brisbane","Perth","Adelaide"] },
+    { code:"KZ", ru:"Казахстан", en:"Kazakhstan", de:"Kasachstan", lat:48.02, lng:66.92, cities:["Almaty","Astana","Shymkent","Karaganda","Aktobe"] },
+    { code:"IL", ru:"Израиль", en:"Israel", de:"Israel", lat:31.05, lng:34.85, cities:["Tel Aviv","Jerusalem","Haifa","Rishon LeZion"] },
+    { code:"GE", ru:"Грузия", en:"Georgia", de:"Georgien", lat:42.32, lng:43.36, cities:["Tbilisi","Batumi","Kutaisi","Rustavi"] },
+    { code:"PT", ru:"Португалия", en:"Portugal", de:"Portugal", lat:39.40, lng:-8.22, cities:["Lisbon","Porto","Braga","Coimbra","Faro"] },
+    { code:"SE", ru:"Швеция", en:"Sweden", de:"Schweden", lat:60.13, lng:18.64, cities:["Stockholm","Gothenburg","Malmö","Uppsala"] },
+    { code:"NO", ru:"Норвегия", en:"Norway", de:"Norwegen", lat:60.47, lng:8.47, cities:["Oslo","Bergen","Trondheim","Stavanger"] },
+    { code:"DK", ru:"Дания", en:"Denmark", de:"Dänemark", lat:56.26, lng:9.50, cities:["Copenhagen","Aarhus","Odense","Aalborg"] }
   ];
-  const ISO2_TO_ISO3 = { DE:"DEU", UA:"UKR", US:"USA", NL:"NLD", PL:"POL", GB:"GBR", FR:"FRA", ES:"ESP", IT:"ITA", AT:"AUT", CH:"CHE", AE:"ARE", TR:"TUR", BR:"BRA", CA:"CAN", AU:"AUS", CZ:"CZE", BE:"BEL" };
+  const ISO2_TO_ISO3 = { DE:"DEU", UA:"UKR", US:"USA", NL:"NLD", PL:"POL", GB:"GBR", FR:"FRA", ES:"ESP", IT:"ITA", AT:"AUT", CH:"CHE", AE:"ARE", TR:"TUR", BR:"BRA", CA:"CAN", AU:"AUS", CZ:"CZE", BE:"BEL", KZ:"KAZ", IL:"ISR", GE:"GEO", PT:"PRT", SE:"SWE", NO:"NOR", DK:"DNK", RO:"ROU", BG:"BGR", HU:"HUN", GR:"GRC", IN:"IND", JP:"JPN", CN:"CHN", KR:"KOR", SG:"SGP", MX:"MEX" };
   const ISO3_TO_ISO2 = Object.fromEntries(Object.entries(ISO2_TO_ISO3).map(([k, v]) => [v, k]));
-  const WORLD_GEO = { loaded: false, countries: [], activeCities: [] };
+  const WORLD_GEO = { loaded: false, promise: null, countries: LOCAL_COUNTRIES.map((c) => ({ ...c })), activeCities: [] };
 
   function translit(str) {
-    const m = { "а":"a","б":"b","в":"v","г":"g","ґ":"g","д":"d","е":"e","ё":"e","є":"e","ж":"zh","з":"z","и":"i","і":"i","ї":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"shch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya" };
-    return String(str || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[а-яёіїєґ]/g, (c) => m[c] ?? c).trim();
+    const m = { "а":"a","б":"b","в":"v","г":"g","ґ":"g","д":"d","е":"e","ё":"e","є":"e","ж":"zh","з":"z","и":"i","і":"i","ї":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"shch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya","ä":"a","ö":"o","ü":"u","ß":"ss" };
+    return String(str || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[а-яёіїєґäöüß]/g, (c) => m[c] ?? c).trim();
   }
-  async function ensureWorldGeo() {
-    if (WORLD_GEO.loaded) return;
-    const byCode = new Map(LOCAL_COUNTRIES.map((c) => [c.code, { ...c, cities: [] }]));
-    try {
-      const cached = localStorage.getItem("b2b_world_geo_v1");
-      const ts = Number(localStorage.getItem("b2b_world_geo_ts") || 0);
-      let data = (cached && Date.now() - ts < 7 * 86400000) ? JSON.parse(cached) : null;
-      if (!Array.isArray(data)) {
-        const r = await fetch("https://countriesnow.space/api/v0.1/countries");
-        if (r.ok) {
-          const j = await r.json();
-          if (j && Array.isArray(j.data)) {
-            data = j.data;
-            try { localStorage.setItem("b2b_world_geo_v1", JSON.stringify(data)); localStorage.setItem("b2b_world_geo_ts", String(Date.now())); } catch (e) {}
+  function syncActiveCities() {
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
+    const cVal = String(STATE.geo.country || ($("countryInput") && $("countryInput").value) || "").trim().toLowerCase();
+    const tr = translit(cVal);
+    const hit = WORLD_GEO.countries.find((c) => {
+      if (cc && c.code && c.code === cc) return true;
+      if (!cVal) return false;
+      return [c.ru, c.en, c.de, c.code].some((n) => {
+        const nl = String(n || "").toLowerCase();
+        return nl === cVal || (tr && translit(nl) === tr);
+      });
+    });
+    if (hit) {
+      STATE.geo.countryCode = hit.code || STATE.geo.countryCode;
+      STATE.geo.countryEn = hit.en || STATE.geo.countryEn;
+      WORLD_GEO.activeCities = Array.isArray(hit.cities) ? hit.cities : [];
+    } else {
+      WORLD_GEO.activeCities = [];
+    }
+  }
+  function ensureWorldGeo() {
+    if (WORLD_GEO.loaded) return Promise.resolve();
+    if (WORLD_GEO.promise) return WORLD_GEO.promise;
+    WORLD_GEO.promise = (async () => {
+      const byCode = new Map(LOCAL_COUNTRIES.map((c) => [c.code, { ...c, cities: [...(c.cities || [])] }]));
+      try {
+        const cached = localStorage.getItem("b2b_world_geo_v1");
+        const ts = Number(localStorage.getItem("b2b_world_geo_ts") || 0);
+        let data = (cached && Date.now() - ts < 7 * 86400000) ? JSON.parse(cached) : null;
+        if (!Array.isArray(data)) {
+          const r = await fetch("https://countriesnow.space/api/v0.1/countries");
+          if (r.ok) {
+            const j = await r.json();
+            if (j && Array.isArray(j.data)) {
+              data = j.data;
+              try { localStorage.setItem("b2b_world_geo_v1", JSON.stringify(data)); localStorage.setItem("b2b_world_geo_ts", String(Date.now())); } catch (e) {}
+            }
           }
         }
-      }
-      const dn = (typeof Intl !== "undefined" && Intl.DisplayNames) ? new Intl.DisplayNames(["ru"], { type: "region" }) : null;
-      (data || []).forEach((row) => {
-        const iso2 = String(row.iso2 || "").toUpperCase(), en = String(row.country || "").trim();
-        if (!en) return;
-        const ex = byCode.get(iso2), cities = Array.isArray(row.cities) ? row.cities.filter(Boolean) : [];
-        if (ex) ex.cities = cities;
-        else { let ru = en; try { if (dn && iso2) ru = dn.of(iso2) || en; } catch (e) {} byCode.set(iso2 || en.toLowerCase(), { code: iso2, ru, en, lat: null, lng: null, cities }); }
-      });
-    } catch (e) {}
-    WORLD_GEO.countries = Array.from(byCode.values());
-    WORLD_GEO.loaded = true;
+        const dn = (typeof Intl !== "undefined" && Intl.DisplayNames) ? new Intl.DisplayNames(["ru"], { type: "region" }) : null;
+        (data || []).forEach((row) => {
+          const iso2 = String(row.iso2 || "").toUpperCase(), en = String(row.country || "").trim();
+          if (!en) return;
+          const ex = byCode.get(iso2), cities = Array.isArray(row.cities) ? row.cities.filter(Boolean) : [];
+          if (ex) {
+            const set = new Set(ex.cities);
+            cities.forEach((ct) => set.add(ct));
+            ex.cities = Array.from(set);
+          } else {
+            let ru = en; try { if (dn && iso2) ru = dn.of(iso2) || en; } catch (e) {}
+            byCode.set(iso2 || en.toLowerCase(), { code: iso2, ru, en, de: en, lat: null, lng: null, cities });
+          }
+        });
+      } catch (e) {}
+      WORLD_GEO.countries = Array.from(byCode.values());
+      WORLD_GEO.loaded = true;
+      syncActiveCities();
+    })();
+    return WORLD_GEO.promise;
+  }
+  function closeAllAc(exceptId) {
+    ["acCountry", "acCity", "acBiz"].forEach((id) => { if (id !== exceptId && $(id)) $(id).classList.add("hidden"); });
   }
   function syncGeoBadge() {
     const b = $("geoLockBadge"), txt = [STATE.geo.country, STATE.geo.city].filter(Boolean).join(" · ");
     if (txt) { b.textContent = "📍 " + txt; b.classList.remove("hidden"); } else b.classList.add("hidden");
   }
   function renderCountryAC(q) {
+    closeAllAc("acCountry");
     const list = $("acCountry"), low = String(q || "").trim().toLowerCase(), tr = translit(low);
     const pool = WORLD_GEO.countries.length ? WORLD_GEO.countries : LOCAL_COUNTRIES;
-    const hits = pool.filter((c) => !low || [c.ru, c.en, c.code].some((n) => String(n || "").toLowerCase().includes(low) || translit(n).includes(tr))).slice(0, 20);
-    if (!hits.length) { list.innerHTML = `<div class="ac-empty">Страна не найдена</div>`; list.classList.remove("hidden"); return; }
+    const scored = [];
+    pool.forEach((c, idx) => {
+      const names = [c.ru, c.en, c.de, c.code].map((x) => String(x || "").toLowerCase()).filter(Boolean);
+      if (!low) { scored.push({ c, sc: 500 - idx }); return; }
+      let sc = 0;
+      if (names.some((n) => n === low || (tr && translit(n) === tr))) sc = 1000;
+      else if (names.some((n) => n.startsWith(low) || (tr && translit(n).startsWith(tr)))) sc = 700 - Math.min(idx, 200);
+      else if (names.some((n) => n.includes(low) || (tr.length >= 2 && translit(n).includes(tr)))) sc = 350 - Math.min(idx, 200);
+      if (sc > 0) scored.push({ c, sc });
+    });
+    scored.sort((a, b) => b.sc - a.sc || String(a.c.ru).localeCompare(String(b.c.ru)));
+    const hits = scored.slice(0, 25).map((x) => x.c);
+    if (!hits.length) { list.innerHTML = `<div class="ac-empty">Страна не найдена — можно ввести вручную</div>`; list.classList.remove("hidden"); return; }
     list.innerHTML = hits.map((c, i) => `<div class="ac-item" data-c-idx="${i}"><div><div class="ac-name">${esc(c.ru)}</div><div class="ac-sub">${esc(c.en)}${c.cities && c.cities.length ? " · " + c.cities.length + " гор." : ""}</div></div><span class="badge green">${esc(c.code || "WORLD")}</span></div>`).join("");
     list.classList.remove("hidden");
     list.querySelectorAll("[data-c-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
       e.preventDefault(); const c = hits[Number(el.dataset.cIdx)];
-      $("countryInput").value = c.ru; STATE.geo = { country: c.ru, countryEn: c.en, countryCode: c.code, city: "", lat: c.lat, lng: c.lng };
-      WORLD_GEO.activeCities = c.cities || []; $("cityInput").value = ""; list.classList.add("hidden"); syncGeoBadge(); $("cityInput").focus();
+      $("countryInput").value = c.ru;
+      STATE.geo = { country: c.ru, countryEn: c.en, countryCode: c.code, city: "", lat: c.lat, lng: c.lng };
+      WORLD_GEO.activeCities = c.cities || [];
+      $("cityInput").value = ""; list.classList.add("hidden"); syncGeoBadge(); $("cityInput").focus();
     }));
   }
   async function fetchCityAC(q) {
-    await ensureWorldGeo();
+    closeAllAc("acCity");
+    syncActiveCities();
     const list = $("acCity"), val = String(q || "").trim();
-    if (!val) { list.classList.add("hidden"); return; }
-    const seq = ++STATE.acSeq.city, low = val.toLowerCase(), tr = translit(low), items = [], seen = new Set();
-    (WORLD_GEO.activeCities || []).forEach((cn) => {
-      if (items.length >= 20) return;
-      const cl = String(cn).toLowerCase(), ct = translit(cn);
-      if ((cl.startsWith(low) || (tr && ct.startsWith(tr))) && !seen.has(cl)) { seen.add(cl); items.push({ city: cn, state: "", country: STATE.geo.country, cc: STATE.geo.countryCode }); }
-    });
-    if (items.length < 5 && val.length >= 2) {
+    const seq = ++STATE.acSeq.city, low = val.toLowerCase(), tr = translit(low);
+    const items = [], seen = new Set();
+    const curCountry = STATE.geo.country || $("countryInput").value.trim();
+    const curCountryEn = STATE.geo.countryEn || curCountry;
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
+
+    const collectLocalCities = () => {
+      const pool = WORLD_GEO.activeCities.length
+        ? WORLD_GEO.activeCities.map((cn) => ({ city: cn, country: curCountry, cc }))
+        : LOCAL_COUNTRIES.flatMap((c) => (c.cities || []).map((cn) => ({ city: cn, country: c.ru, cc: c.code })));
+      const starts = [], contains = [];
+      pool.forEach((row) => {
+        const cn = String(row.city || ""), cl = cn.toLowerCase(), ct = translit(cn);
+        if (!low) { if (WORLD_GEO.activeCities.length && starts.length < 20) starts.push(row); return; }
+        if (cl.startsWith(low) || (tr && ct.startsWith(tr))) starts.push(row);
+        else if (low.length >= 2 && (cl.includes(low) || (tr.length >= 2 && ct.includes(tr)))) contains.push(row);
+      });
+      starts.sort((a, b) => a.city.localeCompare(b.city));
+      contains.sort((a, b) => a.city.localeCompare(b.city));
+      [].concat(starts, contains).slice(0, 24).forEach((row) => {
+        const k = (row.city + "|" + row.cc).toLowerCase();
+        if (seen.has(k)) return; seen.add(k);
+        items.push({ city: row.city, state: "", country: row.country || curCountry, cc: row.cc || cc, lat: null, lng: null });
+      });
+    };
+
+    const renderCities = () => {
+      if (seq !== STATE.acSeq.city) return;
+      if (!items.length) {
+        if (!val) { list.classList.add("hidden"); return; }
+        list.innerHTML = `<div class="ac-empty">Город не найден — оставьте текст, поиск учтёт его</div>`;
+        list.classList.remove("hidden"); return;
+      }
+      list.innerHTML = items.slice(0, 18).map((it, i) => `<div class="ac-item" data-city-idx="${i}"><div><div class="ac-name">${esc(it.city)}</div><div class="ac-sub">${esc([it.state, it.country].filter(Boolean).join(", "))}</div></div><span class="badge sky">${esc(it.cc || "CITY")}</span></div>`).join("");
+      list.classList.remove("hidden");
+      list.querySelectorAll("[data-city-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
+        e.preventDefault(); const it = items[Number(el.dataset.cityIdx)];
+        $("cityInput").value = it.city; STATE.geo.city = it.city;
+        if (it.country && !$("countryInput").value.trim()) { $("countryInput").value = it.country; STATE.geo.country = it.country; }
+        if (it.cc && !STATE.geo.countryCode) STATE.geo.countryCode = it.cc;
+        if (it.lat && it.lng) { STATE.geo.lat = it.lat; STATE.geo.lng = it.lng; }
+        list.classList.add("hidden"); syncGeoBadge(); $("qInput").focus();
+      }));
+    };
+
+    collectLocalCities();
+    if (items.length) renderCities();
+    else if (val.length >= 1) { list.innerHTML = `<div class="ac-empty">⏳ Поиск городов...</div>`; list.classList.remove("hidden"); }
+
+    if (!WORLD_GEO.loaded) {
+      await ensureWorldGeo();
+      if (seq !== STATE.acSeq.city) return;
+      syncActiveCities();
+      collectLocalCities();
+      if (items.length) renderCities();
+    }
+
+    if (items.length < 6 && val.length >= 2) {
       try {
-        const cc3 = ISO2_TO_ISO3[STATE.geo.countryCode] || "";
-        const u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + encodeURIComponent([val, STATE.geo.countryEn].filter(Boolean).join(", ")) + "&category=Populated+Place" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&outFields=City,Region,Country,PlaceName&maxLocations=8&f=pjson";
+        const cc3 = ISO2_TO_ISO3[cc] || "";
+        const u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + encodeURIComponent([val, curCountryEn].filter(Boolean).join(", ")) + "&category=Populated+Place" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&outFields=City,Region,Country,PlaceName&maxLocations=10&f=pjson";
         const r = await fetch(u);
         if (seq !== STATE.acSeq.city) return;
         if (r.ok) ((await r.json()).candidates || []).forEach((cand) => {
           const a = cand.attributes || {}, loc = cand.location || {}, cn = String(a.City || a.PlaceName || "").trim();
-          if (!cn || seen.has(cn.toLowerCase())) return;
-          seen.add(cn.toLowerCase()); items.push({ city: cn, state: a.Region || "", country: STATE.geo.country || a.Country || "", cc: ISO3_TO_ISO2[a.Country] || STATE.geo.countryCode, lat: loc.y, lng: loc.x });
+          if (!cn) return;
+          const cIso2 = ISO3_TO_ISO2[String(a.Country || "").toUpperCase()] || cc;
+          if (cc && cIso2 && cIso2 !== cc) return;
+          const k = (cn + "|" + cIso2).toLowerCase();
+          if (seen.has(k)) return; seen.add(k);
+          items.push({ city: cn, state: a.Region || "", country: curCountry || a.Country || "", cc: cIso2, lat: Number(loc.y) || null, lng: Number(loc.x) || null });
         });
       } catch (e) {}
+      renderCities();
     }
-    if (seq !== STATE.acSeq.city) return;
-    if (!items.length) { list.innerHTML = `<div class="ac-empty">Город будет учтён как текст</div>`; list.classList.remove("hidden"); return; }
-    list.innerHTML = items.slice(0, 14).map((it, i) => `<div class="ac-item" data-city-idx="${i}"><div><div class="ac-name">${esc(it.city)}</div><div class="ac-sub">${esc([it.state, it.country].filter(Boolean).join(", "))}</div></div><span class="badge sky">${esc(it.cc || "CITY")}</span></div>`).join("");
-    list.classList.remove("hidden");
-    list.querySelectorAll("[data-city-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
-      e.preventDefault(); const it = items[Number(el.dataset.cityIdx)];
-      $("cityInput").value = it.city; STATE.geo.city = it.city;
-      if (it.lat && it.lng) { STATE.geo.lat = it.lat; STATE.geo.lng = it.lng; }
-      list.classList.add("hidden"); syncGeoBadge(); $("qInput").focus();
-    }));
   }
   async function fetchBizAC(q) {
+    closeAllAc("acBiz");
     const list = $("acBiz"), val = String(q || "").trim();
     if (val.length < 2 || STATE.entryMode === "niche") { list.classList.add("hidden"); return; }
-    const seq = ++STATE.acSeq.biz, cc3 = ISO2_TO_ISO3[STATE.geo.countryCode] || "";
-    const single = [val, STATE.geo.city || $("cityInput").value.trim(), STATE.geo.countryEn || $("countryInput").value.trim()].filter(Boolean).join(", ");
-    list.innerHTML = `<div class="ac-empty">⏳ Поиск компаний...</div>`; list.classList.remove("hidden");
+    const seq = ++STATE.acSeq.biz;
+    const curCountry = STATE.geo.country || $("countryInput").value.trim();
+    const curCountryEn = STATE.geo.countryEn || curCountry;
+    const curCity = STATE.geo.city || $("cityInput").value.trim();
+    const cc = String(STATE.geo.countryCode || "").toUpperCase();
+    const cc3 = ISO2_TO_ISO3[cc] || "";
+    const single = [val, curCity, curCountryEn].filter(Boolean).join(", ");
+    list.innerHTML = `<div class="ac-empty">⏳ Поиск компаний${curCity ? " в " + esc(curCity) : ""}...</div>`;
+    list.classList.remove("hidden");
+
+    const items = [], seen = new Set();
+    const pushItem = (it) => {
+      const nm = String(it.name || "").trim();
+      if (!nm || nm.length < 2) return;
+      const k = (nm + "|" + String(it.street || "") + "|" + String(it.city || "")).toLowerCase();
+      if (seen.has(k)) return; seen.add(k);
+      items.push(it);
+    };
+
     try {
-      let u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + encodeURIComponent(single) + "&category=POI" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&outFields=PlaceName,StAddr,City,Country,Type,URL&maxLocations=8&f=pjson";
+      let u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + encodeURIComponent(single) + "&category=POI" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&outFields=PlaceName,StAddr,City,Country,Type,URL&maxLocations=10&f=pjson";
       if (STATE.geo.lat && STATE.geo.lng) u += "&location=" + STATE.geo.lng.toFixed(4) + "," + STATE.geo.lat.toFixed(4);
       const r = await fetch(u);
       if (seq !== STATE.acSeq.biz) return;
-      const items = [];
       if (r.ok) ((await r.json()).candidates || []).forEach((cand) => {
-        const a = cand.attributes || {}, nm = String(a.PlaceName || "").trim(), tp = String(a.Type || "").toLowerCase();
+        const a = cand.attributes || {}, loc = cand.location || {}, nm = String(a.PlaceName || "").trim(), tp = String(a.Type || "").toLowerCase();
         if (!nm || /parking|bus stop|street|highway|atm/.test(tp)) return;
-        items.push({ name: nm, street: a.StAddr || "", city: a.City || STATE.geo.city || "", cat: a.Type || "Business", addr: cand.address || "" });
+        const cIso2 = ISO3_TO_ISO2[String(a.Country || "").toUpperCase()] || cc;
+        if (cc && cIso2 && cIso2 !== cc) return;
+        pushItem({ name: nm, street: a.StAddr || "", city: a.City || curCity || "", country: curCountry || a.Country || "", cc: cIso2, cat: a.Type || "Business", addr: cand.address || "", lat: Number(loc.y) || null, lng: Number(loc.x) || null });
       });
-      if (!items.length) { list.innerHTML = `<div class="ac-empty">Нажмите «Запустить аудит» по названию или URL</div>`; return; }
-      list.innerHTML = items.map((it, i) => `<div class="ac-item" data-biz-idx="${i}"><div><div class="ac-name">${esc(it.name)}</div><div class="ac-sub">${esc([it.street, it.city].filter(Boolean).join(", ") || it.addr)}</div></div><span class="badge">${esc(it.cat)}</span></div>`).join("");
-      list.querySelectorAll("[data-biz-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
-        e.preventDefault(); const it = items[Number(el.dataset.bizIdx)];
-        $("qInput").value = [it.name, it.street, it.city].filter(Boolean).join(", ");
-        if (it.city && !$("cityInput").value.trim()) { $("cityInput").value = it.city; STATE.geo.city = it.city; }
-        list.classList.add("hidden"); syncGeoBadge();
-      }));
-    } catch (e) { list.classList.add("hidden"); }
+    } catch (e) {}
+
+    if (items.length < 3 && STATE.apiUrl && seq === STATE.acSeq.biz) {
+      try {
+        const res = await apiGet({ action: "autocomplete", mode: "business", q: val, lang: STATE.lang, country: curCountry, countryCode: cc, city: curCity });
+        if (seq !== STATE.acSeq.biz) return;
+        if (res && res.status === "success" && Array.isArray(res.items)) {
+          res.items.forEach((it) => pushItem({ name: it.name, street: it.street || "", city: it.city || curCity, country: it.country || curCountry, cc: it.countryCode || cc, cat: it.category || "Business", addr: it.formattedAddress || "", lat: it.lat || null, lng: it.lng || null }));
+        }
+      } catch (e2) {}
+    }
+
+    if (seq !== STATE.acSeq.biz) return;
+    if (!items.length) { list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Запустить аудит» по названию или URL</div>`; return; }
+    list.innerHTML = items.slice(0, 10).map((it, i) => `<div class="ac-item" data-biz-idx="${i}"><div><div class="ac-name">${esc(it.name)}</div><div class="ac-sub">${esc([it.street, it.city, it.country].filter(Boolean).join(", ") || it.addr)}</div></div><span class="badge">${esc(it.cat)}</span></div>`).join("");
+    list.querySelectorAll("[data-biz-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
+      e.preventDefault(); const it = items[Number(el.dataset.bizIdx)];
+      $("qInput").value = [it.name, it.street, it.city].filter(Boolean).join(", ");
+      if (it.country && !$("countryInput").value.trim()) { $("countryInput").value = it.country; STATE.geo.country = it.country; }
+      if (it.cc && !STATE.geo.countryCode) STATE.geo.countryCode = it.cc;
+      if (it.city && !$("cityInput").value.trim()) { $("cityInput").value = it.city; STATE.geo.city = it.city; }
+      if (it.lat && it.lng) { STATE.geo.lat = it.lat; STATE.geo.lng = it.lng; }
+      list.classList.add("hidden"); syncGeoBadge();
+    }));
   }
 
   // ==================== 3D SWARM CANVAS & API ====================
@@ -1982,7 +2117,6 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 
     return `
       <div class="bento-grid">
-        <!-- 5-Slider What-If Simulator -->
         <div class="b-card span-7">
           <div class="b-card-top"><span class="b-lbl">🎛️ Симулятор What-If (5 рычагов роста + Capacity)</span><button class="btn btn-xs" id="resetWiBtn">Сбросить в 0%</button></div>
           <div class="dr-grid">
@@ -2000,8 +2134,6 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
             </div>
           </div>
         </div>
-
-        <!-- CAC / LTV Traffic Light -->
         <div class="b-card kpi-${clTone[0]} span-5">
           <div class="b-card-top"><span class="b-lbl">🚦 Калькулятор CAC / LTV / Payback</span><span class="badge ${clTone[0]} num">LTV:CAC = ${ratio.toFixed(1)}×</span></div>
           <div class="dr-grid">
@@ -2016,8 +2148,6 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
           </div>
           <div style="font-size:12px; color:var(--${clTone[0] === "green" ? "accent" : clTone[0]}); font-weight:700;">${clTone[1]}</div>
         </div>
-
-        <!-- Local Browser RFM Analyzer -->
         <div class="b-card span-12">
           <div class="b-card-top">
             <span class="b-lbl">🧬 Локальный RFM-анализатор клиентской базы (100% в браузере, без отправки на сервер)</span>
@@ -2439,14 +2569,12 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       STATE.pageSpeedCache = { mob: 62, desk: 86 }; renderActiveSection(); showToast("⚡ PageSpeed готов");
     });
 
-    // Arena
     if ($("arenaCsvBtn")) $("arenaCsvBtn").addEventListener("click", exportCsvBase);
     mc.querySelectorAll("[data-map-kind]").forEach((el) => el.addEventListener("click", () => openArenaEntityDrawer(el.dataset.mapKind, Number(el.dataset.mapIdx))));
     mc.querySelectorAll("[data-scan-direct]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); scanDirectTarget(el.dataset.scanDirect, el.dataset.scanCity, STATE.report.searchCountry); }));
     mc.querySelectorAll("[data-nb-letter]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); openNeighborLetterDrawer(Number(el.dataset.nbLetter)); }));
     mc.querySelectorAll("[data-copy-kill]").forEach((el) => el.addEventListener("click", () => { const k = ((STATE.report.competitiveIntel && STATE.report.competitiveIntel.killSheet) || [])[Number(el.dataset.copyKill)]; if (k) copyText(k.counterOfferHint, "Контр-оффер"); }));
 
-    // Plan
     mc.querySelectorAll("[data-step-chk]").forEach((chk) => chk.addEventListener("click", (e) => { e.stopPropagation(); toggleStepSolved(Number(chk.dataset.stepChk)); }));
     mc.querySelectorAll("[data-step-open]").forEach((card) => card.addEventListener("click", () => openStepDrawer(Number(card.dataset.stepOpen))));
     mc.querySelectorAll("[data-tk-key]").forEach((chk) => chk.addEventListener("change", () => {
@@ -2456,7 +2584,6 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     }));
     if ($("openTurnkeyBriefBtn")) $("openTurnkeyBriefBtn").addEventListener("click", openTurnkeyBriefDrawer);
 
-    // Section 7: Tools (Playbook + Lab)
     mc.querySelectorAll("[data-tools-tab]").forEach((b) => b.addEventListener("click", () => { STATE.toolsTab = b.dataset.toolsTab; renderActiveSection(); }));
     mc.querySelectorAll("[data-doc-f]").forEach((b) => b.addEventListener("click", () => { STATE.docFilter = b.dataset.docF; renderActiveSection(); }));
     if ($("copySeoAllBtn")) $("copySeoAllBtn").addEventListener("click", () => copyText((STATE.report.seoKeywords || []).map((k) => `${k.keyword}\t${k.intent}\t${k.estCpc}\t${k.targetPage}`).join("\n"), "SEO-ядро"));
@@ -2565,15 +2692,25 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       $("qInputLabel").textContent = mapLbl[0]; $("qInput").placeholder = mapLbl[1];
     }));
 
-    $("countryInput").addEventListener("focus", () => ensureWorldGeo().then(() => renderCountryAC($("countryInput").value)));
-    $("countryInput").addEventListener("input", () => renderCountryAC($("countryInput").value));
-    $("countryInput").addEventListener("blur", () => setTimeout(() => $("acCountry").classList.add("hidden"), 150));
+    $("countryInput").addEventListener("focus", () => { renderCountryAC($("countryInput").value); ensureWorldGeo().then(() => { if (document.activeElement === $("countryInput")) renderCountryAC($("countryInput").value); }); });
+    $("countryInput").addEventListener("input", () => {
+      STATE.geo.country = $("countryInput").value.trim();
+      STATE.geo.countryCode = ""; STATE.geo.countryEn = "";
+      syncActiveCities(); syncGeoBadge();
+      renderCountryAC($("countryInput").value);
+    });
     let cT, bT;
-    $("cityInput").addEventListener("input", () => { clearTimeout(cT); cT = setTimeout(() => fetchCityAC($("cityInput").value), 160); });
-    $("cityInput").addEventListener("blur", () => setTimeout(() => $("acCity").classList.add("hidden"), 150));
-    $("qInput").addEventListener("input", () => { clearTimeout(bT); bT = setTimeout(() => fetchBizAC($("qInput").value), 220); });
-    $("qInput").addEventListener("blur", () => setTimeout(() => $("acBiz").classList.add("hidden"), 150));
-    $("qInput").addEventListener("keydown", (e) => { if (e.key === "Enter") startScan(); });
+    $("cityInput").addEventListener("focus", () => { fetchCityAC($("cityInput").value); });
+    $("cityInput").addEventListener("input", () => {
+      STATE.geo.city = $("cityInput").value.trim(); syncGeoBadge();
+      clearTimeout(cT); cT = setTimeout(() => fetchCityAC($("cityInput").value), 120);
+    });
+    $("qInput").addEventListener("focus", () => { if ($("qInput").value.trim().length >= 2) fetchBizAC($("qInput").value); });
+    $("qInput").addEventListener("input", () => {
+      clearTimeout(bT); bT = setTimeout(() => fetchBizAC($("qInput").value), 200);
+    });
+    $("qInput").addEventListener("keydown", (e) => { if (e.key === "Enter") startScan(); if (e.key === "Escape") closeAllAc(); });
+    document.addEventListener("click", (e) => { if (!e.target.closest(".field-wrap")) closeAllAc(); });
 
     $("brandHomeBtn").addEventListener("click", () => { try { const u = new URL(location.href); u.searchParams.delete("id"); history.replaceState({}, "", u.toString()); } catch (e) {} setScreen("launch"); loadSavedLists(); });
     $("startScanBtn").addEventListener("click", startScan);
@@ -2626,12 +2763,12 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     });
     document.addEventListener("keydown", (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openCmd(); }
-      else if (e.key === "Escape") { closeCmd(); closeDrawer(); }
+      else if (e.key === "Escape") { closeCmd(); closeDrawer(); closeAllAc(); }
     });
 
     initVoiceAndFile();
     pingEngine();
-    setTimeout(ensureWorldGeo, 300);
+    ensureWorldGeo();
 
     if (STATE.partnerId && STATE.apiUrl) {
       apiGet({ action: "partner", partner: STATE.partnerId }).then((res) => {

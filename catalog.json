@@ -1,5 +1,20 @@
 [
   {
+    "id": "1haA4WIWKr6BLp0hsIlD0zQAN6vLH3rad",
+    "name": "Hotel Der Holländer",
+    "niche": "Бюджетный отель в пригороде",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Nimweger Straße 76",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 50,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.3",
+    "createdAt": "2026-11-26T13:02:50.336Z"
+  },
+  {
     "id": "10AbKNuAkZPO1AZ1LFTqYlR6ou6PT6j75",
     "name": "Elterninitiative Integrative Kindertagesstätte Regenbogen e.V.",
     "niche": "Интегративные дошкольные образовательные услуги",
@@ -650,16 +665,5 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T13:53:33.924Z"
-  },
-  {
-    "id": "1KH9URpWPA_4PJXQQe7YSSZhucFD9fR85",
-    "name": "TOTAL Gas Station Emmericher Straße",
-    "niche": "автозаправочная станция с мини‑магазином",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T13:50:50.714Z"
   }
 ]

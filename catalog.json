@@ -1,5 +1,20 @@
 [
   {
+    "id": "11U_3RUB4CxrR0W-8ydmkjcIceuFpvqo8",
+    "name": "Frieden Döner",
+    "niche": "Фаст‑фуд донер и уличная еда",
+    "country": "Индия",
+    "city": "Мумбаи",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 58,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.2",
+    "createdAt": "2026-11-26T12:18:15.555Z"
+  },
+  {
     "id": "1H4Z3yJaziuFV_IV1ccqL0jhfc6JUat93",
     "name": "Circle K",
     "niche": "Топливные станции и автосервисы",
@@ -642,16 +657,5 @@
     "score": 66,
     "modelsUsed": 6,
     "createdAt": "2026-11-23T13:40:14.221Z"
-  },
-  {
-    "id": "17SUEpzr3nfiXbwsrmTI3ovvud4nwQDnD",
-    "name": "TOTAL Gas Station Emmericher Straße",
-    "niche": "АЗС с дополнительными сервисами",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 6,
-    "createdAt": "2026-11-23T13:35:12.105Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1fJRoowbXwg-nZbB9R9dhBwHFLLHQqf49",
+    "name": "Deutsche Post Total Tankstelle",
+    "niche": "Заправочная станция с небольшим магазином",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 99",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-26T08:54:47.491Z"
+  },
+  {
     "id": "1fntigdoxUJtpmCsYfdXxobQ6AoMOfvpN",
     "name": "Vodafone Shop",
     "niche": "Местный розничный магазин мобильных и интернет-услуг",
@@ -626,16 +641,5 @@
     "score": 59,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T13:22:16.513Z"
-  },
-  {
-    "id": "1v7Kn4n6G6ALxXCHc-jXm7LMZV0_8OqSR",
-    "name": "star Tankstelle",
-    "niche": "автозаправочная станция с обслуживанием B2C и B2B",
-    "country": "Германия",
-    "city": "Эммерих-ам-Райн",
-    "rating": "N/A",
-    "score": 53,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T13:19:26.102Z"
   }
 ]

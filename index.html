@@ -435,8 +435,14 @@ body { font-size: 14px; }
 /* Executive Verdict Hero Banner (1 main takeaway per screen) */
 .verdict-hero { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 55%, var(--surface)), var(--surface) 65%); border: 1px solid var(--accent-brd); border-radius: 18px; padding: 22px 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .verdict-kicker { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.verdict-title { font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.38; max-width: 760px; }
-.verdict-next { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+.verdict-title { font-size: 15px; font-weight: 400; color: var(--text); line-height: 1.68; max-width: 780px; letter-spacing: 0.005em; opacity: 0.94; }
+.verdict-next { font-size: 13.5px; font-weight: 500; color: var(--text-2); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); line-height: 1.5; }
+.ac-group-hd { padding: 6px 12px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface)); border-bottom: 1px solid var(--border); }
+.hdr-mail-link { display: inline-flex; align-items: center; gap: 4px; color: var(--accent) !important; font-weight: 600; text-decoration: none; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-brd); transition: opacity .15s; }
+.hdr-mail-link:hover { opacity: 0.85; text-decoration: none; }
+.hdr-soc-row { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.hdr-soc-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2) !important; text-decoration: none; transition: border-color .15s, color .15s; }
+.hdr-soc-chip:hover { border-color: var(--accent-brd); color: var(--accent) !important; }
 
 /* Clean Segmented View Switch inside Tabs 2, 3, 5 */
 .view-switch { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
@@ -582,7 +588,7 @@ body { font-size: 14px; }
       <div>
         <div class="badge sky" id="scanModeBadge">🏢 Мой бизнес</div>
         <h2 style="margin:6px 0 2px; font-size:20px;" id="scanTargetTitle">Сканирование...</h2>
-        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.2</div>
+        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.7</div>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-sm" id="scan3dSwitchBtn">🌐 3D-Рой</button>
@@ -1280,6 +1286,23 @@ body { font-size: 14px; }
       renderCities();
     }
   }
+  async function resolveCityCoordsFe(cityName, countryEn, cc) {
+    if (!cityName) return;
+    try {
+      const cc3 = ISO2_TO_ISO3[String(cc || "").toUpperCase()] || "";
+      const u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" +
+        encodeURIComponent([cityName, countryEn].filter(Boolean).join(", ")) +
+        "&category=Populated+Place" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&maxLocations=1&f=pjson";
+      const r = await fetch(u);
+      if (r.ok) {
+        const c0 = ((await r.json()).candidates || [])[0];
+        if (c0 && c0.location && c0.location.y && c0.location.x) {
+          STATE.geo.lat = Number(c0.location.y); STATE.geo.lng = Number(c0.location.x);
+        }
+      }
+    } catch (e) {}
+  }
+
   async function fetchBizAC(q) {
     closeAllAc("acBiz");
     const list = $("acBiz"), val = String(q || "").trim();
@@ -1290,52 +1313,104 @@ body { font-size: 14px; }
     const curCity = STATE.geo.city || $("cityInput").value.trim();
     const cc = String(STATE.geo.countryCode || "").toUpperCase();
     const cc3 = ISO2_TO_ISO3[cc] || "";
+    const targetCityNorm = translit(curCity || "");
     const single = [val, curCity, curCountryEn].filter(Boolean).join(", ");
     list.innerHTML = `<div class="ac-empty">⏳ Поиск компаний${curCity ? " в " + esc(curCity) : ""}...</div>`;
     list.classList.remove("hidden");
 
+    if (curCity && (!STATE.geo.lat || !STATE.geo.lng)) {
+      await resolveCityCoordsFe(curCity, curCountryEn, cc);
+      if (seq !== STATE.acSeq.biz) return;
+    }
+
     const items = [], seen = new Set();
+    const calcInCity = (ct, addr) => {
+      if (!targetCityNorm) return true;
+      const cn = translit(ct || ""), an = translit(addr || "");
+      return Boolean((cn && (cn === targetCityNorm || cn.includes(targetCityNorm) || targetCityNorm.includes(cn))) || (an && an.includes(targetCityNorm)));
+    };
     const pushItem = (it) => {
       const nm = String(it.name || "").trim();
       if (!nm || nm.length < 2) return;
-      const k = (nm + "|" + String(it.street || "") + "|" + String(it.city || "")).toLowerCase();
+      const k = translit(nm + "|" + String(it.street || "") + "|" + String(it.city || ""));
       if (seen.has(k)) return; seen.add(k);
+      it.inTargetCity = (typeof it.inTargetCity === "boolean") ? it.inTargetCity : calcInCity(it.city, it.addr);
       items.push(it);
     };
 
-    try {
-      let u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" + encodeURIComponent(single) + "&category=POI" + (cc3 ? "&sourceCountry=" + cc3 : "") + "&outFields=PlaceName,StAddr,City,Country,Type,URL&maxLocations=10&f=pjson";
-      if (STATE.geo.lat && STATE.geo.lng) u += "&location=" + STATE.geo.lng.toFixed(4) + "," + STATE.geo.lat.toFixed(4);
-      const r = await fetch(u);
-      if (seq !== STATE.acSeq.biz) return;
-      if (r.ok) ((await r.json()).candidates || []).forEach((cand) => {
-        const a = cand.attributes || {}, loc = cand.location || {}, nm = String(a.PlaceName || "").trim(), tp = String(a.Type || "").toLowerCase();
-        if (!nm || /parking|bus stop|street|highway|atm/.test(tp)) return;
-        const cIso2 = ISO3_TO_ISO2[String(a.Country || "").toUpperCase()] || cc;
-        if (cc && cIso2 && cIso2 !== cc) return;
-        pushItem({ name: nm, street: a.StAddr || "", city: a.City || curCity || "", country: curCountry || a.Country || "", cc: cIso2, cat: a.Type || "Business", website: a.URL || "", addr: cand.address || "", lat: Number(loc.y) || null, lng: Number(loc.x) || null });
-      });
-    } catch (e) {}
-
-    if (items.length < 3 && STATE.apiUrl && seq === STATE.acSeq.biz) {
+    const arcPromise = (async () => {
       try {
-        const res = await apiGet({ action: "autocomplete", mode: "business", q: val, lang: STATE.lang, country: curCountry, countryCode: cc, city: curCity });
-        if (seq !== STATE.acSeq.biz) return;
+        let u = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=" +
+          encodeURIComponent(single) + "&category=POI" + (cc3 ? "&sourceCountry=" + cc3 : "") +
+          "&outFields=PlaceName,StAddr,City,Postal,Country,Type,URL&maxLocations=14&f=pjson";
+        if (STATE.geo.lat && STATE.geo.lng) u += "&location=" + STATE.geo.lng.toFixed(4) + "," + STATE.geo.lat.toFixed(4) + "&distance=18000";
+        const r = await fetch(u);
+        if (!r.ok) return [];
+        const out = [];
+        ((await r.json()).candidates || []).forEach((cand) => {
+          const a = cand.attributes || {}, loc = cand.location || {}, nm = String(a.PlaceName || "").trim(), tp = String(a.Type || "").toLowerCase();
+          if (!nm || /parking|bus stop|street|highway|atm/.test(tp)) return;
+          const cIso2 = ISO3_TO_ISO2[String(a.Country || "").toUpperCase()] || cc;
+          if (cc && cIso2 && cIso2 !== cc) return;
+          out.push({ name: nm, street: a.StAddr || "", city: a.City || "", postal: a.Postal || "", country: curCountry || a.Country || "", cc: cIso2, cat: a.Type || "Business", website: a.URL || "", addr: cand.address || "", lat: Number(loc.y) || null, lng: Number(loc.x) || null, source: "arcgis" });
+        });
+        return out;
+      } catch (e) { return []; }
+    })();
+
+    const gasPromise = (STATE.apiUrl ? (async () => {
+      try {
+        const res = await apiGet({ action: "autocomplete", mode: "business", q: val, lang: STATE.lang, country: curCountry, countryCode: cc, city: curCity, lat: STATE.geo.lat || "", lng: STATE.geo.lng || "" });
         if (res && res.status === "success" && Array.isArray(res.items)) {
-          res.items.forEach((it) => pushItem({ name: it.name, street: it.street || "", city: it.city || curCity, country: it.country || curCountry, cc: it.countryCode || cc, cat: it.category || "Business", addr: it.formattedAddress || "", lat: it.lat || null, lng: it.lng || null }));
+          return res.items.map((it) => ({ name: it.name, street: it.street || "", city: it.city || "", country: it.country || curCountry, cc: it.countryCode || cc, cat: it.category || "Business", rating: it.rating || "", website: it.website || "", logoUrl: it.logoUrl || "", addr: it.formattedAddress || "", lat: it.lat || null, lng: it.lng || null, source: it.source || "maps", inTargetCity: it.inTargetCity }));
         }
       } catch (e2) {}
+      return [];
+    })() : Promise.resolve([]));
+
+    const [arcItems, gasItems] = await Promise.all([arcPromise, gasPromise]);
+    if (seq !== STATE.acSeq.biz) return;
+    gasItems.forEach(pushItem);
+    arcItems.forEach(pushItem);
+
+    // Strictly sort: 1) Exact chosen city FIRST, 2) Google Maps source, 3) Name starts with query
+    const qLow = val.toLowerCase();
+    items.sort((a, b) => {
+      if (a.inTargetCity !== b.inTargetCity) return a.inTargetCity ? -1 : 1;
+      if ((a.source === "google_maps") !== (b.source === "google_maps")) return a.source === "google_maps" ? -1 : 1;
+      const aSt = a.name.toLowerCase().startsWith(qLow) ? 0 : 1, bSt = b.name.toLowerCase().startsWith(qLow) ? 0 : 1;
+      return aSt - bSt;
+    });
+
+    if (!items.length) {
+      list.innerHTML = `<div class="ac-empty">Совпадений в ${curCity ? "«" + esc(curCity) + "»" : "картах"} нет — нажмите «Запустить аудит» (привязка к ${esc([curCity, curCountry].filter(Boolean).join(", ") || "запросу")} сохранится)</div>`;
+      return;
     }
 
-    if (seq !== STATE.acSeq.biz) return;
-    if (!items.length) { list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Запустить аудит» по названию или URL</div>`; return; }
-    list.innerHTML = items.slice(0, 10).map((it, i) => `<div class="ac-item" data-biz-idx="${i}"><div class="co-row" style="flex:1;">${companyLogoHtml(it.logoUrl, it.website, it.name, 26)}<div style="min-width:0;"><div class="ac-name">${esc(it.name)}</div><div class="ac-sub">${esc([it.street, it.city, it.country].filter(Boolean).join(", ") || it.addr)}</div></div></div><span class="badge">${esc(it.cat)}</span></div>`).join("");
+    const inCityList = curCity ? items.filter((x) => x.inTargetCity) : items;
+    const nearList = curCity ? items.filter((x) => !x.inTargetCity) : [];
+    const ordered = [].concat(inCityList.slice(0, 8), nearList.slice(0, 5));
+    const renderRow = (it, i) => `<div class="ac-item" data-biz-idx="${i}"><div class="co-row" style="flex:1;">${companyLogoHtml(it.logoUrl, it.website, it.name, 26)}<div style="min-width:0;"><div class="ac-name">${esc(it.name)}${it.rating ? ` <span style="color:var(--amber);font-size:11.5px;">★ ${esc(it.rating)}</span>` : ""}</div><div class="ac-sub">${esc([it.street, it.city, it.country].filter(Boolean).join(", ") || it.addr)}</div></div></div><span class="badge${it.source === "google_maps" ? " green" : ""}">${esc(it.source === "google_maps" ? "Maps" : it.cat)}</span></div>`;
+
+    let htmlOut = "";
+    if (curCity && inCityList.length) {
+      htmlOut += `<div class="ac-group-hd">📍 В городе ${esc(curCity)} (${inCityList.length})</div>`;
+      htmlOut += inCityList.slice(0, 8).map((it, idx) => renderRow(it, idx)).join("");
+    }
+    if (curCity && nearList.length) {
+      htmlOut += `<div class="ac-group-hd" style="color:var(--muted);">🗺️ Смежные города и регион</div>`;
+      const offset = inCityList.slice(0, 8).length;
+      htmlOut += nearList.slice(0, 5).map((it, idx) => renderRow(it, offset + idx)).join("");
+    }
+    if (!curCity) htmlOut = ordered.map((it, idx) => renderRow(it, idx)).join("");
+
+    list.innerHTML = htmlOut;
     list.querySelectorAll("[data-biz-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
-      e.preventDefault(); const it = items[Number(el.dataset.bizIdx)];
-      $("qInput").value = [it.name, it.street, it.city].filter(Boolean).join(", ");
+      e.preventDefault(); const it = ordered[Number(el.dataset.bizIdx)];
+      $("qInput").value = [it.name, it.street, it.city || curCity].filter(Boolean).join(", ");
       if (it.country && !$("countryInput").value.trim()) { $("countryInput").value = it.country; STATE.geo.country = it.country; }
       if (it.cc && !STATE.geo.countryCode) STATE.geo.countryCode = it.cc;
-      if (it.city && !$("cityInput").value.trim()) { $("cityInput").value = it.city; STATE.geo.city = it.city; }
+      if (it.city) { $("cityInput").value = it.city; STATE.geo.city = it.city; }
       if (it.lat && it.lng) { STATE.geo.lat = it.lat; STATE.geo.lng = it.lng; }
       list.classList.add("hidden"); syncGeoBadge();
     }));
@@ -1573,7 +1648,10 @@ body { font-size: 14px; }
     STATE.pollTimer = setInterval(pollOnce, 1600);
     STATE.scanAbort = new AbortController();
     try {
-      const res = await apiPost({ action: "scan", url: q, language: STATE.lang, country: $("countryInput").value.trim(), city: $("cityInput").value.trim(), engineMode: STATE.engineMode || "argon_pro", scopeMode: STATE.scopeMode, partnerId: STATE.partnerId || "", autoSendEmail: Boolean(STATE.autoEmailOn && STATE.autoEmail), autoSendTo: STATE.autoEmail || "", entryMode: STATE.entryMode, jobId, customBrief: $("briefInput").value.trim() }, STATE.scanAbort.signal);
+      const selCountry = $("countryInput").value.trim(), selCity = $("cityInput").value.trim();
+      const isUrlQ = /^(https?:\/\/|www\.)|[a-z0-9-]+\.[a-z]{2,8}(\/|$)/i.test(q);
+      const boundQ = (!isUrlQ && selCity && !translit(q).includes(translit(selCity))) ? (q + ", " + selCity) : q;
+      const res = await apiPost({ action: "scan", url: boundQ, language: STATE.lang, country: selCountry, city: selCity, engineMode: STATE.engineMode || "argon_pro", scopeMode: STATE.scopeMode, partnerId: STATE.partnerId || "", autoSendEmail: Boolean(STATE.autoEmailOn && STATE.autoEmail), autoSendTo: STATE.autoEmail || "", entryMode: STATE.entryMode, jobId, customBrief: $("briefInput").value.trim() }, STATE.scanAbort.signal);
       clearInterval(STATE.pollTimer);
       if (!res || res.status !== "success" || !res.reportData) throw new Error((res && res.message) || "Пустой ответ");
       $("scanProgress").style.width = "100%";
@@ -1718,9 +1796,33 @@ body { font-size: 14px; }
     $("hdrTrustBadge").textContent = "⚖️ " + (ev.confidenceScore || 75) + "%";
     $("hdrModeBadge").textContent = rep.entityMode || "SMB";
     const parts = [];
-    if (c.address || m.detectedCity) parts.push(`<span>📍 ${esc(c.address || [m.detectedCity, m.detectedCountry].filter(Boolean).join(", "))}</span>`);
+    const streetStr = String(c.street || m.detectedStreet || "").trim();
+    const cityStr = String(m.detectedCity || "").trim();
+    const countryStr = String(m.detectedCountry || "").trim();
+    let fullAddr = String(c.address || "").trim();
+    if (!fullAddr || fullAddr === "N/A" || (streetStr && !fullAddr.toLowerCase().includes(streetStr.toLowerCase()))) {
+      fullAddr = [countryStr, cityStr, streetStr].filter(Boolean).join(", ");
+    }
+    if (fullAddr) parts.push(`<span>📍 ${esc(fullAddr)}</span>`);
     if (c.website && c.website !== "N/A") parts.push(`<a href="${esc(c.website)}" target="_blank" rel="noopener">🌐 ${esc(c.website.replace(/^https?:\/\/(www\.)?/i, "").slice(0, 34))}</a>`);
-    if (c.phone && c.phone !== "N/A") parts.push(`<span>📞 ${esc(c.phone)}</span>`);
+    if (c.email && c.email !== "N/A" && c.email !== "—" && c.email.includes("@")) {
+      const mailSubj = encodeURIComponent("B2B запрос: " + (rep.businessName || ""));
+      parts.push(`<a class="hdr-mail-link" href="mailto:${esc(c.email)}?subject=${mailSubj}" title="Написать письмо на ${esc(c.email)}">✉️ ${esc(c.email)}</a>`);
+    }
+    if (c.phone && c.phone !== "N/A") parts.push(`<a href="tel:${esc(c.phone.replace(/[^+0-9]/g, ""))}" style="color:inherit;text-decoration:none;">📞 ${esc(c.phone)}</a>`);
+    const revNum = Number(rep.reviewCount || 0), ratVal = parseFloat(String(rep.rating || "0")) || 0;
+    if (ratVal > 0) parts.push(`<span style="color:var(--amber);font-weight:700;">⭐ ${esc(rep.rating)}${revNum ? " (" + revNum + ")" : ""}</span>`);
+
+    // Active Social Profiles ONLY (inactive/missing ones are completely hidden!)
+    const activeSocs = (Array.isArray(rep.socialProfiles) ? rep.socialProfiles : []).filter((sp) => sp && sp.url && /^https?:\/\//i.test(sp.url));
+    if (activeSocs.length > 0) {
+      const socIcons = { facebook: "📘", instagram: "📸", youtube: "▶️", tiktok: "🎵", linkedin: "💼", x: "𝕏", twitter: "𝕏", pinterest: "📌", whatsapp: "💬", telegram: "✈️" };
+      const chips = activeSocs.map((sp) => {
+        const ic = socIcons[String(sp.platform || sp.label || "").toLowerCase()] || "🔗";
+        return `<a class="hdr-soc-chip" href="${esc(sp.url)}" target="_blank" rel="noopener" title="${esc(sp.label || sp.platform)}">${ic} ${esc(sp.label || sp.platform)}</a>`;
+      }).join("");
+      parts.push(`<span class="hdr-soc-row">${chips}</span>`);
+    }
     $("hdrMeta").innerHTML = parts.join("");
     const drBtn = $("openDataRoomHdrBtn");
     drBtn.textContent = STATE.ownerDataRoom ? "🔵 Мои цифры" : "🟡 Мои цифры";
@@ -2848,7 +2950,10 @@ body { font-size: 14px; }
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
           <span style="font-size:11.5px; color:var(--muted);" id="ratStatusHint">Schema.org рейтинги с сайтов работают бесплатно всегда.</span>
-          <button class="btn btn-primary btn-sm" id="saveRatingsKeyBtn">⭐ Сохранить ключ рейтингов</button>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn btn-sm" id="testRatingsKeyBtn">🧪 Проверить ключ</button>
+            <button class="btn btn-primary btn-sm" id="saveRatingsKeyBtn">⭐ Сохранить ключ</button>
+          </div>
         </div>
       </div>
 
@@ -2873,6 +2978,23 @@ body { font-size: 14px; }
       apiGet({ action: "ratings_status" }).then(updateRatBadge).catch(() => updateRatBadge({ hasSerper: false, hasGooglePlaces: false }));
     } else updateRatBadge({ hasSerper: false, hasGooglePlaces: false });
 
+    const runLiveRatingsTest = async () => {
+      const tBtn = $("testRatingsKeyBtn"), hint = $("ratStatusHint");
+      if (tBtn) { tBtn.disabled = true; tBtn.textContent = "Проверка..."; }
+      if (hint) hint.textContent = "Отправляю тестовый запрос в Google Maps (Serper / Places)...";
+      try {
+        const tr = await apiGet({ action: "test_ratings_key" });
+        const lines = [];
+        if (tr && tr.serperTest && tr.hasSerper) lines.push((tr.serperTest.ok ? "✅ Serper: " : "❌ Serper: ") + tr.serperTest.msg);
+        if (tr && tr.googleTest && tr.hasGooglePlaces) lines.push((tr.googleTest.ok ? "✅ Google Places: " : "❌ Google Places: ") + tr.googleTest.msg);
+        const msg = lines.length ? lines.join(" | ") : "Ключи ещё не добавлены.";
+        if (hint) { hint.textContent = msg; hint.style.color = (tr && ((tr.serperTest && tr.serperTest.ok) || (tr.googleTest && tr.googleTest.ok))) ? "var(--accent)" : "var(--red)"; }
+        showToast(msg, 6000);
+      } catch (e) { showToast("Ошибка теста: " + e.message, 4500); }
+      finally { if (tBtn) { tBtn.disabled = false; tBtn.textContent = "🧪 Проверить ключ"; } }
+    };
+    $("testRatingsKeyBtn").addEventListener("click", runLiveRatingsTest);
+
     $("saveRatingsKeyBtn").addEventListener("click", async () => {
       const sk = $("serperKeyInp").value.trim(), gk = $("gpKeyInp").value.trim();
       if (!sk && !gk) { showToast("Вставьте ключ Serper.dev или Google Places"); return; }
@@ -2882,10 +3004,10 @@ body { font-size: 14px; }
         if (res && res.status === "success") {
           $("serperKeyInp").value = ""; $("gpKeyInp").value = "";
           updateRatBadge(res);
-          showToast("✅ Ключ сохранён! Следующий скан потянет живые рейтинги Google Maps.");
+          await runLiveRatingsTest();
         } else throw new Error((res && res.message) || "Ошибка сохранения");
       } catch (e) { showToast("Ошибка: " + e.message, 4500); }
-      finally { btn.disabled = false; btn.textContent = "⭐ Сохранить ключ рейтингов"; }
+      finally { btn.disabled = false; btn.textContent = "⭐ Сохранить ключ"; }
     });
 
     $("resetApiDefBtn").addEventListener("click", () => { $("apiUrlInput").value = DEFAULT_GAS_URL; });

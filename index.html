@@ -438,7 +438,8 @@ body { font-size: 14px; }
 .verdict-title { font-size: 15px; font-weight: 400; color: var(--text); line-height: 1.68; max-width: 780px; letter-spacing: 0.005em; opacity: 0.94; }
 .verdict-next { font-size: 13.5px; font-weight: 500; color: var(--text-2); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); line-height: 1.5; }
 .ac-group-hd { padding: 6px 12px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface)); border-bottom: 1px solid var(--border); }
-.hdr-mail-link { display: inline-flex; align-items: center; gap: 4px; color: var(--accent) !important; font-weight: 600; text-decoration: none; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-brd); transition: opacity .15s; }
+.hdr-mail-link { display: inline-flex; align-items: center; gap: 4px; color: var(--accent) !important; font-weight: 700; text-decoration: none; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent-brd); cursor: pointer; pointer-events: auto; position: relative; z-index: 3; font-size: 12px; transition: filter .15s, transform .12s; }
+.hdr-mail-link:hover { filter: brightness(1.12); transform: translateY(-1px); text-decoration: none; }
 .hdr-mail-link:hover { opacity: 0.85; text-decoration: none; }
 .hdr-soc-row { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 .hdr-soc-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2) !important; text-decoration: none; transition: border-color .15s, color .15s; }
@@ -486,12 +487,12 @@ body { font-size: 14px; }
   <div class="brand" id="brandHomeBtn" title="На Консоль запуска">
     <div class="brand-mark">B</div>
     <span class="brand-name">B2B Nexus</span>
-    <span class="ver-pill">v9.1 Executive OS</span>
+    <span class="ver-pill">v9.1.3 Executive OS</span>
   </div>
   <div class="top-right">
     <div class="status-pill" id="engineStatusPill" title="Проверить связь с Argon Engine">
       <span class="s-dot" id="engineDot"></span>
-      <span id="engineStatusText">Argon v8.8.5</span>
+      <span id="engineStatusText">Argon v8.8.8</span>
     </div>
     <button class="btn btn-sm" id="cmdOpenTopBtn" title="Быстрый поиск (Ctrl+K)">🔍 <span class="kbd">Ctrl+K</span></button>
     <select class="lang-sel" id="langSelect" title="Язык отчёта"><option value="ru-RU">RU</option><option value="en-US">EN</option><option value="de-DE">DE</option><option value="es-ES">ES</option><option value="fr-FR">FR</option><option value="zh-CN">ZH</option></select>
@@ -588,7 +589,7 @@ body { font-size: 14px; }
       <div>
         <div class="badge sky" id="scanModeBadge">🏢 Мой бизнес</div>
         <h2 style="margin:6px 0 2px; font-size:20px;" id="scanTargetTitle">Сканирование...</h2>
-        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.7</div>
+        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.8</div>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-sm" id="scan3dSwitchBtn">🌐 3D-Рой</button>
@@ -723,7 +724,7 @@ body { font-size: 14px; }
   const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
   const urlParams = new URLSearchParams(location.search);
   const STATE = {
-    version: "9.1.1", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
+    version: "9.1.3", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
     apiUrl: urlParams.get("api") || localStorage.getItem("b2b_nexus_api_url") || DEFAULT_GAS_URL,
     partnerId: urlParams.get("partner") || "",
     adminMode: urlParams.get("admin") === "1" || localStorage.getItem("b2b_v9_admin") === "1",
@@ -1019,7 +1020,7 @@ body { font-size: 14px; }
       "[2.3s] Web X-Ray: angelshop-verhey.de (HTTPS: OK, Impressum: OK, Privacy: OK, Cookie CMP: NO)",
       "[14.1s] Wave 1: 5 Directors completed (CFO, CMO, CLO, CRO, COO)",
       "[22.6s] Jury Fact-Check: 10 verified facts, 1 VETO (SAP ERP removed), Confidence: 92%",
-      "[38.8s] Argon v8.8.5 finalized in 38.8s (Core: true | Playbook: true)"
+      "[38.8s] Argon v8.8.8 finalized in 38.8s (Core: true | Playbook: true)"
     ]
   };
 
@@ -1806,10 +1807,11 @@ body { font-size: 14px; }
     if (fullAddr) parts.push(`<span>📍 ${esc(fullAddr)}</span>`);
     if (c.website && c.website !== "N/A") parts.push(`<a href="${esc(c.website)}" target="_blank" rel="noopener">🌐 ${esc(c.website.replace(/^https?:\/\/(www\.)?/i, "").slice(0, 34))}</a>`);
     if (c.email && c.email !== "N/A" && c.email !== "—" && c.email.includes("@")) {
-      const mailSubj = encodeURIComponent("B2B запрос: " + (rep.businessName || ""));
-      parts.push(`<a class="hdr-mail-link" href="mailto:${esc(c.email)}?subject=${mailSubj}" title="Написать письмо на ${esc(c.email)}">✉️ ${esc(c.email)}</a>`);
+      const mailSubj = encodeURIComponent("Запрос / предложение для " + (rep.businessName || ""));
+      parts.push(`<a class="hdr-mail-link" id="hdrEmailAction" href="mailto:${esc(c.email)}?subject=${mailSubj}" data-hdr-mail="${esc(c.email)}" title="Написать письмо на ${esc(c.email)}">✉️ ${esc(c.email)}</a>`);
     }
     if (c.phone && c.phone !== "N/A") parts.push(`<a href="tel:${esc(c.phone.replace(/[^+0-9]/g, ""))}" style="color:inherit;text-decoration:none;">📞 ${esc(c.phone)}</a>`);
+    if (c.hours && c.hours !== "N/A" && c.hours !== "—") parts.push(`<span title="Часы работы">🕒 ${esc(String(c.hours).slice(0, 48))}</span>`);
     const revNum = Number(rep.reviewCount || 0), ratVal = parseFloat(String(rep.rating || "0")) || 0;
     if (ratVal > 0) parts.push(`<span style="color:var(--amber);font-weight:700;">⭐ ${esc(rep.rating)}${revNum ? " (" + revNum + ")" : ""}</span>`);
 
@@ -1824,6 +1826,13 @@ body { font-size: 14px; }
       parts.push(`<span class="hdr-soc-row">${chips}</span>`);
     }
     $("hdrMeta").innerHTML = parts.join("");
+    const hdrMailEl = $("hdrEmailAction");
+    if (hdrMailEl) {
+      hdrMailEl.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        openHeaderMailDrawer(hdrMailEl.dataset.hdrMail || "");
+      });
+    }
     const drBtn = $("openDataRoomHdrBtn");
     drBtn.textContent = STATE.ownerDataRoom ? "🔵 Мои цифры" : "🟡 Мои цифры";
     drBtn.style.borderColor = STATE.ownerDataRoom ? "var(--sky-brd)" : "var(--amber-brd)";
@@ -2672,6 +2681,49 @@ body { font-size: 14px; }
       renderReportHeader(); syncRailPills(); renderActiveSection(); closeDrawer(); showToast("🔵 Пересчитано по вашим данным!");
     });
     $("resetDrBtn").addEventListener("click", () => { STATE.ownerDataRoom = null; renderReportHeader(); syncRailPills(); renderActiveSection(); closeDrawer(); showToast("Возвращены бенчмарки 🟡"); });
+  }
+
+  function openHeaderMailDrawer(targetEmail) {
+    if (!STATE.report) return;
+    const rep = STATE.report, toAddr = String(targetEmail || (rep.contacts && rep.contacts.email) || "").trim();
+    const defSubj = "Предложение о сотрудничестве — " + (rep.businessName || "");
+    const defBody = `Добрый день, команда ${rep.businessName || ""}!\n\nПишу вам по поводу возможного сотрудничества и улучшения локального цифрового присутствия в ${(rep.companyMeta && rep.companyMeta.detectedCity) || rep.searchCity || "регионе"}.\n\nБуду рад обсудить детали в удобное для вас время.`;
+    const buildGmailUrl = (to, su, bd) => "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(to) + "&su=" + encodeURIComponent(su) + "&body=" + encodeURIComponent(bd);
+    const buildMailtoUrl = (to, su, bd) => "mailto:" + encodeURIComponent(to) + "?subject=" + encodeURIComponent(su) + "&body=" + encodeURIComponent(bd);
+
+    openDrawer("✉️ Написать письмо в компанию", `${rep.businessName || ""} · ${toAddr}`, `
+      <div class="dr-field" style="margin-bottom:10px;"><label>Кому (Email компании)</label><input id="hmToInp" type="email" value="${esc(toAddr)}"></div>
+      <div class="dr-field" style="margin-bottom:10px;"><label>Тема письма</label><input id="hmSubjInp" type="text" value="${esc(defSubj)}"></div>
+      <div class="dr-field" style="margin-bottom:12px;"><label>Текст письма</label><textarea id="hmBodyTa" class="dr-textarea" style="min-height:160px;">${esc(defBody)}</textarea></div>
+      <div class="b-sub">Выберите удобный способ: открыть готовый черновик в <strong>Gmail</strong>, запустить системный почтовый клиент (<strong>mailto:</strong>) или отправить напрямую через сервер B2B Nexus.</div>`, `
+      <button class="btn btn-sm" id="hmCopyBtn">📋 Копировать</button>
+      <a class="btn btn-sm" id="hmMailtoBtn" href="${esc(buildMailtoUrl(toAddr, defSubj, defBody))}">✉️ Почта (ПК)</a>
+      <button class="btn btn-sm" id="hmDirectSendBtn">⚡ Отправить здесь</button>
+      <button class="btn btn-primary" id="hmGmailBtn">📨 Открыть в Gmail →</button>`);
+
+    const syncLinks = () => {
+      const to = $("hmToInp").value.trim(), su = $("hmSubjInp").value.trim(), bd = $("hmBodyTa").value;
+      if ($("hmMailtoBtn")) $("hmMailtoBtn").href = buildMailtoUrl(to, su, bd);
+    };
+    ["hmToInp", "hmSubjInp", "hmBodyTa"].forEach((id) => { if ($(id)) $(id).addEventListener("input", syncLinks); });
+    $("hmCopyBtn").addEventListener("click", () => copyText($("hmToInp").value.trim(), "Email " + $("hmToInp").value.trim()));
+    $("hmGmailBtn").addEventListener("click", () => {
+      const to = $("hmToInp").value.trim(), su = $("hmSubjInp").value.trim(), bd = $("hmBodyTa").value;
+      if (!to || !to.includes("@")) { showToast("Укажите корректный email"); return; }
+      window.open(buildGmailUrl(to, su, bd), "_blank", "noopener");
+      showToast("📨 Открыт черновик письма в Gmail");
+    });
+    $("hmDirectSendBtn").addEventListener("click", async () => {
+      const to = $("hmToInp").value.trim(), su = $("hmSubjInp").value.trim(), bd = $("hmBodyTa").value.trim();
+      if (!to || !to.includes("@")) { showToast("Укажите корректный email"); return; }
+      if (!STATE.apiUrl || STATE.fileId === "demo_v882") { window.open(buildGmailUrl(to, su, bd), "_blank", "noopener"); return; }
+      const btn = $("hmDirectSendBtn"); btn.disabled = true; btn.textContent = "Отправка...";
+      try {
+        const res = await apiPost({ action: "sendProposal", fileId: STATE.fileId, toEmail: to, vendorName: rep.businessName || "", stepTitle: su, messageBody: bd, senderContact: STATE.autoEmail || "", language: rep.reportLanguage || STATE.lang });
+        if (res && res.status === "success") { showToast("✅ Письмо отправлено на " + (res.resolvedEmail || to)); closeDrawer(); }
+        else throw new Error((res && res.message) || "Ошибка отправки");
+      } catch (e) { showToast("Ошибка: " + e.message, 4500); btn.disabled = false; btn.textContent = "⚡ Отправить здесь"; }
+    });
   }
 
   function openSendEmailDrawer() {

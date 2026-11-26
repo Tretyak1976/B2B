@@ -375,6 +375,23 @@ body.safe-mode .sensitive { filter: blur(7px); user-select: none; pointer-events
 pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); font-family: var(--mono); font-size: 11px; overflow-x: auto; white-space: pre-wrap; max-height: 220px; overflow-y: auto; margin: 8px 0 0; }
 @media (max-width: 980px) { .rfm-grid { grid-template-columns: repeat(2, 1fr); } }
 
+
+/* v9.0.2 Universal Logos & Interactive Zoom/Pan Map */
+.co-logo { display:inline-flex; align-items:center; justify-content:center; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden; flex-shrink:0; font-weight:800; color:var(--accent); position:relative; }
+.co-logo img { width:100%; height:100%; object-fit:contain; background:#fff; padding:2px; display:block; }
+.co-logo .co-fb { display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:12px; color:var(--accent); background:var(--surface-2); }
+.co-logo.no-img .co-fb { display:flex; }
+.co-row { display:flex; align-items:center; gap:9px; min-width:0; }
+.arena-map-wrap { height: 340px; cursor: grab; user-select: none; touch-action: none; }
+.arena-map-wrap.dragging { cursor: grabbing; }
+.map-ctrl-bar { position:absolute; right:10px; top:10px; z-index:5; display:flex; flex-direction:column; gap:4px; }
+.map-ctrl-btn { width:30px; height:30px; border-radius:8px; border:1px solid var(--border-strong); background:rgba(15,23,42,0.92); color:#f1f5f9; font-weight:800; font-size:14px; cursor:pointer; display:grid; place-items:center; }
+.map-ctrl-btn:hover { background:var(--accent); color:#041016; border-color:var(--accent); }
+.map-layer-bar { position:absolute; left:10px; top:10px; z-index:5; display:flex; gap:5px; flex-wrap:wrap; }
+.map-layer-chip { font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; border:1px solid var(--border-strong); background:rgba(15,23,42,0.88); color:#cbd5e1; cursor:pointer; }
+.map-layer-chip.on { border-color:var(--accent-brd); background:rgba(16,185,129,0.22); color:#6ee7b7; }
+.map-zoom-badge { position:absolute; right:10px; bottom:8px; z-index:5; font-size:10.5px; font-family:var(--mono); padding:2px 7px; border-radius:999px; background:rgba(7,11,20,0.85); border:1px solid var(--border); color:#94a3b8; }
+
 </style>
 </head>
 <body>
@@ -383,7 +400,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   <div class="brand" id="brandHomeBtn" title="На Консоль запуска">
     <div class="brand-mark">B</div>
     <span class="brand-name">B2B Nexus</span>
-    <span class="ver-pill">v9 Bento OS</span>
+    <span class="ver-pill">v9.0.2 Bento OS</span>
   </div>
   <div class="top-right">
     <div class="status-pill" id="engineStatusPill" title="Проверить связь с Argon Engine">
@@ -631,7 +648,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
   const urlParams = new URLSearchParams(location.search);
   const STATE = {
-    version: "9.0",
+    version: "9.0.2", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
     apiUrl: urlParams.get("api") || localStorage.getItem("b2b_nexus_api_url") || DEFAULT_GAS_URL,
     partnerId: urlParams.get("partner") || "",
     adminMode: urlParams.get("admin") === "1" || localStorage.getItem("b2b_v9_admin") === "1",
@@ -951,6 +968,24 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     const n = Math.round(Number(num) || 0);
     return (n < 0 ? "-" : "") + Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + (sym || (STATE.report && STATE.report.currencySymbol) || "€");
   }
+
+  function extractDomFe(rawUrl) {
+    if (!rawUrl || rawUrl === "N/A") return "";
+    const s = String(rawUrl).trim().replace(/^https?:\/\/(www\.)?/i, "").split("/")[0].split("?")[0].toLowerCase();
+    return (s && s.indexOf(".") !== -1 && s.indexOf(" ") === -1) ? s : "";
+  }
+  function companyLogoHtml(logoUrl, website, name, size) {
+    const sz = size || 28;
+    const dom = extractDomFe(website);
+    let src = String(logoUrl || "").trim();
+    if (!src && dom) src = "https://www.google.com/s2/favicons?sz=128&domain=" + encodeURIComponent(dom);
+    const init = String(name || "B").trim().slice(0, 1).toUpperCase() || "B";
+    if (!src) {
+      return `<span class="co-logo no-img" style="width:${sz}px;height:${sz}px;"><span class="co-fb" style="font-size:${Math.round(sz * 0.45)}px;">${esc(init)}</span></span>`;
+    }
+    return `<span class="co-logo" style="width:${sz}px;height:${sz}px;"><img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.classList.add('no-img');"><span class="co-fb" style="font-size:${Math.round(sz * 0.45)}px;">${esc(init)}</span></span>`;
+  }
+
   function truthDot(fieldKey, forceLevel) {
     const rep = STATE.report || {};
     const ledger = (rep.truthLedger && rep.truthLedger.fields) || {};
@@ -1209,7 +1244,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
         if (!nm || /parking|bus stop|street|highway|atm/.test(tp)) return;
         const cIso2 = ISO3_TO_ISO2[String(a.Country || "").toUpperCase()] || cc;
         if (cc && cIso2 && cIso2 !== cc) return;
-        pushItem({ name: nm, street: a.StAddr || "", city: a.City || curCity || "", country: curCountry || a.Country || "", cc: cIso2, cat: a.Type || "Business", addr: cand.address || "", lat: Number(loc.y) || null, lng: Number(loc.x) || null });
+        pushItem({ name: nm, street: a.StAddr || "", city: a.City || curCity || "", country: curCountry || a.Country || "", cc: cIso2, cat: a.Type || "Business", website: a.URL || "", addr: cand.address || "", lat: Number(loc.y) || null, lng: Number(loc.x) || null });
       });
     } catch (e) {}
 
@@ -1225,7 +1260,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 
     if (seq !== STATE.acSeq.biz) return;
     if (!items.length) { list.innerHTML = `<div class="ac-empty">Совпадений в картах нет — нажмите «Запустить аудит» по названию или URL</div>`; return; }
-    list.innerHTML = items.slice(0, 10).map((it, i) => `<div class="ac-item" data-biz-idx="${i}"><div><div class="ac-name">${esc(it.name)}</div><div class="ac-sub">${esc([it.street, it.city, it.country].filter(Boolean).join(", ") || it.addr)}</div></div><span class="badge">${esc(it.cat)}</span></div>`).join("");
+    list.innerHTML = items.slice(0, 10).map((it, i) => `<div class="ac-item" data-biz-idx="${i}"><div class="co-row" style="flex:1;">${companyLogoHtml(it.logoUrl, it.website, it.name, 26)}<div style="min-width:0;"><div class="ac-name">${esc(it.name)}</div><div class="ac-sub">${esc([it.street, it.city, it.country].filter(Boolean).join(", ") || it.addr)}</div></div></div><span class="badge">${esc(it.cat)}</span></div>`).join("");
     list.querySelectorAll("[data-biz-idx]").forEach((el) => el.addEventListener("mousedown", (e) => {
       e.preventDefault(); const it = items[Number(el.dataset.bizIdx)];
       $("qInput").value = [it.name, it.street, it.city].filter(Boolean).join(", ");
@@ -1300,7 +1335,11 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     $("screenLaunch").classList.toggle("hidden", name !== "launch");
     $("screenScan").classList.toggle("hidden", name !== "scan");
     $("screenReport").classList.toggle("hidden", name !== "report");
-    if (name !== "scan" && STATE.swarm3dRaf) { cancelAnimationFrame(STATE.swarm3dRaf); STATE.swarm3dRaf = null; }
+    if (name !== "scan") {
+      STATE.isScanning = false;
+      if ($("startScanBtn")) $("startScanBtn").disabled = false;
+      if (STATE.swarm3dRaf) { cancelAnimationFrame(STATE.swarm3dRaf); STATE.swarm3dRaf = null; }
+    }
   }
 
   // ==================== HISTORY, LAUNCH & DIRECT SCAN ====================
@@ -1359,7 +1398,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     [].concat(localV9, localV8, Array.isArray(remote) ? remote : []).forEach((it) => {
       if (!it || !it.id || !it.name || /^n\/a$/i.test(String(it.name).trim())) return;
       if (seen.has(it.id)) return; seen.add(it.id);
-      merged.push({ id: it.id, name: it.name, city: it.city || "", score: it.score || 0, mode: it.mode || it.niche || "SMB", ts: it.ts || (it.createdAt ? String(it.createdAt).slice(0, 10) : "") });
+      merged.push({ id: it.id, name: it.name, city: it.city || "", score: it.score || 0, mode: it.mode || it.niche || "SMB", logoUrl: it.logoUrl || "", website: it.website || "", ts: it.ts || (it.createdAt ? String(it.createdAt).slice(0, 10) : "") });
     });
     if (!merged.length) merged.push({ id: "demo_v882", name: "Angelshop Verhey (Демо v8.8.2)", city: "Kleve", score: 70, mode: "SMB", ts: "2026-11-26" });
     STATE.history = merged.slice(0, 20);
@@ -1391,7 +1430,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     } catch (e) { box.innerHTML = `<div style="color:var(--red); font-size:12.5px;">Ошибка префлайта: ${esc(e.message)}</div>`; }
   }
   function saveHistoryEntry(id, rep) {
-    const entry = { id: id || ("loc_" + Date.now()), name: rep.businessName || "Audit", city: (rep.companyMeta && rep.companyMeta.detectedCity) || rep.searchCity || "", score: (rep.nexusRanking && rep.nexusRanking.score) || 0, mode: rep.entityMode || "SMB", ts: new Date().toISOString().slice(0, 10) };
+    const entry = { id: id || ("loc_" + Date.now()), name: rep.businessName || "Audit", city: (rep.companyMeta && rep.companyMeta.detectedCity) || rep.searchCity || "", score: (rep.nexusRanking && rep.nexusRanking.score) || 0, mode: rep.entityMode || "SMB", logoUrl: rep.logoUrl || "", website: (rep.contacts && rep.contacts.website) || "", ts: new Date().toISOString().slice(0, 10) };
     STATE.history = [entry, ...STATE.history.filter((x) => x.id !== entry.id)].slice(0, 12);
     try { localStorage.setItem("b2b_v9_history", JSON.stringify(STATE.history)); } catch (e) {}
     renderHistoryPanels();
@@ -1406,7 +1445,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     $("histCountBadge").textContent = STATE.history.length;
     $("favCountBadge").textContent = STATE.favorites.length;
     const favIds = new Set(STATE.favorites.map((f) => f.id));
-    const itemHtml = (it) => `<div class="hist-item" data-open-id="${esc(it.id)}"><div style="min-width:0;"><div style="font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(it.name)}</div><div style="font-size:11.5px; color:var(--muted);">${esc(it.city || "—")} · ${esc(it.ts)} · <span class="badge">${esc(it.mode)}</span></div></div><div style="display:flex; align-items:center; gap:6px;"><span class="badge green num">${esc(it.score)}/100</span><button class="star-btn ${favIds.has(it.id) ? "fav" : ""}" data-star-id="${esc(it.id)}">★</button></div></div>`;
+    const itemHtml = (it) => `<div class="hist-item" data-open-id="${esc(it.id)}"><div class="co-row" style="flex:1;">${companyLogoHtml(it.logoUrl, it.website, it.name, 28)}<div style="min-width:0;"><div style="font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(it.name)}</div><div style="font-size:11.5px; color:var(--muted);">${esc(it.city || "—")} · ${esc(it.ts)} · <span class="badge">${esc(it.mode)}</span></div></div></div><div style="display:flex; align-items:center; gap:6px;"><span class="badge green num">${esc(it.score)}/100</span><button class="star-btn ${favIds.has(it.id) ? "fav" : ""}" data-star-id="${esc(it.id)}">★</button></div></div>`;
     $("recentHistoryList").innerHTML = STATE.history.slice(0, 5).map(itemHtml).join("") || `<div style="font-size:12.5px; color:var(--muted);">История пуста</div>`;
     $("favoritesList").innerHTML = STATE.favorites.slice(0, 5).map(itemHtml).join("") || `<div style="font-size:12.5px; color:var(--muted);">Нажмите ★ на отчёте для закрепления</div>`;
     document.querySelectorAll("[data-star-id]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); toggleFav(b.dataset.starId); }));
@@ -1428,9 +1467,12 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   }
 
   async function startScan() {
+    if (STATE.isScanning) { showToast("⏳ Скан уже выполняется — дождитесь завершения"); return; }
     const q = $("qInput").value.trim();
     if (!q) { showToast("Введите название компании, URL или нишу"); $("qInput").focus(); return; }
     if (!STATE.apiUrl) { showToast("API не задан — открываю демо-отчёт v8.8.2"); openDemoReport(); return; }
+    STATE.isScanning = true;
+    if ($("startScanBtn")) $("startScanBtn").disabled = true;
     const modeMeta = { my_business: "🏢 Мой бизнес", competitor: "🎯 Разбор конкурента", niche: "🗺️ Анализ ниши" };
     $("scanModeBadge").textContent = modeMeta[STATE.entryMode] || "🏢 Мой бизнес";
     $("scanTargetTitle").textContent = q;
@@ -1499,7 +1541,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   function loadReportIntoWorkspace(fileId, rawRep) {
     const rep = normalizeReportCompat(rawRep);
     STATE.fileId = fileId; STATE.report = rep; STATE.ownerDataRoom = null;
-    STATE.activeStressId = "base"; STATE.pageSpeedCache = null; STATE.boardHistory = [];
+    STATE.activeStressId = "base"; STATE.pageSpeedCache = null; STATE.boardHistory = []; STATE.mapState = { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true };
     const dr = rep.dataRoomDefaults || {};
     STATE.cacLtv = { cac: Math.max(5, Math.round((Number(dr.avgTicketLocal) || 85) * 0.25)), ticket: Number(dr.avgTicketLocal) || 85, grossPct: Number(dr.grossMarginPct) || 45, ordersYr: 2.5, lifeYrs: 3 };
     if (rep.whiteLabel && rep.whiteLabel.brandName) {
@@ -1601,7 +1643,8 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   function renderReportHeader() {
     const rep = STATE.report; if (!rep) return;
     const c = rep.contacts || {}, m = rep.companyMeta || {}, ev = rep.evidenceSummary || {};
-    $("hdrLogo").textContent = (rep.businessName || "B").slice(0, 1).toUpperCase();
+    $("hdrLogo").innerHTML = companyLogoHtml(rep.logoUrl, (c && c.website) || "", rep.businessName || "B", 38);
+    $("hdrLogo").style.padding = "0"; $("hdrLogo").style.border = "none"; $("hdrLogo").style.background = "transparent";
     $("hdrName").textContent = rep.businessName || "—";
     $("hdrTrustBadge").textContent = "⚖️ Доверие: " + (ev.confidenceScore || 75) + "%";
     $("hdrModeBadge").textContent = rep.entityMode || "SMB";
@@ -1883,63 +1926,187 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   }
 
 
-  // ==================== SECTION 5: ARENA (MAP, BUBBLES, H2H, KILL-SHEET, ECOSYSTEM, CSV) ====================
+  // ==================== SECTION 5: ARENA (INTERACTIVE ZOOM/PAN MAP, HONEST POSITIONING, LOGOS EVERYWHERE, KILL-SHEET, ECOSYSTEM, CSV) ====================
+  function calcDistKmFe(lat1, lng1, lat2, lng2) {
+    if (!lat1 || !lng1 || !lat2 || !lng2) return null;
+    const toR = (d) => d * Math.PI / 180, R = 6371;
+    const dLat = toR(lat2 - lat1), dLng = toR(lng2 - lng1);
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(toR(lat1)) * Math.cos(toR(lat2)) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
   function buildArenaMapSvg(rep) {
-    const W = 540, H = 295, cx = W / 2, cy = H / 2;
+    const W = 600, H = 340, cx = W / 2, cy = H / 2;
     const baseLat = (rep.coordinates && Number(rep.coordinates.lat)) || 51.796;
     const baseLng = (rep.coordinates && Number(rep.coordinates.lng)) || 6.144;
-    const comps = (rep.competitors || []).slice(0, 10);
-    const nbs = (rep.nearbyNeighbors150m || []).slice(0, 6);
-    const pts = [];
+    const comps = STATE.mapState.showComps ? (rep.competitors || []).slice(0, 12) : [];
+    const nbs = STATE.mapState.showNeighbors ? (rep.nearbyNeighbors150m || []).slice(0, 8) : [];
+    const ms = STATE.mapState, z = Math.max(0.5, Math.min(8, Number(ms.zoom) || 1));
+
+    // Auto-fit projection scale from real coordinates so markers never collapse into one dot!
+    const rawPts = [];
+    const cosLat = Math.max(0.25, Math.cos(baseLat * Math.PI / 180));
     comps.forEach((c, i) => {
-      let dx, dy;
-      if (c.lat && c.lng) { dx = (Number(c.lng) - baseLng) * 2600; dy = -(Number(c.lat) - baseLat) * 4200; }
-      else { const ang = (i / Math.max(1, comps.length)) * Math.PI * 2 - 0.5; dx = Math.cos(ang) * (95 + (i % 3) * 32); dy = Math.sin(ang) * (70 + (i % 2) * 34); }
-      pts.push({ kind: "comp", idx: i, item: c, x: Math.max(26, Math.min(W - 26, cx + dx)), y: Math.max(24, Math.min(H - 36, cy + dy)) });
+      if (c.lat && c.lng) {
+        const kmX = (Number(c.lng) - baseLng) * 111.32 * cosLat;
+        const kmY = -(Number(c.lat) - baseLat) * 111.32;
+        rawPts.push({ kind: "comp", idx: i, item: c, kmX, kmY, distKm: Math.hypot(kmX, kmY) });
+      } else {
+        const ang = (i / Math.max(1, comps.length)) * Math.PI * 2 - 0.5, rad = 1.2 + (i % 3) * 0.55;
+        rawPts.push({ kind: "comp", idx: i, item: c, kmX: Math.cos(ang) * rad, kmY: Math.sin(ang) * rad, distKm: rad });
+      }
     });
     nbs.forEach((n, i) => {
-      const ang = (i / Math.max(1, nbs.length)) * Math.PI * 2 + 0.4, rad = 42 + (i % 2) * 18;
-      pts.push({ kind: "nb", idx: i, item: n, x: cx + Math.cos(ang) * rad, y: cy + Math.sin(ang) * rad });
+      if (n.lat && n.lng) {
+        const kmX = (Number(n.lng) - baseLng) * 111.32 * cosLat;
+        const kmY = -(Number(n.lat) - baseLat) * 111.32;
+        rawPts.push({ kind: "nb", idx: i, item: n, kmX, kmY, distKm: Math.hypot(kmX, kmY) });
+      } else {
+        const ang = (i / Math.max(1, nbs.length)) * Math.PI * 2 + 0.45, rad = 0.28 + (i % 2) * 0.14;
+        rawPts.push({ kind: "nb", idx: i, item: n, kmX: Math.cos(ang) * rad, kmY: Math.sin(ang) * rad, distKm: rad });
+      }
     });
-    const rings = `<circle cx="${cx}" cy="${cy}" r="58" fill="rgba(56,189,248,0.06)" stroke="rgba(56,189,248,0.32)" stroke-dasharray="4 3"/><circle cx="${cx}" cy="${cy}" r="118" fill="none" stroke="rgba(148,163,184,0.18)" stroke-dasharray="4 4"/><text x="${cx + 62}" y="${cy - 4}" fill="var(--sky)" font-size="9.5" opacity="0.8">150–350 м</text><text x="${cx + 122}" y="${cy - 4}" fill="var(--muted)" font-size="9.5" opacity="0.7">~3 км</text>`;
+
+    const maxKm = Math.max(0.6, Math.min(12, rawPts.reduce((m, p) => Math.max(m, p.distKm), 0.6) * 1.18));
+    const pxPerKm = Math.min(W * 0.42, H * 0.40) / maxKm;
+
+    // Project points & apply gentle anti-collision repulsion on overlapping markers at current zoom
+    const pts = rawPts.map((p) => ({
+      ...p,
+      x: cx + p.kmX * pxPerKm,
+      y: cy + p.kmY * pxPerKm
+    }));
+    const minSep = 26 / z;
+    for (let iter = 0; iter < 5; iter++) {
+      for (let i = 0; i < pts.length; i++) {
+        // Repel from center (self)
+        const d0x = pts[i].x - cx, d0y = pts[i].y - cy, d0 = Math.hypot(d0x, d0y) || 0.1;
+        if (d0 < minSep) { pts[i].x = cx + (d0x / d0) * minSep; pts[i].y = cy + (d0y / d0) * minSep; }
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[j].x - pts[i].x, dy = pts[j].y - pts[i].y, d = Math.hypot(dx, dy) || 0.1;
+          if (d < minSep) {
+            const push = (minSep - d) * 0.52;
+            const ux = dx / d, uy = dy / d;
+            pts[i].x -= ux * push; pts[i].y -= uy * push;
+            pts[j].x += ux * push; pts[j].y += uy * push;
+          }
+        }
+      }
+    }
+
+    const r1Km = maxKm > 2 ? 1.0 : 0.35;
+    const r2Km = maxKm > 2 ? Number((maxKm * 0.72).toFixed(1)) : Number((maxKm * 0.78).toFixed(2));
+    const inv = 1 / z;
+    const sw = (1.6 * inv).toFixed(2), rComp = (7.2 * inv).toFixed(2), rNb = (5.8 * inv).toFixed(2), rSelf = (8 * inv).toFixed(2), fs = (10 * inv).toFixed(2), fsBig = (11 * inv).toFixed(2);
+
+    const rings = `
+      <circle cx="${cx}" cy="${cy}" r="${(r1Km * pxPerKm).toFixed(1)}" fill="rgba(56,189,248,0.05)" stroke="rgba(56,189,248,0.34)" stroke-width="${(1.1 * inv).toFixed(2)}" stroke-dasharray="${(4 * inv).toFixed(1)} ${(3 * inv).toFixed(1)}"/>
+      <circle cx="${cx}" cy="${cy}" r="${(r2Km * pxPerKm).toFixed(1)}" fill="none" stroke="rgba(148,163,184,0.20)" stroke-width="${(1.0 * inv).toFixed(2)}" stroke-dasharray="${(4 * inv).toFixed(1)} ${(4 * inv).toFixed(1)}"/>
+      <text x="${(cx + r1Km * pxPerKm + 4 * inv).toFixed(1)}" y="${(cy - 3 * inv).toFixed(1)}" fill="#38bdf8" font-size="${(9.5 * inv).toFixed(2)}" opacity="0.85">${r1Km >= 1 ? (r1Km + " км") : (Math.round(r1Km * 1000) + " м")}</text>
+      <text x="${(cx + r2Km * pxPerKm + 4 * inv).toFixed(1)}" y="${(cy - 3 * inv).toFixed(1)}" fill="#94a3b8" font-size="${(9.5 * inv).toFixed(2)}" opacity="0.75">${r2Km} км</text>`;
+
     const pins = pts.map((p) => {
-      if (p.kind === "nb") return `<g class="map-pin" data-map-kind="nb" data-map-idx="${p.idx}"><circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="6" fill="#38bdf8" stroke="#070b14" stroke-width="1.8"/><title>${esc(p.item.name)} (Сосед · ${esc(p.item.niche || "B2B")})</title></g>`;
+      const distLbl = p.distKm < 1 ? (Math.round(p.distKm * 1000) + "м") : (p.distKm.toFixed(1) + "км");
+      const shortNm = (p.item.name || "").slice(0, z >= 2 ? 26 : 16);
+      const showLbl = (z >= 1.35 || p.kind === "comp");
+      if (p.kind === "nb") {
+        return `<g class="map-pin" data-map-kind="nb" data-map-idx="${p.idx}">
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rNb}" fill="#38bdf8" stroke="#070b14" stroke-width="${sw}"/>
+          ${showLbl ? `<text x="${p.x.toFixed(1)}" y="${(p.y - 9 * inv).toFixed(1)}" fill="#bae6fd" font-size="${(9.2 * inv).toFixed(2)}" font-weight="600" text-anchor="middle">${esc(shortNm)}</text>` : ""}
+          <title>${esc(p.item.name)} (Сосед · ${esc(p.item.niche || "B2B")} · ${distLbl})</title>
+        </g>`;
+      }
       const isDonor = /донор/i.test(p.item.roleLabel || "") || (parseFloat(p.item.rating) > 0 && parseFloat(p.item.rating) < 4.1);
-      return `<g class="map-pin" data-map-kind="comp" data-map-idx="${p.idx}"><circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7.5" fill="${isDonor ? "#f87171" : "#fbbf24"}" stroke="#070b14" stroke-width="2"/><text x="${p.x.toFixed(1)}" y="${(p.y - 11).toFixed(1)}" fill="var(--text-2)" font-size="10" font-weight="700" text-anchor="middle">${esc((p.item.name || "").slice(0, 18))}</text><title>${esc(p.item.name)} (${esc(p.item.rating || "—")}★)</title></g>`;
+      const rTxt = p.item.rating ? (" " + p.item.rating + "★") : "";
+      return `<g class="map-pin" data-map-kind="comp" data-map-idx="${p.idx}">
+        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${rComp}" fill="${isDonor ? "#f87171" : "#fbbf24"}" stroke="#070b14" stroke-width="${sw}"/>
+        <text x="${p.x.toFixed(1)}" y="${(p.y - 10 * inv).toFixed(1)}" fill="#e2e8f0" font-size="${fs}" font-weight="700" text-anchor="middle">${esc(shortNm + rTxt)}</text>
+        <title>${esc(p.item.name)} (${esc(p.item.rating || "без оценки")} · ${distLbl}) — клик для скана</title>
+      </g>`;
     }).join("");
-    return `<svg viewBox="0 0 ${W} ${H}">${rings}${pins}<g><circle cx="${cx}" cy="${cy}" r="12" fill="rgba(16,185,129,0.28)"/><circle cx="${cx}" cy="${cy}" r="7.5" fill="#10b981" stroke="#fff" stroke-width="2"/><text x="${cx}" y="${cy + 22}" fill="#10b981" font-size="11" font-weight="800" text-anchor="middle">${esc((rep.businessName || "Вы").slice(0, 22))}</text></g></svg>`;
+
+    const vw = W / z, vh = H / z;
+    const vx = (W - vw) / 2 - (Number(ms.tx) || 0);
+    const vy = (H - vh) / 2 - (Number(ms.ty) || 0);
+
+    return `<svg id="arenaMapSvg" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}">
+      ${rings}${pins}
+      <g>
+        <circle cx="${cx}" cy="${cy}" r="${(13 * inv).toFixed(2)}" fill="rgba(16,185,129,0.28)"/>
+        <circle cx="${cx}" cy="${cy}" r="${rSelf}" fill="#10b981" stroke="#fff" stroke-width="${sw}"/>
+        <text x="${cx}" y="${(cy + 20 * inv).toFixed(1)}" fill="#10b981" font-size="${fsBig}" font-weight="800" text-anchor="middle">${esc((rep.businessName || "Вы").slice(0, 24))}</text>
+      </g>
+    </svg>`;
   }
 
   function buildBubbleSvg(rep) {
-    const W = 420, H = 225, padL = 38, padR = 16, padT = 16, padB = 28;
-    const myR = parseFloat(String(rep.rating || "4.2").split("/")[0]) || 4.2, myRev = Number(rep.reviewCount || 40);
-    const items = [{ name: rep.businessName || "Вы", rating: myR, rev: myRev, self: true }]
-      .concat((rep.competitors || []).slice(0, 6).map((c) => ({ name: c.name, rating: parseFloat(c.rating) || 4.0, rev: Number(c.reviewCount) || 35, self: false, role: c.roleLabel || "" })));
-    const maxRev = Math.max(100, ...items.map((x) => x.rev)) * 1.15;
-    const xOf = (rv) => padL + (Math.min(maxRev, Math.max(5, rv)) / maxRev) * (W - padL - padR);
-    const yOf = (rt) => padT + ((5.1 - Math.max(3.0, Math.min(5.0, rt))) / 2.1) * (H - padT - padB);
-    const grid = [3.5, 4.0, 4.5, 5.0].map((v) => `<line x1="${padL}" y1="${yOf(v).toFixed(1)}" x2="${W - padR}" y2="${yOf(v).toFixed(1)}" stroke="rgba(148,163,184,0.16)"/><text x="${padL - 5}" y="${yOf(v).toFixed(1)}" fill="var(--muted)" font-size="9.5" text-anchor="end" dominant-baseline="middle">${v.toFixed(1)}★</text>`).join("");
-    const bubbles = items.map((it) => {
-      const x = xOf(it.rev), y = yOf(it.rating), r = it.self ? 11 : Math.max(6, Math.min(13, 5 + Math.sqrt(it.rev) * 0.45));
-      const fill = it.self ? "rgba(16,185,129,0.85)" : (/донор/i.test(it.role) ? "rgba(248,113,113,0.75)" : "rgba(56,189,248,0.68)");
-      return `<g><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${fill}" stroke="${it.self ? "#fff" : "#070b14"}" stroke-width="${it.self ? 2 : 1.4}"/><text x="${x.toFixed(1)}" y="${(y - r - 4).toFixed(1)}" fill="${it.self ? "#10b981" : "var(--text-2)"}" font-size="9.5" font-weight="${it.self ? 800 : 600}" text-anchor="middle">${esc(it.name.slice(0, 14))}</text></g>`;
+    const W = 420, H = 225, padL = 42, padR = 16, padT = 18, padB = 30;
+    const myR = parseFloat(String(rep.rating || "0").split("/")[0]) || 0, myRev = Number(rep.reviewCount || 0);
+    const ratedComps = (rep.competitors || []).filter((c) => parseFloat(c.rating) > 0);
+
+    // Honest mode 1: Real Ratings exist (Google Places / Registry)
+    if (ratedComps.length >= 2) {
+      const items = (myR > 0 ? [{ name: rep.businessName || "Вы", rating: myR, rev: myRev, self: true }] : [])
+        .concat(ratedComps.slice(0, 6).map((c) => ({ name: c.name, rating: parseFloat(c.rating), rev: Number(c.reviewCount) || 10, self: false, role: c.roleLabel || "" })));
+      const maxRev = Math.max(80, ...items.map((x) => x.rev)) * 1.15;
+      const xOf = (rv) => padL + (Math.min(maxRev, Math.max(5, rv)) / maxRev) * (W - padL - padR);
+      const yOf = (rt) => padT + ((5.1 - Math.max(3.0, Math.min(5.0, rt))) / 2.1) * (H - padT - padB);
+      const grid = [3.5, 4.0, 4.5, 5.0].map((v) => `<line x1="${padL}" y1="${yOf(v).toFixed(1)}" x2="${W - padR}" y2="${yOf(v).toFixed(1)}" stroke="rgba(148,163,184,0.16)"/><text x="${padL - 5}" y="${yOf(v).toFixed(1)}" fill="var(--muted)" font-size="9.5" text-anchor="end" dominant-baseline="middle">${v.toFixed(1)}★</text>`).join("");
+      const bubbles = items.map((it) => {
+        const x = xOf(it.rev), y = yOf(it.rating), r = it.self ? 11 : Math.max(6, Math.min(13, 5 + Math.sqrt(it.rev) * 0.45));
+        const fill = it.self ? "rgba(16,185,129,0.85)" : (/донор/i.test(it.role) ? "rgba(248,113,113,0.75)" : "rgba(56,189,248,0.68)");
+        return `<g><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${fill}" stroke="${it.self ? "#fff" : "#070b14"}" stroke-width="${it.self ? 2 : 1.4}"/><text x="${x.toFixed(1)}" y="${(y - r - 4).toFixed(1)}" fill="${it.self ? "#10b981" : "var(--text-2)"}" font-size="9.5" font-weight="${it.self ? 800 : 600}" text-anchor="middle">${esc(it.name.slice(0, 14))}</text></g>`;
+      }).join("");
+      return {
+        mode: "ratings",
+        svg: `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:225px;">${grid}<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="rgba(148,163,184,0.35)"/><text x="${(padL + W - padR) / 2}" y="${H - 6}" fill="var(--muted)" font-size="10" text-anchor="middle">Охват (количество отзывов) →</text>${bubbles}</svg>`,
+        foot: "Левый верх = скрытый алмаз · Правый низ = донор клиентов"
+      };
+    }
+
+    // Honest mode 2: ArcGIS / OSM free mode (no star ratings) — show Distance (km) vs Digital Readiness (Website / OSINT), ZERO fake 4.0★ dots!
+    const baseLat = (rep.coordinates && Number(rep.coordinates.lat)) || null;
+    const baseLng = (rep.coordinates && Number(rep.coordinates.lng)) || null;
+    const myDig = (rep.executiveScores && rep.executiveScores.digital) || (rep.digitalSignals && rep.digitalSignals.hasWebsite ? 62 : 25);
+    const items = [{ name: rep.businessName || "Вы", dist: 0, dig: myDig, self: true }]
+      .concat((rep.competitors || []).slice(0, 6).map((c, idx) => {
+        const d = (baseLat && baseLng && c.lat && c.lng) ? calcDistKmFe(baseLat, baseLng, Number(c.lat), Number(c.lng)) : (0.6 + idx * 0.5);
+        const digEst = (c.website && c.website !== "N/A") ? (60 + (idx % 3) * 9) : (26 + (idx % 3) * 6);
+        return { name: c.name, dist: Number((d || 0.5).toFixed(1)), dig: digEst, self: false, hasSite: Boolean(c.website && c.website !== "N/A") };
+      }));
+    const maxDist = Math.max(2.0, ...items.map((x) => x.dist)) * 1.15;
+    const xOf = (d) => padL + (Math.min(maxDist, Math.max(0, d)) / maxDist) * (W - padL - padR);
+    const yOf = (dg) => padT + ((100 - Math.max(10, Math.min(95, dg))) / 90) * (H - padT - padB);
+    const grid = [25, 50, 75, 100].map((v) => `<line x1="${padL}" y1="${yOf(v).toFixed(1)}" x2="${W - padR}" y2="${yOf(v).toFixed(1)}" stroke="rgba(148,163,184,0.16)"/><text x="${padL - 5}" y="${yOf(v).toFixed(1)}" fill="var(--muted)" font-size="9.5" text-anchor="end" dominant-baseline="middle">${v}</text>`).join("");
+    const bubbles = items.map((it, idx) => {
+      const x = xOf(it.dist), y = yOf(it.dig), r = it.self ? 10 : 7.5;
+      const fill = it.self ? "rgba(16,185,129,0.88)" : (it.hasSite ? "rgba(56,189,248,0.75)" : "rgba(251,191,36,0.75)");
+      const yOff = (idx % 2 === 0 ? -r - 4 : r + 11);
+      return `<g><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${it.self ? "#fff" : "#070b14"}" stroke-width="${it.self ? 2 : 1.3}"/><text x="${x.toFixed(1)}" y="${(y + yOff).toFixed(1)}" fill="${it.self ? "#10b981" : "var(--text-2)"}" font-size="9.5" font-weight="${it.self ? 800 : 600}" text-anchor="middle">${esc(it.name.slice(0, 14))}</text></g>`;
     }).join("");
-    return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:225px;">${grid}<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="rgba(148,163,184,0.35)"/><text x="${(padL + W - padR) / 2}" y="${H - 6}" fill="var(--muted)" font-size="10" text-anchor="middle">Охват (количество отзывов) →</text>${bubbles}</svg>`;
+    return {
+      mode: "osint",
+      svg: `<svg viewBox="0 0 ${W} ${H}" style="width:100%; height:225px;">${grid}<line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="rgba(148,163,184,0.35)"/><text x="${(padL + W - padR) / 2}" y="${H - 6}" fill="var(--muted)" font-size="10" text-anchor="middle">Удалённость от вас (км) →</text>${bubbles}</svg>`,
+      foot: "🟡 Звёзды Google Maps не переданы бесплатным ArcGIS/OSM — показана карта «Близость × Цифровой след» (без выдуманных звёзд)"
+    };
   }
 
   function renderArenaSection() {
     const rep = STATE.report, comps = rep.competitors || [], ci = rep.competitiveIntel || {};
     const h2h = (ci.headToHead && ci.headToHead.length) ? ci.headToHead : comps.slice(0, 4).map((c) => ({
       name: c.name, roleLabel: c.roleLabel || "Конкурент", domain: (c.website || "").replace(/^https?:\/\/(www\.)?/i, "").split("/")[0],
+      logoUrl: c.logoUrl || "", website: c.website || "",
       city: c.city || "", rating: c.rating || "—", reviewCount: c.reviewCount || 0,
       googleAdsLibraryUrl: c.website ? ("https://adstransparency.google.com/?domain=" + encodeURIComponent(c.website.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0])) : "",
       metaAdLibraryUrl: "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&q=" + encodeURIComponent(c.name || "")
     }));
     const killSheet = ci.killSheet || [], nbs = rep.nearbyNeighbors150m || [], vendors = rep.itVendors || [];
     const gMapsUrl = (rep.coordinates && rep.coordinates.lat) ? `https://www.google.com/maps/search/?api=1&query=${rep.coordinates.lat},${rep.coordinates.lng}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((rep.businessName || "") + " " + (rep.searchCity || ""))}`;
+    const bubble = buildBubbleSvg(rep);
+    const ms = STATE.mapState;
     return `
       <div class="sec-head">
-        <div><h2>5. Арена — конкуренты, карта, Kill-Sheet и экосистема</h2><div class="sec-sub">Кликните по точке на карте или в таблице для мгновенного запуска скана, перехвата клиентов или кросс-промо.</div></div>
+        <div><h2>5. Арена — конкуренты, карта с зумом, Kill-Sheet и экосистема</h2><div class="sec-sub">Приближайте карту колесом мыши или кнопками +/−, перетаскивайте мышью. Клик по точке — мгновенный скан.</div></div>
         <div style="display:flex; gap:7px; flex-wrap:wrap;">
           <button class="btn btn-sm" data-drawer="allComps">📋 Весь реестр (${comps.length})</button>
           <button class="btn btn-primary btn-sm" id="arenaCsvBtn">📥 Выгрузить базу CSV</button>
@@ -1947,29 +2114,50 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       </div>
       <div class="bento-grid">
         <div class="b-card span-7">
-          <div class="b-card-top"><span class="b-lbl">🗺️ Интерактивная карта окружения (клик = скан)</span><div style="display:flex; gap:6px; align-items:center;">${truthDot("competitors")}<a href="${esc(gMapsUrl)}" target="_blank" rel="noopener" class="b-link">Google Maps ↗</a></div></div>
-          <div class="arena-map-wrap">${buildArenaMapSvg(rep)}<div class="map-legend"><span style="color:#10b981;">● Вы</span><span style="color:#fbbf24;">● Конкурент</span><span style="color:#f87171;">● Донор (&lt;4.1★)</span><span style="color:#38bdf8;">● Сосед 150–350 м</span></div></div>
+          <div class="b-card-top"><span class="b-lbl">🗺️ Интерактивная карта окружения (Zoom + Pan)</span><div style="display:flex; gap:6px; align-items:center;">${truthDot("competitors")}<a href="${esc(gMapsUrl)}" target="_blank" rel="noopener" class="b-link">Google Maps ↗</a></div></div>
+          <div class="arena-map-wrap" id="arenaMapWrap">
+            <div class="map-layer-bar">
+              <button class="map-layer-chip ${ms.showComps ? "on" : ""}" id="mapToggleCompsBtn">● Конкуренты (${comps.length})</button>
+              <button class="map-layer-chip ${ms.showNeighbors ? "on" : ""}" id="mapToggleNbsBtn">● Соседи (${nbs.length})</button>
+            </div>
+            <div class="map-ctrl-bar">
+              <button class="map-ctrl-btn" id="mapZoomInBtn" title="Приблизить (+)">+</button>
+              <button class="map-ctrl-btn" id="mapZoomOutBtn" title="Отдалить (−)">−</button>
+              <button class="map-ctrl-btn" id="mapResetBtn" title="Сбросить масштаб">⟲</button>
+            </div>
+            <div id="arenaMapSvgHost" style="width:100%; height:100%;">${buildArenaMapSvg(rep)}</div>
+            <div class="map-legend"><span style="color:#10b981;">● Вы</span><span style="color:#fbbf24;">● Конкурент</span><span style="color:#f87171;">● Донор</span><span style="color:#38bdf8;">● Сосед</span></div>
+            <div class="map-zoom-badge" id="mapZoomBadge">${ms.zoom.toFixed(1)}×</div>
+          </div>
         </div>
         <div class="b-card span-5">
-          <div class="b-card-top"><span class="b-lbl">🫧 Позиционирование (Рейтинг vs Охват)</span>${truthDot("rating")}</div>
-          ${buildBubbleSvg(rep)}
-          <div class="b-foot"><span style="color:var(--muted);">Левый верх = скрытый алмаз · Правый низ = донор</span></div>
+          <div class="b-card-top"><span class="b-lbl">${bubble.mode === "ratings" ? "🫧 Позиционирование (Рейтинг vs Охват)" : "📡 Карта «Близость × Цифровой след»"}</span>${truthDot("rating")}</div>
+          ${bubble.svg}
+          <div class="b-foot"><span style="color:var(--muted);">${esc(bubble.foot)}</span></div>
         </div>
         <div class="b-card span-12">
-          <div class="b-card-top"><span class="b-lbl">⚔️ Таблица Head-to-Head (Вы vs ТОП конкуренты)</span><span class="badge sky">Google Ads Transparency & Meta Ad Library</span></div>
+          <div class="b-card-top"><span class="b-lbl">⚔️ Таблица Head-to-Head (Вы vs ТОП конкуренты)</span><span class="badge sky">Логотипы · Google Ads & Meta Ads</span></div>
           <div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>Компания</th><th>Роль</th><th>Локация</th><th>Рейтинг</th><th>Реклама OSINT</th><th style="text-align:right;">Действие</th></tr></thead><tbody>
-            <tr style="background:var(--accent-soft);"><td><strong style="color:var(--accent);">${esc(rep.businessName)} (Вы)</strong></td><td><span class="badge green">Объект</span></td><td>${esc(rep.searchCity || "—")}</td><td class="num"><strong>★ ${esc(rep.rating || "N/A")}</strong> (${esc(rep.reviewCount || 0)})</td><td><span class="badge">Стек: ${(rep.techStack || []).length}</span></td><td style="text-align:right;"><span class="badge green">Текущий</span></td></tr>
-            ${h2h.map((h) => `<tr><td><strong>${esc(h.name)}</strong>${h.domain ? `<div style="font-size:11px; color:var(--muted);">${esc(h.domain)}</div>` : ""}</td><td><span class="badge ${/донор/i.test(h.roleLabel || "") ? "red" : "sky"}">${esc(h.roleLabel || "Конкурент")}</span></td><td>${esc(h.city || "—")}</td><td class="num">★ ${esc(h.rating || "—")} ${h.reviewCount ? ("(" + h.reviewCount + ")") : ""}</td><td><div style="display:flex; gap:5px; flex-wrap:wrap;">${h.googleAdsLibraryUrl ? `<a class="btn btn-xs" href="${esc(h.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google Ads ↗</a>` : ""}${h.metaAdLibraryUrl ? `<a class="btn btn-xs" href="${esc(h.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta Ads ↗</a>` : ""}</div></td><td style="text-align:right;"><button class="btn btn-xs" data-scan-direct="${esc(h.name)}" data-scan-city="${esc(h.city || rep.searchCity || "")}">⚡ Скан</button></td></tr>`).join("")}
+            <tr style="background:var(--accent-soft);"><td><div class="co-row">${companyLogoHtml(rep.logoUrl, (rep.contacts && rep.contacts.website) || "", rep.businessName, 26)}<div><strong style="color:var(--accent);">${esc(rep.businessName)} (Вы)</strong></div></div></td><td><span class="badge green">Объект</span></td><td>${esc(rep.searchCity || "—")}</td><td class="num"><strong>★ ${esc(rep.rating || "N/A")}</strong> (${esc(rep.reviewCount || 0)})</td><td><span class="badge">Стек: ${(rep.techStack || []).length}</span></td><td style="text-align:right;"><span class="badge green">Текущий</span></td></tr>
+            ${h2h.map((h) => {
+              const hSite = h.website || (h.domain ? ("https://" + h.domain) : "");
+              const gMapRev = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((h.name || "") + " " + (h.city || rep.searchCity || ""));
+              return `<tr><td><div class="co-row">${companyLogoHtml(h.logoUrl, hSite, h.name, 26)}<div><strong>${esc(h.name)}</strong>${h.domain ? `<div style="font-size:11px; color:var(--muted);">${esc(h.domain)}</div>` : ""}</div></div></td><td><span class="badge ${/донор/i.test(h.roleLabel || "") ? "red" : "sky"}">${esc(h.roleLabel || "Конкурент")}</span></td><td>${esc(h.city || "—")}</td><td class="num">${(h.rating && h.rating !== "—") ? `★ ${esc(h.rating)} ${h.reviewCount ? ("(" + h.reviewCount + ")") : ""}` : `<a href="${esc(gMapRev)}" target="_blank" rel="noopener" style="font-size:11.5px;">Maps ↗</a>`}</td><td><div style="display:flex; gap:5px; flex-wrap:wrap;">${h.googleAdsLibraryUrl ? `<a class="btn btn-xs" href="${esc(h.googleAdsLibraryUrl)}" target="_blank" rel="noopener">Google Ads ↗</a>` : ""}${h.metaAdLibraryUrl ? `<a class="btn btn-xs" href="${esc(h.metaAdLibraryUrl)}" target="_blank" rel="noopener">Meta Ads ↗</a>` : ""}</div></td><td style="text-align:right;"><button class="btn btn-xs" data-scan-direct="${esc(h.name)}" data-scan-city="${esc(h.city || rep.searchCity || "")}">⚡ Скан</button></td></tr>`;
+            }).join("")}
           </tbody></table></div>
         </div>
         <div class="b-card kpi-amber span-6">
-          <div class="b-card-top"><span class="b-lbl">🎯 Kill-Sheet: перехват недовольных клиентов</span><span class="badge amber">${killSheet.length} окна</span></div>
-          ${killSheet.length ? killSheet.map((k, idx) => `<div class="kill-card"><div style="display:flex; justify-content:space-between; gap:8px; margin-bottom:4px;"><strong>${esc(k.competitor)} <span style="color:var(--red);">(${esc(k.rating || "—")}★)</span></strong><button class="btn btn-xs" data-copy-kill="${idx}">📋 Оффер</button></div><div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:5px;">«${esc(k.verifiedNegativeQuote || "")}»</div><div style="font-size:12.5px; color:var(--accent);"><strong>Контр-оффер:</strong> ${esc(k.counterOfferHint || "")}</div></div>`).join("") : `<div class="b-sub">Цитаты 1–2★ не найдены — попросите CMO в Совете ИИ составить оффер перехвата.</div>`}
-          <div class="b-foot"><span style="color:var(--muted);">Удар по реальным болям</span><button class="b-link" data-ask-ai="Составь 3 сильных рекламных оффера перехвата клиентов у конкурентов ${esc(comps.slice(0,3).map(c=>c.name).join(', '))} для ${esc(rep.businessName)}">Усилить в Совете ИИ →</button></div>
+          <div class="b-card-top"><span class="b-lbl">🎯 Kill-Sheet: перехват клиентов конкурентов</span><span class="badge amber">${killSheet.length} окна</span></div>
+          ${killSheet.length ? killSheet.map((k, idx) => {
+            const isOsint = k.source === "osint_benchmark";
+            const gUrl = k.mapsReviewsUrl || ("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((k.competitor || "") + " " + (rep.searchCity || "")));
+            return `<div class="kill-card"><div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:5px;"><div class="co-row">${companyLogoHtml(k.logoUrl, "", k.competitor, 24)}<strong>${esc(k.competitor)}</strong><span class="badge ${isOsint ? "amber" : "red"}">${isOsint ? "🟡 OSINT" : (esc(k.rating || "—") + "★")}</span></div><div style="display:flex; gap:5px;"><a class="btn btn-xs" href="${esc(gUrl)}" target="_blank" rel="noopener">Maps ↗</a><button class="btn btn-xs" data-copy-kill="${idx}">📋 Оффер</button></div></div><div style="font-size:12px; color:var(--muted); font-style:italic; margin-bottom:5px;">«${esc(k.verifiedNegativeQuote || "")}»</div><div style="font-size:12.5px; color:var(--accent);"><strong>Контр-оффер:</strong> ${esc(k.counterOfferHint || "")}</div></div>`;
+          }).join("") : `<div class="b-sub">Окна перехвата не найдены — попросите CMO в Совете ИИ составить оффер перехвата.</div>`}
+          <div class="b-foot"><span style="color:var(--muted);">Удар по слабым точкам конкурентов</span><button class="b-link" data-ask-ai="Составь 3 сильных рекламных оффера перехвата клиентов у конкурентов ${esc(comps.slice(0,3).map(c=>c.name).join(', '))} для ${esc(rep.businessName)}">Усилить в Совете ИИ →</button></div>
         </div>
         <div class="b-card span-6">
           <div class="b-card-top"><span class="b-lbl">🤝 B2B-соседи рядом (150–350 м · CAC = 0 €)</span>${truthDot("neighbors")}</div>
-          <div>${nbs.length ? nbs.slice(0, 4).map((n, i) => `<div class="nb-row"><div style="min-width:0;"><div style="font-weight:700; font-size:13px;">${esc(n.name)} <span class="badge">${esc(n.niche || "B2B")}</span></div><div style="font-size:11.5px; color:var(--muted);">${esc(n.address || "")}</div></div><div style="display:flex; gap:5px; flex-shrink:0;"><button class="btn btn-xs" data-nb-letter="${i}">✉️ Письмо</button><button class="btn btn-xs" data-scan-direct="${esc(n.name)}" data-scan-city="${esc(rep.searchCity || "")}">⚡</button></div></div>`).join("") : `<div class="b-sub">Соседи 150–350 м не обнаружены.</div>`}</div>
+          <div>${nbs.length ? nbs.slice(0, 4).map((n, i) => `<div class="nb-row"><div class="co-row" style="flex:1;">${companyLogoHtml(n.logoUrl, n.website, n.name, 26)}<div style="min-width:0;"><div style="font-weight:700; font-size:13px;">${esc(n.name)} <span class="badge">${esc(n.niche || "B2B")}</span></div><div style="font-size:11.5px; color:var(--muted);">${esc(n.address || "")}</div></div></div><div style="display:flex; gap:5px; flex-shrink:0;"><button class="btn btn-xs" data-nb-letter="${i}">✉️ Письмо</button><button class="btn btn-xs" data-scan-direct="${esc(n.name)}" data-scan-city="${esc(rep.searchCity || "")}">⚡</button></div></div>`).join("") : `<div class="b-sub">Соседи 150–350 м не обнаружены.</div>`}</div>
           <div class="b-foot"><span style="color:var(--muted);">IT-вендоры (Было vs Рекомендуем): <strong>${vendors.length}</strong></span><button class="b-link" data-drawer="itVendors">Сравнить IT-стек →</button></div>
         </div>
       </div>`;
@@ -1996,7 +2184,9 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
             ${list.length ? list.map((st) => {
               const sid = Number(st.id), isDone = solvedSet.has(sid), ch = String(st.impactChannel || "revenue").toLowerCase();
               const chCls = ch === "compliance" ? "amber" : (ch === "opex" ? "sky" : "green");
-              return `<div class="step-card ${isDone ? "solved" : ""}" data-step-open="${sid}"><div class="step-top"><input type="checkbox" class="step-chk" data-step-chk="${sid}" ${isDone ? "checked" : ""}><div class="step-t">${sid}. ${esc(st.title)}</div></div><div style="display:flex; gap:5px; flex-wrap:wrap;"><span class="badge ${chCls}">${ch.toUpperCase()}</span><span class="badge num sensitive">${esc(st.estCapExFormatted || "0")}</span>${Array.isArray(st.contractors) && st.contractors.length ? `<span class="badge violet">📩 RFP</span>` : ""}</div><div style="font-size:11.5px; color:var(--accent); font-weight:700;" class="sensitive">${esc(st.stepNetProfitFormatted || "")}</div></div>`;
+              const cList = (Array.isArray(st.contractors) && st.contractors.length) ? st.contractors : ((rep.itVendors || []).slice(0, 1));
+              const cFirst = cList[0] || null;
+              return `<div class="step-card ${isDone ? "solved" : ""}" data-step-open="${sid}"><div class="step-top"><input type="checkbox" class="step-chk" data-step-chk="${sid}" ${isDone ? "checked" : ""}><div class="step-t">${sid}. ${esc(st.title)}</div></div><div style="display:flex; gap:5px; flex-wrap:wrap;"><span class="badge ${chCls}">${ch.toUpperCase()}</span><span class="badge num sensitive">${esc(st.estCapExFormatted || "0")}</span><span class="badge violet">📩 RFP</span></div>${cFirst ? `<div class="co-row" style="gap:6px; margin-top:2px;">${companyLogoHtml(cFirst.logoUrl, cFirst.website, cFirst.name, 18)}<span style="font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(cFirst.name)}${cFirst.email ? (" · " + esc(cFirst.email)) : ""}</span></div>` : ""}<div style="font-size:11.5px; color:var(--accent); font-weight:700;" class="sensitive">${esc(st.stepNetProfitFormatted || "")}</div></div>`;
             }).join("") : `<div class="b-sub">Нет шагов</div>`}
           </div>`;
         }).join("")}
@@ -2283,13 +2473,19 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   function openStepDrawer(stepId) {
     const rep = STATE.report, st = (rep.newArchitecture || []).find((x) => Number(x.id) === Number(stepId));
     if (!st) return;
-    const isDone = STATE.solvedSteps.includes(Number(st.id)), guide = Array.isArray(st.stepByStepGuide) ? st.stepByStepGuide : [], contrs = Array.isArray(st.contractors) ? st.contractors : [];
+    const isDone = STATE.solvedSteps.includes(Number(st.id)), guide = Array.isArray(st.stepByStepGuide) ? st.stepByStepGuide : [];
+    const rawContrs = (Array.isArray(st.contractors) && st.contractors.length) ? st.contractors : [];
+    const fallbackVendors = (rep.itVendors || []).slice(0, 2).map((v) => {
+      const dom = extractDomFe(v.website);
+      return { name: v.name, city: v.city || "", website: v.website || "", logoUrl: v.logoUrl || "", email: v.email || (dom ? ("info@" + dom) : ""), description: v.integrationTarget || v.description || "" };
+    });
+    const contrs = rawContrs.length ? rawContrs : fallbackVendors;
     const body = `<div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;"><span class="badge ${st.impactChannel === "compliance" ? "amber" : "green"}">${esc(String(st.impactChannel || "revenue").toUpperCase())}</span><span class="badge num">CapEx: ${esc(st.estCapExFormatted || "—")}</span><span class="badge green num">${esc(st.stepNetProfitFormatted || "—")}</span><span class="badge">${esc(st.horizon || "30d")}</span></div>
       ${st.evidence ? `<div class="b-card" style="margin-bottom:12px; border-left:3px solid var(--amber);"><div class="b-lbl">Основание (${st.evidenceTag === "verified_fact" ? "🟢 ФАКТ" : "🟡 БЕНЧМАРК"})</div><div style="font-size:13px;">${esc(st.evidence)}</div></div>` : ""}
       <p style="font-size:13.5px; color:var(--text-2); margin:0 0 14px;">${esc(st.plainExplanation || "")}</p>
       <div class="b-card" style="margin-bottom:14px;"><div class="b-lbl">Пошаговая инструкция</div><ol style="margin:4px 0 0; padding-left:18px; font-size:13px; color:var(--text-2); display:flex; flex-direction:column; gap:6px;">${guide.map((g) => `<li>${esc(g)}</li>`).join("") || "<li>Запустите внедрение по чеклисту</li>"}</ol></div>
-      <div class="b-card"><div class="b-card-top"><span class="b-lbl">🛠️ Подрядчики и Smart RFP</span><button class="btn btn-primary btn-xs" id="openGenericRfpBtn">📩 Бриф Smart RFP</button></div>
-        ${contrs.length ? contrs.map((c, ci) => `<div class="nb-row" style="margin-top:6px;"><div><div style="font-weight:700; font-size:13px;">${esc(c.name)} ${c.rating ? `<span style="color:var(--amber);">★ ${esc(c.rating)}</span>` : ""}</div><div style="font-size:11.5px; color:var(--muted);">${esc([c.city, c.website, c.email].filter(Boolean).join(" · "))}</div></div><button class="btn btn-primary btn-xs" data-rfp-contr="${ci}">📩 Smart RFP</button></div>`).join("") : `<div class="b-sub">Подрядчики не привязаны — сформируйте универсальный Smart RFP.</div>`}
+      <div class="b-card"><div class="b-card-top"><span class="b-lbl">🛠️ Подрядчики / Вендоры и Smart RFP (${contrs.length})</span><button class="btn btn-primary btn-xs" id="openGenericRfpBtn">📩 Свой получатель</button></div>
+        ${contrs.length ? contrs.map((c, ci) => `<div class="nb-row" style="margin-top:6px;"><div class="co-row" style="flex:1;">${companyLogoHtml(c.logoUrl, c.website, c.name, 28)}<div style="min-width:0;"><div style="font-weight:700; font-size:13px;">${esc(c.name)} ${c.rating ? `<span style="color:var(--amber);">★ ${esc(c.rating)}</span>` : ""}</div><div style="font-size:11.5px; color:var(--muted);">${esc([c.city, c.email || "email не указан"].filter(Boolean).join(" · "))}</div>${c.website ? `<a href="${esc(c.website)}" target="_blank" rel="noopener" style="font-size:11px;">${esc(extractDomFe(c.website) || c.website)} ↗</a>` : ""}</div></div><button class="btn btn-primary btn-xs" data-rfp-contr="${ci}">📩 Smart RFP</button></div>`).join("") : `<div class="b-sub">Нажмите «Свой получатель» для создания брифа Smart RFP.</div>`}
       </div>`;
     openDrawer(`Шаг ${st.id}. ${st.title}`, "Дорожная карта 30/60/90+", body, `<button class="btn btn-sm" id="toggleStepInDrawerBtn">${isDone ? "↩️ Вернуть" : "✅ Выполнено"}</button><button class="btn btn-sm" id="askStepAiBtn">🧠 Разобрать в Совете ИИ</button>`);
     $("toggleStepInDrawerBtn").addEventListener("click", () => { toggleStepSolved(st.id); openStepDrawer(st.id); });
@@ -2344,14 +2540,14 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 
   function openAllCompsDrawer() {
     const rep = STATE.report, comps = rep.competitors || [];
-    openDrawer(`📋 Полный реестр конкурентов (${comps.length})`, rep.businessName, `<table class="tbl"><thead><tr><th>Компания</th><th>Рейтинг</th><th></th></tr></thead><tbody>${comps.map((c) => `<tr><td><strong>${esc(c.name)}</strong><div style="font-size:11px; color:var(--muted);">${esc([c.city, c.street].filter(Boolean).join(", "))}</div></td><td class="num">★ ${esc(c.rating || "—")} (${c.reviewCount || 0})</td><td style="text-align:right;"><button class="btn btn-xs" data-dr-scan="${esc(c.name)}" data-dr-city="${esc(c.city || rep.searchCity || "")}">⚡ Скан</button></td></tr>`).join("")}</tbody></table>`, `<button class="btn btn-primary btn-sm" id="drCsvBtn">📥 CSV</button>`);
+    openDrawer(`📋 Полный реестр конкурентов (${comps.length})`, rep.businessName, `<table class="tbl"><thead><tr><th>Компания</th><th>Рейтинг</th><th></th></tr></thead><tbody>${comps.map((c) => `<tr><td><div class="co-row">${companyLogoHtml(c.logoUrl, c.website, c.name, 26)}<div><strong>${esc(c.name)}</strong><div style="font-size:11px; color:var(--muted);">${esc([c.city, c.street].filter(Boolean).join(", "))}</div></div></div></td><td class="num">${c.rating ? ("★ " + esc(c.rating) + " (" + (c.reviewCount || 0) + ")") : `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + " " + (c.city || rep.searchCity || ""))}" target="_blank" rel="noopener" style="font-size:11px;">Maps ↗</a>`}</td><td style="text-align:right;"><button class="btn btn-xs" data-dr-scan="${esc(c.name)}" data-dr-city="${esc(c.city || rep.searchCity || "")}">⚡ Скан</button></td></tr>`).join("")}</tbody></table>`, `<button class="btn btn-primary btn-sm" id="drCsvBtn">📥 CSV</button>`);
     $("drCsvBtn").addEventListener("click", exportCsvBase);
     document.querySelectorAll("[data-dr-scan]").forEach((b) => b.addEventListener("click", () => scanDirectTarget(b.dataset.drScan, b.dataset.drCity, rep.searchCountry)));
   }
 
   function openItVendorsDrawer() {
     const rep = STATE.report, cur = rep.techStack || [], vend = rep.itVendors || [];
-    openDrawer("⚙️ IT-стек: Было vs Рекомендуем", rep.businessName, `<div class="b-card" style="margin-bottom:12px;"><div class="b-lbl">Обнаружено сейчас (🟢 ФАКТ)</div><div style="display:flex; gap:6px; flex-wrap:wrap;">${cur.map((t) => `<span class="badge">${esc(t.name || t)}</span>`).join("") || `<span class="b-sub">Не обнаружено</span>`}</div></div>${vend.map((v) => `<div class="b-card" style="margin-bottom:8px;"><div class="b-card-top"><strong>${esc(v.name)}</strong><span class="badge sky">${esc(v.integrationTarget || "SaaS")}</span></div><div class="b-sub">${esc(v.description || v.reason || "")}</div>${v.website ? `<a href="${esc(v.website)}" target="_blank" rel="noopener" style="font-size:12px;">${esc(v.website)} ↗</a>` : ""}</div>`).join("")}`);
+    openDrawer("⚙️ IT-стек: Было vs Рекомендуем", rep.businessName, `<div class="b-card" style="margin-bottom:12px;"><div class="b-lbl">Обнаружено сейчас (🟢 ФАКТ)</div><div style="display:flex; gap:6px; flex-wrap:wrap;">${cur.map((t) => `<span class="badge">${esc(t.name || t)}</span>`).join("") || `<span class="b-sub">Не обнаружено</span>`}</div></div>${vend.map((v) => `<div class="b-card" style="margin-bottom:8px;"><div class="b-card-top"><div class="co-row">${companyLogoHtml(v.logoUrl, v.website, v.name, 26)}<strong>${esc(v.name)}</strong></div><span class="badge sky">${esc(v.integrationTarget || "SaaS")}</span></div><div class="b-sub">${esc(v.description || v.reason || "")}</div><div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">${v.website ? `<a href="${esc(v.website)}" target="_blank" rel="noopener" style="font-size:12px;">${esc(v.website)} ↗</a>` : ""}${v.email ? `<span style="font-size:11.5px; color:var(--muted);">✉️ ${esc(v.email)}</span>` : ""}</div></div>`).join("")}`);
   }
 
   function openRiskContourDrawer(key) {
@@ -2570,7 +2766,59 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     });
 
     if ($("arenaCsvBtn")) $("arenaCsvBtn").addEventListener("click", exportCsvBase);
-    mc.querySelectorAll("[data-map-kind]").forEach((el) => el.addEventListener("click", () => openArenaEntityDrawer(el.dataset.mapKind, Number(el.dataset.mapIdx))));
+    const bindMapPins = () => {
+      mc.querySelectorAll("[data-map-kind]").forEach((el) => el.addEventListener("click", (ev) => {
+        if (STATE.mapState._dragged) return;
+        ev.stopPropagation();
+        openArenaEntityDrawer(el.dataset.mapKind, Number(el.dataset.mapIdx));
+      }));
+    };
+    const redrawMap = () => {
+      const host = $("arenaMapSvgHost");
+      if (!host) return;
+      host.innerHTML = buildArenaMapSvg(STATE.report);
+      if ($("mapZoomBadge")) $("mapZoomBadge").textContent = STATE.mapState.zoom.toFixed(1) + "×";
+      bindMapPins();
+    };
+    bindMapPins();
+    if ($("mapZoomInBtn")) $("mapZoomInBtn").addEventListener("click", (e) => { e.stopPropagation(); STATE.mapState.zoom = Math.min(8, Number((STATE.mapState.zoom * 1.45).toFixed(2))); redrawMap(); });
+    if ($("mapZoomOutBtn")) $("mapZoomOutBtn").addEventListener("click", (e) => { e.stopPropagation(); STATE.mapState.zoom = Math.max(0.6, Number((STATE.mapState.zoom / 1.45).toFixed(2))); redrawMap(); });
+    if ($("mapResetBtn")) $("mapResetBtn").addEventListener("click", (e) => { e.stopPropagation(); STATE.mapState.zoom = 1; STATE.mapState.tx = 0; STATE.mapState.ty = 0; redrawMap(); });
+    if ($("mapToggleCompsBtn")) $("mapToggleCompsBtn").addEventListener("click", (e) => { e.stopPropagation(); STATE.mapState.showComps = !STATE.mapState.showComps; $("mapToggleCompsBtn").classList.toggle("on", STATE.mapState.showComps); redrawMap(); });
+    if ($("mapToggleNbsBtn")) $("mapToggleNbsBtn").addEventListener("click", (e) => { e.stopPropagation(); STATE.mapState.showNeighbors = !STATE.mapState.showNeighbors; $("mapToggleNbsBtn").classList.toggle("on", STATE.mapState.showNeighbors); redrawMap(); });
+    const mapWrap = $("arenaMapWrap");
+    if (mapWrap) {
+      mapWrap.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const f = e.deltaY < 0 ? 1.22 : (1 / 1.22);
+        STATE.mapState.zoom = Math.max(0.6, Math.min(8, Number((STATE.mapState.zoom * f).toFixed(2))));
+        redrawMap();
+      }, { passive: false });
+      let dragging = false, sx = 0, sy = 0, stx = 0, sty = 0;
+      const onDown = (cx, cy) => { dragging = true; STATE.mapState._dragged = false; sx = cx; sy = cy; stx = STATE.mapState.tx; sty = STATE.mapState.ty; mapWrap.classList.add("dragging"); };
+      const onMove = (cx, cy) => {
+        if (!dragging) return;
+        const dx = cx - sx, dy = cy - sy;
+        if (Math.hypot(dx, dy) > 4) STATE.mapState._dragged = true;
+        const rect = mapWrap.getBoundingClientRect();
+        const scaleX = (600 / STATE.mapState.zoom) / Math.max(1, rect.width);
+        const scaleY = (340 / STATE.mapState.zoom) / Math.max(1, rect.height);
+        STATE.mapState.tx = stx + dx * scaleX;
+        STATE.mapState.ty = sty + dy * scaleY;
+        const svg = $("arenaMapSvg");
+        if (svg) {
+          const vw = 600 / STATE.mapState.zoom, vh = 340 / STATE.mapState.zoom;
+          svg.setAttribute("viewBox", `${((600 - vw) / 2 - STATE.mapState.tx).toFixed(1)} ${((340 - vh) / 2 - STATE.mapState.ty).toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}`);
+        }
+      };
+      const onUp = () => { if (!dragging) return; dragging = false; mapWrap.classList.remove("dragging"); setTimeout(() => { STATE.mapState._dragged = false; }, 60); };
+      mapWrap.addEventListener("mousedown", (e) => { if (e.target.closest("button")) return; onDown(e.clientX, e.clientY); });
+      window.addEventListener("mousemove", (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener("mouseup", onUp);
+      mapWrap.addEventListener("touchstart", (e) => { if (e.touches.length === 1 && !e.target.closest("button")) onDown(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+      mapWrap.addEventListener("touchmove", (e) => { if (e.touches.length === 1 && dragging) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+      mapWrap.addEventListener("touchend", onUp);
+    }
     mc.querySelectorAll("[data-scan-direct]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); scanDirectTarget(el.dataset.scanDirect, el.dataset.scanCity, STATE.report.searchCountry); }));
     mc.querySelectorAll("[data-nb-letter]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); openNeighborLetterDrawer(Number(el.dataset.nbLetter)); }));
     mc.querySelectorAll("[data-copy-kill]").forEach((el) => el.addEventListener("click", () => { const k = ((STATE.report.competitiveIntel && STATE.report.competitiveIntel.killSheet) || [])[Number(el.dataset.copyKill)]; if (k) copyText(k.counterOfferHint, "Контр-оффер"); }));

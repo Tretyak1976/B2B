@@ -1,5 +1,20 @@
 [
   {
+    "id": "1kUvqvkEQMlo4wRMwwmeusGUoRuBCtiwi",
+    "name": "McCafé",
+    "niche": "Кофейня",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Van-den-Bergh-Straße 64",
+    "website": "https://www.mcdonalds.com/de/de-de/restaurant-suche.html/l/kleve/van-den-bergh-strasse-64/1103",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=mcdonalds.com",
+    "rating": "N/A",
+    "score": 60,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T14:00:58.577Z"
+  },
+  {
     "id": "1eBGaxA4z6j0V2BpYCHKG68zOc4xIyNMd",
     "name": "Steakhaus El Poncho Inhaber Aleksandra Jovanovic",
     "niche": "Ресторан стейков и гриль-бар",
@@ -670,16 +685,5 @@
     "score": 46,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T15:03:05.478Z"
-  },
-  {
-    "id": "1elIm9OG7YjQ6141Yr2HIN4MOqd3wdNUB",
-    "name": "MrBeast Burger Greenville",
-    "niche": "ghost‑kitchen фаст‑фуд",
-    "country": "США",
-    "city": "Greenville",
-    "rating": "N/A",
-    "score": 66,
-    "modelsUsed": 5,
-    "createdAt": "2026-11-23T15:00:36.690Z"
   }
 ]

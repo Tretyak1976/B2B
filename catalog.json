@@ -1,5 +1,20 @@
 [
   {
+    "id": "1m43alTjjlSGJKiot82eWF6DGMGFETnGs",
+    "name": "Zara, Kleve",
+    "niche": "Быстрая мода (Fast Fashion)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 64,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.5",
+    "createdAt": "2026-11-26T15:08:41.043Z"
+  },
+  {
     "id": "14SaIDRCEEgl2ck0miOa-2IUTCaxbSr32",
     "name": "C&A, Kleve",
     "niche": "Розничная торговля одеждой и аксессуарами",
@@ -694,16 +709,5 @@
     "score": 57,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T17:24:08.657Z"
-  },
-  {
-    "id": "1zuEeHVghl63UojDjQUM_6-v8imsl8Z0X",
-    "name": "Ужгородська початкова школа \"Престиж\"",
-    "niche": "начальная школа",
-    "country": "Украина",
-    "city": "Ужгород",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T17:02:06.813Z"
   }
 ]

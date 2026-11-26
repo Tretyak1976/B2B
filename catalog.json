@@ -1,5 +1,20 @@
 [
   {
+    "id": "1I4DH4MSt9W2PlFBs6S3KqgotRg4subRC",
+    "name": "MM tire",
+    "niche": "Розничная торговля и сервисное обслуживание шин",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 53,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.6",
+    "createdAt": "2026-11-26T15:46:50.793Z"
+  },
+  {
     "id": "1AUlyCzdOP1Jk96-Kx4uA61OZkcq4eT-0",
     "name": "TEDi Gmbh & Co. KG",
     "niche": "Сетевой магазин товаров для дома и хозтоваров (дискаунтер)",
@@ -710,16 +725,5 @@
     "score": 54,
     "modelsUsed": 4,
     "createdAt": "2026-11-24T07:20:38.167Z"
-  },
-  {
-    "id": "1U6n7r1uMXDc-1QgPVCRuL13qlQ0GGM2X",
-    "name": "CLASSIC Tankstelle Kleve",
-    "niche": "АЗС с базовыми услугами",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-24T07:16:51.722Z"
   }
 ]

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>B2B Nexus v9 — Bento Business Audit OS</title>
+<title>B2B Nexus v9.1 — Clean Executive OS</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310b981'/%3E%3Cpath d='M18 44V20h14c7 0 11 3.5 11 9.5 0 4-2 6.8-5.5 8 4.2 1 6.5 4 6.5 8.5 0 6.2-4.6 10-12 10H18zm8-15h5.5c2.6 0 4.2-1.2 4.2-3.4s-1.6-3.3-4.2-3.3H26V29zm0 11h6.2c2.9 0 4.6-1.3 4.6-3.7s-1.7-3.6-4.6-3.6H26V40z' fill='%23051018'/%3E%3C/svg%3E">
 <style>
 :root {
@@ -392,6 +392,86 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 .map-layer-chip.on { border-color:var(--accent-brd); background:rgba(16,185,129,0.22); color:#6ee7b7; }
 .map-zoom-badge { position:absolute; right:10px; bottom:8px; z-index:5; font-size:10.5px; font-family:var(--mono); padding:2px 7px; border-radius:999px; background:rgba(7,11,20,0.85); border:1px solid var(--border); color:#94a3b8; }
 
+
+/* ==================== v9.1 CLEAN EXECUTIVE OS DESIGN SYSTEM ==================== */
+body { font-size: 14px; }
+.topbar { height: 56px; padding: 0 24px; }
+.rep-header { position: sticky; top: 56px; z-index: 52; padding: 14px 24px 0; background: var(--surface-glass); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); }
+.rep-header-wrap { max-width: 1180px; margin: 0 auto; }
+.rep-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 12px; }
+.biz-logo { width: 42px; height: 42px; border-radius: 11px; }
+.biz-name { font-size: 18px; font-weight: 850; letter-spacing: -0.025em; }
+.biz-meta { font-size: 12.5px; color: var(--muted); gap: 12px; margin-top: 2px; }
+
+/* 3-Button Clean Executive Header Actions */
+.rep-controls { gap: 8px; }
+.menu-popover { min-width: 270px; padding: 8px; }
+.menu-sec-lbl { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--soft); padding: 6px 10px 4px; }
+.menu-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; font-size: 12.5px; color: var(--text-2); }
+.menu-divider { height: 1px; background: var(--border); margin: 6px 0; }
+
+/* 5-Tab Horizontal Executive Navigation */
+.exec-tabs { display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; margin-bottom: -1px; }
+.exec-tabs::-webkit-scrollbar { display: none; }
+.exec-tab { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border: none; background: transparent; color: var(--muted); font-size: 13.5px; font-weight: 700; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
+.exec-tab:hover { color: var(--text); }
+.exec-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+.exec-tab .et-num { font-size: 11px; font-weight: 800; color: var(--soft); }
+.exec-tab.active .et-num { color: var(--accent); }
+.exec-tab .et-pill { font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+.exec-tab.active .et-pill { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-brd); }
+
+/* Centered Spacious Workspace (No cramped sidebar, no floating FAB) */
+.ws-layout { display: block; min-height: calc(100vh - 150px); }
+.main-canvas { max-width: 1180px; width: 100%; margin: 0 auto; padding: 26px 24px 96px; }
+.sec-head { margin-bottom: 20px; align-items: center; }
+.sec-head h2 { font-size: 22px; font-weight: 850; letter-spacing: -0.025em; }
+.sec-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.bento-grid { gap: 18px; }
+.b-card { padding: 20px 22px; gap: 13px; border-radius: 16px; }
+.b-lbl { font-size: 11px; letter-spacing: 0.06em; }
+.b-val { font-size: 28px; }
+
+/* Executive Verdict Hero Banner (1 main takeaway per screen) */
+.verdict-hero { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 55%, var(--surface)), var(--surface) 65%); border: 1px solid var(--accent-brd); border-radius: 18px; padding: 22px 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.verdict-kicker { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.verdict-title { font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.38; max-width: 760px; }
+.verdict-next { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+
+/* Clean Segmented View Switch inside Tabs 2, 3, 5 */
+.view-switch { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+.view-sw-btn { border: none; background: transparent; color: var(--muted); font-size: 13px; font-weight: 700; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+.view-sw-btn:hover { color: var(--text); }
+.view-sw-btn.active { background: var(--surface-2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.22); }
+
+/* Clean Vertical Plan & Contractors List (replaces cramped 4-column board) */
+.plan-phase-block { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+.plan-phase-hd { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 20px; background: color-mix(in srgb, var(--surface-2) 65%, transparent); border-bottom: 1px solid var(--border); }
+.plan-phase-title { font-size: 13px; font-weight: 800; letter-spacing: 0.02em; display: flex; align-items: center; gap: 8px; }
+.plan-row { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.14s; }
+.plan-row:last-child { border-bottom: none; }
+.plan-row:hover { background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+.plan-row.solved { opacity: 0.58; }
+.plan-row.solved .plan-row-title { text-decoration: line-through; color: var(--muted); }
+.plan-row-left { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+.plan-row-title { font-size: 14px; font-weight: 750; color: var(--text); line-height: 1.35; }
+.plan-row-sub { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.plan-row-contr { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 7px 10px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); }
+.plan-row-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.plan-metrics { text-align: right; min-width: 96px; }
+
+/* Unified Clean Mobile 5-Tab Bottom Bar */
+.mobile-bar { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 980px) {
+  .topbar { padding: 0 14px; }
+  .rep-header { padding: 10px 14px 0; }
+  .exec-tabs { display: none; }
+  .main-canvas { padding: 16px 14px 86px; }
+  .plan-row { grid-template-columns: 1fr; gap: 10px; padding: 14px 16px; }
+  .plan-row-right { justify-content: space-between; width: 100%; }
+  .plan-metrics { text-align: left; }
+}
+
 </style>
 </head>
 <body>
@@ -400,12 +480,12 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   <div class="brand" id="brandHomeBtn" title="На Консоль запуска">
     <div class="brand-mark">B</div>
     <span class="brand-name">B2B Nexus</span>
-    <span class="ver-pill">v9.0.2 Bento OS</span>
+    <span class="ver-pill">v9.1 Executive OS</span>
   </div>
   <div class="top-right">
     <div class="status-pill" id="engineStatusPill" title="Проверить связь с Argon Engine">
       <span class="s-dot" id="engineDot"></span>
-      <span id="engineStatusText">Argon v8.8.2</span>
+      <span id="engineStatusText">Argon v8.8.4</span>
     </div>
     <button class="btn btn-sm" id="cmdOpenTopBtn" title="Быстрый поиск (Ctrl+K)">🔍 <span class="kbd">Ctrl+K</span></button>
     <select class="lang-sel" id="langSelect" title="Язык отчёта"><option value="ru-RU">RU</option><option value="en-US">EN</option><option value="de-DE">DE</option><option value="es-ES">ES</option><option value="fr-FR">FR</option><option value="zh-CN">ZH</option></select>
@@ -473,7 +553,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
           <input type="checkbox" id="swarm3dToggle" style="accent-color:var(--accent);"> 🌐 3D-Рой
         </label>
         <button class="btn btn-sm" id="preflightBtn" title="Быстрый OSINT-префлайт за 3 сек">⚡ Префлайт</button>
-        <button class="btn btn-sm" id="openDemoBtn" style="border-color:var(--accent-brd); color:var(--accent);">▶ Демо v8.8.2</button>
+        <button class="btn btn-sm" id="openDemoBtn" style="border-color:var(--accent-brd); color:var(--accent);">▶ Демо-отчёт</button>
       </div>
     </div>
 
@@ -527,85 +607,74 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 
 <div id="screenReport" class="hidden">
   <div class="rep-header">
-    <div class="rep-header-inner">
-      <div class="biz-ident">
-        <div class="biz-logo" id="hdrLogo">B</div>
-        <div style="min-width:0;">
-          <div class="biz-title-row">
-            <span class="biz-name" id="hdrName">—</span>
-            <span class="badge violet" id="hdrTrustBadge" style="cursor:pointer;" title="Открыть вердикт Суда Присяжных">⚖️ Доверие: —</span>
-            <span class="badge" id="hdrModeBadge">SMB</span>
-          </div>
-          <div class="biz-meta" id="hdrMeta"></div>
-        </div>
-      </div>
-      <div class="rep-controls">
-        <div class="seg-switch" title="Точка или весь Бренд">
-          <button class="seg-btn active" data-scope="LOCATION">Точка</button>
-          <button class="seg-btn" data-scope="BRAND">Бренд</button>
-        </div>
-        <div class="seg-switch" title="Горизонт показателей">
-          <button class="seg-btn active" data-horizon="now">Сегодня</button>
-          <button class="seg-btn" data-horizon="12m">+12 мес.</button>
-        </div>
-        <button class="btn btn-sm" id="langStyleBtn">💬 Простой</button>
-        <button class="btn btn-sm" id="safeModeBtn">🛡️ Safe Mode</button>
-        <button class="btn btn-sm" id="openDataRoomHdrBtn" style="border-color:var(--amber-brd); color:var(--amber);">🟡 Data Room</button>
-        <div class="dropdown-wrap">
-          <button class="btn btn-sm" id="exportMenuBtn">Экспорт ▾</button>
-          <div class="dropdown-menu hidden" id="exportDropdown">
-            <button class="dd-item" data-exp="pdf">🖨️ Печать / PDF A4</button>
-            <button class="dd-item" data-exp="csv">📥 Вся база (CSV)</button>
-            <button class="dd-item" data-exp="email">✉️ Отправить на почту</button>
-            <button class="dd-item" data-exp="json">📦 Скачать JSON</button>
-            <button class="dd-item" data-exp="dossier">📋 Суд Присяжных и факты</button>
+    <div class="rep-header-wrap">
+      <div class="rep-header-inner">
+        <div class="biz-ident">
+          <div class="biz-logo" id="hdrLogo">B</div>
+          <div style="min-width:0;">
+            <div class="biz-title-row">
+              <span class="biz-name" id="hdrName">—</span>
+              <span class="badge" id="hdrModeBadge">SMB</span>
+              <span class="badge violet" id="hdrTrustBadge" style="cursor:pointer;" title="Открыть вердикт Суда Присяжных">⚖️ —</span>
+            </div>
+            <div class="biz-meta" id="hdrMeta"></div>
           </div>
         </div>
+        <div class="rep-controls">
+          <button class="btn" id="openDataRoomHdrBtn" style="border-color:var(--amber-brd); color:var(--amber);">🟡 Мои цифры</button>
+          <button class="btn btn-primary" id="openBoardHdrBtn">🧠 Совет ИИ</button>
+          <div class="dropdown-wrap">
+            <button class="btn" id="exportMenuBtn">⋯ Меню</button>
+            <div class="dropdown-menu menu-popover hidden" id="exportDropdown">
+              <div class="menu-sec-lbl">Режим просмотра</div>
+              <div class="menu-row">
+                <span>Масштаб</span>
+                <div class="seg-switch">
+                  <button class="seg-btn active" data-scope="LOCATION">Точка</button>
+                  <button class="seg-btn" data-scope="BRAND">Бренд</button>
+                </div>
+              </div>
+              <div class="menu-row">
+                <span>Горизонт</span>
+                <div class="seg-switch">
+                  <button class="seg-btn active" data-horizon="now">Сегодня</button>
+                  <button class="seg-btn" data-horizon="12m">+12м</button>
+                </div>
+              </div>
+              <button class="dd-item" id="langStyleBtn">💬 Язык отчёта: Простой</button>
+              <button class="dd-item" id="safeModeBtn">🛡️ Safe Mode (скрыть суммы)</button>
+              <div class="menu-divider"></div>
+              <div class="menu-sec-lbl">Экспорт и проверка</div>
+              <button class="dd-item" data-exp="pdf">🖨️ Печать / PDF A4</button>
+              <button class="dd-item" data-exp="email">✉️ Отправить отчёт на почту</button>
+              <button class="dd-item" data-exp="csv">📥 Выгрузить базу (CSV)</button>
+              <button class="dd-item" data-exp="json">📦 Скачать JSON</button>
+              <button class="dd-item" data-exp="dossier">⚖️ Суд Присяжных и факты</button>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <nav class="exec-tabs" id="execTabs">
+        <button class="exec-tab active" data-tab="overview"><span class="et-num">1</span><span>Обзор</span><span class="et-pill num" id="tabPillOverview">—</span></button>
+        <button class="exec-tab" data-tab="finance"><span class="et-num">2</span><span>Финансы и Риски</span><span class="et-pill" id="tabPillFinance">🟡</span></button>
+        <button class="exec-tab" data-tab="market"><span class="et-num">3</span><span>Рынок и Сайт</span><span class="et-pill num" id="tabPillMarket">0</span></button>
+        <button class="exec-tab" data-tab="plan"><span class="et-num">4</span><span>План и Подрядчики</span><span class="et-pill num" id="tabPillPlan">0/10</span></button>
+        <button class="exec-tab" data-tab="tools"><span class="et-num">5</span><span>Материалы и Калькуляторы</span></button>
+      </nav>
     </div>
   </div>
 
   <div class="ws-layout">
-    <aside class="left-rail" id="leftRail">
-      <div>
-        <div class="phase-group">
-          <div class="phase-lbl">I. Понять</div>
-          <button class="nav-btn active" data-sec="pulse"><span class="nav-left"><span>⚡</span><span>1. Пульс</span></span><span class="nav-pill num" id="navPillPulse">—</span></button>
-          <button class="nav-btn" data-sec="xray"><span class="nav-left"><span>🔬</span><span>2. Рентген</span></span><span class="nav-pill num" id="navPillXray">GEO</span></button>
-        </div>
-        <div class="phase-group">
-          <div class="phase-lbl">II. Посчитать и защитить</div>
-          <button class="nav-btn" data-sec="money"><span class="nav-left"><span>💶</span><span>3. Деньги</span></span><span class="nav-pill" id="navPillMoney">🟡</span></button>
-          <button class="nav-btn" data-sec="shield"><span class="nav-left"><span>🛡️</span><span>4. Щит</span></span><span class="nav-pill num" id="navPillShield">0</span></button>
-        </div>
-        <div class="phase-group">
-          <div class="phase-lbl">III. Обойти рынок</div>
-          <button class="nav-btn" data-sec="arena"><span class="nav-left"><span>⚔️</span><span>5. Арена</span></span><span class="nav-pill num" id="navPillArena">0</span></button>
-        </div>
-        <div class="phase-group">
-          <div class="phase-lbl">IV. Сделать</div>
-          <button class="nav-btn" data-sec="plan"><span class="nav-left"><span>🗺️</span><span>6. План</span></span><span class="nav-pill num" id="navPillPlan">0/10</span></button>
-          <button class="nav-btn" data-sec="tools"><span class="nav-left"><span>🧰</span><span>7. Инструменты</span></span><span class="nav-pill">Lab</span></button>
-        </div>
-      </div>
-      <div>
-        <button class="ai-rail-cta" id="openBoardRailBtn">
-          <div style="font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:space-between;">
-            <span>🧠 8. Совет ИИ</span><span class="badge violet">3x</span>
-          </div>
-          <div style="font-size:11px; color:var(--muted); margin-top:3px;">CFO · CMO · CLO по контексту</div>
-        </button>
-      </div>
-    </aside>
     <main class="main-canvas" id="mainCanvas"></main>
   </div>
 
-  <button class="fab-ai" id="fabAiBtn">🧠 Совет ИИ</button>
   <nav class="mobile-bar" id="mobileBar">
-    <button class="mob-tab active" data-mob-phase="understand"><span>⚡</span><span>Понять</span></button>
-    <button class="mob-tab" data-mob-phase="finance"><span>💶</span><span>Деньги/Щит</span></button>
-    <button class="mob-tab" data-mob-phase="market"><span>⚔️</span><span>Арена</span></button>
-    <button class="mob-tab" data-mob-phase="act"><span>🗺️</span><span>Сделать</span></button>
+    <button class="mob-tab active" data-mob-tab="overview"><span>⚡</span><span>Обзор</span></button>
+    <button class="mob-tab" data-mob-tab="finance"><span>💶</span><span>Финансы</span></button>
+    <button class="mob-tab" data-mob-tab="market"><span>🗺️</span><span>Рынок</span></button>
+    <button class="mob-tab" data-mob-tab="plan"><span>📋</span><span>План</span></button>
+    <button class="mob-tab" data-mob-tab="tools"><span>🧰</span><span>Тексты</span></button>
   </nav>
 </div>
 
@@ -648,7 +717,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
   const urlParams = new URLSearchParams(location.search);
   const STATE = {
-    version: "9.0.2", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
+    version: "9.1", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
     apiUrl: urlParams.get("api") || localStorage.getItem("b2b_nexus_api_url") || DEFAULT_GAS_URL,
     partnerId: urlParams.get("partner") || "",
     adminMode: urlParams.get("admin") === "1" || localStorage.getItem("b2b_v9_admin") === "1",
@@ -665,7 +734,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     horizon: "now",
     plainMode: true,
     safeMode: false,
-    activeSec: "pulse",
+    activeSec: "overview",
     lang: localStorage.getItem("b2b_lang") || "ru-RU",
     geo: { country: "", countryEn: "", countryCode: "", city: "", lat: null, lng: null },
     acSeq: { city: 0, biz: 0 },
@@ -944,7 +1013,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       "[2.3s] Web X-Ray: angelshop-verhey.de (HTTPS: OK, Impressum: OK, Privacy: OK, Cookie CMP: NO)",
       "[14.1s] Wave 1: 5 Directors completed (CFO, CMO, CLO, CRO, COO)",
       "[22.6s] Jury Fact-Check: 10 verified facts, 1 VETO (SAP ERP removed), Confidence: 92%",
-      "[38.8s] Argon v8.8.2 finalized in 38.8s (Core: true | Playbook: true)"
+      "[38.8s] Argon v8.8.4 finalized in 38.8s (Core: true | Playbook: true)"
     ]
   };
 
@@ -1554,7 +1623,7 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     if (fileId && fileId !== "demo_v882") {
       try { const u = new URL(location.href); u.searchParams.set("id", fileId); history.replaceState({}, "", u.toString()); } catch (e) {}
     }
-    STATE.activeSec = (STATE.entryMode === "competitor" || STATE.entryMode === "niche") ? "arena" : "pulse";
+    STATE.activeSec = (STATE.entryMode === "competitor" || STATE.entryMode === "niche") ? "market" : "overview"; STATE.finSub = "money"; STATE.mktSub = "arena";
     renderReportHeader(); syncRailPills(); renderActiveSection(); setScreen("report");
   }
 
@@ -1639,42 +1708,41 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     };
   }
 
-  // ==================== HEADER & LEFT RAIL ====================
+  // ==================== HEADER & 5-TAB NAVIGATION ====================
   function renderReportHeader() {
     const rep = STATE.report; if (!rep) return;
     const c = rep.contacts || {}, m = rep.companyMeta || {}, ev = rep.evidenceSummary || {};
-    $("hdrLogo").innerHTML = companyLogoHtml(rep.logoUrl, (c && c.website) || "", rep.businessName || "B", 38);
+    $("hdrLogo").innerHTML = companyLogoHtml(rep.logoUrl, (c && c.website) || "", rep.businessName || "B", 42);
     $("hdrLogo").style.padding = "0"; $("hdrLogo").style.border = "none"; $("hdrLogo").style.background = "transparent";
     $("hdrName").textContent = rep.businessName || "—";
-    $("hdrTrustBadge").textContent = "⚖️ Доверие: " + (ev.confidenceScore || 75) + "%";
+    $("hdrTrustBadge").textContent = "⚖️ " + (ev.confidenceScore || 75) + "%";
     $("hdrModeBadge").textContent = rep.entityMode || "SMB";
     const parts = [];
     if (c.address || m.detectedCity) parts.push(`<span>📍 ${esc(c.address || [m.detectedCity, m.detectedCountry].filter(Boolean).join(", "))}</span>`);
-    if (c.website && c.website !== "N/A") parts.push(`<a href="${esc(c.website)}" target="_blank" rel="noopener">🌐 ${esc(c.website.replace(/^https?:\/\/(www\.)?/i, "").slice(0, 32))}</a>`);
+    if (c.website && c.website !== "N/A") parts.push(`<a href="${esc(c.website)}" target="_blank" rel="noopener">🌐 ${esc(c.website.replace(/^https?:\/\/(www\.)?/i, "").slice(0, 34))}</a>`);
     if (c.phone && c.phone !== "N/A") parts.push(`<span>📞 ${esc(c.phone)}</span>`);
-    if (c.email) parts.push(`<span>✉️ ${esc(c.email)}</span>`);
     $("hdrMeta").innerHTML = parts.join("");
     const drBtn = $("openDataRoomHdrBtn");
-    drBtn.textContent = STATE.ownerDataRoom ? "🔵 Ваши цифры" : "🟡 Data Room";
+    drBtn.textContent = STATE.ownerDataRoom ? "🔵 Мои цифры" : "🟡 Мои цифры";
     drBtn.style.borderColor = STATE.ownerDataRoom ? "var(--sky-brd)" : "var(--amber-brd)";
     drBtn.style.color = STATE.ownerDataRoom ? "var(--sky)" : "var(--amber)";
   }
+
   function syncRailPills() {
     const rep = STATE.report; if (!rep) return;
-    const rank = rep.nexusRanking || {}, geo = (rep.digitalSignals && rep.digitalSignals.geoVisibility) || {}, rc = rep.riskContours || {};
+    const rank = rep.nexusRanking || {}, rc = rep.riskContours || {};
     const allR = [].concat(rc.legalTax || [], rc.marketingSeo || [], rc.itBusFactor || [], rc.physicalMonetization || []);
     const hi = allR.filter((r) => String(r.severity || "").toLowerCase() === "high").length;
-    $("navPillPulse").textContent = (rank.score || 0) + "/100";
-    $("navPillXray").textContent = "GEO " + (geo.aiVisibilityScore || 0);
-    $("navPillMoney").textContent = STATE.ownerDataRoom ? "🔵 Точно" : "🟡 Оценка";
-    $("navPillShield").textContent = hi ? (hi + " HIGH") : allR.length;
-    $("navPillArena").textContent = (rep.competitors || []).length + " конк.";
-    $("navPillPlan").textContent = STATE.solvedSteps.length + "/" + (rep.newArchitecture || []).length;
-    document.querySelectorAll("#leftRail .nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.sec === STATE.activeSec));
+    if ($("tabPillOverview")) $("tabPillOverview").textContent = (rank.score || 0) + "/100";
+    if ($("tabPillFinance")) $("tabPillFinance").textContent = hi ? (hi + " HIGH") : (STATE.ownerDataRoom ? "🔵" : "🟡");
+    if ($("tabPillMarket")) $("tabPillMarket").textContent = (rep.competitors || []).length;
+    if ($("tabPillPlan")) $("tabPillPlan").textContent = STATE.solvedSteps.length + "/" + (rep.newArchitecture || []).length;
+    document.querySelectorAll("#execTabs .exec-tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === STATE.activeSec));
+    document.querySelectorAll("#mobileBar .mob-tab").forEach((b) => b.classList.toggle("active", b.dataset.mobTab === STATE.activeSec));
   }
 
-  // ==================== SECTION 1: PULSE ====================
-  function renderPulseSection() {
+  // ==================== TAB 1: OVERVIEW (EXECUTIVE VERDICT + 4 KPI + STRENGTHS/LEAKS + STRATEGY) ====================
+  function renderOverviewTab() {
     const rep = STATE.report, { fin } = getEffectiveFinancials(), sym = rep.currencySymbol || "€";
     const rank = rep.nexusRanking || {}, geo = (rep.digitalSignals && rep.digitalSignals.geoVisibility) || {};
     const ev = rep.evidenceSummary || {}, diff = rep.diffSinceLastScan || {}, steps = rep.newArchitecture || [];
@@ -1683,32 +1751,40 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     const strengths = ((rep.reputation && rep.reputation.positive) || []).slice(0, 3);
     const leaks = ((rep.reputation && rep.reputation.auditGaps) || (rep.digitalSignals && rep.digitalSignals.missing) || []).slice(0, 3);
     const scens = (rep.strategyScenarios || []).slice(0, 3);
+    const firstStep = steps.find((s) => !STATE.solvedSteps.includes(Number(s.id))) || steps[0] || null;
+    const positioning = (rep.marketIntelligence && rep.marketIntelligence.positioning) || "Диагностика бизнеса и приоритетных точек роста на ближайшие 90 дней.";
 
     return `
-      <div class="sec-head">
-        <div>
-          <h2>1. Пульс — диагноз за 60 секунд</h2>
-          <div class="sec-sub">${isPlain ? "Главная картина бизнеса простыми словами: где вы сильны, где теряются деньги и с чего начать." : "Executive summary: нормализованный EBITDA-потенциал, зрелость, GEO-видимость и вердикт Суда Присяжных."}</div>
+      <div class="verdict-hero">
+        <div style="flex:1; min-width:260px;">
+          <div class="verdict-kicker">
+            <span>Главный вывод аудита</span>
+            ${diff.hasPrevious ? `<button class="btn btn-xs" data-drawer="deepDiff">📈 ${esc((diff.pulseSummary || [])[0] || ("Скан #" + diff.scanNumber))}</button>` : ""}
+            <button class="btn btn-xs" data-drawer="jury">⚖️ Фактов: ${ev.verifiedFactsCount || 0} · ВЕТО: ${ev.jurorVetoedClaims || 0}</button>
+          </div>
+          <div class="verdict-title">${esc(positioning)}</div>
+          ${firstStep ? `<div class="verdict-next"><strong>Шаг №1 прямо сейчас:</strong> ${esc(firstStep.title)} <span style="color:var(--muted);">(${esc(firstStep.estCapExFormatted || "0 €")} · ${esc(firstStep.stepNetProfitFormatted || "")})</span></div>` : ""}
         </div>
-        <div style="display:flex; gap:7px; flex-wrap:wrap;">
-          ${diff.hasPrevious ? `<button class="btn btn-sm" data-drawer="deepDiff">📈 Deep Diff (${esc((diff.pulseSummary || [])[0] || "Скан #" + diff.scanNumber)})</button>` : ""}
-          <button class="btn btn-sm" data-drawer="jury">⚖️ Суд Присяжных (${ev.verifiedFactsCount || 0} факт · ${ev.jurorVetoedClaims || 0} ВЕТО)</button>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; flex-shrink:0;">
+          <button class="btn btn-primary" data-go-sec="plan">Открыть план действий →</button>
+          <button class="btn" data-open-dr="revenue">${STATE.ownerDataRoom ? "🔵 Изменить цифры" : "🟡 Вбить мои цифры"}</button>
         </div>
       </div>
+
       <div class="bento-grid">
-        <div class="b-card kpi-green span-3 clickable" data-open-dr="ebitdaUpside">
+        <div class="b-card kpi-green span-3 clickable" data-go-sec="finance">
           <div class="b-card-top"><span class="b-lbl">${isPlain ? "Потенциал прибыли / год" : "Потенциал EBITDA (12м)"}</span>${truthDot("ebitdaUpside")}</div>
           <div class="b-val num sensitive" style="color:var(--accent);">${esc(fin.profitIncrease || "—")}</div>
           <div class="b-sub sensitive">${is12m ? "Оборот: " + esc(fin.newTurnover || "—") : "Окупаемость: " + esc(fin.paybackPeriod || "—")} · CapEx ${esc(fin.estCapExFormatted || "—")}</div>
         </div>
-        <div class="b-card kpi-sky span-3 clickable" data-go-sec="xray">
+        <div class="b-card kpi-sky span-3 clickable" data-go-sec="market">
           <div class="b-card-top"><span class="b-lbl">Индекс зрелости</span>${truthDot("rating")}</div>
-          <div class="b-val num">${esc(is12m ? Math.min(96, (rank.score || 60) + 18) : (rank.score || 0))}<span style="font-size:14px; color:var(--muted);">/100</span></div>
+          <div class="b-val num">${esc(is12m ? Math.min(96, (rank.score || 60) + 18) : (rank.score || 0))}<span style="font-size:15px; color:var(--muted);">/100</span></div>
           <div class="b-sub">Грейд ${esc(rank.grade || "B")} · Место #${esc(rank.cityRank || 1)}/${esc(rank.cityPeerTotal || 1)} в локации</div>
         </div>
         <div class="b-card kpi-violet span-3 clickable" data-go-sec="xray">
           <div class="b-card-top"><span class="b-lbl">Видимость в ИИ (GEO)</span>${truthDot("website")}</div>
-          <div class="b-val num">${esc(geo.aiVisibilityScore || 0)}<span style="font-size:14px; color:var(--muted);">/100</span></div>
+          <div class="b-val num">${esc(geo.aiVisibilityScore || 0)}<span style="font-size:15px; color:var(--muted);">/100</span></div>
           <div class="b-sub">${geo.hasSchemaOrg ? "Schema.org OK" : "Нет Schema.org"} · AI-боты ${geo.robotsAllowsAi !== false ? "открыты" : "закрыты"}</div>
         </div>
         <div class="b-card kpi-amber span-3 clickable" data-go-sec="plan">
@@ -1719,30 +1795,30 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
 
         <div class="b-card span-6">
           <div class="b-card-top"><span class="b-lbl">💪 3 главные точки силы</span>${truthDot("rating")}</div>
-          <ul class="mini-list">${(strengths.length ? strengths : ["Подтверждённая локация и спрос"]).map((x) => `<li><span style="color:var(--accent);">●</span><span>${esc(x)}</span></li>`).join("")}</ul>
-          <div class="b-foot"><span style="color:var(--muted);">${esc((rep.marketIntelligence && rep.marketIntelligence.positioning || "").slice(0, 92))}</span><button class="b-link" data-go-sec="xray">Рентген →</button></div>
+          <ul class="mini-list">${(strengths.length ? strengths : ["Подтверждённая локация и стабильный спрос"]).map((x) => `<li><span style="color:var(--accent);">●</span><span>${esc(x)}</span></li>`).join("")}</ul>
+          <div class="b-foot"><span style="color:var(--muted);">Опора для роста и удержания клиентов</span><button class="b-link" data-go-sec="xray">Аудит сайта и отзывов →</button></div>
         </div>
         <div class="b-card span-6">
-          <div class="b-card-top"><span class="b-lbl">🩸 3 главные утечки</span>${truthDot("website")}</div>
+          <div class="b-card-top"><span class="b-lbl">🩸 3 главные утечки и пробелы</span>${truthDot("website")}</div>
           <ul class="mini-list">${(leaks.length ? leaks : ["Уточните метрики в Data Room"]).map((x) => `<li><span style="color:var(--red);">●</span><span>${esc(x)}</span></li>`).join("")}</ul>
-          <div class="b-foot"><span style="color:var(--muted);">Закрываются в первые 7–30 дней</span><button class="b-link" data-go-sec="plan">В План →</button></div>
+          <div class="b-foot"><span style="color:var(--muted);">Закрываются в первые 7–30 дней</span><button class="b-link" data-go-sec="shield">Открыть 4 контура рисков →</button></div>
         </div>
 
         <div class="b-card span-8">
           <div class="b-card-top"><span class="b-lbl">🧭 Выбор стратегии (Go / No-Go)</span>${truthDot("capEx")}</div>
           <div class="scen-row">${scens.map((s) => {
             const code = s.scenario || "B", picked = STATE.selectedScenario === code;
-            return `<div class="scen-box ${picked ? "picked" : ""}" data-pick-scen="${esc(code)}"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span class="badge ${picked ? "green" : ""}">Сценарий ${esc(code)}</span><strong class="num" style="font-size:12.5px;">${esc(s.capex || "—")}</strong></div><div style="font-weight:800; font-size:13px; margin-bottom:3px;">${esc(s.title || "")}</div><div style="font-size:11.5px; color:var(--muted);">${esc(s.focus || "")}</div></div>`;
+            return `<div class="scen-box ${picked ? "picked" : ""}" data-pick-scen="${esc(code)}"><div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span class="badge ${picked ? "green" : ""}">Сценарий ${esc(code)}</span><strong class="num" style="font-size:12.5px;">${esc(s.capex || "—")}</strong></div><div style="font-weight:800; font-size:13.5px; margin-bottom:4px;">${esc(s.title || "")}</div><div style="font-size:12px; color:var(--muted);">${esc(s.focus || "")}</div></div>`;
           }).join("")}</div>
         </div>
-        <div class="b-card span-4 clickable" data-go-sec="money">
+        <div class="b-card span-4 clickable" data-go-sec="finance">
           <div class="b-card-top"><span class="b-lbl">🏦 Банковская сверка</span>${truthDot("revenue")}</div>
-          <div style="display:flex; flex-direction:column; gap:6px; font-size:12.5px;">
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
             <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">EBITDA сейчас:</span><strong class="num sensitive">${esc(fin.currentEbitdaFormatted || "—")}</strong></div>
             <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">После з/п владельца:</span><strong class="num sensitive" style="color:${(fin.normalizedProfitCurrentRaw || 0) < 0 ? "var(--red)" : "var(--accent)"};">${esc(fin.normalizedProfitCurrentFormatted || "—")}</strong></div>
             <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Загрузка мощностей:</span><strong class="num">${esc((fin.capacity && fin.capacity.projectedUtilizationPct) || 85)}%</strong></div>
           </div>
-          <div class="b-foot"><span style="color:var(--muted);">4 стресс-теста и Cash Flow</span><button class="b-link" data-go-sec="money">В «Деньги» →</button></div>
+          <div class="b-foot"><span style="color:var(--muted);">Cash Flow и 4 стресс-теста</span><button class="b-link" data-go-sec="finance">Финансы и Риски →</button></div>
         </div>
       </div>`;
   }
@@ -2163,39 +2239,120 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       </div>`;
   }
 
-  // ==================== SECTION 6: PLAN (30/60/90+, SMART RFP, TURNKEY, 8 KPIs) ====================
+  // ==================== TAB 2 COMPOSITE: FINANCE & RISKS ====================
+  function renderFinanceTab() {
+    const rc = STATE.report.riskContours || {};
+    const allR = [].concat(rc.legalTax || [], rc.marketingSeo || [], rc.itBusFactor || [], rc.physicalMonetization || []);
+    const hi = allR.filter((r) => String(r.severity || "").toLowerCase() === "high").length;
+    const isRisk = STATE.finSub === "risks";
+    const { isUser } = getEffectiveFinancials();
+    return `
+      <div class="sec-head">
+        <div>
+          <h2>2. Финансы и Риски</h2>
+          <div class="sec-sub">${isRisk ? "4 контура защиты (Право, Маркетинг, IT/Bus Factor, Офлайн) с проверкой за 5 минут." : "Сколько заработаем и выдержит ли касса кризис: честный P&L, Cash Flow 18м и 4 стресс-теста."}</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <div class="view-switch">
+            <button class="view-sw-btn ${!isRisk ? "active" : ""}" data-fin-sub="money">💰 P&L и Стресс-тесты</button>
+            <button class="view-sw-btn ${isRisk ? "active" : ""}" data-fin-sub="risks">🛡️ 4 контура рисков ${hi ? `<span class="badge red" style="padding:0 6px;">${hi}</span>` : ""}</button>
+          </div>
+          ${!isRisk ? `<button class="btn btn-primary btn-sm" data-open-dr="revenue">${isUser ? "🔵 Изменить цифры" : "🟡 Вбить мои цифры"}</button>` : ""}
+        </div>
+      </div>
+      ${isRisk ? renderShieldSection().replace(/<div class="sec-head">[\s\S]*?<\/div>\s*<div class="bento-grid">/, '<div class="bento-grid">') : renderMoneySection().replace(/<div class="sec-head">[\s\S]*?<\/div>\s*<div class="bento-grid">/, '<div class="bento-grid">')}`;
+  }
+
+  // ==================== TAB 3 COMPOSITE: MARKET & SITE ====================
+  function renderMarketTab() {
+    const rep = STATE.report, comps = rep.competitors || [];
+    const geo = (rep.digitalSignals && rep.digitalSignals.geoVisibility) || {};
+    const isSite = STATE.mktSub === "site";
+    return `
+      <div class="sec-head">
+        <div>
+          <h2>3. Рынок и Сайт</h2>
+          <div class="sec-sub">${isSite ? "Как нас видят клиенты, Google и нейросети: радар зрелости, тех-светофор, GEO и отзывы." : "Кто вокруг нас: карта с зумом, конкуренты с логотипами, Kill-Sheet и B2B-соседи."}</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <div class="view-switch">
+            <button class="view-sw-btn ${!isSite ? "active" : ""}" data-mkt-sub="arena">🗺️ Карта и Конкуренты (${comps.length})</button>
+            <button class="view-sw-btn ${isSite ? "active" : ""}" data-mkt-sub="site">🔬 Сайт, GEO (${geo.aiVisibilityScore || 0}) и Отзывы</button>
+          </div>
+          ${!isSite ? `<button class="btn btn-sm" data-drawer="allComps">📋 Реестр</button><button class="btn btn-primary btn-sm" id="arenaCsvBtn">📥 CSV</button>` : `<button class="btn btn-sm" id="runPsiBtn">⚡ PageSpeed</button><button class="btn btn-sm" data-drawer="qrStand">🖨️ QR-стенд</button>`}
+        </div>
+      </div>
+      ${isSite ? renderXraySection().replace(/<div class="sec-head">[\s\S]*?<\/div>\s*<div class="bento-grid">/, '<div class="bento-grid">') : renderArenaSection().replace(/<div class="sec-head">[\s\S]*?<\/div>\s*<div class="bento-grid">/, '<div class="bento-grid">')}`;
+  }
+
+  // ==================== TAB 4: PLAN & CONTRACTORS (CLEAN VERTICAL SPRINT LIST) ====================
   function renderPlanSection() {
     const rep = STATE.report, steps = rep.newArchitecture || [], sym = rep.currencySymbol || "€", { fin } = getEffectiveFinancials();
     const solvedSet = new Set(STATE.solvedSteps);
-    const phases = [{ key: "PHASE_0", title: "Фаза 0 · 1–7 дн.", tone: "red" }, { key: "SPRINT_1", title: "Спринт 1 · 30 дн.", tone: "amber" }, { key: "SPRINT_2", title: "Спринт 2 · 60 дн.", tone: "sky" }, { key: "SPRINT_3", title: "Спринт 3 · 90+ дн.", tone: "green" }];
+    const phases = [
+      { key: "PHASE_0", title: "Фаза 0 · Критический фундамент (1–7 дней)", tone: "red" },
+      { key: "SPRINT_1", title: "Спринт 1 · Быстрый эффект (15–30 дней)", tone: "amber" },
+      { key: "SPRINT_2", title: "Спринт 2 · Системный рост (30–60 дней)", tone: "sky" },
+      { key: "SPRINT_3", title: "Спринт 3 · Масштабирование (60–90+ дней)", tone: "green" }
+    ];
     const pkgs = rep.turnkeyPackages || [], selSet = new Set(STATE.selectedTurnkey);
     let tkSum = 0, tkDays = 0;
     pkgs.forEach((p, idx) => { const k = p.key || ("pkg_" + (idx + 1)); if (selSet.has(k)) { tkSum += Number(p.priceRaw) || parseFloat(String(p.priceFormatted || "0").replace(/\s+/g, "").replace(/[^0-9.]/g, "")) || 0; tkDays += parseInt(String(p.days || "7"), 10) || 7; } });
     const kpis = rep.directorKpis || [];
+    const vendors = rep.itVendors || [];
+
     return `
       <div class="sec-head">
-        <div><h2>6. План — Дорожная карта 30/60/90+ и Подрядчики</h2><div class="sec-sub">Чекбоксы синхронизируются с Пульсом и Диском. Клик по шагу открывает 4 подшага и отправку Smart RFP.</div></div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="badge green num">Выполнено: ${solvedSet.size}/${steps.length}</span><span class="badge sky num sensitive">CapEx: ${esc(fin.estCapExFormatted || "—")}</span></div>
+        <div>
+          <h2>4. План и Подрядчики</h2>
+          <div class="sec-sub">Кто и за сколько выполнит каждый шаг. Нажмите «📩 КП» в строке, чтобы отправить Smart RFP подрядчику, или кликните по шагу для инструкции.</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <span class="badge green num">Выполнено: ${solvedSet.size}/${steps.length}</span>
+          <span class="badge num sensitive">Бюджет CapEx: ${esc(fin.estCapExFormatted || "—")}</span>
+        </div>
       </div>
-      <div class="sprint-board" style="margin-bottom:14px;">
-        ${phases.map((ph) => {
-          const list = steps.filter((s, idx) => (s.sprintPhase || (idx === 0 ? "PHASE_0" : idx < 4 ? "SPRINT_1" : idx < 7 ? "SPRINT_2" : "SPRINT_3")) === ph.key);
-          return `<div class="sprint-col"><div class="sprint-col-hd"><span class="sprint-title">${ph.title}</span><span class="badge ${ph.tone}">${list.length}</span></div>
-            ${list.length ? list.map((st) => {
-              const sid = Number(st.id), isDone = solvedSet.has(sid), ch = String(st.impactChannel || "revenue").toLowerCase();
-              const chCls = ch === "compliance" ? "amber" : (ch === "opex" ? "sky" : "green");
-              const cList = (Array.isArray(st.contractors) && st.contractors.length) ? st.contractors : ((rep.itVendors || []).slice(0, 1));
-              const cFirst = cList[0] || null;
-              return `<div class="step-card ${isDone ? "solved" : ""}" data-step-open="${sid}"><div class="step-top"><input type="checkbox" class="step-chk" data-step-chk="${sid}" ${isDone ? "checked" : ""}><div class="step-t">${sid}. ${esc(st.title)}</div></div><div style="display:flex; gap:5px; flex-wrap:wrap;"><span class="badge ${chCls}">${ch.toUpperCase()}</span><span class="badge num sensitive">${esc(st.estCapExFormatted || "0")}</span><span class="badge violet">📩 RFP</span></div>${cFirst ? `<div class="co-row" style="gap:6px; margin-top:2px;">${companyLogoHtml(cFirst.logoUrl, cFirst.website, cFirst.name, 18)}<span style="font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(cFirst.name)}${cFirst.email ? (" · " + esc(cFirst.email)) : ""}</span></div>` : ""}<div style="font-size:11.5px; color:var(--accent); font-weight:700;" class="sensitive">${esc(st.stepNetProfitFormatted || "")}</div></div>`;
-            }).join("") : `<div class="b-sub">Нет шагов</div>`}
-          </div>`;
-        }).join("")}
-      </div>
-      <div class="bento-grid">
+
+      ${phases.map((ph) => {
+        const list = steps.filter((s, idx) => (s.sprintPhase || (idx === 0 ? "PHASE_0" : idx < 4 ? "SPRINT_1" : idx < 7 ? "SPRINT_2" : "SPRINT_3")) === ph.key);
+        if (!list.length) return "";
+        return `<div class="plan-phase-block">
+          <div class="plan-phase-hd">
+            <span class="plan-phase-title"><span class="badge ${ph.tone}">${list.length}</span> ${ph.title}</span>
+          </div>
+          ${list.map((st, li) => {
+            const sid = Number(st.id), isDone = solvedSet.has(sid);
+            const cList = (Array.isArray(st.contractors) && st.contractors.length) ? st.contractors : (vendors.length ? [vendors[(sid - 1) % vendors.length]] : []);
+            const cFirst = cList[0] || null;
+            const cEmail = cFirst ? (cFirst.email || (extractDomFe(cFirst.website) ? ("info@" + extractDomFe(cFirst.website)) : "")) : "";
+            return `<div class="plan-row ${isDone ? "solved" : ""}" data-step-open="${sid}">
+              <div class="plan-row-left">
+                <input type="checkbox" class="step-chk" data-step-chk="${sid}" ${isDone ? "checked" : ""}>
+                <div style="min-width:0;">
+                  <div class="plan-row-title">${sid}. ${esc(st.title)}</div>
+                  <div class="plan-row-sub">${esc((st.plainExplanation || "").slice(0, 125))}</div>
+                </div>
+              </div>
+              <div class="plan-row-contr">
+                ${cFirst ? `${companyLogoHtml(cFirst.logoUrl, cFirst.website, cFirst.name, 26)}<div style="min-width:0;"><div style="font-weight:700; font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(cFirst.name)}</div><div style="font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(cEmail || cFirst.city || "Вендор")}</div></div>` : `<span style="font-size:12px; color:var(--muted);">Универсальный Smart RFP</span>`}
+              </div>
+              <div class="plan-row-right">
+                <div class="plan-metrics">
+                  <div style="font-size:12.5px; font-weight:800; color:var(--accent);" class="num sensitive">${esc(st.stepNetProfitFormatted || "—")}</div>
+                  <div style="font-size:11.5px; color:var(--muted);" class="num sensitive">CapEx: ${esc(st.estCapExFormatted || "0")}</div>
+                </div>
+                <button class="btn btn-sm" data-quick-rfp="${sid}" title="Сформировать и отправить Smart RFP">📩 КП</button>
+              </div>
+            </div>`;
+          }).join("")}
+        </div>`;
+      }).join("")}
+
+      <div class="bento-grid" style="margin-top:20px;">
         <div class="b-card span-7">
           <div class="b-card-top"><span class="b-lbl">🧩 Конструктор запуска «под ключ»</span>${truthDot("capEx")}</div>
           <div class="tk-grid">${pkgs.map((p, idx) => { const k = p.key || ("pkg_" + (idx + 1)), on = selSet.has(k); return `<label class="tk-item ${on ? "on" : ""}"><input type="checkbox" data-tk-key="${esc(k)}" ${on ? "checked" : ""} style="accent-color:var(--accent); margin-top:2px;"><div style="min-width:0;"><div style="font-weight:700; font-size:12.5px; line-height:1.3;">${esc(p.title)}</div><div style="font-size:11.5px; color:var(--muted); margin-top:3px;">${esc(p.days || "10d")} · <strong class="num sensitive" style="color:var(--text);">${esc(p.priceFormatted || fmtMoney(p.priceRaw, sym))}</strong></div></div></label>`; }).join("") || `<div class="b-sub">Модули под ключ не приложены.</div>`}</div>
-          <div class="b-foot"><div style="font-size:12.5px;">Смета: <strong class="num sensitive" style="color:var(--accent);">${fmtMoney(tkSum, sym)}</strong> · Срок: <strong>~${tkDays} дн.</strong></div><button class="btn btn-primary btn-sm" id="openTurnkeyBriefBtn" ${tkSum <= 0 ? "disabled" : ""}>📩 Сформировать сводный RFP</button></div>
+          <div class="b-foot"><div style="font-size:13px;">Смета: <strong class="num sensitive" style="color:var(--accent);">${fmtMoney(tkSum, sym)}</strong> · Срок: <strong>~${tkDays} дн.</strong></div><button class="btn btn-primary btn-sm" id="openTurnkeyBriefBtn" ${tkSum <= 0 ? "disabled" : ""}>📩 Сформировать сводный RFP</button></div>
         </div>
         <div class="b-card span-5">
           <div class="b-card-top"><span class="b-lbl">🎯 8 ежемесячных KPI директора</span>${truthDot("revenue")}</div>
@@ -2363,16 +2520,16 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     const rep = STATE.report;
     return `
       <div class="sec-head">
-        <div><h2>7. Инструменты — Playbook и Лаборатория Business OS</h2><div class="sec-sub">Готовые скрипты, SEO-ядро, 6 документов и 3 финансовых симулятора (100% автономно в браузере).</div></div>
-        <div class="sub-tabs">
-          <button class="sub-tab ${STATE.toolsTab === "playbook" ? "active" : ""}" data-tools-tab="playbook">📚 Коммерческий Playbook</button>
-          <button class="sub-tab ${STATE.toolsTab === "lab" ? "active" : ""}" data-tools-tab="lab">🧪 Лаборатория (What-If · LTV · RFM)</button>
+        <div><h2>5. Материалы и Калькуляторы</h2><div class="sec-sub">Готовые скрипты продаж, SEO-ядро, шаблоны писем и 3 автономных финансовых симулятора.</div></div>
+        <div class="view-switch">
+          <button class="view-sw-btn ${STATE.toolsTab === "playbook" ? "active" : ""}" data-tools-tab="playbook">📚 Коммерческий Playbook</button>
+          <button class="view-sw-btn ${STATE.toolsTab === "lab" ? "active" : ""}" data-tools-tab="lab">🧪 Лаборатория (What-If · LTV · RFM)</button>
         </div>
       </div>
       ${STATE.toolsTab === "playbook" ? renderPlaybookBlock(rep) : renderLabBlock(rep)}`;
   }
 
-  const RENDERERS = { pulse: renderPulseSection, xray: renderXraySection, money: renderMoneySection, shield: renderShieldSection, arena: renderArenaSection, plan: renderPlanSection, tools: renderToolsSection };
+  const RENDERERS = { overview: renderOverviewTab, finance: renderFinanceTab, market: renderMarketTab, plan: renderPlanSection, tools: renderToolsSection };
 
   // ==================== SURGEON DRAWERS (ALL SECTIONS 1–8 + EMAIL + ADMIN OUTREACH) ====================
   function openDrawer(title, sub, bodyHtml, footHtml) {
@@ -2736,8 +2893,20 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
   // ==================== RENDER ACTIVE SECTION + WIRE DELEGATES ====================
   function renderActiveSection() {
     if (!STATE.report) return;
-    $("mainCanvas").innerHTML = (RENDERERS[STATE.activeSec] || RENDERERS.pulse)();
+    $("mainCanvas").innerHTML = (RENDERERS[STATE.activeSec] || RENDERERS.overview)();
     const mc = $("mainCanvas");
+    mc.querySelectorAll("[data-fin-sub]").forEach((b) => b.addEventListener("click", () => { STATE.finSub = b.dataset.finSub; renderActiveSection(); }));
+    mc.querySelectorAll("[data-mkt-sub]").forEach((b) => b.addEventListener("click", () => { STATE.mktSub = b.dataset.mktSub; renderActiveSection(); }));
+    mc.querySelectorAll("[data-quick-rfp]").forEach((b) => b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const sid = Number(b.dataset.quickRfp);
+      const st = (STATE.report.newArchitecture || []).find((x) => Number(x.id) === sid);
+      if (!st) return;
+      const vendors = STATE.report.itVendors || [];
+      const cList = (Array.isArray(st.contractors) && st.contractors.length) ? st.contractors : (vendors.length ? [vendors[(sid - 1) % vendors.length]] : []);
+      const picked = cList[0] ? Object.assign({}, cList[0], { email: cList[0].email || (extractDomFe(cList[0].website) ? ("info@" + extractDomFe(cList[0].website)) : "") }) : null;
+      openSmartRfpDrawer(st, picked);
+    }));
 
     mc.querySelectorAll("[data-go-sec]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); switchSection(el.dataset.goSec); }));
     mc.querySelectorAll("[data-open-dr]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); openDataRoomDrawer(el.dataset.openDr); }));
@@ -2859,18 +3028,28 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     });
   }
 
-  function switchSection(sec) { STATE.activeSec = sec; syncRailPills(); renderActiveSection(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  function switchSection(sec) {
+    if (sec === "pulse" || sec === "overview") STATE.activeSec = "overview";
+    else if (sec === "money" || sec === "finance") { STATE.activeSec = "finance"; STATE.finSub = "money"; }
+    else if (sec === "shield") { STATE.activeSec = "finance"; STATE.finSub = "risks"; }
+    else if (sec === "arena" || sec === "market") { STATE.activeSec = "market"; STATE.mktSub = "arena"; }
+    else if (sec === "xray") { STATE.activeSec = "market"; STATE.mktSub = "site"; }
+    else if (sec === "plan") STATE.activeSec = "plan";
+    else if (sec === "tools") STATE.activeSec = "tools";
+    else STATE.activeSec = "overview";
+    syncRailPills(); renderActiveSection(); window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   // ==================== COMMAND PALETTE (Ctrl+K) ====================
   function buildCmdItems() {
     const items = [
-      { group: "Разделы", label: "⚡ 1. Пульс — диагноз за 60 секунд", keys: "пульс pulse", run: () => switchSection("pulse") },
-      { group: "Разделы", label: "🔬 2. Рентген — радар, PageSpeed, GEO, QR-стенд", keys: "рентген xray geo qr", run: () => switchSection("xray") },
-      { group: "Разделы", label: "💶 3. Деньги — P&L, Cash Flow 18м, 4 стресс-теста", keys: "деньги p&l cashflow стресс", run: () => switchSection("money") },
-      { group: "Разделы", label: "🛡️ 4. Щит — 4 контура рисков A/B/C/D", keys: "щит риски право gdpr", run: () => switchSection("shield") },
-      { group: "Разделы", label: "⚔️ 5. Арена — карта, Kill-Sheet, соседи, CSV", keys: "арена конкуренты карта killsheet csv", run: () => switchSection("arena") },
-      { group: "Разделы", label: "🗺️ 6. План — спринты 30/60/90+, Smart RFP, KPI", keys: "план шаги rfp подрядчики kpi", run: () => switchSection("plan") },
-      { group: "Разделы", label: "🧰 7. Инструменты — Playbook, What-If, CAC/LTV, RFM", keys: "инструменты playbook whatif ltv rfm seo", run: () => switchSection("tools") },
+      { group: "Вкладки (5)", label: "1. Обзор — главный вывод, KPI, силы и утечки", keys: "обзор пульс overview pulse", run: () => switchSection("overview") },
+      { group: "Вкладки (5)", label: "2. Финансы — P&L, Cash Flow 18м, 4 стресс-теста", keys: "финансы деньги p&l cashflow стресс", run: () => switchSection("money") },
+      { group: "Вкладки (5)", label: "2. Риски — 4 контура защиты A/B/C/D", keys: "риски щит право gdpr", run: () => switchSection("shield") },
+      { group: "Вкладки (5)", label: "3. Рынок — карта с зумом, конкуренты, Kill-Sheet", keys: "рынок арена конкуренты карта killsheet", run: () => switchSection("arena") },
+      { group: "Вкладки (5)", label: "3. Сайт и GEO — радар, PageSpeed, отзывы, QR", keys: "сайт рентген xray geo qr", run: () => switchSection("xray") },
+      { group: "Вкладки (5)", label: "4. План и Подрядчики — спринты, Smart RFP, KPI", keys: "план шаги rfp подрядчики kpi", run: () => switchSection("plan") },
+      { group: "Вкладки (5)", label: "5. Материалы и Калькуляторы — скрипты, What-If, LTV, RFM", keys: "материалы инструменты playbook whatif ltv rfm seo", run: () => switchSection("tools") },
       { group: "Действия", label: "🟡 Открыть живой Data Room", keys: "data room оборот маржа", run: () => openDataRoomDrawer("revenue") },
       { group: "Действия", label: "✉️ Отправить полный отчёт на почту", keys: "почта email отправить", run: () => openSendEmailDrawer() },
       { group: "Действия", label: "🖨️ Конструктор QR-стенда на кассу", keys: "qr стенд печать", run: () => openQrStandDrawer() },
@@ -2893,12 +3072,12 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     }).join("") : `<div class="ac-empty">Ничего не найдено</div>`;
     $("cmdList").querySelectorAll("[data-cmd-i]").forEach((el) => el.addEventListener("click", () => runCmdIdx(Number(el.dataset.cmdI))));
   }
-  function runCmdIdx(idx) { const it = curCmd[idx]; closeCmd(); if (!it) return; if (!STATE.report && it.group === "Разделы") openDemoReport(); it.run(); }
+  function runCmdIdx(idx) { const it = curCmd[idx]; closeCmd(); if (!it) return; if (!STATE.report && it.group === "Вкладки (5)") openDemoReport(); it.run(); }
   function openCmd() { $("cmdBackdrop").classList.remove("hidden"); $("cmdInput").value = ""; renderCmdList(""); setTimeout(() => $("cmdInput").focus(), 30); }
   function closeCmd() { $("cmdBackdrop").classList.add("hidden"); }
 
-  function toggleSafeMode() { STATE.safeMode = !STATE.safeMode; document.body.classList.toggle("safe-mode", STATE.safeMode); $("safeModeBtn").classList.toggle("safe-active", STATE.safeMode); showToast(STATE.safeMode ? "🛡️ Safe Mode ВКЛ" : "Safe Mode ВЫКЛ"); }
-  function togglePlainMode() { STATE.plainMode = !STATE.plainMode; $("langStyleBtn").textContent = STATE.plainMode ? "💬 Простой" : "🎓 Эксперт"; $("langStyleBtn").classList.toggle("active-toggle", !STATE.plainMode); renderActiveSection(); }
+  function toggleSafeMode() { STATE.safeMode = !STATE.safeMode; document.body.classList.toggle("safe-mode", STATE.safeMode); $("safeModeBtn").textContent = STATE.safeMode ? "🛡️ Safe Mode: ВКЛ" : "🛡️ Safe Mode (скрыть суммы)"; showToast(STATE.safeMode ? "🛡️ Safe Mode ВКЛ" : "Safe Mode ВЫКЛ"); }
+  function togglePlainMode() { STATE.plainMode = !STATE.plainMode; $("langStyleBtn").textContent = STATE.plainMode ? "💬 Язык отчёта: Простой" : "🎓 Язык отчёта: Эксперт"; renderActiveSection(); showToast(STATE.plainMode ? "Стиль: Простой" : "Стиль: Эксперт"); }
 
   function initVoiceAndFile() {
     $("toggleBriefBtn").addEventListener("click", () => $("briefPanel").classList.toggle("hidden"));
@@ -2977,8 +3156,8 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
     document.querySelectorAll("[data-horizon]").forEach((b) => b.addEventListener("click", () => { STATE.horizon = b.dataset.horizon; document.querySelectorAll("[data-horizon]").forEach((x) => x.classList.toggle("active", x === b)); renderActiveSection(); }));
 
     $("exportMenuBtn").addEventListener("click", (e) => { e.stopPropagation(); $("exportDropdown").classList.toggle("hidden"); });
-    document.addEventListener("click", () => $("exportDropdown").classList.add("hidden"));
-    document.querySelectorAll("[data-exp]").forEach((it) => it.addEventListener("click", () => {
+    document.addEventListener("click", (e) => { if (!e.target.closest("#exportDropdown") && !e.target.closest("#exportMenuBtn")) $("exportDropdown").classList.add("hidden"); });
+    document.querySelectorAll("[data-exp]").forEach((it) => it.addEventListener("click", () => { $("exportDropdown").classList.add("hidden");
       const k = it.dataset.exp;
       if (k === "pdf") window.print();
       else if (k === "csv") exportCsvBase();
@@ -2987,15 +3166,9 @@ pre.log-box { background: #040812; color: #cbd5e1; padding: 10px 12px; border-ra
       else if (k === "email") openSendEmailDrawer();
     }));
 
-    document.querySelectorAll("#leftRail .nav-btn").forEach((b) => b.addEventListener("click", () => switchSection(b.dataset.sec)));
-    $("openBoardRailBtn").addEventListener("click", () => openAiBoardDrawer(""));
-    $("fabAiBtn").addEventListener("click", () => openAiBoardDrawer(""));
-    const mobCycle = { understand: ["pulse", "xray"], finance: ["money", "shield"], market: ["arena"], act: ["plan", "tools"] };
-    document.querySelectorAll("#mobileBar .mob-tab").forEach((t) => t.addEventListener("click", () => {
-      document.querySelectorAll("#mobileBar .mob-tab").forEach((x) => x.classList.toggle("active", x === t));
-      const list = mobCycle[t.dataset.mobPhase] || ["pulse"];
-      switchSection(list.includes(STATE.activeSec) ? list[(list.indexOf(STATE.activeSec) + 1) % list.length] : list[0]);
-    }));
+    document.querySelectorAll("#execTabs .exec-tab").forEach((b) => b.addEventListener("click", () => switchSection(b.dataset.tab)));
+    $("openBoardHdrBtn").addEventListener("click", () => openAiBoardDrawer(""));
+    document.querySelectorAll("#mobileBar .mob-tab").forEach((t) => t.addEventListener("click", () => switchSection(t.dataset.mobTab)));
 
     $("closeDrawerBtn").addEventListener("click", closeDrawer);
     $("drawerBackdrop").addEventListener("click", closeDrawer);

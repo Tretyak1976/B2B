@@ -1,5 +1,20 @@
 [
   {
+    "id": "1QJZvfJIPmps3B7XnQU_Y6JDIp85TZ9Jx",
+    "name": "Kosmetiksalon Jasmina",
+    "niche": "Салон красоты и эстетической косметологии",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 256",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 6,
+    "schemaVersion": "8.8",
+    "createdAt": "2026-11-26T07:18:03.556Z"
+  },
+  {
     "id": "1ZS9zzZ67FNs5IZW6K7a2chGwB9HKi2OC",
     "name": "Montessorischule der Stadt Kleve",
     "niche": "Монтессори школа для детей 3-12 лет",
@@ -614,16 +629,5 @@
     "score": 59,
     "modelsUsed": 3,
     "createdAt": "2026-11-23T12:43:35.072Z"
-  },
-  {
-    "id": "11yMr-eEoH0S4Jdu4vbmAcnXpiCGnq9YS",
-    "name": "Möbel Kleinmanns",
-    "niche": "розничный магазин мебели среднего ценового сегмента",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 3,
-    "createdAt": "2026-11-23T12:35:53.117Z"
   }
 ]

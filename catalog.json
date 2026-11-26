@@ -1,5 +1,20 @@
 [
   {
+    "id": "12CdKFSawv64-WP--vMkww5jT3e-nqkQm",
+    "name": "Samsung",
+    "niche": "Розничная электроника",
+    "country": "Венгрия",
+    "city": "Debrecen",
+    "street": "Csapó utca 30",
+    "website": "https://www.ses.hu",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=ses.hu",
+    "rating": "N/A",
+    "score": 56,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.2",
+    "createdAt": "2026-11-26T09:59:59.644Z"
+  },
+  {
     "id": "1RHbJya-pxOJMLP_CeT_2IwZ8GEa3Nej8",
     "name": "Коломак",
     "niche": "железнодорожная станция",
@@ -634,16 +649,5 @@
     "score": 63,
     "modelsUsed": 6,
     "createdAt": "2026-11-23T13:29:58.794Z"
-  },
-  {
-    "id": "1a6n75y3QgpCd93ECOKxTzEurdhLZk-Rd",
-    "name": "Токио Парк Хотелл",
-    "niche": "отель среднего класса",
-    "country": "Япония",
-    "city": "Токио",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T13:28:21.509Z"
   }
 ]

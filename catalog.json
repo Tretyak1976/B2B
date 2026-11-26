@@ -1,5 +1,20 @@
 [
   {
+    "id": "1GGQ8ls-PnM_D5F-GTuV0aR5pBK-iwN4U",
+    "name": "Sparkasse Rhein-Maas Hauptstelle Kleve",
+    "niche": "Розничный и корпоративный банковский сервис",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Hagsche Straße 33",
+    "website": "https://www.sparkasse.de/standorte/filialen/sparkasse-rhein-maas-hauptstelle-kleve-101507",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=sparkasse.de",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.4",
+    "createdAt": "2026-11-26T13:28:41.518Z"
+  },
+  {
     "id": "1XKl57yp6kCmwJoCfjhtVYGmmZ4vC5rqy",
     "name": "Hotel-Restaurant Zur Post",
     "niche": "Ресторан-отель с фокусом на стейк-хаус и семейный обед",
@@ -658,16 +673,5 @@
     "score": 69,
     "modelsUsed": 6,
     "createdAt": "2026-11-23T14:09:13.488Z"
-  },
-  {
-    "id": "16bP49GUyk1PLPRsKsvaknHwJmE8xvtda",
-    "name": "Aral",
-    "niche": "АЗС с магазином и зарядкой электромобилей",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 7,
-    "createdAt": "2026-11-23T14:07:17.620Z"
   }
 ]

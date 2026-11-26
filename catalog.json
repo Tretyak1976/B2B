@@ -1,5 +1,20 @@
 [
   {
+    "id": "1s7XTmyYULD0fZbvosVNMKnF1rnsUOGBa",
+    "name": "Dm-Drogerie Markt, Harzweg 23, Quedlinburg",
+    "niche": "Розничная торговля косметикой, парфюмерией и товарами для здоровья",
+    "country": "Германия",
+    "city": "Quedlinburg",
+    "street": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 58,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.5",
+    "createdAt": "2026-11-26T15:17:34.797Z"
+  },
+  {
     "id": "1wf5nd6QxZCKIR0iOVoQMQLHUTkCBEkdW",
     "name": "C&A, Kleve",
     "niche": "Розничная торговля одеждой и аксессуарами (масс-маркет)",
@@ -698,16 +713,5 @@
     "score": 52,
     "modelsUsed": 4,
     "createdAt": "2026-11-23T17:38:33.917Z"
-  },
-  {
-    "id": "1qxN58e0UZskiGKWVR8QZ7gBgsi6QOjJx",
-    "name": "Aral teńizi - Арал теңізі",
-    "niche": "АЗС с зарядкой электромобилей и автосервисом",
-    "country": "Қазақстан",
-    "city": "Арал ауданы",
-    "rating": "N/A",
-    "score": 57,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-23T17:24:08.657Z"
   }
 ]

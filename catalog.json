@@ -1,5 +1,20 @@
 [
   {
+    "id": "1zJxw5gciVKtxFiJUSNfwCESoR93C-gjy",
+    "name": "Sisters",
+    "niche": "Модный розничный магазин женской одежды",
+    "country": "Норвегия",
+    "city": "Ålesund",
+    "street": "Rasmus Rønnebergs gate 4",
+    "website": "https://www.siup.no",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=siup.no",
+    "rating": "N/A",
+    "score": 59,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:19:31.670Z"
+  },
+  {
     "id": "180BTsH3ZqeZJlEvCcLNRECyx3mVxSG9M",
     "name": "Smoke or Buggy coffeeshop",
     "niche": "Кофейня с продажей каннабиса",
@@ -733,17 +748,5 @@
     "modelsUsed": 6,
     "schemaVersion": "7.8",
     "createdAt": "2026-11-24T16:06:50.064Z"
-  },
-  {
-    "id": "1gvtPIOk4NfcwJOiMPCSFY9yE0NXaoZPY",
-    "name": "Horsthemke",
-    "niche": "Business",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "4.3/5.0",
-    "score": 74,
-    "modelsUsed": 8,
-    "schemaVersion": "7.5",
-    "createdAt": "2026-11-24T14:30:28.765Z"
   }
 ]

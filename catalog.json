@@ -1,5 +1,20 @@
 [
   {
+    "id": "1O8WI8PMPb9Z4gLZru1AdXU1-yeKBUP0M",
+    "name": "Peppes Pizza",
+    "niche": "пицца‑ресторан быстрого обслуживания",
+    "country": "Норвегия",
+    "city": "Bergen",
+    "street": "Ådnavegen 63",
+    "website": "https://www.peppes.no",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=peppes.no",
+    "rating": "3.2/5.0",
+    "score": 60,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:22:49.711Z"
+  },
+  {
     "id": "1zJxw5gciVKtxFiJUSNfwCESoR93C-gjy",
     "name": "Sisters",
     "niche": "Модный розничный магазин женской одежды",
@@ -733,20 +748,5 @@
     "modelsUsed": 7,
     "schemaVersion": "7.8",
     "createdAt": "2026-11-24T16:09:21.483Z"
-  },
-  {
-    "id": "1XM-23V-cKGK7bWT0Z8Y_-GQ6uwQ0gC5k",
-    "name": "Samsung Electronics",
-    "niche": "корпоративные IT-решения и электроника",
-    "country": "Южная Корея",
-    "city": "Seoul",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 63,
-    "modelsUsed": 6,
-    "schemaVersion": "7.8",
-    "createdAt": "2026-11-24T16:06:50.064Z"
   }
 ]

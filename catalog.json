@@ -1,5 +1,20 @@
 [
   {
+    "id": "10Js_5LccRIyrvH1Rnt0okyavHzo3W9Ik",
+    "name": "Нова пошта",
+    "niche": "Курьерская доставка и логистика",
+    "country": "Украина",
+    "city": "Красноград",
+    "street": "вулиця Шиндлера 90",
+    "website": "https://novaposhta.ua/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=novaposhta.ua",
+    "rating": "4.1/5.0",
+    "score": 75,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T08:51:07.490Z"
+  },
+  {
     "id": "1O8WI8PMPb9Z4gLZru1AdXU1-yeKBUP0M",
     "name": "Peppes Pizza",
     "niche": "пицца‑ресторан быстрого обслуживания",
@@ -733,20 +748,5 @@
     "modelsUsed": 7,
     "schemaVersion": "7.8",
     "createdAt": "2026-11-24T16:11:54.104Z"
-  },
-  {
-    "id": "1zH6gYTc0y9uG8YLWgLktWjXjIdT5wq5k",
-    "name": "Sportbedarf Kleve Stefan Klümpen",
-    "niche": "Коммерческая компания",
-    "country": "",
-    "city": "",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 7,
-    "schemaVersion": "7.8",
-    "createdAt": "2026-11-24T16:09:21.483Z"
   }
 ]

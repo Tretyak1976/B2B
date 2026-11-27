@@ -1,5 +1,18 @@
 [
   {
+    "id": "1iCp2h0GK3yJAYMuqM0Ia7uULnnLnyceF",
+    "name": "LVM Versicherung Berger & Wilmsen oHG - Versicherungsagentur",
+    "niche": "Страхові послуги для фізичних та юридичних осіб",
+    "country": "Німеччина",
+    "city": "Kleve",
+    "website": "https://agentur.lvm.de/berger-wilmsen/buero/kleve",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=agentur.lvm.de",
+    "rating": "4.9/5.0",
+    "score": 78,
+    "schemaVersion": "10.0",
+    "createdAt": "2026-11-27T14:36:55.235Z"
+  },
+  {
     "id": "1CwIckM3_0PrOKfZ4B04cP8FxHX4U-9HJ",
     "name": "Frau Emma - Drinks Snacks Food",
     "niche": "Кав'ярня‑закусочна",
@@ -727,20 +740,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.7",
     "createdAt": "2026-11-25T18:04:30.901Z"
-  },
-  {
-    "id": "1L47xwilrGtWKhXf7f2RDpuCosQkLavQD",
-    "name": "sattelstuhl-arbeitsstuhl.de",
-    "niche": "Эргономичные офисные кресла (Sattelstuhl) для B2B и B2C",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "https://sattelstuhl-arbeitsstuhl.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=sattelstuhl-arbeitsstuhl.de",
-    "rating": "N/A",
-    "score": 52,
-    "modelsUsed": 8,
-    "schemaVersion": "8.7",
-    "createdAt": "2026-11-25T18:00:45.789Z"
   }
 ]

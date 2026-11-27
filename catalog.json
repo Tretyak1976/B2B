@@ -1,5 +1,19 @@
 [
   {
+    "id": "1G-88VPd0DLTnWD2IVLJI59GA6enulgTB",
+    "name": "Pesami Kleve",
+    "niche": "Ресторан",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Hafenstraße 2",
+    "website": "https://pesami.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=pesami.de",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "schemaVersion": "10.1",
+    "createdAt": "2026-11-27T15:03:47.638Z"
+  },
+  {
     "id": "1qmajgHpX5j_jzQmjs6pGKrIE1TtNjg0n",
     "name": "Fleischerimbiss Terhoeven - Ludwig Jahn Straße",
     "niche": "Фастфуд с мясными блюдами",
@@ -724,20 +738,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-25T18:38:32.889Z"
-  },
-  {
-    "id": "1q_6-xvPE-kgV1w4P4nDIhxAVDPkbcn1G",
-    "name": "More Than Music, Kleve",
-    "niche": "Музыкальный магазин и кафе",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 55,
-    "modelsUsed": 7,
-    "schemaVersion": "8.7",
-    "createdAt": "2026-11-25T18:18:03.540Z"
   }
 ]

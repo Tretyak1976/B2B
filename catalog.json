@@ -1,5 +1,20 @@
 [
   {
+    "id": "1tViqTsdbSj8EuRV1mgo_UOxm7k2R-oCd",
+    "name": "Диканька",
+    "niche": "Ресторан традиционной украинской кухни",
+    "country": "Украина",
+    "city": "Харківська міська громада",
+    "street": "Лермонтовська вулиця 7",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 55,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T09:03:39.755Z"
+  },
+  {
     "id": "1y49nxdj6ceKEw7BtTbTJmp3fMl0YNZis",
     "name": "AZS",
     "niche": "Топливно‑заправочная станция",
@@ -733,20 +748,5 @@
     "modelsUsed": 6,
     "schemaVersion": "8.2",
     "createdAt": "2026-11-25T10:14:22.809Z"
-  },
-  {
-    "id": "1pdw2Sf6Z6LUxnUEX1giuAHFZqy-LSvM5",
-    "name": "De Grendel Wine Estate and Restaurant",
-    "niche": "Винодельня и ресторан премиум‑класса",
-    "country": "Южная Африка",
-    "city": "Кейптаун",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 8,
-    "schemaVersion": "8.0",
-    "createdAt": "2026-11-25T08:15:53.567Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1y49nxdj6ceKEw7BtTbTJmp3fMl0YNZis",
+    "name": "AZS",
+    "niche": "Топливно‑заправочная станция",
+    "country": "Украина",
+    "city": "Poltava",
+    "street": "Космічний провулок",
+    "website": "",
+    "logoUrl": "",
+    "rating": "3.6/5.0",
+    "score": 62,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T08:57:59.854Z"
+  },
+  {
     "id": "10Js_5LccRIyrvH1Rnt0okyavHzo3W9Ik",
     "name": "Нова пошта",
     "niche": "Курьерская доставка и логистика",
@@ -733,20 +748,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.0",
     "createdAt": "2026-11-25T08:15:53.567Z"
-  },
-  {
-    "id": "1fgA6p8FtdZBZowgApzsnAmEQX4LnKc0k",
-    "name": "Klümpenweg",
-    "niche": "Уличный объект без подтверждённого коммерческого статуса",
-    "country": "Германия",
-    "city": "Geldern",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 7,
-    "schemaVersion": "7.8",
-    "createdAt": "2026-11-24T16:11:54.104Z"
   }
 ]

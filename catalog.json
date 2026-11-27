@@ -1,5 +1,19 @@
 [
   {
+    "id": "1a-bU-E5zoQcs_UZovdioGmuFuHe12dGb",
+    "name": "TotalEnergies Tankstelle",
+    "niche": "Заправочная станция",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 99",
+    "website": "https://www.circlek-deutschland.de/tankstellenfinder",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=circlek-deutschland.de",
+    "rating": "4.3/5.0",
+    "score": 60,
+    "schemaVersion": "10.3",
+    "createdAt": "2026-11-27T18:32:06.830Z"
+  },
+  {
     "id": "1nGdG9Kpzz_p22GdB0Rrx1XjcEIGbinCy",
     "name": "Bundespolizeiinspektion Kleve",
     "niche": "Полиция",
@@ -718,20 +732,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T09:49:45.558Z"
-  },
-  {
-    "id": "1fntigdoxUJtpmCsYfdXxobQ6AoMOfvpN",
-    "name": "Vodafone Shop",
-    "niche": "Местный розничный магазин мобильных и интернет-услуг",
-    "country": "Германия",
-    "city": "Überlingen",
-    "street": "Lippertsreuter Straße 60",
-    "website": "https://www.highspeed.deals/203359536/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=highspeed.deals",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-26T07:40:59.570Z"
   }
 ]

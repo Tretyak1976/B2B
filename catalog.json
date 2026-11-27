@@ -1,5 +1,20 @@
 [
   {
+    "id": "1MxvVOYnEMBi1o5ZAAOi7u-6T-ERIKtZJ",
+    "name": "Materborner Stuben",
+    "niche": "Быстрое питание (фритюр, имбисс)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Kirchweg 35",
+    "website": "",
+    "logoUrl": "",
+    "rating": "4.6/5.0",
+    "score": 73,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:04:47.393Z"
+  },
+  {
     "id": "1NyqdfxL2oi4kJid84RHhqIlpr8ZGm5-A",
     "name": "zahn & more - Dr. Georg Damen",
     "niche": "Стоматологические услуги",
@@ -721,17 +736,5 @@
     "modelsUsed": 6,
     "schemaVersion": "7.0",
     "createdAt": "2026-11-24T11:32:45.176Z"
-  },
-  {
-    "id": "1rx9V7cY5617asE7Ze3FB5d0qQY_U9B9U",
-    "name": "Immobilienmakler Rieder",
-    "niche": "Real Estate Brokerage",
-    "country": "Германия",
-    "city": "Freilassing",
-    "rating": "N/A",
-    "score": 46,
-    "modelsUsed": 6,
-    "schemaVersion": "7.0",
-    "createdAt": "2026-11-24T09:23:09.538Z"
   }
 ]

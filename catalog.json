@@ -1,5 +1,19 @@
 [
   {
+    "id": "1cBxtH2wC0Waq4FnzjaTtdVUxV2e1I6Sn",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Мебель и кухни",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 88",
+    "website": "http://www.kspb.nl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 45,
+    "schemaVersion": "10.2",
+    "createdAt": "2026-11-27T15:26:58.311Z"
+  },
+  {
     "id": "1nxE9xq8e7l_B3Od1vSYA0QdBZ9TzSTjo",
     "name": "GALERIA Kleve",
     "niche": "Department store",
@@ -495,21 +509,6 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:15:13.267Z"
-  },
-  {
-    "id": "1RkhS0wy4kW_igOqjBLSScIPJ0swQSe1U",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Производство и установка кухонь на заказ",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 88",
-    "website": "https://www.kspb.nl",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
-    "rating": "4.9/5.0",
-    "score": 72,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:11:06.106Z"
   },
   {
     "id": "1kUvqvkEQMlo4wRMwwmeusGUoRuBCtiwi",

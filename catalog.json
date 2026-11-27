@@ -1,5 +1,19 @@
 [
   {
+    "id": "1nGdG9Kpzz_p22GdB0Rrx1XjcEIGbinCy",
+    "name": "Bundespolizeiinspektion Kleve",
+    "niche": "Полиция",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 92-94",
+    "website": "https://www.bundespolizei.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=bundespolizei.de",
+    "rating": "N/A",
+    "score": 30,
+    "schemaVersion": "10.2",
+    "createdAt": "2026-11-27T15:29:47.615Z"
+  },
+  {
     "id": "1cBxtH2wC0Waq4FnzjaTtdVUxV2e1I6Sn",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Мебель и кухни",
@@ -719,20 +733,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-26T07:40:59.570Z"
-  },
-  {
-    "id": "15AzjOuuWKdUB2K5mMTMrer_BvsLd_6ph",
-    "name": "Angelshop Verhey",
-    "niche": "Товары для рыбалки и охоты",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 189",
-    "website": "https://www.angelshop-verhey.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=angelshop-verhey.de",
-    "rating": "4.4/5.0",
-    "score": 70,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-26T07:32:28.609Z"
   }
 ]

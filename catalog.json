@@ -1,5 +1,20 @@
 [
   {
+    "id": "1NyqdfxL2oi4kJid84RHhqIlpr8ZGm5-A",
+    "name": "zahn & more - Dr. Georg Damen",
+    "niche": "Стоматологические услуги",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Hoffmannallee 18",
+    "website": "https://www.zahn-and-more.com/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=zahn-and-more.com",
+    "rating": "4.9/5.0",
+    "score": 78,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T07:52:58.133Z"
+  },
+  {
     "id": "1iifPnoF7kXcDxGuykZLTL6Kh3BpnvJhj",
     "name": "TotalEnergies",
     "niche": "Автозаправочная станция с базовыми услугами топливозаправки",
@@ -718,16 +733,5 @@
     "modelsUsed": 6,
     "schemaVersion": "7.0",
     "createdAt": "2026-11-24T09:23:09.538Z"
-  },
-  {
-    "id": "1x8ES5MtZBd-AYkFkOjJNLNJ2XBJ3yxWA",
-    "name": "Immobilienmakler Immobilien Losch Kleve",
-    "niche": "агентство недвижимости премиум‑класса",
-    "country": "Германия",
-    "city": "Клеве",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 4,
-    "createdAt": "2026-11-24T08:57:01.684Z"
   }
 ]

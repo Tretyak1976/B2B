@@ -1,5 +1,19 @@
 [
   {
+    "id": "1nxE9xq8e7l_B3Od1vSYA0QdBZ9TzSTjo",
+    "name": "GALERIA Kleve",
+    "niche": "Department store",
+    "country": "Germany",
+    "city": "Kleve",
+    "address": "Germany, Kleve, Große Str. 42-46",
+    "website": "https://www.galeria.de/filialen/l/kleve/grosse-strasse-42-46/001508",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=galeria.de",
+    "rating": "4.1/5.0",
+    "score": 78,
+    "schemaVersion": "10.2",
+    "createdAt": "2026-11-27T15:22:14.454Z"
+  },
+  {
     "id": "1PgDeGgfCuvFvYwK8lz9SlmY8ejfUtG_8",
     "name": "7MVGFJJJ+HFF",
     "niche": "Местный розничный магазин",
@@ -721,20 +735,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-26T07:32:28.609Z"
-  },
-  {
-    "id": "1QJZvfJIPmps3B7XnQU_Y6JDIp85TZ9Jx",
-    "name": "Kosmetiksalon Jasmina",
-    "niche": "Салон красоты и эстетической косметологии",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 256",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 6,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-26T07:18:03.556Z"
   }
 ]

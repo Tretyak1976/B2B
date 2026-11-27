@@ -1,5 +1,19 @@
 [
   {
+    "id": "1qmajgHpX5j_jzQmjs6pGKrIE1TtNjg0n",
+    "name": "Fleischerimbiss Terhoeven - Ludwig Jahn Straße",
+    "niche": "Фастфуд с мясными блюдами",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Ludwig-Jahn-Straße 17",
+    "website": "https://fleischerimbiss-terhoeven.de/offnungszeiten/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=fleischerimbiss-terhoeven.de",
+    "rating": "4.3/5.0",
+    "score": 68,
+    "schemaVersion": "10.1",
+    "createdAt": "2026-11-27T14:59:30.117Z"
+  },
+  {
     "id": "1iCp2h0GK3yJAYMuqM0Ia7uULnnLnyceF",
     "name": "LVM Versicherung Berger & Wilmsen oHG - Versicherungsagentur",
     "niche": "Страхові послуги для фізичних та юридичних осіб",
@@ -725,20 +739,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.7",
     "createdAt": "2026-11-25T18:18:03.540Z"
-  },
-  {
-    "id": "1zcGzbOkGZUoIeBgANwMBMICOa4MQk6Vc",
-    "name": "Krebber & Russ GmbH",
-    "niche": "производство и продажа специализированных химических реагентов",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 7,
-    "schemaVersion": "8.7",
-    "createdAt": "2026-11-25T18:04:30.901Z"
   }
 ]

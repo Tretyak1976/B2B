@@ -1,5 +1,20 @@
 [
   {
+    "id": "1my_hlcjLhhOKS4t28SC_6fducT8heV4w",
+    "name": "Marani",
+    "niche": "Грузинская кухня в ресторане",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Materborner Allee 26",
+    "website": "https://restaurantmarani.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=restaurantmarani.de",
+    "rating": "4.9/5.0",
+    "score": 79,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:07:27.739Z"
+  },
+  {
     "id": "1MxvVOYnEMBi1o5ZAAOi7u-6T-ERIKtZJ",
     "name": "Materborner Stuben",
     "niche": "Быстрое питание (фритюр, имбисс)",
@@ -724,17 +739,5 @@
     "modelsUsed": 6,
     "schemaVersion": "7.0",
     "createdAt": "2026-11-24T12:10:56.463Z"
-  },
-  {
-    "id": "1Vp5qoEIwjosUWcXRKX8McUT2rYCVH7yS",
-    "name": "Dr. Pascal Schnabel MSc, Zahnarzt in Kleve",
-    "niche": "Dental practice",
-    "country": "Германия",
-    "city": "Kleve",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 6,
-    "schemaVersion": "7.0",
-    "createdAt": "2026-11-24T11:32:45.176Z"
   }
 ]

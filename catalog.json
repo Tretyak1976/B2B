@@ -1,5 +1,20 @@
 [
   {
+    "id": "14dkPY7UobS3InyPUkOD6AqJopMLnbTpN",
+    "name": "Möbel Kleinmanns",
+    "niche": "Мебельный ритейл",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 230",
+    "website": "https://www.moebel-kleinmanns.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=moebel-kleinmanns.de",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T09:05:29.118Z"
+  },
+  {
     "id": "1tViqTsdbSj8EuRV1mgo_UOxm7k2R-oCd",
     "name": "Диканька",
     "niche": "Ресторан традиционной украинской кухни",
@@ -733,20 +748,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.3",
     "createdAt": "2026-11-25T11:34:02.208Z"
-  },
-  {
-    "id": "1OyvN1Fjg_n4lWjes1YCgI-Iu87ZGBfvL",
-    "name": "Dr. Pascal Schnabel MSc, Zahnarzt",
-    "niche": "Стоматологическая практика частного сектора",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "https://dr. pascal schnabel msc, zahnarzt, kleve, германия",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=dr.%20pascal%20schnabel%20msc%2C%20zahnarzt%2C%20kleve%2C%20%D0%B3%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 6,
-    "schemaVersion": "8.2",
-    "createdAt": "2026-11-25T10:14:22.809Z"
   }
 ]

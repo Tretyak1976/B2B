@@ -1,5 +1,20 @@
 [
   {
+    "id": "1d9xdqDdauMZa9L2G4QmNBx6cp8uVbtkN",
+    "name": "Konomine Castle Ruins",
+    "niche": "Исторический памятник и туристическая достопримечательность",
+    "country": "Япония",
+    "city": "Yamaguchi 758, 0057",
+    "street": "",
+    "website": "http://www.oidemase.or.jp/tourism-information/spots/12372",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=oidemase.or.jp",
+    "rating": "4.1/5.0",
+    "score": 67,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T11:26:07.042Z"
+  },
+  {
     "id": "1uei_ne0RGnz5Aot_kyGDM5ZNYuemiInS",
     "name": "Wolfgang Strack Global-Finanz",
     "niche": "Финансовое посредничество и страхование (Versicherungsmakler)",
@@ -733,20 +748,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.5",
     "createdAt": "2026-11-25T17:36:50.287Z"
-  },
-  {
-    "id": "1CCEPPjhR4TaFrdqq-ojbIwpW9FmgN9bY",
-    "name": "Lidl",
-    "niche": "розничная сеть продуктовых супермаркетов",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 64,
-    "modelsUsed": 8,
-    "schemaVersion": "8.4",
-    "createdAt": "2026-11-25T17:14:21.299Z"
   }
 ]

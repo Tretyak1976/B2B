@@ -1,5 +1,20 @@
 [
   {
+    "id": "180BTsH3ZqeZJlEvCcLNRECyx3mVxSG9M",
+    "name": "Smoke or Buggy coffeeshop",
+    "niche": "Кофейня с продажей каннабиса",
+    "country": "Германия",
+    "city": "VA Nijmegen",
+    "street": "Platenmakersstraat 8",
+    "website": "https://www.buggycoffeeshop.nl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=buggycoffeeshop.nl",
+    "rating": "4.5/5.0",
+    "score": 74,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:17:10.758Z"
+  },
+  {
     "id": "1ToTx8nnXqPzCrX4mpjUaFbNA4xD9DR0Z",
     "name": "Tichelpark Cinemas",
     "niche": "Кинотеатры и развлекательные центры",
@@ -730,17 +745,5 @@
     "modelsUsed": 8,
     "schemaVersion": "7.5",
     "createdAt": "2026-11-24T14:30:28.765Z"
-  },
-  {
-    "id": "1FuSvA7oZ9Tf9NxiLD_QcYkCFcNBG-YbL",
-    "name": "Horsthemke",
-    "niche": "Кафе",
-    "country": "Германия",
-    "city": "Witten",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 8,
-    "schemaVersion": "7.1",
-    "createdAt": "2026-11-24T12:50:30.483Z"
   }
 ]

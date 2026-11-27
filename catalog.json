@@ -1,5 +1,19 @@
 [
   {
+    "id": "1PgDeGgfCuvFvYwK8lz9SlmY8ejfUtG_8",
+    "name": "7MVGFJJJ+HFF",
+    "niche": "Местный розничный магазин",
+    "country": "",
+    "city": "Bhutan",
+    "address": "Bhutan, 7MVGFJJJ+HFF",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 38,
+    "schemaVersion": "10.1",
+    "createdAt": "2026-11-27T15:09:55.240Z"
+  },
+  {
     "id": "1v7ZgAvBy8Whp6yl07rRwzvne9wz34lxA",
     "name": "MediaMarkt Kleve",
     "niche": "Электронный магазин и бытовая техника",
@@ -722,20 +736,5 @@
     "modelsUsed": 6,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-26T07:18:03.556Z"
-  },
-  {
-    "id": "1ZS9zzZ67FNs5IZW6K7a2chGwB9HKi2OC",
-    "name": "Montessorischule der Stadt Kleve",
-    "niche": "Монтессори школа для детей 3-12 лет",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Spyckstraße 24",
-    "website": "montessorischule-kleve.eu",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=montessorischule-kleve.eu",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-25T18:56:01.805Z"
   }
 ]

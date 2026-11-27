@@ -1,5 +1,18 @@
 [
   {
+    "id": "1gHbSqRr6EWs67hh1zrivaEedp42H2W1j",
+    "name": "Total",
+    "niche": "АЗС та продаж пального",
+    "country": "Німеччина",
+    "city": "",
+    "website": "",
+    "logoUrl": "",
+    "rating": "3.7/5.0",
+    "score": 68,
+    "schemaVersion": "10.0",
+    "createdAt": "2026-11-27T14:29:38.292Z"
+  },
+  {
     "id": "1Dfq-lqQr9tBmg2gD9Rh1YvfTemG7dKdw",
     "name": "Brands Ludwig GmbH",
     "niche": "Локальні послуги з технічного обслуговування будинків",
@@ -731,20 +744,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.7",
     "createdAt": "2026-11-25T17:56:18.066Z"
-  },
-  {
-    "id": "1aBhcHO9NYOIzugWOPn8Kn5Xtglfh6kxP",
-    "name": "Restaurant Akropolis in Kleve",
-    "niche": "Ресторанная индустрия",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Gruftstraße 26",
-    "website": "https://www.akropolis-kleve.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=akropolis-kleve.de",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 6,
-    "schemaVersion": "8.7",
-    "createdAt": "2026-11-25T17:52:07.319Z"
   }
 ]

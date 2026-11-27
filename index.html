@@ -487,12 +487,12 @@ body { font-size: 14px; }
   <div class="brand" id="brandHomeBtn" title="На Консоль запуска">
     <div class="brand-mark">B</div>
     <span class="brand-name">B2B Nexus</span>
-    <span class="ver-pill">v9.1.3 Executive OS</span>
+    <span class="ver-pill">v9.1.4 Executive OS</span>
   </div>
   <div class="top-right">
     <div class="status-pill" id="engineStatusPill" title="Проверить связь с Argon Engine">
       <span class="s-dot" id="engineDot"></span>
-      <span id="engineStatusText">Argon v8.8.8</span>
+      <span id="engineStatusText">Argon v8.8.9</span>
     </div>
     <button class="btn btn-sm" id="cmdOpenTopBtn" title="Быстрый поиск (Ctrl+K)">🔍 <span class="kbd">Ctrl+K</span></button>
     <select class="lang-sel" id="langSelect" title="Язык отчёта"><option value="ru-RU">RU</option><option value="en-US">EN</option><option value="de-DE">DE</option><option value="es-ES">ES</option><option value="fr-FR">FR</option><option value="zh-CN">ZH</option></select>
@@ -589,7 +589,7 @@ body { font-size: 14px; }
       <div>
         <div class="badge sky" id="scanModeBadge">🏢 Мой бизнес</div>
         <h2 style="margin:6px 0 2px; font-size:20px;" id="scanTargetTitle">Сканирование...</h2>
-        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.8</div>
+        <div style="font-size:12.5px; color:var(--muted);" id="scanSubStatus">Подключение к Argon Engine v8.8.9</div>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-sm" id="scan3dSwitchBtn">🌐 3D-Рой</button>
@@ -724,10 +724,11 @@ body { font-size: 14px; }
   const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbx_-Bd82Pk93cpQF5dWDbYPcqOA426yVGyeX9yTcBetggCh8Q0r934n37vJtCZXA48/exec";
   const urlParams = new URLSearchParams(location.search);
   const STATE = {
-    version: "9.1.3", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
+    version: "9.1.4", finSub: "money", mktSub: "arena", isScanning: false, mapState: { zoom: 1, tx: 0, ty: 0, showComps: true, showNeighbors: true },
     apiUrl: urlParams.get("api") || localStorage.getItem("b2b_nexus_api_url") || DEFAULT_GAS_URL,
     partnerId: urlParams.get("partner") || "",
     adminMode: urlParams.get("admin") === "1" || localStorage.getItem("b2b_v9_admin") === "1",
+    adminPin: localStorage.getItem("b2b_v9_admin_pin") || "",
     engineMode: localStorage.getItem("b2b_engine") || "argon_pro",
     autoEmail: localStorage.getItem("b2b_auto_email") || "",
     autoEmailOn: localStorage.getItem("b2b_auto_email_on") === "1",
@@ -1020,7 +1021,7 @@ body { font-size: 14px; }
       "[2.3s] Web X-Ray: angelshop-verhey.de (HTTPS: OK, Impressum: OK, Privacy: OK, Cookie CMP: NO)",
       "[14.1s] Wave 1: 5 Directors completed (CFO, CMO, CLO, CRO, COO)",
       "[22.6s] Jury Fact-Check: 10 verified facts, 1 VETO (SAP ERP removed), Confidence: 92%",
-      "[38.8s] Argon v8.8.8 finalized in 38.8s (Core: true | Playbook: true)"
+      "[38.8s] Argon v8.8.9 finalized in 38.8s (Core: true | Playbook: true)"
     ]
   };
 
@@ -1448,15 +1449,19 @@ body { font-size: 14px; }
   async function apiGet(params) {
     if (!STATE.apiUrl) throw new Error("API URL не задан");
     const u = new URL(STATE.apiUrl);
-    Object.entries(params || {}).forEach(([k, v]) => { if (v !== undefined && v !== null) u.searchParams.set(k, String(v)); });
+    const mergedParams = Object.assign({}, params || {});
+    if (STATE.adminPin && mergedParams.adminPin === undefined) mergedParams.adminPin = STATE.adminPin;
+    Object.entries(mergedParams).forEach(([k, v]) => { if (v !== undefined && v !== null) u.searchParams.set(k, String(v)); });
     return (await fetch(u.toString(), { method: "GET", redirect: "follow" })).json();
   }
   async function apiPost(body, signal) {
     if (!STATE.apiUrl) throw new Error("API URL не задан");
+    const payload = Object.assign({}, body || {});
+    if (STATE.adminPin && payload.adminPin === undefined) payload.adminPin = STATE.adminPin;
     return (await fetch(STATE.apiUrl, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
       redirect: "follow",
       signal
     })).json();
@@ -2882,15 +2887,171 @@ body { font-size: 14px; }
     });
   }
 
-  function openQrStandDrawer() {
-    const rep = STATE.report, url = (rep.contacts && rep.contacts.website && rep.contacts.website !== "N/A") ? rep.contacts.website : "https://maps.google.com/?q=" + encodeURIComponent(rep.businessName);
-    const cells = []; let h = 2166136261; for (let i = 0; i < url.length; i++) h = Math.imul(h ^ url.charCodeAt(i), 16777619);
-    for (let y = 0; y < 21; y++) for (let x = 0; x < 21; x++) {
-      const inC = (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13);
-      const on = inC ? ((x === 0 || x === 6 || y === 0 || y === 6 || x === 14 || x === 20 || y === 14 || y === 20) || (x >= 2 && x <= 4 && y >= 2 && y <= 4) || (x >= 16 && x <= 18 && y >= 2 && y <= 4) || (x >= 2 && x <= 4 && y >= 16 && y <= 18)) : ((((h >>> ((x * 7 + y * 13) % 24)) ^ (x * y + x + y)) & 1) === 1);
-      if (on) cells.push(`<rect x="${x * 7 + 10}" y="${y * 7 + 10}" width="7" height="7" fill="#0f172a"/>`);
+  function generateQrMatrixISO(text) {
+    const bch = (val, poly, deg, valBits) => {
+      let rem = val << deg;
+      for (let bit = valBits + deg - 1; bit >= deg; bit--) if ((rem >>> bit) & 1) rem ^= (poly << (bit - deg));
+      return (val << deg) | rem;
+    };
+    const bytes = Array.from(new TextEncoder().encode(String(text || "https://google.com")));
+    const SPEC = [
+      null,
+      [1, 26, 10, 1, 16, 0, 0, []],
+      [2, 44, 16, 1, 28, 0, 0, [6, 18]],
+      [3, 70, 26, 1, 44, 0, 0, [6, 22]],
+      [4, 100, 18, 2, 32, 0, 0, [6, 26]],
+      [5, 134, 24, 2, 43, 0, 0, [6, 30]],
+      [6, 172, 16, 4, 27, 0, 0, [6, 34]],
+      [7, 196, 18, 4, 31, 0, 0, [6, 22, 38]],
+      [8, 242, 22, 2, 38, 2, 39, [6, 24, 42]],
+      [9, 292, 22, 3, 36, 2, 37, [6, 26, 46]],
+      [10, 346, 26, 4, 43, 1, 44, [6, 28, 50]]
+    ];
+    let sp = null;
+    for (let v = 1; v <= 10; v++) {
+      const cap = SPEC[v][3] * SPEC[v][4] + SPEC[v][5] * SPEC[v][6];
+      if (bytes.length + (v <= 9 ? 2 : 3) <= cap) { sp = SPEC[v]; break; }
     }
-    openDrawer("🖨️ Конструктор QR-стенда на кассу", "Без подкупа за отзывы (соответствует UWG)", `<div style="background:#fff; color:#0f172a; border-radius:14px; padding:22px; text-align:center; border:2px dashed #cbd5e1;"><div style="font-size:12px; font-weight:800; text-transform:uppercase; color:#059669;">${esc(rep.businessName)}</div><h3 style="margin:6px 0 12px; font-size:19px;">Поделитесь честным мнением о визите!</h3><svg viewBox="0 0 167 167" width="167" height="167" style="background:#fff; border-radius:10px;">${cells.join("")}</svg><div style="font-size:12px; color:#475569; margin-top:10px;">Наведите камеру смартфона — займёт 20 секунд. Спасибо!</div></div>`, `<button class="btn btn-primary" onclick="window.print()">🖨️ Печать (A5 / A6)</button>`);
+    if (!sp) { bytes.length = 210; sp = SPEC[10]; }
+    const [ver, , ecLen, g1Cnt, g1Data, g2Cnt, g2Data, align] = sp;
+    const totalData = g1Cnt * g1Data + g2Cnt * g2Data;
+    const size = ver * 4 + 17;
+    const bits = [];
+    const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    pushBits(4, 4); pushBits(bytes.length, ver <= 9 ? 8 : 16);
+    bytes.forEach((b) => pushBits(b, 8));
+    const maxBits = totalData * 8;
+    for (let i = 0; i < 4 && bits.length < maxBits; i++) bits.push(0);
+    while (bits.length % 8 !== 0) bits.push(0);
+    const dataCw = [];
+    for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; dataCw.push(b); }
+    let padIdx = 0;
+    while (dataCw.length < totalData) dataCw.push((padIdx++ & 1) === 0 ? 0xEC : 0x11);
+    const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+    let x = 1;
+    for (let i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x = (x << 1) ^ (x & 0x80 ? 0x11D : 0); }
+    for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+    const gfMul = (a, b) => (a && b) ? EXP[LOG[a] + LOG[b]] : 0;
+    let gen = [1];
+    for (let i = 0; i < ecLen; i++) {
+      const nxt = new Array(gen.length + 1).fill(0);
+      for (let j = 0; j < gen.length; j++) { nxt[j] ^= gen[j]; nxt[j + 1] ^= gfMul(gen[j], EXP[i]); }
+      gen = nxt;
+    }
+    const rsCompute = (block) => {
+      const res = new Array(ecLen).fill(0);
+      for (let i = 0; i < block.length; i++) {
+        const f = block[i] ^ res.shift(); res.push(0);
+        if (f) for (let j = 0; j < ecLen; j++) res[j] ^= gfMul(gen[j + 1], f);
+      }
+      return res;
+    };
+    const dBlocks = [], eBlocks = [];
+    let off = 0;
+    for (let i = 0; i < g1Cnt; i++) { const b = dataCw.slice(off, off + g1Data); off += g1Data; dBlocks.push(b); eBlocks.push(rsCompute(b)); }
+    for (let i = 0; i < g2Cnt; i++) { const b = dataCw.slice(off, off + g2Data); off += g2Data; dBlocks.push(b); eBlocks.push(rsCompute(b)); }
+    const finalCw = [];
+    const maxD = Math.max(g1Data, g2Data);
+    for (let i = 0; i < maxD; i++) dBlocks.forEach((b) => { if (i < b.length) finalCw.push(b[i]); });
+    for (let i = 0; i < ecLen; i++) eBlocks.forEach((b) => finalCw.push(b[i]));
+    const mat = Array.from({ length: size }, () => new Int8Array(size));
+    const isFn = Array.from({ length: size }, () => new Uint8Array(size));
+    const setFn = (r, c, v) => { if (r >= 0 && r < size && c >= 0 && c < size) { mat[r][c] = v ? 1 : 0; isFn[r][c] = 1; } };
+    const drawFinder = (tr, tc) => {
+      for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+        const inB = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+        setFn(tr + dr, tc + dc, inB && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4)));
+      }
+    };
+    drawFinder(0, 0); drawFinder(0, size - 7); drawFinder(size - 7, 0);
+    for (let i = 8; i < size - 8; i++) { setFn(6, i, i % 2 === 0); setFn(i, 6, i % 2 === 0); }
+    const lastA = align.length ? align[align.length - 1] : -1;
+    for (let i = 0; i < align.length; i++) for (let j = 0; j < align.length; j++) {
+      const ar = align[i], ac = align[j];
+      if ((ar === 6 && ac === 6) || (ar === 6 && ac === lastA) || (ar === lastA && ac === 6)) continue;
+      for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) setFn(ar + dr, ac + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1);
+    }
+    for (let i = 0; i < 9; i++) { if (i !== 6) { setFn(8, i, 0); setFn(i, 8, 0); } }
+    for (let i = 0; i < 8; i++) { setFn(8, size - 1 - i, 0); setFn(size - 1 - i, 8, 0); }
+    setFn(size - 8, 8, 1);
+    if (ver >= 7) {
+      const vBits = bch(ver, 0x1F25, 12, 6);
+      for (let i = 0; i < 18; i++) { const bit = (vBits >>> i) & 1, a = Math.floor(i / 3), b = size - 11 + (i % 3); setFn(a, b, bit); setFn(b, a, bit); }
+    }
+    let bitIdx = 0;
+    const totalBits = finalCw.length * 8;
+    for (let col = size - 1; col >= 1; col -= 2) {
+      if (col === 6) col--;
+      const upward = (((size - 1 - col) >> 1) & 1) === 0;
+      for (let step = 0; step < size; step++) {
+        const r = upward ? (size - 1 - step) : step;
+        for (let dc = 0; dc < 2; dc++) {
+          const c = col - dc;
+          if (!isFn[r][c]) { mat[r][c] = bitIdx < totalBits ? ((finalCw[bitIdx >> 3] >>> (7 - (bitIdx & 7))) & 1) : 0; bitIdx++; }
+        }
+      }
+    }
+    const maskFns = [
+      (r, c) => (r + c) % 2 === 0, (r) => r % 2 === 0, (r, c) => c % 3 === 0, (r, c) => (r + c) % 3 === 0,
+      (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0, (r, c) => ((r * c) % 2 + (r * c) % 3) === 0,
+      (r, c) => (((r * c) % 2 + (r * c) % 3) % 2) === 0, (r, c) => (((r + c) % 2 + (r * c) % 3) % 2) === 0
+    ];
+    const coords1 = [[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]];
+    const coords2 = [[size-1,8],[size-2,8],[size-3,8],[size-4,8],[size-5,8],[size-6,8],[size-7,8],[8,size-8],[8,size-7],[8,size-6],[8,size-5],[8,size-4],[8,size-3],[8,size-2],[8,size-1]];
+    let bestGrid = null, bestPen = 1e9;
+    for (let m = 0; m < 8; m++) {
+      const g = mat.map((row, r) => Array.from(row, (v, c) => (!isFn[r][c] && maskFns[m](r, c)) ? (v ^ 1) : v));
+      const fmt = bch(m, 0x537, 10, 5) ^ 0x5412;
+      for (let i = 0; i < 15; i++) { const b = (fmt >>> (14 - i)) & 1; g[coords1[i][0]][coords1[i][1]] = b; g[coords2[i][0]][coords2[i][1]] = b; }
+      let pen = 0;
+      for (let r = 1; r < size; r++) for (let c = 1; c < size; c++) if (g[r][c] === g[r-1][c] && g[r][c] === g[r][c-1] && g[r][c] === g[r-1][c-1]) pen += 3;
+      if (pen < bestPen) { bestPen = pen; bestGrid = g; }
+    }
+    return bestGrid;
+  }
+
+  function buildQrSvgMarkup(url) {
+    const grid = generateQrMatrixISO(url);
+    const sz = grid.length, quiet = 4, total = sz + quiet * 2;
+    const rects = [];
+    for (let r = 0; r < sz; r++) for (let c = 0; c < sz; c++) {
+      if (grid[r][c]) rects.push(`<rect x="${c + quiet}" y="${r + quiet}" width="1" height="1" fill="#0f172a"/>`);
+    }
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" width="188" height="188" shape-rendering="crispEdges" style="background:#fff; border-radius:10px; border:1px solid #e2e8f0;">${rects.join("")}</svg>`;
+  }
+
+  function openQrStandDrawer() {
+    const rep = STATE.report;
+    const mapsUrl = "https://maps.google.com/?q=" + encodeURIComponent((rep.businessName || "") + " " + (rep.location && rep.location.city || ""));
+    const rawSite = (rep.contacts && rep.contacts.website && rep.contacts.website !== "N/A") ? String(rep.contacts.website).trim() : "";
+    const defaultUrl = rawSite && rawSite.length <= 140 ? rawSite : mapsUrl;
+    const svgHtml = buildQrSvgMarkup(defaultUrl);
+    openDrawer("🖨️ Конструктор QR-стенда на кассу (ISO QR)", "Настоящий сканируемый QR-код · Без подкупа за отзывы (UWG)", `
+      <div class="dr-field" style="margin-bottom:12px;">
+        <label>Целевая ссылка QR-кода (можно вставить прямую ссылку на Google-отзывы)</label>
+        <input id="qrTargetUrlInp" type="url" value="${esc(defaultUrl)}">
+      </div>
+      <div style="background:#fff; color:#0f172a; border-radius:14px; padding:22px; text-align:center; border:2px dashed #cbd5e1;">
+        <div style="font-size:12px; font-weight:800; text-transform:uppercase; color:#059669;">${esc(rep.businessName)}</div>
+        <h3 style="margin:6px 0 12px; font-size:19px;">Поделитесь честным мнением о визите!</h3>
+        <div id="qrSvgHost">${svgHtml}</div>
+        <div style="font-size:11.5px; color:#475569; margin-top:10px;">Наведите камеру смартфона — займёт 20 секунд. Спасибо!</div>
+      </div>`, `
+      <button class="btn btn-sm" id="dlQrSvgBtn">⬇️ Скачать SVG</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Печать (A5 / A6)</button>`);
+    const inp = $("qrTargetUrlInp"), host = $("qrSvgHost");
+    if (inp && host) {
+      inp.addEventListener("input", () => { const v = inp.value.trim(); if (v.length >= 4) host.innerHTML = buildQrSvgMarkup(v); });
+    }
+    if ($("dlQrSvgBtn")) {
+      $("dlQrSvgBtn").addEventListener("click", () => {
+        const curSvg = (host && host.innerHTML) || svgHtml;
+        const blob = new Blob([curSvg], { type: "image/svg+xml;charset=utf-8" });
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "QR_" + String(rep.businessName || "business").replace(/[^a-zA-Z0-9_-]+/g, "_") + ".svg";
+        a.click(); showToast("✅ Реальный ISO QR-код сохранён (SVG)");
+      });
+    }
   }
 
   function openCfTableDrawer() {
@@ -3009,6 +3170,21 @@ body { font-size: 14px; }
         </div>
       </div>
 
+      <div class="b-card" style="margin-bottom:14px; border-color:var(--border-strong);">
+        <div class="b-card-top">
+          <span class="b-lbl">🔐 Защита портала и ключей (Admin PIN)</span>
+          <span class="badge amber" id="pinStatusBadge">Проверка...</span>
+        </div>
+        <div class="b-sub" style="line-height:1.45;">Закрывает запись ключей Serper, отправку писем с вашей почты и просмотр истории сканов. PIN хранится в вашем браузере и проверяется на сервере GAS.</div>
+        <div class="dr-grid">
+          <div class="dr-field"><label>Ваш текущий PIN (для доступа с этого браузера)</label><input id="adminPinLocalInp" type="password" autocomplete="off" value="${esc(STATE.adminPin)}" placeholder="Минимум 4 символа"></div>
+          <div class="dr-field"><label>Задать / сменить серверный PIN в GAS</label><input id="adminPinNewInp" type="password" autocomplete="off" placeholder="Новый PIN (если хотите сменить)"></div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:6px; flex-wrap:wrap;">
+          <button class="btn btn-sm" id="saveServerPinBtn">🔐 Установить PIN на сервере</button>
+        </div>
+      </div>
+
       <div class="dr-field" style="margin-bottom:10px;"><label>GAS Web App URL</label><input id="apiUrlInput" type="url" value="${esc(STATE.apiUrl)}"></div>
       <div class="dr-grid" style="margin-bottom:10px;">
         <div class="dr-field"><label>Режим роя моделей</label><select id="setEngineSel" class="inp" style="height:38px;"><option value="argon_pro" ${STATE.engineMode === "argon_pro" ? "selected" : ""}>Argon Pro (5 Директоров + Суд)</option><option value="fast_flash" ${STATE.engineMode === "fast_flash" ? "selected" : ""}>Turbo Flash (~15–20 сек)</option></select></div>
@@ -3020,7 +3196,11 @@ body { font-size: 14px; }
       <button class="btn btn-primary" id="saveApiUrlBtn">Сохранить настройки</button>`);
 
     const updateRatBadge = (st) => {
-      const b = $("ratStatusBadge"), h = $("ratStatusHint");
+      const b = $("ratStatusBadge"), h = $("ratStatusHint"), pb = $("pinStatusBadge");
+      if (pb && st) {
+        if (st.hasAdminPin) { pb.className = "badge green"; pb.textContent = "🟢 Защищён PIN"; }
+        else { pb.className = "badge amber"; pb.textContent = "🟡 PIN не задан (открыт)"; }
+      }
       if (!b || !st) return;
       if (st.hasSerper) { b.className = "badge green"; b.textContent = "🟢 Serper.dev (" + (st.serperMasked || "OK") + ")"; if (h) h.textContent = "Живые звёзды Google Maps + реальные 1–2★ отзывы для Kill-Sheet активны!"; }
       else if (st.hasGooglePlaces) { b.className = "badge green"; b.textContent = "🟢 Google Places (" + (st.googleMasked || "OK") + ")"; if (h) h.textContent = "Google Places API Free Tier активен для рейтингов и отзывов."; }
@@ -3062,9 +3242,31 @@ body { font-size: 14px; }
       finally { btn.disabled = false; btn.textContent = "⭐ Сохранить ключ"; }
     });
 
+    if ($("saveServerPinBtn")) {
+      $("saveServerPinBtn").addEventListener("click", async () => {
+        const curP = ($("adminPinLocalInp") && $("adminPinLocalInp").value.trim()) || STATE.adminPin || "";
+        const nextP = ($("adminPinNewInp") && $("adminPinNewInp").value.trim()) || curP;
+        if (nextP.length < 4) { showToast("Введите PIN минимум 4 символа", 3500); return; }
+        const btn = $("saveServerPinBtn"); btn.disabled = true; btn.textContent = "Сохранение...";
+        try {
+          const res = await apiPost({ action: "save_admin_pin", currentPin: curP, newPin: nextP });
+          if (res && res.status === "success") {
+            STATE.adminPin = nextP;
+            localStorage.setItem("b2b_v9_admin_pin", nextP);
+            if ($("adminPinLocalInp")) $("adminPinLocalInp").value = nextP;
+            if ($("adminPinNewInp")) $("adminPinNewInp").value = "";
+            updateRatBadge(res);
+            showToast("🔐 Admin PIN установлен на сервере GAS и сохранён в браузере!", 5000);
+          } else throw new Error((res && res.message) || "Не удалось установить PIN");
+        } catch (e) { showToast("Ошибка PIN: " + e.message, 4500); }
+        finally { btn.disabled = false; btn.textContent = "🔐 Установить PIN на сервере"; }
+      });
+    }
     $("resetApiDefBtn").addEventListener("click", () => { $("apiUrlInput").value = DEFAULT_GAS_URL; });
     $("saveApiUrlBtn").addEventListener("click", () => {
       STATE.apiUrl = $("apiUrlInput").value.trim() || DEFAULT_GAS_URL;
+      STATE.adminPin = ($("adminPinLocalInp") && $("adminPinLocalInp").value.trim()) || "";
+      localStorage.setItem("b2b_v9_admin_pin", STATE.adminPin);
       STATE.engineMode = $("setEngineSel").value;
       STATE.autoEmail = $("setAutoMailInp").value.trim();
       STATE.autoEmailOn = $("setAutoMailOn").checked;
@@ -3140,15 +3342,23 @@ body { font-size: 14px; }
 
     const psiBtn = $("runPsiBtn");
     if (psiBtn) psiBtn.addEventListener("click", async () => {
-      psiBtn.disabled = true; psiBtn.textContent = "⏳ Замер...";
-      if (STATE.apiUrl && STATE.report.contacts && STATE.report.contacts.website && STATE.report.contacts.website !== "N/A") {
-        try {
-          const [m, d] = await Promise.all([apiGet({ action: "pagespeed", url: STATE.report.contacts.website, strategy: "mobile" }), apiGet({ action: "pagespeed", url: STATE.report.contacts.website, strategy: "desktop" })]);
-          STATE.pageSpeedCache = { mob: (m && m.data && m.data.score) || 64, desk: (d && d.data && d.data.score) || 88 };
-          renderActiveSection(); showToast("⚡ PageSpeed замерен"); return;
-        } catch (e) {}
+      const site = STATE.report && STATE.report.contacts && STATE.report.contacts.website;
+      if (!site || site === "N/A") { showToast("У компании не обнаружен сайт — замер PageSpeed невозможен", 4000); return; }
+      if (!STATE.apiUrl) { showToast("Подключите GAS API для живого замера Google PageSpeed", 4000); return; }
+      psiBtn.disabled = true; psiBtn.textContent = "⏳ Замер Google PSI...";
+      try {
+        const [m, d] = await Promise.all([apiGet({ action: "pagespeed", url: site, strategy: "mobile" }), apiGet({ action: "pagespeed", url: site, strategy: "desktop" })]);
+        const mobVal = Number(m && m.data && m.data.score), deskVal = Number(d && d.data && d.data.score);
+        if (mobVal > 0 || deskVal > 0) {
+          STATE.pageSpeedCache = { mob: mobVal > 0 ? mobVal : "N/A", desk: deskVal > 0 ? deskVal : "N/A" };
+          renderActiveSection(); showToast("⚡ Живой PageSpeed замерен"); return;
+        }
+        throw new Error((m && m.message) || "Google PageSpeed API не вернул оценку");
+      } catch (e) {
+        STATE.pageSpeedCache = null;
+        psiBtn.disabled = false; psiBtn.textContent = "⚡ Повторить замер";
+        showToast("⚠️ PageSpeed API временно недоступен (" + String(e.message || "таймаут").slice(0, 60) + ")", 5000);
       }
-      STATE.pageSpeedCache = { mob: 62, desk: 86 }; renderActiveSection(); showToast("⚡ PageSpeed готов");
     });
 
     if ($("arenaCsvBtn")) $("arenaCsvBtn").addEventListener("click", exportCsvBase);
@@ -3199,9 +3409,12 @@ body { font-size: 14px; }
         }
       };
       const onUp = () => { if (!dragging) return; dragging = false; mapWrap.classList.remove("dragging"); setTimeout(() => { STATE.mapState._dragged = false; }, 60); };
-      mapWrap.addEventListener("mousedown", (e) => { if (e.target.closest("button")) return; onDown(e.clientX, e.clientY); });
-      window.addEventListener("mousemove", (e) => onMove(e.clientX, e.clientY));
+      if (typeof window._b2bMapCleanup === "function") { try { window._b2bMapCleanup(); } catch (ce) {} }
+      const winMove = (e) => onMove(e.clientX, e.clientY);
+      window.addEventListener("mousemove", winMove);
       window.addEventListener("mouseup", onUp);
+      window._b2bMapCleanup = () => { window.removeEventListener("mousemove", winMove); window.removeEventListener("mouseup", onUp); };
+      mapWrap.addEventListener("mousedown", (e) => { if (e.target.closest("button")) return; onDown(e.clientX, e.clientY); });
       mapWrap.addEventListener("touchstart", (e) => { if (e.touches.length === 1 && !e.target.closest("button")) onDown(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
       mapWrap.addEventListener("touchmove", (e) => { if (e.touches.length === 1 && dragging) onMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
       mapWrap.addEventListener("touchend", onUp);

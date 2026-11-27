@@ -1,5 +1,19 @@
 [
   {
+    "id": "1v7ZgAvBy8Whp6yl07rRwzvne9wz34lxA",
+    "name": "MediaMarkt Kleve",
+    "niche": "Электронный магазин и бытовая техника",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Stechbahn 19-23",
+    "website": "https://www.mediamarkt.de/de/store/kleve-79",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=mediamarkt.de",
+    "rating": "4.0/5.0",
+    "score": 58,
+    "schemaVersion": "10.1",
+    "createdAt": "2026-11-27T15:07:32.269Z"
+  },
+  {
     "id": "1G-88VPd0DLTnWD2IVLJI59GA6enulgTB",
     "name": "Pesami Kleve",
     "niche": "Ресторан",
@@ -723,20 +737,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8",
     "createdAt": "2026-11-25T18:56:01.805Z"
-  },
-  {
-    "id": "1Zvq0DvjugEDAX64R-80e63tXp0XObgDb",
-    "name": "Bundespolizeiinspektion Kleve",
-    "niche": "Государственная полиция федеральной безопасности",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 92",
-    "website": "https://www.bundespolizei.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=bundespolizei.de",
-    "rating": "N/A",
-    "score": 61,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8",
-    "createdAt": "2026-11-25T18:38:32.889Z"
   }
 ]

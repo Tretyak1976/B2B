@@ -1,5 +1,20 @@
 [
   {
+    "id": "1uei_ne0RGnz5Aot_kyGDM5ZNYuemiInS",
+    "name": "Wolfgang Strack Global-Finanz",
+    "niche": "Финансовое посредничество и страхование (Versicherungsmakler)",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Emmericher Straße 252",
+    "website": "https://strack.global-finanz.de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=strack.global-finanz.de",
+    "rating": "5.0/5.0",
+    "score": 72,
+    "modelsUsed": 7,
+    "schemaVersion": "8.8.9",
+    "createdAt": "2026-11-27T09:07:27.017Z"
+  },
+  {
     "id": "14dkPY7UobS3InyPUkOD6AqJopMLnbTpN",
     "name": "Möbel Kleinmanns",
     "niche": "Мебельный ритейл",
@@ -733,20 +748,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.4",
     "createdAt": "2026-11-25T17:14:21.299Z"
-  },
-  {
-    "id": "1NWUHYjmDyPOkbhP_hvoOC9W1HLY6J5Bd",
-    "name": "Shopping Manaus ViaNorte",
-    "niche": "Торговый центр розничной торговли",
-    "country": "Бразилия",
-    "city": "Manaus",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 58,
-    "modelsUsed": 7,
-    "schemaVersion": "8.3",
-    "createdAt": "2026-11-25T11:34:02.208Z"
   }
 ]

@@ -1,5 +1,20 @@
 [
   {
+    "id": "1ToTx8nnXqPzCrX4mpjUaFbNA4xD9DR0Z",
+    "name": "Tichelpark Cinemas",
+    "niche": "Кинотеатры и развлекательные центры",
+    "country": "Германия",
+    "city": "Kleve",
+    "street": "Tichelstraße 12",
+    "website": "https://www.kleverkinos.de/index.php?show=week&targetkino=kontakt",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kleverkinos.de",
+    "rating": "4.4/5.0",
+    "score": 73,
+    "modelsUsed": 8,
+    "schemaVersion": "8.8.8",
+    "createdAt": "2026-11-27T08:12:57.887Z"
+  },
+  {
     "id": "1my_hlcjLhhOKS4t28SC_6fducT8heV4w",
     "name": "Marani",
     "niche": "Грузинская кухня в ресторане",
@@ -727,17 +742,5 @@
     "modelsUsed": 8,
     "schemaVersion": "7.1",
     "createdAt": "2026-11-24T12:50:30.483Z"
-  },
-  {
-    "id": "1U-8NLy-xCeJEZqlEzZcy3S0_BVym7kfu",
-    "name": "Thünnesen Bäckereimaschinen",
-    "niche": "Bäckereimaschinen",
-    "country": "Германия",
-    "city": "Weeze",
-    "rating": "N/A",
-    "score": 62,
-    "modelsUsed": 6,
-    "schemaVersion": "7.0",
-    "createdAt": "2026-11-24T12:10:56.463Z"
   }
 ]

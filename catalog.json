@@ -1,5 +1,18 @@
 [
   {
+    "id": "1CwIckM3_0PrOKfZ4B04cP8FxHX4U-9HJ",
+    "name": "Frau Emma - Drinks Snacks Food",
+    "niche": "Кав'ярня‑закусочна",
+    "country": "Німеччина",
+    "city": "Kleve",
+    "website": "",
+    "logoUrl": "",
+    "rating": "1.0/5.0",
+    "score": 45,
+    "schemaVersion": "10.0",
+    "createdAt": "2026-11-27T14:34:38.674Z"
+  },
+  {
     "id": "1gHbSqRr6EWs67hh1zrivaEedp42H2W1j",
     "name": "Total",
     "niche": "АЗС та продаж пального",
@@ -729,20 +742,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.7",
     "createdAt": "2026-11-25T18:00:45.789Z"
-  },
-  {
-    "id": "1WnU8K8gepDD5XsXKQgRSJmJRhZ2WLJAv",
-    "name": "Hagebaumarkt Swertz Kleve",
-    "niche": "Строительный гипермаркет (DIY и садоводство)",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Ludwig-Jahn-Straße",
-    "website": "https://www.swertz-bauzentrum.de/hagebaumaerkte/hagebaumarkt-kleve/mn_9",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=swertz-bauzentrum.de",
-    "rating": "N/A",
-    "score": 61,
-    "modelsUsed": 8,
-    "schemaVersion": "8.7",
-    "createdAt": "2026-11-25T17:56:18.066Z"
   }
 ]

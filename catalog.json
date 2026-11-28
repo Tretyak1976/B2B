@@ -1,5 +1,19 @@
 [
   {
+    "id": "1L6FBe9slNt3cEM1thnB0gFZQrgsh9T6v",
+    "name": "Youtube.Com",
+    "niche": "Онлайн‑контент и видеопродакшн",
+    "country": "Германия",
+    "city": "Korb",
+    "address": "Германия, Korb, Lindenstraße",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 58,
+    "schemaVersion": "10.5",
+    "createdAt": "2026-11-28T08:35:08.437Z"
+  },
+  {
     "id": "1NePT99YeWGV0QouTmMomMoasWBS9gmqX",
     "name": "Hotel Plaza Uruapan",
     "niche": "Отель",
@@ -711,20 +725,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.3",
     "createdAt": "2026-11-26T13:02:50.336Z"
-  },
-  {
-    "id": "10AbKNuAkZPO1AZ1LFTqYlR6ou6PT6j75",
-    "name": "Elterninitiative Integrative Kindertagesstätte Regenbogen e.V.",
-    "niche": "Интегративные дошкольные образовательные услуги",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Stadionstraße 56",
-    "website": "https://regenbogen-kita.net",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=regenbogen-kita.net",
-    "rating": "N/A",
-    "score": 58,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.3",
-    "createdAt": "2026-11-26T12:50:09.677Z"
   }
 ]

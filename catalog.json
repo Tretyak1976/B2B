@@ -1,5 +1,19 @@
 [
   {
+    "id": "1YpAt2awqW8kusOXdQ_olQ10qiSUv8mgO",
+    "name": "Keuken Studio Peter Boekesteijn (KSPB)",
+    "niche": "Кухонные студии и мебель",
+    "country": "Нидерланды",
+    "city": "Westervoort",
+    "address": "Нидерланды, Westervoort, Het Vergun 30",
+    "website": "http://www.kspb.nl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 68,
+    "schemaVersion": "11.1",
+    "createdAt": "2026-11-28T09:17:58.269Z"
+  },
+  {
     "id": "1PUc8eGXWEMBbpphE-W1KEglEb323CeTJ",
     "name": "K Kiosk - Interpresse",
     "niche": "Киоск с закусками",
@@ -697,20 +711,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.6",
     "createdAt": "2026-11-26T15:41:56.378Z"
-  },
-  {
-    "id": "1Urz5ryqhzqKOGu3I2OCZGwEHMg-Ojzqy",
-    "name": "Holzleitner",
-    "niche": "Розничная торговля бытовой электроникой и крупной бытовой техникой",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 238",
-    "website": "https://www.holzleitner.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=holzleitner.de",
-    "rating": "N/A",
-    "score": 61,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.6",
-    "createdAt": "2026-11-26T15:33:59.617Z"
   }
 ]

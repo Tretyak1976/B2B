@@ -1,5 +1,19 @@
 [
   {
+    "id": "1NePT99YeWGV0QouTmMomMoasWBS9gmqX",
+    "name": "Hotel Plaza Uruapan",
+    "niche": "Отель",
+    "country": "Мексика",
+    "city": "Uruapan",
+    "address": "Мексика, Uruapan, Ocampo 64",
+    "website": "http://www.hotelplazauruapan.com.mx/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=hotelplazauruapan.com.mx",
+    "rating": "4.5/5.0",
+    "score": 78,
+    "schemaVersion": "10.5",
+    "createdAt": "2026-11-28T08:29:56.823Z"
+  },
+  {
     "id": "1ls2WxSNC5GUfxGX3XripJiIdTwQQEqoV",
     "name": "Bundespolizeiinspektion Kleve",
     "niche": "Полицейская инспекция",
@@ -712,20 +726,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.3",
     "createdAt": "2026-11-26T12:50:09.677Z"
-  },
-  {
-    "id": "11U_3RUB4CxrR0W-8ydmkjcIceuFpvqo8",
-    "name": "Frieden Döner",
-    "niche": "Фаст‑фуд донер и уличная еда",
-    "country": "Индия",
-    "city": "Мумбаи",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 58,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.2",
-    "createdAt": "2026-11-26T12:18:15.555Z"
   }
 ]

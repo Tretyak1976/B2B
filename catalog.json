@@ -1,5 +1,19 @@
 [
   {
+    "id": "1AgNGy7jaI6609pi7dm5GhSw1nmuI01Tl",
+    "name": "Pâtisserie Riviera",
+    "niche": "Кондитерская",
+    "country": "",
+    "city": "Monaco",
+    "address": "Monaco, 27 Bd des Moulins, 98000 Monaco",
+    "website": "https://www.riviera1955.com/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=riviera1955.com",
+    "rating": "4.4/5.0",
+    "score": 68,
+    "schemaVersion": "10.5",
+    "createdAt": "2026-11-28T08:22:54.645Z"
+  },
+  {
     "id": "1Vr_3gKPQDZhO5ahmCUkvtAPuNCwV6Ab4",
     "name": "Chocolatería Puerta Del Sol - Spanish Food - Chocolate & Churros - Churrería",
     "niche": "Чуррос и шоколадные напитки",
@@ -713,20 +727,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T12:18:15.555Z"
-  },
-  {
-    "id": "1H4Z3yJaziuFV_IV1ccqL0jhfc6JUat93",
-    "name": "Circle K",
-    "niche": "Топливные станции и автосервисы",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 99",
-    "website": "https://www.circlek-deutschland.de/tankstellenfinder",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=circlek-deutschland.de",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 6,
-    "schemaVersion": "8.8.2",
-    "createdAt": "2026-11-26T12:11:07.472Z"
   }
 ]

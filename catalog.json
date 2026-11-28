@@ -1,5 +1,19 @@
 [
   {
+    "id": "19ueLfPbZfEdN_19nIfPPoGd0jfAiVELh",
+    "name": "Largs Pier Hotel",
+    "niche": "Отель и паб",
+    "country": "Австралия",
+    "city": "Largs Bay SA",
+    "address": "Австралия, Largs Bay SA, 198 Esplanade",
+    "website": "https://largspierhotel.com.au/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=largspierhotel.com.au",
+    "rating": "4.3/5.0",
+    "score": 68,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:37:56.412Z"
+  },
+  {
     "id": "1L6FBe9slNt3cEM1thnB0gFZQrgsh9T6v",
     "name": "Youtube.Com",
     "niche": "Онлайн‑контент и видеопродакшн",
@@ -710,20 +724,5 @@
     "modelsUsed": 6,
     "schemaVersion": "8.8.3",
     "createdAt": "2026-11-26T13:19:34.472Z"
-  },
-  {
-    "id": "1haA4WIWKr6BLp0hsIlD0zQAN6vLH3rad",
-    "name": "Hotel Der Holländer",
-    "niche": "Бюджетный отель в пригороде",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Nimweger Straße 76",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 50,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.3",
-    "createdAt": "2026-11-26T13:02:50.336Z"
   }
 ]

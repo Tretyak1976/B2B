@@ -1,5 +1,19 @@
 [
   {
+    "id": "1ls2WxSNC5GUfxGX3XripJiIdTwQQEqoV",
+    "name": "Bundespolizeiinspektion Kleve",
+    "niche": "Полицейская инспекция",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 92-94",
+    "website": "https://www.bundespolizei.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=bundespolizei.de",
+    "rating": "N/A",
+    "score": 68,
+    "schemaVersion": "10.5",
+    "createdAt": "2026-11-28T08:27:55.104Z"
+  },
+  {
     "id": "1AgNGy7jaI6609pi7dm5GhSw1nmuI01Tl",
     "name": "Pâtisserie Riviera",
     "niche": "Кондитерская",
@@ -82,20 +96,6 @@
     "score": 60,
     "schemaVersion": "10.3",
     "createdAt": "2026-11-27T18:32:06.830Z"
-  },
-  {
-    "id": "1nGdG9Kpzz_p22GdB0Rrx1XjcEIGbinCy",
-    "name": "Bundespolizeiinspektion Kleve",
-    "niche": "Полиция",
-    "country": "Германия",
-    "city": "Kleve",
-    "address": "Германия, Kleve, Emmericher Str. 92-94",
-    "website": "https://www.bundespolizei.de/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=bundespolizei.de",
-    "rating": "N/A",
-    "score": 30,
-    "schemaVersion": "10.2",
-    "createdAt": "2026-11-27T15:29:47.615Z"
   },
   {
     "id": "1cBxtH2wC0Waq4FnzjaTtdVUxV2e1I6Sn",

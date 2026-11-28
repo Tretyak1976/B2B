@@ -1,5 +1,19 @@
 [
   {
+    "id": "1ue7wP6CzU6l0Hr29Y7MTYtrWEz5Qvt9h",
+    "name": "Bittan Market",
+    "niche": "рынок продуктов и товаров повседневного спроса",
+    "country": "IN",
+    "city": "Indien",
+    "address": "IN, Indien, Opposite Habibganj Police Station",
+    "website": "",
+    "logoUrl": "",
+    "rating": "4.2/5.0",
+    "score": 68,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:41:28.849Z"
+  },
+  {
     "id": "1TEMCFcaLlTDMjKf3qd4GKN8UUa_UA6pF",
     "name": "สวรรค์บ้านไร่",
     "niche": "Тайская ресторанная кухня",
@@ -708,20 +722,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T13:45:23.863Z"
-  },
-  {
-    "id": "1GGQ8ls-PnM_D5F-GTuV0aR5pBK-iwN4U",
-    "name": "Sparkasse Rhein-Maas Hauptstelle Kleve",
-    "niche": "Розничный и корпоративный банковский сервис",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hagsche Straße 33",
-    "website": "https://www.sparkasse.de/standorte/filialen/sparkasse-rhein-maas-hauptstelle-kleve-101507",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=sparkasse.de",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T13:28:41.518Z"
   }
 ]

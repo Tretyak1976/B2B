@@ -1,5 +1,19 @@
 [
   {
+    "id": "1nwoqspLTlR9M8EUJ0Cvr8vchik6TwBkW",
+    "name": "Jemy Kremy cukiernia, piekarnia i kawiarnia",
+    "niche": "Веганская кондитерская и кафе",
+    "country": "Польша",
+    "city": "90-263 Łódź",
+    "address": "Польша, 90-263 Łódź, Włókiennicza 1",
+    "website": "https://jemykremy.pl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=jemykremy.pl",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:01:24.895Z"
+  },
+  {
     "id": "1kE1FXE3milgmZ5BEZJ_84Ke7FU6TOjLU",
     "name": "El Poncho",
     "niche": "Стейкхаус",
@@ -705,20 +719,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:15:13.267Z"
-  },
-  {
-    "id": "1kUvqvkEQMlo4wRMwwmeusGUoRuBCtiwi",
-    "name": "McCafé",
-    "niche": "Кофейня",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Van-den-Bergh-Straße 64",
-    "website": "https://www.mcdonalds.com/de/de-de/restaurant-suche.html/l/kleve/van-den-bergh-strasse-64/1103",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=mcdonalds.com",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:00:58.577Z"
   }
 ]

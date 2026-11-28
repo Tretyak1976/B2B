@@ -1,5 +1,19 @@
 [
   {
+    "id": "1xz0frAivof2Me-2-vRUMPv_KU3x-fOxS",
+    "name": "Keuken Studio Peter Boekesteijn (KSPB)",
+    "niche": "Кухонный дизайн и мебель",
+    "country": "Нидерланды",
+    "city": "Westervoort",
+    "address": "Нидерланды, Westervoort, Het Vergun 30",
+    "website": "http://www.kspb.nl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 70,
+    "schemaVersion": "11.2",
+    "createdAt": "2026-11-28T09:29:57.891Z"
+  },
+  {
     "id": "1J91zWlf7MY7b0USOVMsBxJrowXTBYCI8",
     "name": "De Geest Brussels",
     "niche": "Прачечная",
@@ -40,20 +54,6 @@
     "score": 72,
     "schemaVersion": "11.1",
     "createdAt": "2026-11-28T09:20:32.988Z"
-  },
-  {
-    "id": "1YpAt2awqW8kusOXdQ_olQ10qiSUv8mgO",
-    "name": "Keuken Studio Peter Boekesteijn (KSPB)",
-    "niche": "Кухонные студии и мебель",
-    "country": "Нидерланды",
-    "city": "Westervoort",
-    "address": "Нидерланды, Westervoort, Het Vergun 30",
-    "website": "http://www.kspb.nl/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
-    "rating": "4.9/5.0",
-    "score": 68,
-    "schemaVersion": "11.1",
-    "createdAt": "2026-11-28T09:17:58.269Z"
   },
   {
     "id": "1PUc8eGXWEMBbpphE-W1KEglEb323CeTJ",

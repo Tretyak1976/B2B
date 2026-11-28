@@ -1,5 +1,19 @@
 [
   {
+    "id": "1ZtGJnXhR_11FreEXd3mlODQ-S2PMlaw1",
+    "name": "Daggis Hundesnacks & BARF-Shop",
+    "niche": "Петшоп и товары для собак",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 114",
+    "website": "http://www.barf-kleve.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=barf-kleve.de",
+    "rating": "4.7/5.0",
+    "score": 65,
+    "schemaVersion": "11.4",
+    "createdAt": "2026-11-28T10:06:27.615Z"
+  },
+  {
     "id": "1Teh-Ep6S5vC16F5QOir9Rllxt6hn65yx",
     "name": "Sportbedarf Kleve Stefan Klümpen",
     "niche": "Спортивные товары",
@@ -334,20 +348,6 @@
     "score": 68,
     "schemaVersion": "10.5",
     "createdAt": "2026-11-28T08:21:24.758Z"
-  },
-  {
-    "id": "13pBnMtBsXCm8cFyoajsf_Pv-gwAZQ5yr",
-    "name": "Daggis Hundesnacks & BARF-Shop",
-    "niche": "магазин товаров для собак и BARF‑питание",
-    "country": "Германия",
-    "city": "Kleve",
-    "address": "Германия, Kleve, Emmericher Str. 114",
-    "website": "http://www.barf-kleve.de/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=barf-kleve.de",
-    "rating": "4.7/5.0",
-    "score": 78,
-    "schemaVersion": "10.5",
-    "createdAt": "2026-11-28T08:18:57.362Z"
   },
   {
     "id": "1krdLfsH_NDdDVD3bAj89aCMhQCRDPTif",

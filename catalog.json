@@ -1,5 +1,19 @@
 [
   {
+    "id": "1c1iAc45HDOeCJJ3Gf2xdpYfGBughMa4U",
+    "name": "Hotel Plaza Uruapan",
+    "niche": "Отель",
+    "country": "Мексика",
+    "city": "Uruapan",
+    "address": "Мексика, Uruapan, Ocampo 64",
+    "website": "http://www.hotelplazauruapan.com.mx/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=hotelplazauruapan.com.mx",
+    "rating": "4.5/5.0",
+    "score": 78,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:39:45.577Z"
+  },
+  {
     "id": "1AIewVIQSBeMlSfSCcrw2HqEBMM9lp21k",
     "name": "Pâtisserie Riviera",
     "niche": "Кондитерская",
@@ -40,20 +54,6 @@
     "score": 58,
     "schemaVersion": "10.5",
     "createdAt": "2026-11-28T08:35:08.437Z"
-  },
-  {
-    "id": "1NePT99YeWGV0QouTmMomMoasWBS9gmqX",
-    "name": "Hotel Plaza Uruapan",
-    "niche": "Отель",
-    "country": "Мексика",
-    "city": "Uruapan",
-    "address": "Мексика, Uruapan, Ocampo 64",
-    "website": "http://www.hotelplazauruapan.com.mx/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=hotelplazauruapan.com.mx",
-    "rating": "4.5/5.0",
-    "score": 78,
-    "schemaVersion": "10.5",
-    "createdAt": "2026-11-28T08:29:56.823Z"
   },
   {
     "id": "1ls2WxSNC5GUfxGX3XripJiIdTwQQEqoV",

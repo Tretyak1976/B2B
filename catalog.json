@@ -1,5 +1,19 @@
 [
   {
+    "id": "1okVpboJ1fevJmLwOXhq9uoHka6ISJUIc",
+    "name": "Restaurant Westerbachhalle Eschborn",
+    "niche": "Средиземноморская кухня в ресторане",
+    "country": "Германия",
+    "city": "Eschborn-Niederhöchstadt",
+    "address": "Германия, Eschborn-Niederhöchstadt, Georg-Büchner-Straße 30",
+    "website": "https://www.restaurantwesterbachhalle.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=restaurantwesterbachhalle.de",
+    "rating": "4.5/5.0",
+    "score": 68,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:13:40.290Z"
+  },
+  {
     "id": "1SNp7fTw_gDPWj9ZUGvQGFmEVWnl05TZp",
     "name": "Netto Marken-Discount",
     "niche": "Супермаркет",
@@ -701,20 +715,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.5",
     "createdAt": "2026-11-26T15:08:41.043Z"
-  },
-  {
-    "id": "1pec5eE7yA88Y1ljnc1jCP-WphGHR18tA",
-    "name": "Mango",
-    "niche": "розничная торговля модой",
-    "country": "Испания",
-    "city": "Барселона",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:41:23.810Z"
   }
 ]

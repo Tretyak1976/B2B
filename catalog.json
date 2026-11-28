@@ -1,5 +1,19 @@
 [
   {
+    "id": "17d91uPEvmbhoaOIEe4hAGwMfnGZXsEwj",
+    "name": "Billy King Pharmacy",
+    "niche": "Аптека",
+    "country": "Ирландия",
+    "city": "Co. Galway",
+    "address": "Ирландия, Co. Galway, 2 Dunlo Hill",
+    "website": "",
+    "logoUrl": "",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "schemaVersion": "11.1",
+    "createdAt": "2026-11-28T09:21:21.989Z"
+  },
+  {
     "id": "11_a6SziVSyklAL7q1mflyl7_16XDH1mL",
     "name": "The Tuck Shop",
     "niche": "Кафе‑закусочная",
@@ -694,20 +708,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.8",
     "createdAt": "2026-11-26T16:48:05.710Z"
-  },
-  {
-    "id": "1y3OF_bsW_5hhE7oDqPBRbnXCtQBLab9A",
-    "name": "M & M Reifen",
-    "niche": "Шиномонтаж и автосервис",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Kalkarer Str. 17",
-    "website": "http://www.mum-reifen.com/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=mum-reifen.com",
-    "rating": "4.9/5.0",
-    "score": 86,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.7",
-    "createdAt": "2026-11-26T16:08:37.008Z"
   }
 ]

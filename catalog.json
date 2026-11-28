@@ -1,5 +1,19 @@
 [
   {
+    "id": "1TEMCFcaLlTDMjKf3qd4GKN8UUa_UA6pF",
+    "name": "สวรรค์บ้านไร่",
+    "niche": "Тайская ресторанная кухня",
+    "country": "",
+    "city": "Thailand",
+    "address": "Thailand, Unnamed Road Phra Non, Nakhon Luang District, Chang Wat Phra Nakhon Si Ayutthaya 13260",
+    "website": "https://www.wongnai.com/restaurants/160580fF-%E0%B8%AA%E0%B8%A7%E0%B8%A3%E0%B8%A3%E0%B8%84%E0%B9%8C%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%A3%E0%B9%88",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=wongnai.com",
+    "rating": "4.5/5.0",
+    "score": 68,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:40:41.672Z"
+  },
+  {
     "id": "1c1iAc45HDOeCJJ3Gf2xdpYfGBughMa4U",
     "name": "Hotel Plaza Uruapan",
     "niche": "Отель",
@@ -709,20 +723,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T13:28:41.518Z"
-  },
-  {
-    "id": "1XKl57yp6kCmwJoCfjhtVYGmmZ4vC5rqy",
-    "name": "Hotel-Restaurant Zur Post",
-    "niche": "Ресторан-отель с фокусом на стейк-хаус и семейный обед",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hagsche Straße 44",
-    "website": "https://www.hotel-zur-post-kleve.com/pages/restaurant.php?phpMyAdmin=R37wnpoL6va6AtSDeLL0IQrgAS5",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=hotel-zur-post-kleve.com",
-    "rating": "N/A",
-    "score": 55,
-    "modelsUsed": 6,
-    "schemaVersion": "8.8.3",
-    "createdAt": "2026-11-26T13:19:34.472Z"
   }
 ]

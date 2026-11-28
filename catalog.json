@@ -1,5 +1,19 @@
 [
   {
+    "id": "1gY2VZLRuHBbOpxlQv4zC8E5--NSl8fpR",
+    "name": "Daggis Hundesnacks & BARF-Shop",
+    "niche": "магазин кормов BARF и лакомств для собак",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 114",
+    "website": "http://www.barf-kleve.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=barf-kleve.de",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "schemaVersion": "10.4",
+    "createdAt": "2026-11-28T07:59:55.849Z"
+  },
+  {
     "id": "1a-bU-E5zoQcs_UZovdioGmuFuHe12dGb",
     "name": "TotalEnergies Tankstelle",
     "niche": "Заправочная станция",
@@ -717,20 +731,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T09:59:59.644Z"
-  },
-  {
-    "id": "1RHbJya-pxOJMLP_CeT_2IwZ8GEa3Nej8",
-    "name": "Коломак",
-    "niche": "железнодорожная станция",
-    "country": "Украина",
-    "city": "Шелестове",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 52,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.2",
-    "createdAt": "2026-11-26T09:49:45.558Z"
   }
 ]

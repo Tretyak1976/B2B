@@ -1,5 +1,19 @@
 [
   {
+    "id": "1YNAl_68eSrh443SLUrt4etLyobbz2rmV",
+    "name": "Largs Pier Hotel",
+    "niche": "Отель‑паб у пляжа",
+    "country": "Австралия",
+    "city": "Largs Bay SA",
+    "address": "Австралия, Largs Bay SA, 198 Esplanade",
+    "website": "https://largspierhotel.com.au/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=largspierhotel.com.au",
+    "rating": "4.3/5.0",
+    "score": 60,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:03:59.320Z"
+  },
+  {
     "id": "1Th3oh9VjtoFMesDgIS6cqkD_Nv2HyNax",
     "name": "Zucker & Zimt Café-Restaurant",
     "niche": "кафе‑ресторан",
@@ -124,20 +138,6 @@
     "score": 78,
     "schemaVersion": "10.6",
     "createdAt": "2026-11-28T08:39:06.706Z"
-  },
-  {
-    "id": "19ueLfPbZfEdN_19nIfPPoGd0jfAiVELh",
-    "name": "Largs Pier Hotel",
-    "niche": "Отель и паб",
-    "country": "Австралия",
-    "city": "Largs Bay SA",
-    "address": "Австралия, Largs Bay SA, 198 Esplanade",
-    "website": "https://largspierhotel.com.au/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=largspierhotel.com.au",
-    "rating": "4.3/5.0",
-    "score": 68,
-    "schemaVersion": "10.6",
-    "createdAt": "2026-11-28T08:37:56.412Z"
   },
   {
     "id": "1L6FBe9slNt3cEM1thnB0gFZQrgsh9T6v",

@@ -1,5 +1,19 @@
 [
   {
+    "id": "11_a6SziVSyklAL7q1mflyl7_16XDH1mL",
+    "name": "The Tuck Shop",
+    "niche": "Кафе‑закусочная",
+    "country": "ЮАР",
+    "city": "Cape Town",
+    "address": "ЮАР, Cape Town, 23 Putney Rd",
+    "website": "",
+    "logoUrl": "",
+    "rating": "4.6/5.0",
+    "score": 72,
+    "schemaVersion": "11.1",
+    "createdAt": "2026-11-28T09:20:32.988Z"
+  },
+  {
     "id": "1G-v9KXpcyT41iA_zejmw3pFF1DiO0ZUd",
     "name": "De Geest Brussels",
     "niche": "Химчистка",
@@ -695,20 +709,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.7",
     "createdAt": "2026-11-26T16:08:37.008Z"
-  },
-  {
-    "id": "1I4DH4MSt9W2PlFBs6S3KqgotRg4subRC",
-    "name": "MM tire",
-    "niche": "Розничная торговля и сервисное обслуживание шин",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 53,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.6",
-    "createdAt": "2026-11-26T15:46:50.793Z"
   }
 ]

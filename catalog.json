@@ -1,5 +1,19 @@
 [
   {
+    "id": "1R2sd5MlDroinfdYQfg_t8Rt3NS7Hvt51",
+    "name": "Restaurant universitaire La Roche d'Argent",
+    "niche": "Студенческий столовая",
+    "country": "Франция",
+    "city": "Poitiers",
+    "address": "Франция, Poitiers, 1 Rue Roche-d'Argent",
+    "website": "http://www.crous-poitiers.fr/restaurant/r-u-roche-dargent/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=crous-poitiers.fr",
+    "rating": "4.1/5.0",
+    "score": 68,
+    "schemaVersion": "10.4",
+    "createdAt": "2026-11-28T08:04:06.017Z"
+  },
+  {
     "id": "1gY2VZLRuHBbOpxlQv4zC8E5--NSl8fpR",
     "name": "Daggis Hundesnacks & BARF-Shop",
     "niche": "магазин кормов BARF и лакомств для собак",
@@ -716,20 +730,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.2",
     "createdAt": "2026-11-26T10:08:35.388Z"
-  },
-  {
-    "id": "12CdKFSawv64-WP--vMkww5jT3e-nqkQm",
-    "name": "Samsung",
-    "niche": "Розничная электроника",
-    "country": "Венгрия",
-    "city": "Debrecen",
-    "street": "Csapó utca 30",
-    "website": "https://www.ses.hu",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=ses.hu",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.2",
-    "createdAt": "2026-11-26T09:59:59.644Z"
   }
 ]

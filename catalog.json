@@ -1,5 +1,19 @@
 [
   {
+    "id": "1HIpeGwr-hMZxhv_hBDCZv5OqK1qx4Oqd",
+    "name": "Eiscafe Il Gelato 2000",
+    "niche": "Кафе с мороженым",
+    "country": "Германия",
+    "city": "Eschborn-Niederhöchstadt",
+    "address": "Германия, Eschborn-Niederhöchstadt, Langer Weg 4",
+    "website": "https://ilgelato2000.metro.bar/?lang=de",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=ilgelato2000.metro.bar",
+    "rating": "4.5/5.0",
+    "score": 68,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:14:28.478Z"
+  },
+  {
     "id": "1okVpboJ1fevJmLwOXhq9uoHka6ISJUIc",
     "name": "Restaurant Westerbachhalle Eschborn",
     "niche": "Средиземноморская кухня в ресторане",
@@ -700,20 +714,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.5",
     "createdAt": "2026-11-26T15:11:50.207Z"
-  },
-  {
-    "id": "1m43alTjjlSGJKiot82eWF6DGMGFETnGs",
-    "name": "Zara, Kleve",
-    "niche": "Быстрая мода (Fast Fashion)",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 64,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.5",
-    "createdAt": "2026-11-26T15:08:41.043Z"
   }
 ]

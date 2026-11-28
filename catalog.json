@@ -1,5 +1,19 @@
 [
   {
+    "id": "1G-v9KXpcyT41iA_zejmw3pFF1DiO0ZUd",
+    "name": "De Geest Brussels",
+    "niche": "Химчистка",
+    "country": "Бельгия",
+    "city": "Bruxelles",
+    "address": "Бельгия, Bruxelles, Rue de l'Hôpital 41",
+    "website": "https://degeestteinturerie.be/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=degeestteinturerie.be",
+    "rating": "4.1/5.0",
+    "score": 68,
+    "schemaVersion": "11.1",
+    "createdAt": "2026-11-28T09:18:57.683Z"
+  },
+  {
     "id": "1YpAt2awqW8kusOXdQ_olQ10qiSUv8mgO",
     "name": "Keuken Studio Peter Boekesteijn (KSPB)",
     "niche": "Кухонные студии и мебель",
@@ -696,20 +710,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.6",
     "createdAt": "2026-11-26T15:46:50.793Z"
-  },
-  {
-    "id": "1AUlyCzdOP1Jk96-Kx4uA61OZkcq4eT-0",
-    "name": "TEDi Gmbh & Co. KG",
-    "niche": "Сетевой магазин товаров для дома и хозтоваров (дискаунтер)",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hoffmannallee 2",
-    "website": "https://www.tedi.com/stores/4006/de/NORDRHEIN-WESTFALEN/Kleve/Hoffmannallee-2",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=tedi.com",
-    "rating": "N/A",
-    "score": 59,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.6",
-    "createdAt": "2026-11-26T15:41:56.378Z"
   }
 ]

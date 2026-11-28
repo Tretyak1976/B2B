@@ -1,5 +1,19 @@
 [
   {
+    "id": "1GaAwIqO2Wyh5KPBYPMfjWvXiZ3AHVGkp",
+    "name": "Küchen Studio Peter Boekesteijn",
+    "niche": "Кухонные студии и мебельные шоу‑румы",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 88",
+    "website": "http://www.kspb.nl/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
+    "rating": "4.9/5.0",
+    "score": 58,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T08:54:08.305Z"
+  },
+  {
     "id": "1UZ1xwvB-U03uDtmoB-YYGp4DfDd5-wN5",
     "name": "Bvlgari Resort Dubai",
     "niche": "Роскошный отель",
@@ -180,20 +194,6 @@
     "score": 60,
     "schemaVersion": "10.3",
     "createdAt": "2026-11-27T18:32:06.830Z"
-  },
-  {
-    "id": "1cBxtH2wC0Waq4FnzjaTtdVUxV2e1I6Sn",
-    "name": "Küchen Studio Peter Boekesteijn",
-    "niche": "Мебель и кухни",
-    "country": "Германия",
-    "city": "Kleve",
-    "address": "Германия, Kleve, Emmericher Str. 88",
-    "website": "http://www.kspb.nl/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kspb.nl",
-    "rating": "4.9/5.0",
-    "score": 45,
-    "schemaVersion": "10.2",
-    "createdAt": "2026-11-27T15:26:58.311Z"
   },
   {
     "id": "1nxE9xq8e7l_B3Od1vSYA0QdBZ9TzSTjo",

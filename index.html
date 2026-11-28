@@ -415,6 +415,84 @@ button, input, select { font-family: inherit; }
 .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
 .admin-field { display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
 
+
+/* ===== DEEP 360° STAGE 2: GHOST MODE, 5-AXIS RADAR, OSINT CARD & AD SPY ===== */
+.ghost-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+  border: 1.5px solid #fca5a5; border-left: 5px solid var(--danger);
+  border-radius: var(--radius); padding: 14px 18px; margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(220,38,38,0.08);
+}
+.ghost-banner-body { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 220px; }
+.ghost-icon { font-size: 24px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.ghost-title { font-size: 15px; font-weight: 800; color: #991b1b; margin-bottom: 2px; }
+.ghost-desc { font-size: 13.5px; color: #7f1d1d; }
+
+.deep360-grid { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 16px; margin-bottom: 20px; }
+.osint-card { border-top: 3px solid #0284c7; }
+.osint-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.osint-list { display: flex; flex-direction: column; gap: 0; }
+.osint-row {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--bg); font-size: 13.5px;
+}
+.osint-row:last-child { border-bottom: none; padding-bottom: 2px; }
+.osint-k { color: var(--text-muted); font-weight: 600; flex-shrink: 0; min-width: 150px; }
+.osint-v { color: var(--text); text-align: right; flex: 1; word-break: break-word; }
+.osint-v-left { color: var(--text); flex: 1; }
+.psi-bar-wrap { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.psi-score-pill { font-weight: 800; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; }
+.psi-btn {
+  padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface);
+  font-size: 12px; font-weight: 600; color: var(--text); cursor: pointer;
+}
+.psi-btn:hover { border-color: var(--accent); color: var(--accent-text); }
+.flag-chip {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; margin: 2px 3px 2px 0;
+  background: var(--warn-bg); color: var(--warn); border: 1px solid #fde68a;
+}
+.flag-chip.danger { background: var(--danger-bg); color: var(--danger); border-color: #fecaca; }
+.flag-chip.info { background: #f0f9ff; color: #0369a1; border-color: #bae6fd; }
+.ext-rev-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px;
+  background: #f8fafc; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600;
+  color: var(--text); margin: 2px 4px 2px 0; text-decoration: none;
+}
+.ext-rev-chip:hover { border-color: #0284c7; color: #0284c7; text-decoration: none; }
+
+.radar-card { display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-top: 3px solid var(--accent); }
+.radar-svg-wrap { width: 100%; max-width: 310px; margin: 4px auto; }
+.radar-legend { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-top: 8px; font-size: 12.5px; }
+.radar-leg-item { display: flex; align-items: center; justify-content: space-between; padding: 4px 8px; border-radius: 8px; background: var(--bg); }
+.radar-leg-item strong { font-size: 13px; }
+
+.adspy-strip {
+  margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border);
+}
+.adspy-title { font-size: 12.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+.adspy-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  padding: 6px 0; border-bottom: 1px solid var(--bg); font-size: 13px;
+}
+.adspy-row:last-child { border-bottom: none; }
+.adspy-btns { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.adspy-btn {
+  display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 8px;
+  font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.15s;
+}
+.adspy-btn.meta { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.adspy-btn.meta:hover { background: #dbeafe; text-decoration: none; }
+.adspy-btn.google { background: var(--accent-soft); color: var(--accent-text); border: 1px solid #a7f3d0; }
+.adspy-btn.google:hover { background: #a7f3d0; text-decoration: none; }
+
+@media (max-width: 860px) {
+  .deep360-grid { grid-template-columns: 1fr; }
+  .osint-row { flex-direction: column; gap: 4px; }
+  .osint-v { text-align: left; }
+}
+
 #printSheet { display: none; }
 @media print {
   body { background: #fff; }
@@ -439,7 +517,7 @@ button, input, select { font-family: inherit; }
 
 <div id="adminBanner" class="admin-banner hidden">
   <div class="admin-banner-inner">
-    <span><strong>Режим владельца B2B Nexus v10.1</strong> · Ключи и настройки скрыты от обычных пользователей</span>
+    <span><strong>Режим владельца B2B Nexus v11.3</strong> · Ключи и настройки скрыты от обычных пользователей</span>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn btn-sm btn-soft" onclick="openAdminModal()">Панель управления</button>
       <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
@@ -577,6 +655,16 @@ button, input, select { font-family: inherit; }
 
     <!-- TAB 1: DIAGNOSIS -->
     <div id="tabDiagnosis">
+      <div id="ghostModeBanner" class="ghost-banner hidden">
+        <div class="ghost-banner-body">
+          <div class="ghost-icon">🚨</div>
+          <div>
+            <div class="ghost-title" data-i18n="ghost_title">Обнаружен «Режим призрака» в Google Maps</div>
+            <div id="ghostBannerDesc" class="ghost-desc"></div>
+          </div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="switchAuditTab('plan')" data-i18n="ghost_cta">Исправить в плане →</button>
+      </div>
       <div class="diag-grid">
         <div class="card">
           <div class="diag-card-head">
@@ -628,6 +716,28 @@ button, input, select { font-family: inherit; }
         </div>
       </div>
 
+      <div id="deep360Wrap" class="deep360-grid hidden">
+        <div class="card osint-card">
+          <div class="osint-head">
+            <h3 style="font-size:16px;margin:0;" data-i18n="hdr_osint">Глубокая разведка OSINT (360°)</h3>
+            <span class="pill pill-green" data-i18n="badge_live_osint">Live-проверка</span>
+          </div>
+          <div id="diagOsintList" class="osint-list"></div>
+          <div id="diagAdSpyWrap" class="adspy-strip hidden">
+            <div class="adspy-title" data-i18n="hdr_adspy">📢 Проверка рекламы конкурентов (Ad Spy · 1 клик)</div>
+            <div id="diagAdSpyList"></div>
+          </div>
+        </div>
+        <div class="card radar-card">
+          <div style="width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <h3 style="font-size:16px;margin:0;" data-i18n="hdr_radar">Профиль бизнеса (5 осей)</h3>
+            <span id="radarAvgBadge" class="pill pill-green">—</span>
+          </div>
+          <div id="diagRadarSvg" class="radar-svg-wrap"></div>
+          <div id="diagRadarLegend" class="radar-legend"></div>
+        </div>
+      </div>
+
       <div id="diagRisksWrap" class="card hidden" style="margin-bottom:20px;">
         <h3 style="font-size:16px;margin-bottom:12px;" data-i18n="hdr_risks">На что обратить внимание по законам и рискам</h3>
         <div id="diagRisksList"></div>
@@ -665,6 +775,10 @@ button, input, select { font-family: inherit; }
           <div class="card">
             <h3 style="font-size:16px;font-weight:700;margin-bottom:12px;" data-i18n="hdr_you_vs">Вы и конкуренты</h3>
             <div id="compCompareList"></div>
+          </div>
+          <div id="compAdSpyCard" class="card hidden">
+            <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-i18n="hdr_adspy">📢 Проверка рекламы конкурентов (Ad Spy · 1 клик)</h3>
+            <div id="compAdSpyList"></div>
           </div>
           <div class="card">
             <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-i18n="hdr_neighbors">Полезные соседи рядом</h3>
@@ -859,7 +973,31 @@ const I18N = {
     hdr_launch_route: "Маршрут запуска",
     footer_tag: "Понятный навигатор для бизнеса по всему миру",
     lnk_privacy: "Конфиденциальность",
-    lnk_legal: "Правовая информация"
+    lnk_legal: "Правовая информация",
+    ghost_title: "Обнаружен «Режим призрака» в Google Maps",
+    ghost_desc_tpl: "Карточка показывает слишком мало часов работы ({summary}) — клиенты видят статус «Закрыто» и уходят к конкурентам.",
+    ghost_cta: "Исправить в плане →",
+    hdr_osint: "Глубокая разведка OSINT (360°)",
+    badge_live_osint: "Live-проверка",
+    hdr_radar: "Профиль бизнеса (5 осей)",
+    hdr_adspy: "📢 Проверка рекламы (Ad Spy · 1 клик)",
+    osint_reg: "🏛️ Реестр и юрформа",
+    osint_dns: "🔐 Почта и DNS",
+    osint_speed: "⚡ Скорость (Mobile)",
+    osint_hours: "🕒 График работы",
+    osint_flags: "🔎 Скрытые тех-флаги",
+    osint_ext: "🌍 Внешние отзывы",
+    osint_personal_liab: "Личная ответственность",
+    osint_psi_checking: "Измеряем скорость с вашего браузера...",
+    osint_psi_btn: "Проверить скорость",
+    osint_psi_na: "Нет данных PSI",
+    osint_ttfb: "ответ сервера",
+    osint_target_tag: "Вы",
+    rad_rep: "Репутация",
+    rad_web: "Сайт и скорость",
+    rad_sec: "Доверие и защита",
+    rad_vis: "Видимость и график",
+    rad_mkt: "Позиция на рынке"
   },
   uk: {
     langCode: "uk-UA",
@@ -933,7 +1071,31 @@ const I18N = {
     hdr_launch_route: "Маршрут запуску",
     footer_tag: "Зрозумілий навігатор для бізнесу по всьому світу",
     lnk_privacy: "Конфіденційність",
-    lnk_legal: "Правова інформація"
+    lnk_legal: "Правова інформація",
+    ghost_title: "Виявлено «Режим привида» в Google Maps",
+    ghost_desc_tpl: "Картка показує надто мало робочих годин ({summary}) — клієнти бачать «Зачинено» і йдуть до конкурентів.",
+    ghost_cta: "Виправити в плані →",
+    hdr_osint: "Глибока розвідка OSINT (360°)",
+    badge_live_osint: "Live-перевірка",
+    hdr_radar: "Профіль бізнесу (5 осей)",
+    hdr_adspy: "📢 Перевірка реклами (Ad Spy · 1 клік)",
+    osint_reg: "🏛️ Реєстр і юрформа",
+    osint_dns: "🔐 Пошта та DNS",
+    osint_speed: "⚡ Швидкість (Mobile)",
+    osint_hours: "🕒 Графік роботи",
+    osint_flags: "🔎 Приховані тех-прапорці",
+    osint_ext: "🌍 Зовнішні відгуки",
+    osint_personal_liab: "Особиста відповідальність",
+    osint_psi_checking: "Вимірюємо швидкість із вашого браузера...",
+    osint_psi_btn: "Перевірити швидкість",
+    osint_psi_na: "Немає даних PSI",
+    osint_ttfb: "відповідь сервера",
+    osint_target_tag: "Ви",
+    rad_rep: "Репутація",
+    rad_web: "Сайт і швидкість",
+    rad_sec: "Довіра і захист",
+    rad_vis: "Видимість і графік",
+    rad_mkt: "Позиція на ринку"
   },
   de: {
     langCode: "de-DE",
@@ -1007,7 +1169,31 @@ const I18N = {
     hdr_launch_route: "Gründungsfahrplan",
     footer_tag: "Klarer Wegweiser für Unternehmen weltweit",
     lnk_privacy: "Datenschutz",
-    lnk_legal: "Impressum"
+    lnk_legal: "Impressum",
+    ghost_title: "„Ghost-Mode“ in Google Maps erkannt",
+    ghost_desc_tpl: "Ihr Profil zeigt extrem kurze Öffnungszeiten ({summary}) — Kunden sehen „Geschlossen“ und gehen zur Konkurrenz.",
+    ghost_cta: "Im Plan beheben →",
+    hdr_osint: "Tiefen-OSINT-Check (360°)",
+    badge_live_osint: "Live-Daten",
+    hdr_radar: "Unternehmensprofil (5 Achsen)",
+    hdr_adspy: "📢 Werbe-Check (Ad Spy · 1 Klick)",
+    osint_reg: "🏛️ Register & Rechtsform",
+    osint_dns: "🔐 E-Mail & DNS",
+    osint_speed: "⚡ Speed (Mobile)",
+    osint_hours: "🕒 Öffnungszeiten",
+    osint_flags: "🔎 Technische Funde",
+    osint_ext: "🌍 Externe Bewertungen",
+    osint_personal_liab: "Persönliche Haftung",
+    osint_psi_checking: "Mobile-Speed wird direkt gemessen...",
+    osint_psi_btn: "Speed prüfen",
+    osint_psi_na: "Kein PSI-Wert",
+    osint_ttfb: "Server-Antwort",
+    osint_target_tag: "Sie",
+    rad_rep: "Reputation",
+    rad_web: "Website & Speed",
+    rad_sec: "Vertrauen & Schutz",
+    rad_vis: "Sichtbarkeit & Zeiten",
+    rad_mkt: "Marktposition"
   },
   en: {
     langCode: "en-US",
@@ -1081,7 +1267,31 @@ const I18N = {
     hdr_launch_route: "Launch Roadmap",
     footer_tag: "Simple business navigator worldwide",
     lnk_privacy: "Privacy",
-    lnk_legal: "Legal Notice"
+    lnk_legal: "Legal Notice",
+    ghost_title: "Ghost Mode Detected on Google Maps",
+    ghost_desc_tpl: "Your profile lists very few open hours ({summary}) — customers see 'Closed' and leave for competitors.",
+    ghost_cta: "Fix in Action Plan →",
+    hdr_osint: "Deep OSINT Intelligence (360°)",
+    badge_live_osint: "Live Check",
+    hdr_radar: "Business Profile (5 Axes)",
+    hdr_adspy: "📢 Competitor Ad Spy (1-Click)",
+    osint_reg: "🏛️ Registry & Legal Form",
+    osint_dns: "🔐 Email & DNS",
+    osint_speed: "⚡ Mobile Speed",
+    osint_hours: "🕒 Opening Hours",
+    osint_flags: "🔎 Hidden Tech Flags",
+    osint_ext: "🌍 External Reviews",
+    osint_personal_liab: "Personal Liability",
+    osint_psi_checking: "Measuring mobile speed directly...",
+    osint_psi_btn: "Test speed",
+    osint_psi_na: "No PSI score",
+    osint_ttfb: "server response",
+    osint_target_tag: "You",
+    rad_rep: "Reputation",
+    rad_web: "Website & Speed",
+    rad_sec: "Trust & Security",
+    rad_vis: "Visibility & Hours",
+    rad_mkt: "Market Position"
   }
 };
 
@@ -1310,6 +1520,8 @@ function openAuditResult(fileId, rawReport, isCached) {
   STATE.activeStepIdx = 0;
   STATE.stepBranch = "diy";
   STATE.explanations = {};
+  STATE.clientPsi = null;
+  STATE.clientPsiLoading = false;
   try { STATE.solvedSteps = JSON.parse(localStorage.getItem("b2b_v10_done_" + (fileId || STATE.v10.business.name)) || "{}"); } catch (e) { STATE.solvedSteps = {}; }
 
   if (fileId) {
@@ -1378,11 +1590,299 @@ function renderAuditAll(isCached) {
     }).join("");
   } else rw.classList.add("hidden");
 
+  renderDeep360Panel(v);
   renderPlanSidebar();
   renderPlanDetail();
   renderCompetitorsTab();
   initCalculator();
   document.getElementById("auditDisclaimer").textContent = v.legalDisclaimer || "";
+}
+
+
+function computeRadarMetrics(v) {
+  const b = v.business || {}, os = v.osint || {}, d = v.diagnosis || {};
+  const rating = Number(b.rating) || 0;
+  const revCnt = Number(b.reviewCount) || 0;
+  // 1. Reputation (0..100)
+  let rep = rating > 0 ? Math.round((rating / 5) * 78) : 40;
+  if (revCnt >= 500) rep += 18;
+  else if (revCnt >= 100) rep += 13;
+  else if (revCnt >= 25) rep += 7;
+  if (os.reviewVelocity && os.reviewVelocity.ownerReplyPct !== null && os.reviewVelocity.ownerReplyPct !== undefined) {
+    if (os.reviewVelocity.ownerReplyPct >= 40) rep += 6;
+    else if (os.reviewVelocity.ownerReplyPct === 0) rep -= 6;
+  }
+  rep = Math.max(15, Math.min(100, rep));
+
+  // 2. Website & Speed (0..100)
+  let web = b.isNetwork ? 82 : (b.website ? 64 : 22);
+  const psiScore = (STATE.clientPsi && STATE.clientPsi.score !== null)
+    ? STATE.clientPsi.score
+    : (os.pageSpeed && os.pageSpeed.mobileScore !== null && os.pageSpeed.mobileScore !== undefined ? os.pageSpeed.mobileScore : null);
+  if (psiScore !== null) {
+    web = Math.round(web * 0.45 + psiScore * 0.55);
+  } else if (os.serverTiming && os.serverTiming.ttfbMs > 0) {
+    if (os.serverTiming.ttfbMs < 900) web += 12;
+    else if (os.serverTiming.ttfbMs > 2500) web -= 14;
+  }
+  if (os.webFlags && os.webFlags.outdatedPdfs && os.webFlags.outdatedPdfs.length) web -= 10;
+  if (os.webFlags && os.webFlags.directoryInsteadOfSite) web = Math.min(web, 30);
+  web = Math.max(15, Math.min(100, web));
+
+  // 3. Trust & Security (0..100)
+  let sec = 72;
+  const rCnt = (v.risks || []).length;
+  sec -= Math.min(36, rCnt * 10);
+  if (os.dns && os.dns.checked) {
+    if (os.dns.hasSpf) sec += 12; else sec -= 12;
+    if (os.dns.hasDmarc) sec += 12; else sec -= 10;
+  }
+  if (os.registry && os.registry.personalLiabilityRisk) sec -= 10;
+  sec = Math.max(15, Math.min(100, sec));
+
+  // 4. Visibility & Hours (0..100)
+  let vis = 68;
+  if (os.hoursAudit && os.hoursAudit.hasData) {
+    if (os.hoursAudit.isGhostMode) vis -= 42;
+    else if (os.hoursAudit.weeklyHours >= 40) vis += 10;
+  }
+  if (os.externalReviews && os.externalReviews.length) vis += Math.min(15, os.externalReviews.length * 6);
+  if (b.socials && b.socials.length) vis += Math.min(10, b.socials.length * 4);
+  if (os.webFlags && (os.webFlags.httpInMaps || os.webFlags.napPhoneMismatch || os.webFlags.foreignPhonePrefix)) vis -= 12;
+  vis = Math.max(12, Math.min(100, vis));
+
+  // 5. Market Position (0..100)
+  const peers = (v.competitors || []).filter(function(c) { return Number(c.rating) > 0; });
+  let mkt = rating > 0 ? Math.round((rating / 5) * 80) : 55;
+  if (rating > 0 && peers.length > 0) {
+    const avgPeer = peers.reduce(function(a, c) { return a + Number(c.rating); }, 0) / peers.length;
+    mkt = Math.round(68 + (rating - avgPeer) * 35);
+    if (revCnt >= 100) mkt += 8;
+  }
+  mkt = Math.max(18, Math.min(100, mkt));
+
+  return [
+    { key: "rad_rep", label: t("rad_rep"), val: rep },
+    { key: "rad_web", label: t("rad_web"), val: web },
+    { key: "rad_sec", label: t("rad_sec"), val: sec },
+    { key: "rad_vis", label: t("rad_vis"), val: vis },
+    { key: "rad_mkt", label: t("rad_mkt"), val: mkt }
+  ];
+}
+
+function renderRadar5Axes(v) {
+  const axes = computeRadarMetrics(v);
+  const avg = Math.round(axes.reduce(function(a, x) { return a + x.val; }, 0) / axes.length);
+  const avgEl = document.getElementById("radarAvgBadge");
+  if (avgEl) {
+    avgEl.textContent = avg + " / 100";
+    avgEl.className = "pill " + (avg >= 72 ? "pill-green" : (avg >= 52 ? "pill-amber" : "pill-red"));
+  }
+
+  const cx = 155, cy = 140, R = 92;
+  const pt = function(idx, ratio) {
+    const ang = -Math.PI / 2 + (idx * 2 * Math.PI / 5);
+    return [cx + Math.cos(ang) * R * ratio, cy + Math.sin(ang) * R * ratio];
+  };
+  let gridSvg = "";
+  [0.25, 0.5, 0.75, 1.0].forEach(function(lv) {
+    const pts = axes.map(function(_, i) { const p = pt(i, lv); return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ");
+    gridSvg += '<polygon points="' + pts + '" fill="none" stroke="#e2e8f0" stroke-width="1"/>';
+  });
+  let spokesSvg = "";
+  axes.forEach(function(_, i) {
+    const p = pt(i, 1.0);
+    spokesSvg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="#e2e8f0" stroke-width="1"/>';
+  });
+  const dataPts = axes.map(function(ax, i) {
+    const p = pt(i, Math.max(0.1, ax.val / 100));
+    return p[0].toFixed(1) + "," + p[1].toFixed(1);
+  }).join(" ");
+  let dotsSvg = "", labelsSvg = "";
+  axes.forEach(function(ax, i) {
+    const dp = pt(i, Math.max(0.1, ax.val / 100));
+    const lp = pt(i, 1.24);
+    const col = ax.val >= 72 ? "#059669" : (ax.val >= 50 ? "#d97706" : "#dc2626");
+    dotsSvg += '<circle cx="' + dp[0].toFixed(1) + '" cy="' + dp[1].toFixed(1) + '" r="4.5" fill="' + col + '" stroke="#fff" stroke-width="1.5"/>';
+    const anchor = Math.abs(lp[0] - cx) < 12 ? "middle" : (lp[0] > cx ? "start" : "end");
+    labelsSvg += '<text x="' + lp[0].toFixed(1) + '" y="' + (lp[1] + 4).toFixed(1) + '" text-anchor="' + anchor + '" font-size="11" font-weight="700" fill="#334155">' + esc(ax.label) + '</text>';
+  });
+
+  const svg = '<svg viewBox="0 0 310 280" width="100%" aria-label="5-axis business radar">' +
+    gridSvg + spokesSvg +
+    '<polygon points="' + dataPts + '" fill="rgba(5,150,105,0.20)" stroke="#059669" stroke-width="2.2" stroke-linejoin="round"/>' +
+    dotsSvg + labelsSvg + '</svg>';
+  document.getElementById("diagRadarSvg").innerHTML = svg;
+  document.getElementById("diagRadarLegend").innerHTML = axes.map(function(ax) {
+    const col = ax.val >= 72 ? "var(--accent-text)" : (ax.val >= 50 ? "var(--warn)" : "var(--danger)");
+    return '<div class="radar-leg-item"><span>' + esc(ax.label) + '</span><strong style="color:' + col + ';">' + ax.val + '</strong></div>';
+  }).join("");
+}
+
+function renderAdSpyHtml(adSpyList) {
+  return (adSpyList || []).map(function(ad) {
+    return '<div class="adspy-row">' +
+      '<span><strong>' + esc(ad.name) + '</strong>' + (ad.isTarget ? (' <span class="pill pill-green" style="padding:1px 7px;font-size:11px;">' + esc(t("osint_target_tag")) + '</span>') : '') + '</span>' +
+      '<span class="adspy-btns">' +
+        '<a class="adspy-btn meta" href="' + esc(ad.metaAdsUrl) + '" target="_blank" rel="noopener">Meta Ads ↗</a>' +
+        '<a class="adspy-btn google" href="' + esc(ad.googleAdsUrl) + '" target="_blank" rel="noopener">Google Ads ↗</a>' +
+      '</span></div>';
+  }).join("");
+}
+
+function buildPsiDisplayHtml(v) {
+  const os = v.osint || {}, b = v.business || {};
+  const backendPsi = os.pageSpeed && os.pageSpeed.mobileScore !== null && os.pageSpeed.mobileScore !== undefined ? os.pageSpeed : null;
+  const timing = os.serverTiming && os.serverTiming.ttfbMs > 0 ? os.serverTiming : null;
+  const ttfbStr = timing ? ('<span style="font-size:12px;color:var(--text-muted);">(' + esc(t("osint_ttfb")) + ': ' + timing.ttfbMs + ' ms' + (timing.htmlKb ? (', ' + timing.htmlKb + ' KB') : '') + ')</span>') : '';
+
+  const score = (STATE.clientPsi && STATE.clientPsi.score !== null)
+    ? STATE.clientPsi.score
+    : (backendPsi ? backendPsi.mobileScore : null);
+  const lcp = (STATE.clientPsi && STATE.clientPsi.lcpSec)
+    ? STATE.clientPsi.lcpSec
+    : (backendPsi ? backendPsi.lcpSec : null);
+
+  if (score !== null) {
+    const cls = score >= 75 ? "pill-green" : (score >= 50 ? "pill-amber" : "pill-red");
+    return '<span class="psi-bar-wrap">' +
+      '<span class="psi-score-pill ' + cls + '">' + score + ' / 100</span>' +
+      (lcp ? ('<span style="font-size:12.5px;color:var(--text-muted);">LCP ' + lcp + 's</span>') : '') +
+      ttfbStr + '</span>';
+  }
+  if (STATE.clientPsiLoading) {
+    return '<span class="psi-bar-wrap"><span style="font-size:12.5px;color:#0284c7;font-weight:600;">⏳ ' + esc(t("osint_psi_checking")) + '</span> ' + ttfbStr + '</span>';
+  }
+  if (b.website && !b.isNetwork) {
+    return '<span class="psi-bar-wrap">' + ttfbStr + ' <button class="psi-btn" onclick="runClientPageSpeed(true)">⚡ ' + esc(t("osint_psi_btn")) + '</button></span>';
+  }
+  return '<span style="color:var(--text-muted);">—</span>';
+}
+
+async function runClientPageSpeed(manual) {
+  const v = STATE.v10;
+  if (!v || !v.business || !v.business.website || v.business.isNetwork) return;
+  if (STATE.clientPsiLoading) return;
+  const rawUrl = String(v.business.website).trim();
+  const cleanUrl = rawUrl.indexOf("http") === 0 ? rawUrl : ("https://" + rawUrl);
+  const targetFileId = STATE.fileId;
+  STATE.clientPsiLoading = true;
+  const slot = document.getElementById("osintPsiSlot");
+  if (slot) slot.innerHTML = buildPsiDisplayHtml(v);
+
+  try {
+    const apiUrl = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=" + encodeURIComponent(cleanUrl) + "&strategy=mobile&category=performance";
+    const resp = await fetch(apiUrl);
+    if (STATE.fileId !== targetFileId) return;
+    if (resp.ok) {
+      const j = await resp.json();
+      const lr = j.lighthouseResult || {};
+      const sc = lr.categories && lr.categories.performance && lr.categories.performance.score;
+      const lcpMs = lr.audits && lr.audits["largest-contentful-paint"] && lr.audits["largest-contentful-paint"].numericValue;
+      if (sc !== null && sc !== undefined) {
+        STATE.clientPsi = {
+          score: Math.round(sc * 100),
+          lcpSec: lcpMs ? Number((Number(lcpMs) / 1000).toFixed(1)) : null
+        };
+      }
+    } else if (manual) {
+      showToast("PageSpeed HTTP " + resp.status);
+    }
+  } catch (e) {
+    if (manual) showToast(t("osint_psi_na"));
+  } finally {
+    STATE.clientPsiLoading = false;
+    if (STATE.v10 && STATE.fileId === targetFileId) {
+      const sl = document.getElementById("osintPsiSlot");
+      if (sl) sl.innerHTML = buildPsiDisplayHtml(STATE.v10);
+      renderRadar5Axes(STATE.v10);
+    }
+  }
+}
+
+function renderDeep360Panel(v) {
+  const os = v.osint || {}, b = v.business || {};
+
+  // 1. Red Ghost Mode Alert Banner
+  const gb = document.getElementById("ghostModeBanner");
+  if (os.hoursAudit && os.hoursAudit.isGhostMode) {
+    document.getElementById("ghostBannerDesc").textContent = t("ghost_desc_tpl").replace("{summary}", os.hoursAudit.summary);
+    gb.classList.remove("hidden");
+  } else {
+    gb.classList.add("hidden");
+  }
+
+  // 2. Deep OSINT rows
+  const rows = [];
+  if (os.registry && (os.registry.legalForm || os.registry.registryId)) {
+    const regDom = os.registry.sourceUrl ? os.registry.sourceUrl.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0] : "";
+    rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_reg")) + '</span><span class="osint-v"><strong>' +
+      esc(os.registry.legalForm || "—") + (os.registry.registryId ? (' · ' + esc(os.registry.registryId)) : '') + '</strong>' +
+      (os.registry.personalLiabilityRisk ? (' <span class="pill pill-red" style="padding:2px 8px;font-size:11px;">' + esc(t("osint_personal_liab")) + '</span>') : '') +
+      (os.registry.sourceUrl ? (' · <a href="' + esc(os.registry.sourceUrl) + '" target="_blank" rel="noopener">' + esc(regDom) + ' ↗</a>') : '') +
+      '</span></div>');
+  }
+  if (os.dns && os.dns.checked) {
+    const spfCls = os.dns.hasSpf ? "pill-green" : "pill-red";
+    const dmarcCls = os.dns.hasDmarc ? "pill-green" : "pill-red";
+    rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_dns")) + '</span><span class="osint-v">' +
+      '<span class="pill ' + spfCls + '" style="padding:2px 8px;font-size:11.5px;margin-right:4px;">SPF: ' + (os.dns.hasSpf ? "OK" : "NO") + '</span>' +
+      '<span class="pill ' + dmarcCls + '" style="padding:2px 8px;font-size:11.5px;margin-right:4px;">DMARC: ' + (os.dns.hasDmarc ? "OK" : "NO") + '</span>' +
+      (os.dns.mailProvider ? ('<span style="font-size:12.5px;color:var(--text-muted);">' + esc(os.dns.mailProvider) + '</span>') : '') +
+      '</span></div>');
+  }
+  if (b.website && !b.isNetwork) {
+    rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_speed")) + '</span><span class="osint-v" id="osintPsiSlot">' + buildPsiDisplayHtml(v) + '</span></div>');
+  }
+  if (os.hoursAudit && os.hoursAudit.hasData) {
+    const hCls = os.hoursAudit.isGhostMode ? "pill-red" : "pill-green";
+    rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_hours")) + '</span><span class="osint-v"><span class="pill ' + hCls + '" style="padding:2px 9px;font-size:12px;">' + esc(os.hoursAudit.summary) + '</span></span></div>');
+  }
+  if (os.webFlags) {
+    const chips = [];
+    if (os.webFlags.httpInMaps) chips.push('<span class="flag-chip">HTTP → HTTPS (Google Maps)</span>');
+    if (os.webFlags.directoryInsteadOfSite) chips.push('<span class="flag-chip danger">Directory only: ' + esc((os.webFlags.directoryUrl || "").replace(/^https?:\/\/(www\.)?/i, "").split("/")[0]) + '</span>');
+    if (os.webFlags.outdatedPdfs && os.webFlags.outdatedPdfs.length) {
+      os.webFlags.outdatedPdfs.forEach(function(pdf) {
+        const shortPdf = pdf.split("/").pop() || pdf;
+        chips.push('<span class="flag-chip danger">PDF: ' + esc(shortPdf.slice(0, 32)) + '</span>');
+      });
+    }
+    if (os.webFlags.napPhoneMismatch) chips.push('<span class="flag-chip danger">Phone NAP mismatch</span>');
+    if (os.webFlags.foreignPhonePrefix) chips.push('<span class="flag-chip">Foreign phone prefix</span>');
+    if (os.webFlags.htmlLang) {
+      chips.push('<span class="flag-chip info">lang=' + esc(os.webFlags.htmlLang) + (os.webFlags.hreflangLangs && os.webFlags.hreflangLangs.length ? (' · hreflang=' + esc(os.webFlags.hreflangLangs.join("/"))) : ' (1 lang)') + '</span>');
+    }
+    if (chips.length) {
+      rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_flags")) + '</span><span class="osint-v">' + chips.join("") + '</span></div>');
+    }
+  }
+  if (os.externalReviews && os.externalReviews.length) {
+    rows.push('<div class="osint-row"><span class="osint-k">' + esc(t("osint_ext")) + '</span><span class="osint-v">' +
+      os.externalReviews.map(function(er) {
+        return '<a class="ext-rev-chip" href="' + esc(er.url) + '" target="_blank" rel="noopener">' + esc(er.source) + (er.rating ? (' ★' + er.rating) : '') + ' ↗</a>';
+      }).join("") + '</span></div>');
+  }
+
+  const wrap = document.getElementById("deep360Wrap");
+  if (rows.length || (os.adSpy && os.adSpy.length) || b.rating > 0) {
+    wrap.classList.remove("hidden");
+    document.getElementById("diagOsintList").innerHTML = rows.length ? rows.join("") : '<div style="font-size:13px;color:var(--text-muted);padding:8px 0;">—</div>';
+    const adWrap = document.getElementById("diagAdSpyWrap");
+    if (os.adSpy && os.adSpy.length) {
+      adWrap.classList.remove("hidden");
+      document.getElementById("diagAdSpyList").innerHTML = renderAdSpyHtml(os.adSpy);
+    } else adWrap.classList.add("hidden");
+    renderRadar5Axes(v);
+  } else {
+    wrap.classList.add("hidden");
+  }
+
+  // Trigger non-blocking browser-side Mobile PageSpeed if backend didn't return a score (zero 429!)
+  const hasBackendPsi = Boolean(os.pageSpeed && os.pageSpeed.mobileScore !== null && os.pageSpeed.mobileScore !== undefined);
+  if (b.website && !b.isNetwork && !hasBackendPsi && !STATE.clientPsi && !STATE.clientPsiLoading) {
+    runClientPageSpeed(false);
+  }
 }
 
 function renderPlanSidebar() {
@@ -1548,6 +2048,15 @@ function renderCompetitorsTab() {
       (k.mapsUrl ? ('<div style="margin-top:10px;font-size:13px;"><a href="' + esc(k.mapsUrl) + '" target="_blank" rel="noopener">' + esc(t("lbl_open_maps")) + '</a></div>') : '') +
       '</div>';
   }).join("") : '<div class="card"><p class="diag-note">—</p></div>';
+
+  const adSpyList = (v.osint && v.osint.adSpy) || [];
+  const compAdCard = document.getElementById("compAdSpyCard");
+  if (compAdCard) {
+    if (adSpyList.length) {
+      compAdCard.classList.remove("hidden");
+      document.getElementById("compAdSpyList").innerHTML = renderAdSpyHtml(adSpyList);
+    } else compAdCard.classList.add("hidden");
+  }
 
   const peers = (v.competitors || []).slice(0, 6);
   let cmpHtml = '<div class="peer-row is-you"><div class="peer-left">' + logoBadgeHtml(b.logoUrl, b.name, "sm") +
@@ -1759,6 +2268,12 @@ function exportPdf() {
     sheet.innerHTML = '<h1>' + esc(b.name) + '</h1>' +
       '<p>📍 ' + esc(b.address || [b.country, b.city].filter(Boolean).join(", ")) + ' · ' + esc(t("lbl_score")) + ': ' + b.healthScore + '/100</p>' +
       '<div class="print-card"><strong>' + esc(t("lbl_verdict")) + ':</strong> ' + esc(v.verdict) + '</div>' +
+      (v.osint ? ('<div class="print-card"><strong>OSINT 360°:</strong> ' +
+        [v.osint.registry && v.osint.registry.legalForm ? (v.osint.registry.legalForm + (v.osint.registry.registryId ? (' ' + v.osint.registry.registryId) : '')) : '',
+         v.osint.dns && v.osint.dns.checked ? v.osint.dns.summary : '',
+         v.osint.hoursAudit && v.osint.hoursAudit.hasData ? v.osint.hoursAudit.summary : '',
+         (STATE.clientPsi && STATE.clientPsi.score !== null) ? ('Mobile PageSpeed: ' + STATE.clientPsi.score + '/100') : (v.osint.pageSpeed && v.osint.pageSpeed.mobileScore !== null ? ('Mobile PageSpeed: ' + v.osint.pageSpeed.mobileScore + '/100') : '')
+        ].filter(Boolean).map(esc).join(' · ') + '</div>') : '') +
       '<h2>' + esc(t("hdr_plan")) + '</h2>' +
       (v.plan || []).map(function(s) {
         const spStr = (s.specialists || []).map(function(sp) { return esc(sp.name) + (sp.address ? (' (' + esc(sp.address) + ')') : ''); }).join(" · ");
@@ -1803,7 +2318,7 @@ function openLegalModal(kind) {
 }
 
 async function openAdminModal() {
-  openModal("Панель владельца B2B Nexus v10.1",
+  openModal("Панель владельца B2B Nexus v11.3",
     '<div class="admin-field"><label><strong>Admin PIN</strong></label>' +
     '<input id="admPinInput" type="password" class="field-input" value="' + esc(getAdminPin()) + '" placeholder="PIN"></div>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;">' +

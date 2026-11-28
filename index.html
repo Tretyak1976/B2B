@@ -27,6 +27,10 @@
   --amber-bg: #fffbeb;
   --amber-text: #b45309;
   --amber-border: #fde68a;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --warn: #b45309;
+  --warn-bg: #fffbeb;
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03);
   --shadow-md: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
   --radius: 16px;
@@ -160,6 +164,8 @@ button, input, select { font-family: inherit; }
 .btn-outline:hover { background: var(--surface-soft); border-color: #94a3b8; }
 .btn-soft { background: var(--accent-soft); color: var(--accent-text); border-color: var(--accent-border); }
 .btn-soft:hover { background: #d1fae5; }
+.btn-danger { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25); }
+.btn-danger:hover { filter: brightness(0.94); }
 .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 8px; }
 
 .container { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
@@ -274,6 +280,30 @@ button, input, select { font-family: inherit; }
 .pill-green { background: var(--accent-soft); color: var(--accent-text); border-color: var(--accent-border); }
 .pill-red { background: var(--red-bg); color: var(--red-text); border-color: var(--red-border); }
 .pill-amber { background: var(--amber-bg); color: var(--amber-text); border-color: var(--amber-border); }
+
+
+.biz-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 6px; font-size: 13px; color: var(--text-muted); }
+.biz-meta-item { display: inline-flex; align-items: center; gap: 5px; }
+.biz-hours-line {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+  padding: 4px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 600;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text);
+}
+.biz-hours-line.ghost { background: var(--danger-bg); border-color: var(--red-border); color: var(--danger); }
+.biz-socials-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.social-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; text-decoration: none; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); transition: all 0.15s;
+}
+.social-chip:hover { transform: translateY(-1px); text-decoration: none; border-color: var(--accent); color: var(--accent-text); }
+.social-chip.soc-instagram { background: #fdf2f8; border-color: #fbcfe8; color: #be185d; }
+.social-chip.soc-facebook { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+.social-chip.soc-youtube { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+.social-chip.soc-linkedin { background: #f0f9ff; border-color: #bae6fd; color: #0369a1; }
+.social-chip.soc-tiktok { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+.social-chip.soc-whatsapp { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+.social-chip.soc-telegram { background: #f0f9ff; border-color: #bae6fd; color: #0284c7; }
 
 /* CARDS & GRIDS */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); }
@@ -517,7 +547,7 @@ button, input, select { font-family: inherit; }
 
 <div id="adminBanner" class="admin-banner hidden">
   <div class="admin-banner-inner">
-    <span><strong>Режим владельца B2B Nexus v11.3</strong> · Ключи и настройки скрыты от обычных пользователей</span>
+    <span><strong>Режим владельца B2B Nexus v11.4</strong> · Ключи и настройки скрыты от обычных пользователей</span>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn btn-sm btn-soft" onclick="openAdminModal()">Панель управления</button>
       <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
@@ -643,6 +673,9 @@ button, input, select { font-family: inherit; }
           <div id="bizTitle" class="biz-name"></div>
           <div id="bizSubtitle" class="biz-loc"></div>
           <div id="bizFullAddr" class="addr-line"></div>
+          <div id="bizContactsRow" class="biz-meta-row hidden"></div>
+          <div id="bizHoursRow" class="hidden"></div>
+          <div id="bizSocialsRow" class="biz-socials-row hidden"></div>
         </div>
       </div>
       <div class="biz-badges">
@@ -997,7 +1030,8 @@ const I18N = {
     rad_web: "Сайт и скорость",
     rad_sec: "Доверие и защита",
     rad_vis: "Видимость и график",
-    rad_mkt: "Позиция на рынке"
+    rad_mkt: "Позиция на рынке",
+    hdr_hours_lbl: "Режим работы"
   },
   uk: {
     langCode: "uk-UA",
@@ -1095,7 +1129,8 @@ const I18N = {
     rad_web: "Сайт і швидкість",
     rad_sec: "Довіра і захист",
     rad_vis: "Видимість і графік",
-    rad_mkt: "Позиція на ринку"
+    rad_mkt: "Позиція на ринку",
+    hdr_hours_lbl: "Режим роботи"
   },
   de: {
     langCode: "de-DE",
@@ -1193,7 +1228,8 @@ const I18N = {
     rad_web: "Website & Speed",
     rad_sec: "Vertrauen & Schutz",
     rad_vis: "Sichtbarkeit & Zeiten",
-    rad_mkt: "Marktposition"
+    rad_mkt: "Marktposition",
+    hdr_hours_lbl: "Öffnungszeiten"
   },
   en: {
     langCode: "en-US",
@@ -1291,7 +1327,8 @@ const I18N = {
     rad_web: "Website & Speed",
     rad_sec: "Trust & Security",
     rad_vis: "Visibility & Hours",
-    rad_mkt: "Market Position"
+    rad_mkt: "Market Position",
+    hdr_hours_lbl: "Opening hours"
   }
 };
 
@@ -1550,6 +1587,31 @@ function renderAuditAll(isCached) {
   document.getElementById("bizTitle").textContent = b.name;
   document.getElementById("bizSubtitle").textContent = [b.niche, b.website ? b.website.replace(/^https?:\/\/(www\.)?/i, "") : ""].filter(Boolean).join(" · ");
   document.getElementById("bizFullAddr").textContent = b.address ? ("📍 " + b.address) : "";
+  const cRow = document.getElementById("bizContactsRow");
+  const cItems = [];
+  if (b.phone) cItems.push('<a class="biz-meta-item" href="tel:' + esc(b.phone.replace(/[^+\d]/g, "")) + '">📞 ' + esc(b.phone) + '</a>');
+  if (b.email) cItems.push('<a class="biz-meta-item" href="mailto:' + esc(b.email) + '">✉️ ' + esc(b.email) + '</a>');
+  if (b.website) cItems.push('<a class="biz-meta-item" href="' + esc(b.website) + '" target="_blank" rel="noopener">🌐 ' + esc(b.website.replace(/^https?:\/\/(www\.)?/i, "").replace(/\/$/, "")) + ' ↗</a>');
+  if (cItems.length) { cRow.innerHTML = cItems.join(""); cRow.classList.remove("hidden"); } else cRow.classList.add("hidden");
+
+  const hRow = document.getElementById("bizHoursRow");
+  if (b.hours) {
+    const isGhost = Boolean(v.osint && v.osint.hoursAudit && v.osint.hoursAudit.isGhostMode);
+    const cleanHrs = humanizeHoursClient(b.hours);
+    hRow.innerHTML = '<span class="biz-hours-line' + (isGhost ? ' ghost' : '') + '">🕒 <span>' + esc(t("hdr_hours_lbl")) + ':</span> ' + esc(cleanHrs) + '</span>';
+    hRow.classList.remove("hidden");
+  } else hRow.classList.add("hidden");
+
+  const sRow = document.getElementById("bizSocialsRow");
+  const socList = Array.isArray(b.socials) ? b.socials.filter(function(s) { return s && s.url && s.label; }) : [];
+  if (socList.length) {
+    const socIcons = { instagram: "📸", facebook: "📘", youtube: "▶️", linkedin: "💼", tiktok: "🎵", x: "𝕏", whatsapp: "💬", telegram: "✈️", pinterest: "📌" };
+    sRow.innerHTML = socList.map(function(s) {
+      const k = String(s.label).toLowerCase().replace(/[^a-z]/g, "");
+      return '<a class="social-chip soc-' + esc(k) + '" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (socIcons[k] || "🔗") + ' ' + esc(s.label) + ' ↗</a>';
+    }).join("");
+    sRow.classList.remove("hidden");
+  } else sRow.classList.add("hidden");
   document.getElementById("bizRatingBadge").textContent = b.rating > 0 ? ("★ " + b.rating.toFixed(1) + " (" + b.reviewCount + ")") : "★ —";
   document.getElementById("bizScoreBadge").textContent = t("lbl_score") + ": " + b.healthScore + " / 100";
   const cb = document.getElementById("bizCacheBadge");
@@ -1598,6 +1660,31 @@ function renderAuditAll(isCached) {
   document.getElementById("auditDisclaimer").textContent = v.legalDisclaimer || "";
 }
 
+
+function humanizeHoursClient(raw) {
+  let s = String(raw || "").trim();
+  if (!s) return "";
+  const dMap = {
+    ru: { Mo: "Пн", Tu: "Вт", We: "Ср", Th: "Чт", Fr: "Пт", Sa: "Сб", Su: "Вс" },
+    uk: { Mo: "Пн", Tu: "Вт", We: "Ср", Th: "Чт", Fr: "Пт", Sa: "Сб", Su: "Нд" },
+    de: { Mo: "Mo", Tu: "Di", We: "Mi", Th: "Do", Fr: "Fr", Sa: "Sa", Su: "So" },
+    en: { Mo: "Mon", Tu: "Tue", We: "Wed", Th: "Thu", Fr: "Fri", Sa: "Sat", Su: "Sun" }
+  }[STATE.lang] || { Mo: "Mon", Tu: "Tue", We: "Wed", Th: "Thu", Fr: "Fri", Sa: "Sat", Su: "Sun" };
+  s = s.replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, function(m) { return dMap[m] || m; });
+  s = s.replace(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?\s*[–—\-]\s*(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/gi, function(_, h1, m1, ap1, h2, m2, ap2) {
+    const to24 = function(h, m, ap) {
+      let hr = parseInt(h, 10) || 0;
+      const mn = parseInt(m || "0", 10) || 0;
+      const a = String(ap || "").toLowerCase();
+      if (a === "pm" && hr < 12) hr += 12;
+      if (a === "am" && hr === 12) hr = 0;
+      return (hr < 10 ? "0" : "") + hr + ":" + (mn < 10 ? "0" : "") + mn;
+    };
+    const effAp1 = ap1 || (parseInt(h1, 10) <= parseInt(h2, 10) ? ap2 : "");
+    return to24(h1, m1, effAp1) + "–" + to24(h2, m2, ap2);
+  });
+  return s;
+}
 
 function computeRadarMetrics(v) {
   const b = v.business || {}, os = v.osint || {}, d = v.diagnosis || {};
@@ -2318,7 +2405,7 @@ function openLegalModal(kind) {
 }
 
 async function openAdminModal() {
-  openModal("Панель владельца B2B Nexus v11.3",
+  openModal("Панель владельца B2B Nexus v11.4",
     '<div class="admin-field"><label><strong>Admin PIN</strong></label>' +
     '<input id="admPinInput" type="password" class="field-input" value="' + esc(getAdminPin()) + '" placeholder="PIN"></div>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;">' +

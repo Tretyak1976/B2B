@@ -523,6 +523,131 @@ button, input, select { font-family: inherit; }
   .osint-v { text-align: left; }
 }
 
+
+/* ===== v12.0 PRO: MARKETING & SEO PACK + LIVE AI ADVISOR ===== */
+.pro-tag {
+  display: inline-flex; align-items: center; padding: 1px 6px; border-radius: 6px;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.05em; margin-left: 5px;
+  background: linear-gradient(135deg, #10b981, #06b6d4); color: #ffffff; vertical-align: middle;
+}
+.pro-cta-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  background: linear-gradient(135deg, #0f172a 0%, #132f4c 100%);
+  color: #ffffff; border-radius: var(--radius); padding: 18px 22px; margin-bottom: 20px;
+  border-bottom: 3px solid var(--accent); box-shadow: var(--shadow-md);
+}
+.pro-cta-title { font-size: 16.5px; font-weight: 800; margin-bottom: 3px; }
+.pro-cta-sub { font-size: 13.5px; color: #cbd5e1; max-width: 600px; }
+.pro-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.mkt-hero-card {
+  text-align: center; padding: 36px 26px;
+  background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+  border: 1.5px solid var(--accent-border);
+}
+.mkt-features-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 12px;
+  margin: 22px 0 26px; text-align: left;
+}
+.mkt-feat-box {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px;
+}
+.mkt-feat-box strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+.mkt-feat-box span { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; display: block; }
+
+.mkt-section { margin-bottom: 22px; }
+.mkt-section-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.mkt-section-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+.seo-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.seo-table th { text-align: left; padding: 9px 10px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.seo-table td { padding: 10px 10px; border-bottom: 1px solid var(--bg); vertical-align: top; }
+.seo-table tr:last-child td { border-bottom: none; }
+.serp-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--bg); font-size: 13.5px; }
+.serp-row:last-child { border-bottom: none; }
+.serp-pos { width: 24px; height: 24px; border-radius: 7px; background: var(--bg); font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-muted); }
+.serp-pos.is-you { background: var(--accent); color: #fff; }
+.ad-card { border: 1px solid var(--border); border-radius: 12px; padding: 15px; background: var(--surface-soft); margin-bottom: 12px; }
+.ad-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.ad-hl { color: #1d4ed8; font-weight: 800; font-size: 15px; line-height: 1.35; margin-bottom: 5px; }
+.ad-desc { font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+.neg-chip { display: inline-block; padding: 3px 9px; border-radius: 999px; background: var(--red-bg); color: var(--red-text); font-size: 12px; font-weight: 600; margin: 2px 4px 2px 0; border: 1px solid var(--red-border); }
+.week-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.week-card { border: 1px solid var(--border); border-top: 3px solid #0284c7; border-radius: 14px; padding: 16px; background: var(--surface); }
+.week-post { padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 13.5px; }
+.week-post:last-child { border-bottom: none; padding-bottom: 0; }
+.script-card { border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 14px; padding: 16px 18px; background: var(--surface); margin-bottom: 14px; }
+.script-body { background: var(--surface-soft); border: 1px dashed var(--border-strong); border-radius: 10px; padding: 12px 14px; font-size: 13.5px; white-space: pre-wrap; color: var(--text); margin-top: 10px; line-height: 1.55; }
+
+/* LIVE AI ADVISOR FAB & SLIDE-OVER DRAWER */
+.advisor-fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 55;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 20px; border-radius: 999px; border: none; cursor: pointer;
+  background: linear-gradient(135deg, #0f172a 0%, #059669 100%);
+  color: #ffffff; font-size: 14.5px; font-weight: 800;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.28), 0 0 0 3px rgba(16, 185, 129, 0.22);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.advisor-fab:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(15, 23, 42, 0.34), 0 0 0 4px rgba(16, 185, 129, 0.32); }
+.advisor-dot { width: 9px; height: 9px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; }
+
+.advisor-backdrop {
+  position: fixed; inset: 0; z-index: 70; background: rgba(15, 23, 42, 0.42);
+  display: flex; justify-content: flex-end;
+}
+.advisor-drawer {
+  width: 440px; max-width: 100vw; height: 100vh; background: var(--surface);
+  display: flex; flex-direction: column; box-shadow: -12px 0 40px rgba(15, 23, 42, 0.22);
+}
+.advisor-head {
+  padding: 16px 18px; background: linear-gradient(135deg, #0f172a 0%, #132f4c 100%);
+  color: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.advisor-quick {
+  padding: 10px 14px; background: var(--surface-soft); border-bottom: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.advisor-qchip {
+  padding: 5px 10px; border-radius: 999px; border: 1px solid var(--accent-border);
+  background: var(--surface); color: var(--accent-text); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.14s; text-align: left;
+}
+.advisor-qchip:hover { background: var(--accent-soft); }
+.advisor-msgs {
+  flex: 1; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 12px;
+  background: var(--bg);
+}
+.chat-bubble {
+  max-width: 90%; padding: 11px 14px; border-radius: 14px; font-size: 13.8px; line-height: 1.5; word-break: break-word;
+}
+.chat-bubble.user {
+  align-self: flex-end; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.ai {
+  align-self: flex-start; background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm);
+}
+.chat-bubble-foot {
+  margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--bg);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--text-light);
+}
+.advisor-input-bar {
+  padding: 12px 14px; border-top: 1px solid var(--border); background: var(--surface);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.advisor-input-bar textarea {
+  flex: 1; resize: none; min-height: 42px; max-height: 110px; padding: 10px 12px;
+  border: 1px solid var(--border-strong); border-radius: 10px; font-family: inherit;
+  font-size: 14px; outline: none; color: var(--text);
+}
+.advisor-input-bar textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12); }
+
+@media (max-width: 860px) {
+  .week-grid { grid-template-columns: 1fr; }
+  .advisor-fab { right: 14px; bottom: 14px; padding: 11px 16px; font-size: 13.5px; }
+}
+
 #printSheet { display: none; }
 @media print {
   body { background: #fff; }
@@ -547,7 +672,7 @@ button, input, select { font-family: inherit; }
 
 <div id="adminBanner" class="admin-banner hidden">
   <div class="admin-banner-inner">
-    <span><strong>Режим владельца B2B Nexus v11.4</strong> · Ключи и настройки скрыты от обычных пользователей</span>
+    <span><strong>Режим владельца B2B Nexus v12.0 Pro</strong> · Ключи и настройки скрыты от обычных пользователей</span>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn btn-sm btn-soft" onclick="openAdminModal()">Панель управления</button>
       <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
@@ -586,6 +711,7 @@ button, input, select { font-family: inherit; }
       <button class="nav-tab" data-tab="plan" onclick="switchAuditTab('plan')" data-i18n="tab_plan">2. План действий</button>
       <button class="nav-tab" data-tab="competitors" onclick="switchAuditTab('competitors')" data-i18n="tab_comp">3. Конкуренты</button>
       <button class="nav-tab" data-tab="numbers" onclick="switchAuditTab('numbers')" data-i18n="tab_nums">4. Мои цифры</button>
+      <button class="nav-tab" data-tab="marketing" onclick="switchAuditTab('marketing')"><span data-i18n="tab_mkt">5. Маркетинг и SEO</span><span class="pro-tag">PRO</span></button>
     </nav>
 
     <div id="startupTopSwitch" class="top-mode-switch hidden">
@@ -771,6 +897,17 @@ button, input, select { font-family: inherit; }
         </div>
       </div>
 
+      <div class="pro-cta-banner">
+        <div>
+          <div class="pro-cta-title" data-i18n="pro_cta_title">Нужны готовые клиенты, реклама и личный советник?</div>
+          <div class="pro-cta-sub" data-i18n="pro_cta_sub">Соберите боевой пакет SEO + Google/Meta Ads + контент-план на 30 дней или задайте любой вопрос живому AI-директору.</div>
+        </div>
+        <div class="pro-cta-actions">
+          <button class="btn btn-primary btn-sm" onclick="openMarketingPackTab()" data-i18n="pro_cta_mkt">🚀 Боевой пакет SEO/Ads</button>
+          <button class="btn btn-soft btn-sm" onclick="openAdvisorDrawer()" data-i18n="pro_cta_chat">💬 Спросить AI-советника</button>
+        </div>
+      </div>
+
       <div id="diagRisksWrap" class="card hidden" style="margin-bottom:20px;">
         <h3 style="font-size:16px;margin-bottom:12px;" data-i18n="hdr_risks">На что обратить внимание по законам и рискам</h3>
         <div id="diagRisksList"></div>
@@ -868,6 +1005,41 @@ button, input, select { font-family: inherit; }
       </div>
       <div id="auditDisclaimer" style="font-size:13px;color:var(--text-light);text-align:center;margin-top:8px;"></div>
     </div>
+
+    <!-- TAB 5: DEEP MARKETING & SEO BATTLE PACK (v12 PRO) -->
+    <div id="tabMarketing" class="hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 style="font-size:24px;font-weight:800;letter-spacing:-0.02em;" data-i18n="hdr_mkt_pack">Боевой пакет маркетинга и SEO</h2>
+          <span class="pro-tag" style="font-size:11px;padding:3px 9px;">PRO 360°</span>
+        </div>
+        <div id="mktTopActions" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-soft btn-sm" onclick="openAdvisorDrawer()" data-i18n="pro_cta_chat">💬 Спросить AI-советника</button>
+          <button class="btn btn-outline btn-sm" onclick="generateMarketingPack(true)" data-i18n="btn_regen_mkt">↻ Обновить пакет</button>
+        </div>
+      </div>
+
+      <div id="mktEmptyState" class="card mkt-hero-card">
+        <div style="font-size:38px;margin-bottom:8px;">🚀</div>
+        <h3 style="font-size:21px;font-weight:800;margin-bottom:8px;" data-i18n="mkt_intro_title">Готовая система привлечения клиентов под ключ</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);max-width:640px;margin:0 auto;" data-i18n="mkt_intro_sub">Живая разведка выдачи Google в вашем городе + готовые рекламные кампании, 30-дневный контент-план и скрипты продаж на языке ваших клиентов.</p>
+        <div class="mkt-features-grid">
+          <div class="mkt-feat-box"><strong data-i18n="mkt_f1_t">🔍 Живой Google ТОП-5 и SEO</strong><span data-i18n="mkt_f1_d">Реальные лидеры поиска в городе, 10 ключевых запросов и готовые Meta-теги для сайта.</span></div>
+          <div class="mkt-feat-box"><strong data-i18n="mkt_f2_t">🎯 Google Ads + Meta Ads</strong><span data-i18n="mkt_f2_d">Готовые объявления, минус-слова, таргетинг и идеи для фото/видео на языке клиентов.</span></div>
+          <div class="mkt-feat-box"><strong data-i18n="mkt_f3_t">📅 Контент-план на 30 дней</strong><span data-i18n="mkt_f3_d">12 конкретных тем по неделям для Reels, Google Maps, Facebook и рассылок.</span></div>
+          <div class="mkt-feat-box"><strong data-i18n="mkt_f4_t">📞 3 скрипта продаж</strong><span data-i18n="mkt_f4_d">Ответ на заявку, обработка возражения «дорого» и возврат клиентов без нарушений закона.</span></div>
+        </div>
+        <button id="btnGenMarketing" class="btn btn-primary" style="padding:14px 30px;font-size:15.5px;" onclick="generateMarketingPack(false)" data-i18n="btn_gen_mkt">Сгенерировать боевой пакет (15–20 сек) →</button>
+      </div>
+
+      <div id="mktLoadingState" class="card hidden" style="text-align:center;padding:42px 24px;">
+        <div class="spinner"></div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:6px;" data-i18n="mkt_loading_t">Сканируем Google ТОП-10 города и собираем кампании...</div>
+        <div style="font-size:14px;color:var(--text-muted);" data-i18n="mkt_loading_d">Анализируем реальные запросы, объявления конкурентов, 30-дневный контент и скрипты (обычно 12–25 сек).</div>
+      </div>
+
+      <div id="mktContent" class="hidden"></div>
+    </div>
   </section>
 
   <!-- STARTUP WORKSPACE -->
@@ -925,6 +1097,33 @@ button, input, select { font-family: inherit; }
     </div>
     <div id="modalBody"></div>
   </div>
+</div>
+
+<button id="advisorFab" class="advisor-fab hidden" onclick="openAdvisorDrawer()">
+  <span class="advisor-dot"></span>
+  <span>💬</span>
+  <span data-i18n="adv_fab">AI-советник</span>
+</button>
+
+<div id="advisorBackdrop" class="advisor-backdrop hidden" onclick="if(event.target===this) closeAdvisorDrawer()">
+  <aside class="advisor-drawer" role="dialog" aria-label="AI Business Advisor">
+    <div class="advisor-head">
+      <div>
+        <div style="font-size:15.5px;font-weight:800;">🤖 <span data-i18n="adv_title">Живой AI-советник</span></div>
+        <div id="advisorBizSub" style="font-size:12px;color:#94a3b8;margin-top:2px;">—</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-outline btn-sm" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="clearAdvisorChat()" title="Clear">🗑️</button>
+        <button class="btn btn-outline btn-sm" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);" onclick="closeAdvisorDrawer()">✕</button>
+      </div>
+    </div>
+    <div id="advisorQuickChips" class="advisor-quick"></div>
+    <div id="advisorMessages" class="advisor-msgs"></div>
+    <div class="advisor-input-bar">
+      <textarea id="advisorInput" rows="1" placeholder="Спросите о бизнесе, рекламе, письме клиенту..." data-i18n-ph="adv_ph" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAdvisorMessage();}"></textarea>
+      <button id="btnAdvisorSend" class="btn btn-primary btn-sm" style="height:42px;padding:0 16px;" onclick="sendAdvisorMessage()">→</button>
+    </div>
+  </aside>
 </div>
 
 <div id="toast" class="toast hidden"></div>
@@ -1031,7 +1230,50 @@ const I18N = {
     rad_sec: "Доверие и защита",
     rad_vis: "Видимость и график",
     rad_mkt: "Позиция на рынке",
-    hdr_hours_lbl: "Режим работы"
+    hdr_hours_lbl: "Режим работы",
+    tab_mkt: "5. Маркетинг и SEO",
+    pro_cta_title: "Нужны готовые клиенты, реклама и личный советник?",
+    pro_cta_sub: "Соберите боевой пакет SEO + Google/Meta Ads + контент-план на 30 дней или задайте любой вопрос живому AI-директору.",
+    pro_cta_mkt: "🚀 Боевой пакет SEO/Ads",
+    pro_cta_chat: "💬 Спросить AI-советника",
+    hdr_mkt_pack: "Боевой пакет маркетинга и SEO",
+    btn_regen_mkt: "↻ Обновить пакет",
+    mkt_intro_title: "Готовая система привлечения клиентов под ключ",
+    mkt_intro_sub: "Живая разведка выдачи Google в вашем городе + готовые рекламные кампании, 30-дневный контент-план и скрипты продаж на языке ваших клиентов.",
+    mkt_f1_t: "🔍 Живой Google ТОП-5 и SEO",
+    mkt_f1_d: "Реальные лидеры поиска в городе, 10 ключевых запросов и готовые Meta-теги для сайта.",
+    mkt_f2_t: "🎯 Google Ads + Meta Ads",
+    mkt_f2_d: "Готовые объявления, минус-слова, таргетинг и идеи для фото/видео на языке клиентов.",
+    mkt_f3_t: "📅 Контент-план на 30 дней",
+    mkt_f3_d: "12 конкретных тем по неделям для Reels, Google Maps, Facebook и рассылок.",
+    mkt_f4_t: "📞 3 скрипта продаж",
+    mkt_f4_d: "Ответ на заявку, обработка возражения «дорого» и возврат клиентов без нарушений закона.",
+    btn_gen_mkt: "Сгенерировать боевой пакет (15–20 сек) →",
+    mkt_loading_t: "Сканируем Google ТОП-10 города и собираем кампании...",
+    mkt_loading_d: "Анализируем реальные запросы, объявления конкурентов, 30-дневный контент и скрипты (обычно 12–25 сек).",
+    mkt_serp_hdr: "🔍 Живая выдача Google в городе",
+    mkt_in_top10: "Вы в ТОП-10 Google (позиция #{pos})",
+    mkt_not_top10: "Вас нет в органическом ТОП-10 Google",
+    mkt_meta_hdr: "🏷️ Готовые SEO-теги для сайта",
+    mkt_kw_hdr: "🔑 Ключевые запросы города",
+    mkt_kw_col: "Запрос",
+    mkt_int_col: "Цель",
+    mkt_diff_col: "Сложность",
+    mkt_act_col: "Где применить",
+    mkt_gads_hdr: "🎯 Готовая кампания Google Ads (поиск)",
+    mkt_mads_hdr: "📱 Готовая кампания Meta Ads (Instagram / Facebook)",
+    mkt_neg_kw: "Минус-слова (чтобы не сливать бюджет):",
+    mkt_content_hdr: "📅 Контент-план на 30 дней (4 недели)",
+    mkt_week: "Неделя",
+    mkt_scripts_hdr: "📞 Боевые скрипты продаж и допродаж",
+    adv_fab: "AI-советник",
+    adv_title: "Живой AI-советник",
+    adv_ph: "Спросите о бизнесе, рекламе, письме клиенту...",
+    adv_welcome: "Привет! Я изучил весь аудит, OSINT-находки, конкурентов и цифры этого бизнеса. Задайте любой вопрос — помогу разобрать стратегию или сразу напишу готовое письмо, ответ на отзыв или скрипт.",
+    adv_q1: "Напиши ответ на сложный отзыв клиента",
+    adv_q2: "Как поднять средний чек на 15–20%?",
+    adv_q3: "Напиши письмо соседу о партнёрстве",
+    adv_q4: "Что сделать за 0 € в первые 48 часов?"
   },
   uk: {
     langCode: "uk-UA",
@@ -1130,7 +1372,50 @@ const I18N = {
     rad_sec: "Довіра і захист",
     rad_vis: "Видимість і графік",
     rad_mkt: "Позиція на ринку",
-    hdr_hours_lbl: "Режим роботи"
+    hdr_hours_lbl: "Режим роботи",
+    tab_mkt: "5. Маркетинг і SEO",
+    pro_cta_title: "Потрібні готові клієнти, реклама та особистий радник?",
+    pro_cta_sub: "Зберіть бойовий пакет SEO + Google/Meta Ads + контент-план на 30 днів або поставте будь-яке питання живому AI-директору.",
+    pro_cta_mkt: "🚀 Бойовий пакет SEO/Ads",
+    pro_cta_chat: "💬 Запитати AI-радника",
+    hdr_mkt_pack: "Бойовий пакет маркетингу та SEO",
+    btn_regen_mkt: "↻ Оновити пакет",
+    mkt_intro_title: "Готова система залучення клієнтів під ключ",
+    mkt_intro_sub: "Жива розвідка видачі Google у вашому місті + готові рекламні кампанії, 30-денний контент-план і скрипти продажів мовою ваших клієнтів.",
+    mkt_f1_t: "🔍 Живий Google ТОП-5 і SEO",
+    mkt_f1_d: "Реальні лідери пошуку в місті, 10 ключових запитів і готові Meta-теги для сайту.",
+    mkt_f2_t: "🎯 Google Ads + Meta Ads",
+    mkt_f2_d: "Готові оголошення, мінус-слова, таргетинг та ідеї для фото/відео мовою клієнтів.",
+    mkt_f3_t: "📅 Контент-план на 30 днів",
+    mkt_f3_d: "12 конкретних тем по тижнях для Reels, Google Maps, Facebook і розсилок.",
+    mkt_f4_t: "📞 3 скрипти продажів",
+    mkt_f4_d: "Відповідь на заявку, робота із запереченням «дорого» і повернення клієнтів без порушень закону.",
+    btn_gen_mkt: "Згенерувати бойовий пакет (15–20 сек) →",
+    mkt_loading_t: "Скануємо Google ТОП-10 міста та збираємо кампанії...",
+    mkt_loading_d: "Аналізуємо реальні запити, оголошення конкурентів, 30-денний контент і скрипти (зазвичай 12–25 сек).",
+    mkt_serp_hdr: "🔍 Жива видача Google у місті",
+    mkt_in_top10: "Ви в ТОП-10 Google (позиція #{pos})",
+    mkt_not_top10: "Вас немає в органічному ТОП-10 Google",
+    mkt_meta_hdr: "🏷️ Готові SEO-теги для сайту",
+    mkt_kw_hdr: "🔑 Ключові запити міста",
+    mkt_kw_col: "Запит",
+    mkt_int_col: "Мета",
+    mkt_diff_col: "Складність",
+    mkt_act_col: "Де застосувати",
+    mkt_gads_hdr: "🎯 Готова кампанія Google Ads (пошук)",
+    mkt_mads_hdr: "📱 Готова кампанія Meta Ads (Instagram / Facebook)",
+    mkt_neg_kw: "Мінус-слова (щоб не зливати бюджет):",
+    mkt_content_hdr: "📅 Контент-план на 30 днів (4 тижні)",
+    mkt_week: "Тиждень",
+    mkt_scripts_hdr: "📞 Бойові скрипти продажів і допродажів",
+    adv_fab: "AI-радник",
+    adv_title: "Живий AI-радник",
+    adv_ph: "Запитайте про бізнес, рекламу, лист клієнту...",
+    adv_welcome: "Привіт! Я вивчив увесь аудит, OSINT-знахідки, конкурентів і цифри цього бізнесу. Поставте будь-яке питання — допоможу розібрати стратегію або одразу напишу готовий лист, відповідь на відгук чи скрипт.",
+    adv_q1: "Напиши відповідь на складний відгук клієнта",
+    adv_q2: "Як підняти середній чек на 15–20%?",
+    adv_q3: "Напиши лист сусіду про партнерство",
+    adv_q4: "Що зробити за 0 € у перші 48 годин?"
   },
   de: {
     langCode: "de-DE",
@@ -1229,7 +1514,50 @@ const I18N = {
     rad_sec: "Vertrauen & Schutz",
     rad_vis: "Sichtbarkeit & Zeiten",
     rad_mkt: "Marktposition",
-    hdr_hours_lbl: "Öffnungszeiten"
+    hdr_hours_lbl: "Öffnungszeiten",
+    tab_mkt: "5. Marketing & SEO",
+    pro_cta_title: "Fertige Kundenkampagnen & persönlicher KI-Berater?",
+    pro_cta_sub: "Erstellen Sie das SEO + Google/Meta Ads Paket inkl. 30-Tage-Content-Plan oder fragen Sie direkt Ihren KI-Geschäftsberater.",
+    pro_cta_mkt: "🚀 SEO & Ads Paket",
+    pro_cta_chat: "💬 KI-Berater fragen",
+    hdr_mkt_pack: "Marketing- & SEO-Praxispaket",
+    btn_regen_mkt: "↻ Neu generieren",
+    mkt_intro_title: "Schlüsselfertiges System für lokale Neukunden",
+    mkt_intro_sub: "Live-Analyse der Google-Suchergebnisse in Ihrer Stadt + fertige Werbekampagnen, 30-Tage-Content-Plan und Verkaufsleitfäden.",
+    mkt_f1_t: "🔍 Live Google TOP-5 & SEO",
+    mkt_f1_d: "Echte Such-Gewinner vor Ort, 10 lokale Keywords und fertige Meta-Tags.",
+    mkt_f2_t: "🎯 Google Ads + Meta Ads",
+    mkt_f2_d: "Fertige Anzeigentexte, auszuschließende Keywords, Zielgruppen und Video-Ideen.",
+    mkt_f3_t: "📅 30-Tage-Content-Plan",
+    mkt_f3_d: "12 konkrete Beiträge nach Wochen für Reels, Google Maps, Facebook & E-Mail.",
+    mkt_f4_t: "📞 3 Verkaufsleitfäden",
+    mkt_f4_d: "Anfrage-Antwort, Einwandbehandlung „zu teuer“ und Stammkunden-Bindung.",
+    btn_gen_mkt: "Marketing- & SEO-Paket erstellen (15–20 Sek.) →",
+    mkt_loading_t: "Google TOP-10 der Stadt wird gescannt & Kampagnen erstellt...",
+    mkt_loading_d: "Wir analysieren echte Suchanfragen, Wettbewerber, 30-Tage-Content und Skripte (ca. 12–25 Sek.).",
+    mkt_serp_hdr: "🔍 Live Google-Suchergebnisse vor Ort",
+    mkt_in_top10: "Sie sind in den Google TOP-10 (Platz #{pos})",
+    mkt_not_top10: "Nicht in den organischen Google TOP-10 sichtbar",
+    mkt_meta_hdr: "🏷️ Fertige SEO-Tags für Ihre Website",
+    mkt_kw_hdr: "🔑 Lokale Suchbegriffe",
+    mkt_kw_col: "Suchbegriff",
+    mkt_int_col: "Absicht",
+    mkt_diff_col: "Wettbewerb",
+    mkt_act_col: "Einsatzort",
+    mkt_gads_hdr: "🎯 Fertige Google Ads Kampagne (Suche)",
+    mkt_mads_hdr: "📱 Fertige Meta Ads Kampagne (Instagram / Facebook)",
+    mkt_neg_kw: "Auszuschließende Wörter (spart Werbebudget):",
+    mkt_content_hdr: "📅 30-Tage-Content-Plan (4 Wochen)",
+    mkt_week: "Woche",
+    mkt_scripts_hdr: "📞 Verkaufs- & Gesprächsleitfäden",
+    adv_fab: "KI-Berater",
+    adv_title: "Live KI-Geschäftsberater",
+    adv_ph: "Fragen zu Marketing, Preisen, Kunden-Mails...",
+    adv_welcome: "Hallo! Ich kenne den kompletten Audit, alle OSINT-Funde, Wettbewerber und Zahlen dieses Unternehmens. Fragen Sie mich alles — von Strategie bis zu fertigen Texten.",
+    adv_q1: "Schreibe eine Antwort auf eine kritische Bewertung",
+    adv_q2: "Wie steigere ich den Durchschnittsbon um 15–20%?",
+    adv_q3: "Schreibe eine Partner-Mail an einen Nachbarn",
+    adv_q4: "Was kann ich in 48 Stunden für 0 € umsetzen?"
   },
   en: {
     langCode: "en-US",
@@ -1328,7 +1656,50 @@ const I18N = {
     rad_sec: "Trust & Security",
     rad_vis: "Visibility & Hours",
     rad_mkt: "Market Position",
-    hdr_hours_lbl: "Opening hours"
+    hdr_hours_lbl: "Opening hours",
+    tab_mkt: "5. Marketing & SEO",
+    pro_cta_title: "Want ready-to-launch ads & a live AI Business Director?",
+    pro_cta_sub: "Generate a complete Local SEO + Google/Meta Ads + 30-day content battle pack or ask your personal AI advisor anything.",
+    pro_cta_mkt: "🚀 SEO & Ads Battle Pack",
+    pro_cta_chat: "💬 Ask AI Advisor",
+    hdr_mkt_pack: "Deep Marketing & SEO Battle Pack",
+    btn_regen_mkt: "↻ Refresh Pack",
+    mkt_intro_title: "Turnkey Local Customer Acquisition System",
+    mkt_intro_sub: "Live Google SERP intelligence in your city + ready-to-run ad campaigns, 30-day content calendar, and sales scripts in your customers' language.",
+    mkt_f1_t: "🔍 Live Google TOP-5 & SEO",
+    mkt_f1_d: "Real local search winners, 10 city keywords, and ready Title/Meta/H1 tags.",
+    mkt_f2_t: "🎯 Google Ads + Meta Ads",
+    mkt_f2_d: "Ready search ads, negative keywords, audience targeting, and visual hooks.",
+    mkt_f3_t: "📅 30-Day Content Calendar",
+    mkt_f3_d: "12 concrete weekly posts for Reels, Google Business Profile, Facebook & email.",
+    mkt_f4_t: "📞 3 Sales Scripts",
+    mkt_f4_d: "Lead response, handling 'too expensive', and repeat-visit conversion scripts.",
+    btn_gen_mkt: "Generate Marketing & SEO Pack (15–20s) →",
+    mkt_loading_t: "Scanning local Google TOP-10 & building your campaigns...",
+    mkt_loading_d: "Analyzing live search demand, competitor hooks, 30-day content & scripts (12–25s).",
+    mkt_serp_hdr: "🔍 Live Local Google Search Results",
+    mkt_in_top10: "You rank in Google TOP-10 (Position #{pos})",
+    mkt_not_top10: "Not visible in organic Google TOP-10 yet",
+    mkt_meta_hdr: "🏷️ Ready Website SEO Tags",
+    mkt_kw_hdr: "🔑 Local Search Keywords",
+    mkt_kw_col: "Keyword",
+    mkt_int_col: "Intent",
+    mkt_diff_col: "Difficulty",
+    mkt_act_col: "Where to use",
+    mkt_gads_hdr: "🎯 Ready Google Ads Campaign (Search)",
+    mkt_mads_hdr: "📱 Ready Meta Ads Campaign (Instagram / Facebook)",
+    mkt_neg_kw: "Negative keywords (prevent wasted ad spend):",
+    mkt_content_hdr: "📅 30-Day Content Calendar (4 Weeks)",
+    mkt_week: "Week",
+    mkt_scripts_hdr: "📞 Battle-Tested Sales Scripts",
+    adv_fab: "AI Advisor",
+    adv_title: "Live AI Business Advisor",
+    adv_ph: "Ask about strategy, ads, emails, pricing...",
+    adv_welcome: "Hi! I have the full audit, OSINT findings, competitor complaints, and numbers for this business. Ask anything — or tell me what email, reply, or script to write for you.",
+    adv_q1: "Write a calm reply to a negative review",
+    adv_q2: "How can I raise average order value by 15–20%?",
+    adv_q3: "Write a partnership email to a nearby neighbor",
+    adv_q4: "What should I do in 48 hours with $0 budget?"
   }
 };
 
@@ -1349,7 +1720,11 @@ const STATE = {
   stExplanations: {},
   selectedSuggestion: null,
   pollTimer: null,
-  acTimer: null
+  acTimer: null,
+  mktPack: null,
+  mktLoading: false,
+  advisorMsgs: [],
+  advisorBusy: false
 };
 
 function t(k) { return (I18N[STATE.lang] && I18N[STATE.lang][k]) || I18N.ru[k] || k; }
@@ -1412,6 +1787,8 @@ function showOnlySection(id) {
   document.getElementById("startupTopSwitch").classList.toggle("hidden", id !== "startupView");
   document.getElementById("btnPdfTop").classList.toggle("hidden", id !== "auditView" && id !== "startupView");
   document.getElementById("langSwitcher").classList.toggle("hidden", id === "auditView" || id === "startupView");
+  const fab = document.getElementById("advisorFab");
+  if (fab) fab.classList.toggle("hidden", id !== "auditView" && id !== "startupView");
 }
 
 function goHome(mode) { if (mode) setHomeMode(mode); showOnlySection("homeView"); }
@@ -1559,6 +1936,9 @@ function openAuditResult(fileId, rawReport, isCached) {
   STATE.explanations = {};
   STATE.clientPsi = null;
   STATE.clientPsiLoading = false;
+  STATE.mktPack = (STATE.v10.deepPacks && STATE.v10.deepPacks.marketing) || null;
+  STATE.mktLoading = false;
+  initAdvisorForCurrentContext();
   try { STATE.solvedSteps = JSON.parse(localStorage.getItem("b2b_v10_done_" + (fileId || STATE.v10.business.name)) || "{}"); } catch (e) { STATE.solvedSteps = {}; }
 
   if (fileId) {
@@ -1574,7 +1954,7 @@ function openAuditResult(fileId, rawReport, isCached) {
 function switchAuditTab(tab) {
   STATE.auditTab = tab;
   document.querySelectorAll("#auditNav .nav-tab").forEach(function(b) { b.classList.toggle("active", b.getAttribute("data-tab") === tab); });
-  ["diagnosis", "plan", "competitors", "numbers"].forEach(function(k) {
+  ["diagnosis", "plan", "competitors", "numbers", "marketing"].forEach(function(k) {
     document.getElementById("tab" + k.charAt(0).toUpperCase() + k.slice(1)).classList.toggle("hidden", k !== tab);
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1657,6 +2037,7 @@ function renderAuditAll(isCached) {
   renderPlanDetail();
   renderCompetitorsTab();
   initCalculator();
+  renderMarketingTab();
   document.getElementById("auditDisclaimer").textContent = v.legalDisclaimer || "";
 }
 
@@ -2267,8 +2648,10 @@ async function runStartupPlan() {
       showToast(j.message || "Error");
       return;
     }
+    STATE.fileId = j.fileId || "";
     STATE.startupData = j.planData;
     STATE.activeStIdx = 0;
+    initAdvisorForCurrentContext();
     STATE.stBranch = "diy";
     STATE.stExplanations = {};
     renderStartupAll();
@@ -2347,6 +2730,325 @@ function renderStartupStep() {
   box.innerHTML = html;
 }
 
+
+// =========================================================================
+// TAB 5: DEEP MARKETING & SEO BATTLE PACK (v12.0 PRO)
+// =========================================================================
+function openMarketingPackTab() {
+  switchAuditTab("marketing");
+  if (!STATE.mktPack && !STATE.mktLoading && STATE.fileId) {
+    generateMarketingPack(false);
+  }
+}
+
+async function generateMarketingPack(forceRefresh) {
+  if (!STATE.fileId) { showToast("Run an audit first"); return; }
+  if (STATE.mktLoading) return;
+  STATE.mktLoading = true;
+  renderMarketingTab();
+  try {
+    const resp = await fetch(GAS_URL, {
+      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "deep_marketing_pack",
+        fileId: STATE.fileId,
+        language: t("langCode"),
+        forceRefresh: Boolean(forceRefresh),
+        clientId: getClientId(),
+        adminPin: getAdminPin()
+      })
+    });
+    const j = await resp.json();
+    if (j.status === "success" && j.pack) {
+      STATE.mktPack = j.pack;
+      if (STATE.v10) {
+        if (!STATE.v10.deepPacks) STATE.v10.deepPacks = {};
+        STATE.v10.deepPacks.marketing = j.pack;
+      }
+      showToast(j.cached ? "⚡ Loaded from report" : "🚀 Marketing & SEO Pack ready!");
+    } else {
+      showToast(j.message || "Error generating pack");
+    }
+  } catch (e) {
+    showToast("Network error: " + e.message);
+  } finally {
+    STATE.mktLoading = false;
+    renderMarketingTab();
+  }
+}
+
+function renderMarketingTab() {
+  const emptyEl = document.getElementById("mktEmptyState");
+  const loadEl = document.getElementById("mktLoadingState");
+  const contEl = document.getElementById("mktContent");
+  const actsEl = document.getElementById("mktTopActions");
+  if (!emptyEl || !loadEl || !contEl) return;
+
+  if (STATE.mktLoading) {
+    emptyEl.classList.add("hidden");
+    contEl.classList.add("hidden");
+    actsEl.classList.add("hidden");
+    loadEl.classList.remove("hidden");
+    return;
+  }
+  loadEl.classList.add("hidden");
+
+  const pk = STATE.mktPack;
+  if (!pk) {
+    emptyEl.classList.remove("hidden");
+    contEl.classList.add("hidden");
+    actsEl.classList.add("hidden");
+    return;
+  }
+
+  emptyEl.classList.add("hidden");
+  contEl.classList.remove("hidden");
+  actsEl.classList.remove("hidden");
+
+  const serp = pk.liveSerp || {};
+  const meta = pk.seoOnPage || {};
+  const gads = pk.googleAds || {};
+  const mads = pk.metaAds || {};
+
+  let html = '<div class="verdict-box" style="margin-bottom:20px;">' +
+    '<strong>🎯 ' + esc(t("lbl_verdict")) + ':</strong> ' + esc(pk.executiveSummary || "") +
+    '<div style="margin-top:6px;font-size:12px;color:var(--text-muted);">' +
+    esc(pk.localCustomerLang || "") + (pk.usedModel ? (' · ' + esc(pk.usedModel)) : '') + (pk.elapsedSec ? (' · ' + pk.elapsedSec + 's') : '') +
+    '</div></div>';
+
+  // 1. Live Google SERP + Ready SEO Meta Tags
+  html += '<div class="two-col-equal mkt-section">';
+  // Left: Live Google TOP-5
+  const top10Badge = serp.targetRanksInTop10
+    ? '<span class="pill pill-green">' + esc(t("mkt_in_top10").replace("{pos}", serp.targetRankPos)) + '</span>'
+    : '<span class="pill pill-red">' + esc(t("mkt_not_top10")) + '</span>';
+  html += '<div class="card"><div class="mkt-section-head"><h3 class="mkt-section-title">' + esc(t("mkt_serp_hdr")) + '</h3>' + top10Badge + '</div>' +
+    (serp.query ? ('<div style="font-size:12.5px;color:var(--text-muted);margin-bottom:10px;">Google: <strong>«' + esc(serp.query) + '»</strong></div>') : '') +
+    ((serp.topOrganic && serp.topOrganic.length) ? serp.topOrganic.map(function(o) {
+      return '<div class="serp-row"><span class="serp-pos' + (o.isTarget ? ' is-you' : '') + '">' + o.pos + '</span>' +
+        '<div style="min-width:0;flex:1;"><div><a href="' + esc(o.url) + '" target="_blank" rel="noopener" style="font-weight:700;">' + esc(o.title) + '</a></div>' +
+        '<div style="font-size:12px;color:var(--text-muted);">' + esc(o.domain) + (o.isDirectory ? ' · directory' : '') + '</div></div></div>';
+    }).join("") : '<div style="font-size:13px;color:var(--text-muted);">—</div>');
+  if (serp.relatedSearches && serp.relatedSearches.length) {
+    html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--bg);">' +
+      serp.relatedSearches.slice(0, 6).map(function(q) { return '<span class="flag-chip info">🔎 ' + esc(q) + '</span>'; }).join("") + '</div>';
+  }
+  html += '</div>';
+
+  // Right: Ready SEO Meta Tags + Local SEO Checklist
+  const metaCopyBlob = "Title: " + (meta.titleTag || "") + "\nDescription: " + (meta.metaDescription || "") + "\nH1: " + (meta.h1 || "");
+  html += '<div class="card"><div class="mkt-section-head"><h3 class="mkt-section-title">' + esc(t("mkt_meta_hdr")) + '</h3>' +
+    '<button class="btn btn-outline btn-sm" onclick="copyText(this.getAttribute(\'data-copy\'))" data-copy="' + esc(metaCopyBlob) + '">' + esc(t("btn_copy")) + '</button></div>' +
+    '<div class="ad-card" style="margin-bottom:12px;">' +
+      '<div style="font-size:11.5px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">Title</div>' +
+      '<div class="ad-hl" style="margin-bottom:8px;">' + esc(meta.titleTag || "—") + '</div>' +
+      '<div style="font-size:11.5px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">Meta Description</div>' +
+      '<div class="ad-desc">' + esc(meta.metaDescription || "—") + '</div>' +
+      '<div style="font-size:11.5px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">H1</div>' +
+      '<div style="font-weight:700;font-size:14px;">' + esc(meta.h1 || "—") + '</div>' +
+    '</div>' +
+    '<ul class="bullet-list">' + (meta.localSeoChecklist || []).map(function(it) {
+      return '<li><span class="dot dot-green"></span><span>' + esc(it) + '</span></li>';
+    }).join("") + '</ul></div>';
+  html += '</div>';
+
+  // 2. Local SEO Keywords Table
+  if (pk.seoKeywords && pk.seoKeywords.length) {
+    html += '<div class="card mkt-section"><div class="mkt-section-head"><h3 class="mkt-section-title">' + esc(t("mkt_kw_hdr")) + ' (' + pk.seoKeywords.length + ')</h3>' +
+      '<button class="btn btn-outline btn-sm" onclick="copyText(STATE.mktPack.seoKeywords.map(function(k){return k.keyword;}).join(\'\\n\'))">' + esc(t("btn_copy")) + '</button></div>' +
+      '<div style="overflow-x:auto;"><table class="seo-table"><thead><tr><th>' + esc(t("mkt_kw_col")) + '</th><th>' + esc(t("mkt_int_col")) + '</th><th>' + esc(t("mkt_diff_col")) + '</th><th>' + esc(t("mkt_act_col")) + '</th></tr></thead><tbody>' +
+      pk.seoKeywords.map(function(k) {
+        const dCls = k.difficulty === "low" ? "pill-green" : (k.difficulty === "high" ? "pill-red" : "pill-amber");
+        return '<tr><td><strong>' + esc(k.keyword) + '</strong></td>' +
+          '<td><span class="pill" style="padding:2px 8px;font-size:11.5px;">' + esc(k.intent || "") + '</span></td>' +
+          '<td><span class="pill ' + dCls + '" style="padding:2px 8px;font-size:11.5px;">' + esc(k.difficulty || "") + '</span></td>' +
+          '<td style="color:var(--text-muted);">' + esc(k.actionNote || "") + '</td></tr>';
+      }).join("") + '</tbody></table></div></div>';
+  }
+
+  // 3. Google Ads & Meta Ads Side by Side
+  html += '<div class="two-col-equal mkt-section">';
+  // Google Ads
+  html += '<div class="card"><div class="mkt-section-head"><h3 class="mkt-section-title">' + esc(t("mkt_gads_hdr")) + '</h3>' +
+    (gads.monthlyBudgetFormatted ? ('<span class="pill pill-green">' + esc(gads.monthlyBudgetFormatted) + '</span>') : '') + '</div>';
+  if (gads.expectedClicksMonth || gads.expectedLeadsMonth) {
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">' +
+      (gads.expectedClicksMonth ? ('<span class="pill">👆 ' + esc(gads.expectedClicksMonth) + '</span>') : '') +
+      (gads.expectedLeadsMonth ? ('<span class="pill pill-green">🔥 ' + esc(gads.expectedLeadsMonth) + '</span>') : '') + '</div>';
+  }
+  html += (gads.ads || []).map(function(ad, idx) {
+    const adCopy = (ad.headlines || []).join(" | ") + "\n" + (ad.descriptions || []).join("\n") + (ad.callout ? ("\n" + ad.callout) : "");
+    return '<div class="ad-card"><div class="ad-card-head"><strong style="font-size:13px;color:var(--text-muted);">' + esc(ad.groupName || ("Ad #" + (idx + 1))) + '</strong>' +
+      '<button class="btn btn-outline btn-sm" onclick="copyText(this.getAttribute(\'data-copy\'))" data-copy="' + esc(adCopy) + '">' + esc(t("btn_copy")) + '</button></div>' +
+      '<div class="ad-hl">' + esc((ad.headlines || []).join(" · ")) + '</div>' +
+      '<div class="ad-desc">' + esc((ad.descriptions || []).join(" ")) + '</div>' +
+      (ad.callout ? ('<div style="font-size:12px;color:var(--accent-text);font-weight:700;">✓ ' + esc(ad.callout) + '</div>') : '') + '</div>';
+  }).join("");
+  if (gads.negativeKeywords && gads.negativeKeywords.length) {
+    html += '<div style="margin-top:10px;"><div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:5px;">' + esc(t("mkt_neg_kw")) + '</div>' +
+      gads.negativeKeywords.map(function(nw) { return '<span class="neg-chip">-' + esc(nw) + '</span>'; }).join("") + '</div>';
+  }
+  html += '</div>';
+
+  // Meta Ads
+  html += '<div class="card"><div class="mkt-section-head"><h3 class="mkt-section-title">' + esc(t("mkt_mads_hdr")) + '</h3>' +
+    (mads.monthlyBudgetFormatted ? ('<span class="pill pill-green">' + esc(mads.monthlyBudgetFormatted) + '</span>') : '') + '</div>';
+  if (mads.audienceTargeting) {
+    html += '<div class="step-why" style="margin-bottom:12px;font-size:13px;">🎯 ' + esc(mads.audienceTargeting) + '</div>';
+  }
+  html += (mads.creatives || []).map(function(cr, idx) {
+    const cCopy = (cr.hook || "") + "\n\n" + (cr.body || "") + (cr.cta ? ("\n\n" + cr.cta) : "");
+    return '<div class="ad-card"><div class="ad-card-head"><strong style="font-size:13.5px;">' + esc(cr.name || ("Creative #" + (idx + 1))) + '</strong>' +
+      '<button class="btn btn-outline btn-sm" onclick="copyText(this.getAttribute(\'data-copy\'))" data-copy="' + esc(cCopy) + '">' + esc(t("btn_copy")) + '</button></div>' +
+      '<div style="font-weight:800;font-size:14px;color:var(--text);margin-bottom:6px;">«' + esc(cr.hook || "") + '»</div>' +
+      '<div class="ad-desc" style="white-space:pre-wrap;">' + esc(cr.body || "") + '</div>' +
+      (cr.cta ? ('<div style="margin-bottom:6px;"><span class="pill pill-green" style="padding:2px 9px;font-size:12px;">' + esc(cr.cta) + '</span></div>') : '') +
+      (cr.visualIdea ? ('<div style="font-size:12.5px;color:var(--text-muted);">🎬 ' + esc(cr.visualIdea) + '</div>') : '') + '</div>';
+  }).join("");
+  html += '</div></div>';
+
+  // 4. 30-Day Content Calendar
+  if (pk.contentPlan && pk.contentPlan.length) {
+    html += '<div class="mkt-section"><h3 class="mkt-section-title" style="margin-bottom:12px;">' + esc(t("mkt_content_hdr")) + '</h3><div class="week-grid">' +
+      pk.contentPlan.map(function(wk, wi) {
+        return '<div class="week-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+          '<span class="pill pill-green" style="padding:2px 9px;font-size:12px;">' + esc(t("mkt_week")) + ' ' + (wk.week || (wi + 1)) + '</span>' +
+          '<strong style="font-size:14px;">' + esc(wk.theme || "") + '</strong></div>' +
+          (wk.posts || []).map(function(p) {
+            return '<div class="week-post"><div style="margin-bottom:3px;"><span class="flag-chip info">' + esc(p.channel || "Post") + '</span>' +
+              (p.format ? ('<span class="flag-chip">' + esc(p.format) + '</span>') : '') + '</div>' +
+              '<div style="font-weight:700;color:var(--text);">' + esc(p.title || "") + '</div>' +
+              (p.hook ? ('<div style="font-size:12.5px;color:var(--accent-text);margin-top:2px;">«' + esc(p.hook) + '»</div>') : '') + '</div>';
+          }).join("") + '</div>';
+      }).join("") + '</div></div>';
+  }
+
+  // 5. Sales Scripts
+  if (pk.salesScripts && pk.salesScripts.length) {
+    html += '<div class="mkt-section"><h3 class="mkt-section-title" style="margin-bottom:12px;">' + esc(t("mkt_scripts_hdr")) + '</h3>' +
+      pk.salesScripts.map(function(sc, si) {
+        return '<div class="script-card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">' +
+          '<div><strong style="font-size:15.5px;">' + (si + 1) + '. ' + esc(sc.scenario || "") + '</strong>' +
+          (sc.goal ? ('<div style="font-size:13px;color:var(--text-muted);">' + esc(sc.goal) + '</div>') : '') + '</div>' +
+          '<button class="btn btn-outline btn-sm" onclick="copyText(STATE.mktPack.salesScripts[' + si + '].script)">' + esc(t("btn_copy")) + '</button></div>' +
+          '<div class="script-body">' + esc(sc.script || "") + '</div></div>';
+      }).join("") + '</div>';
+  }
+
+  contEl.innerHTML = html;
+}
+
+// =========================================================================
+// LIVE AI BUSINESS ADVISOR (SLIDE-OVER DRAWER)
+// =========================================================================
+function getAdvisorStorageKey() {
+  return "b2b_v12_adv_" + (STATE.fileId || (STATE.v10 && STATE.v10.business && STATE.v10.business.name) || (STATE.startupData && STATE.startupData.niche) || "default");
+}
+
+function initAdvisorForCurrentContext() {
+  try {
+    const saved = sessionStorage.getItem(getAdvisorStorageKey());
+    STATE.advisorMsgs = saved ? JSON.parse(saved) : [];
+  } catch (e) { STATE.advisorMsgs = []; }
+  STATE.advisorBusy = false;
+  const subEl = document.getElementById("advisorBizSub");
+  if (subEl) {
+    if (STATE.v10 && STATE.v10.business) subEl.textContent = STATE.v10.business.name + (STATE.v10.business.city ? (" · " + STATE.v10.business.city) : "");
+    else if (STATE.startupData) subEl.textContent = (STATE.startupData.niche || "Startup") + (STATE.startupData.location && STATE.startupData.location.city ? (" · " + STATE.startupData.location.city) : "");
+  }
+  renderAdvisorQuickChips();
+  renderAdvisorMessages();
+}
+
+function renderAdvisorQuickChips() {
+  const wrap = document.getElementById("advisorQuickChips");
+  if (!wrap) return;
+  const qs = [t("adv_q1"), t("adv_q2"), t("adv_q3"), t("adv_q4")];
+  wrap.innerHTML = qs.map(function(q) {
+    return '<button class="advisor-qchip" onclick="sendAdvisorMessage(this.getAttribute(\'data-q\'))" data-q="' + esc(q) + '">' + esc(q) + '</button>';
+  }).join("");
+}
+
+function openAdvisorDrawer() {
+  initAdvisorForCurrentContext();
+  document.getElementById("advisorBackdrop").classList.remove("hidden");
+  setTimeout(function() { const inp = document.getElementById("advisorInput"); if (inp) inp.focus(); }, 100);
+}
+
+function closeAdvisorDrawer() {
+  document.getElementById("advisorBackdrop").classList.add("hidden");
+}
+
+function clearAdvisorChat() {
+  STATE.advisorMsgs = [];
+  try { sessionStorage.removeItem(getAdvisorStorageKey()); } catch (e) {}
+  renderAdvisorMessages();
+}
+
+function formatAdvisorText(raw) {
+  return esc(raw || "")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n/g, "<br>");
+}
+
+function renderAdvisorMessages() {
+  const box = document.getElementById("advisorMessages");
+  if (!box) return;
+  let html = '<div class="chat-bubble ai">' + esc(t("adv_welcome")) + '</div>';
+  html += (STATE.advisorMsgs || []).map(function(m, idx) {
+    if (m.role === "user") {
+      return '<div class="chat-bubble user">' + esc(m.text) + '</div>';
+    }
+    return '<div class="chat-bubble ai"><div>' + formatAdvisorText(m.text) + '</div>' +
+      '<div class="chat-bubble-foot"><span>' + esc(m.model || "B2B Nexus AI") + '</span>' +
+      '<button class="psi-btn" onclick="copyText(STATE.advisorMsgs[' + idx + '].text)">' + esc(t("btn_copy")) + '</button></div></div>';
+  }).join("");
+  if (STATE.advisorBusy) {
+    html += '<div class="chat-bubble ai" style="color:var(--text-muted);">⏳ ...</div>';
+  }
+  box.innerHTML = html;
+  box.scrollTop = box.scrollHeight;
+}
+
+async function sendAdvisorMessage(presetText) {
+  if (STATE.advisorBusy) return;
+  const inp = document.getElementById("advisorInput");
+  const text = String(presetText || (inp ? inp.value : "") || "").trim();
+  if (!text) return;
+  if (inp && !presetText) inp.value = "";
+
+  const history = STATE.advisorMsgs.slice(-6).map(function(m) { return { role: m.role, text: m.text }; });
+  STATE.advisorMsgs.push({ role: "user", text: text });
+  STATE.advisorBusy = true;
+  renderAdvisorMessages();
+
+  try {
+    const resp = await fetch(GAS_URL, {
+      method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "chatReport",
+        fileId: STATE.fileId || "",
+        message: text,
+        history: history,
+        language: t("langCode"),
+        clientId: getClientId()
+      })
+    });
+    const j = await resp.json();
+    if (j.status === "success" && j.answer) {
+      STATE.advisorMsgs.push({ role: "assistant", text: j.answer, model: (j.usedModels && j.usedModels[0]) || "AI" });
+      try { sessionStorage.setItem(getAdvisorStorageKey(), JSON.stringify(STATE.advisorMsgs.slice(-20))); } catch (se) {}
+    } else {
+      STATE.advisorMsgs.push({ role: "assistant", text: j.message || "Error — please retry." });
+    }
+  } catch (e) {
+    STATE.advisorMsgs.push({ role: "assistant", text: "Network error: " + e.message });
+  } finally {
+    STATE.advisorBusy = false;
+    renderAdvisorMessages();
+  }
+}
+
 // CLEAN PRINT / PDF
 function exportPdf() {
   const sheet = document.getElementById("printSheet");
@@ -2372,6 +3074,12 @@ function exportPdf() {
       (v.competitorWeaknesses || []).map(function(k) {
         return '<div class="print-card"><strong>' + esc(k.competitor) + '</strong>' + (k.address ? (' · 📍 ' + esc(k.address)) : '') + '<br>«' + esc(k.quote) + '»<br><b>' + esc(t("lbl_your_chance")) + ':</b> ' + esc(k.chance) + '</div>';
       }).join("") +
+      (STATE.mktPack ? ('<h2>' + esc(t("hdr_mkt_pack")) + '</h2>' +
+        '<div class="print-card"><strong>' + esc(STATE.mktPack.executiveSummary || '') + '</strong></div>' +
+        (STATE.mktPack.seoOnPage ? ('<div class="print-card"><b>SEO Title:</b> ' + esc(STATE.mktPack.seoOnPage.titleTag || '') + '<br><b>Meta:</b> ' + esc(STATE.mktPack.seoOnPage.metaDescription || '') + '<br><b>H1:</b> ' + esc(STATE.mktPack.seoOnPage.h1 || '') + '</div>') : '') +
+        ((STATE.mktPack.seoKeywords && STATE.mktPack.seoKeywords.length) ? ('<div class="print-card"><b>SEO Keywords:</b> ' + STATE.mktPack.seoKeywords.map(function(k){return esc(k.keyword);}).join(', ') + '</div>') : '') +
+        ((STATE.mktPack.salesScripts && STATE.mktPack.salesScripts.length) ? STATE.mktPack.salesScripts.map(function(sc){return '<div class="print-card"><b>' + esc(sc.scenario) + '</b><br>' + esc(sc.script) + '</div>';}).join('') : '')
+      ) : '') +
       '<p style="font-size:11px;color:#64748b;margin-top:16px;">' + esc(v.legalDisclaimer) + '</p>';
   } else if (STATE.startupData) {
     const d = STATE.startupData;
@@ -2405,7 +3113,7 @@ function openLegalModal(kind) {
 }
 
 async function openAdminModal() {
-  openModal("Панель владельца B2B Nexus v11.4",
+  openModal("Панель владельца B2B Nexus v12.0 Pro",
     '<div class="admin-field"><label><strong>Admin PIN</strong></label>' +
     '<input id="admPinInput" type="password" class="field-input" value="' + esc(getAdminPin()) + '" placeholder="PIN"></div>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;">' +
@@ -2443,7 +3151,7 @@ async function adminSaveKeys() {
       const r = await fetch(GAS_URL + "?id=" + encodeURIComponent(idParam));
       const j = await r.json();
       if (j.status === "success" && j.data) {
-        if (j.data.mode === "startup") { STATE.startupData = j.data; renderStartupAll(); showOnlySection("startupView"); }
+        if (j.data.mode === "startup") { STATE.fileId = idParam; STATE.startupData = j.data; initAdvisorForCurrentContext(); renderStartupAll(); showOnlySection("startupView"); }
         else { openAuditResult(idParam, j.data, true); }
         return;
       }

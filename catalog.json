@@ -1,5 +1,19 @@
 [
   {
+    "id": "13pBnMtBsXCm8cFyoajsf_Pv-gwAZQ5yr",
+    "name": "Daggis Hundesnacks & BARF-Shop",
+    "niche": "магазин товаров для собак и BARF‑питание",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 114",
+    "website": "http://www.barf-kleve.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=barf-kleve.de",
+    "rating": "4.7/5.0",
+    "score": 78,
+    "schemaVersion": "10.5",
+    "createdAt": "2026-11-28T08:18:57.362Z"
+  },
+  {
     "id": "1krdLfsH_NDdDVD3bAj89aCMhQCRDPTif",
     "name": "https://tretyak1976.github.io/B2B",
     "niche": "Консультации для малого бизнеса",
@@ -26,20 +40,6 @@
     "score": 68,
     "schemaVersion": "10.4",
     "createdAt": "2026-11-28T08:04:06.017Z"
-  },
-  {
-    "id": "1gY2VZLRuHBbOpxlQv4zC8E5--NSl8fpR",
-    "name": "Daggis Hundesnacks & BARF-Shop",
-    "niche": "магазин кормов BARF и лакомств для собак",
-    "country": "Германия",
-    "city": "Kleve",
-    "address": "Германия, Kleve, Emmericher Str. 114",
-    "website": "http://www.barf-kleve.de/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=barf-kleve.de",
-    "rating": "4.7/5.0",
-    "score": 78,
-    "schemaVersion": "10.4",
-    "createdAt": "2026-11-28T07:59:55.849Z"
   },
   {
     "id": "1a-bU-E5zoQcs_UZovdioGmuFuHe12dGb",

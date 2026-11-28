@@ -1,5 +1,19 @@
 [
   {
+    "id": "1SNp7fTw_gDPWj9ZUGvQGFmEVWnl05TZp",
+    "name": "Netto Marken-Discount",
+    "niche": "Супермаркет",
+    "country": "Германия",
+    "city": "Eisenach",
+    "address": "Германия, Eisenach, Kupferhammer 39",
+    "website": "https://www.netto-online.de/filialen/eisenach/kupferhammer-39/8710",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=netto-online.de",
+    "rating": "3.8/5.0",
+    "score": 58,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:12:49.384Z"
+  },
+  {
     "id": "1XaOTbaYtZdD8_uRNMESujISOEsvzyMPN",
     "name": "Clemdastraße 5",
     "niche": "Строительные материалы и товары для дома",
@@ -702,20 +716,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:41:23.810Z"
-  },
-  {
-    "id": "1OnhLlyOZ96lJOYm8ITo51bvDxyyWHY5O",
-    "name": "KiK",
-    "niche": "Дешёвая одежда и аксессуары (fast fashion)",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hagsche Straße 13",
-    "website": "https://www.kik.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=kik.de",
-    "rating": "N/A",
-    "score": 51,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:36:34.274Z"
   }
 ]

@@ -1,5 +1,19 @@
 [
   {
+    "id": "1PUc8eGXWEMBbpphE-W1KEglEb323CeTJ",
+    "name": "K Kiosk - Interpresse",
+    "niche": "Киоск с закусками",
+    "country": "Люксембург",
+    "city": "Lëtzebuerg",
+    "address": "Люксембург, Lëtzebuerg, 16 Av. de la Porte-Neuve",
+    "website": "",
+    "logoUrl": "",
+    "rating": "2.4/5.0",
+    "score": 38,
+    "schemaVersion": "11.1",
+    "createdAt": "2026-11-28T09:17:13.360Z"
+  },
+  {
     "id": "1t4xjErIGWrzSM9RNHXDC49byWs4Vz-Iw",
     "name": "Reed - Plaisir Végétal",
     "niche": "веганский ресторан",
@@ -698,20 +712,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.6",
     "createdAt": "2026-11-26T15:33:59.617Z"
-  },
-  {
-    "id": "1s7XTmyYULD0fZbvosVNMKnF1rnsUOGBa",
-    "name": "Dm-Drogerie Markt, Harzweg 23, Quedlinburg",
-    "niche": "Розничная торговля косметикой, парфюмерией и товарами для здоровья",
-    "country": "Германия",
-    "city": "Quedlinburg",
-    "street": "",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 58,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.5",
-    "createdAt": "2026-11-26T15:17:34.797Z"
   }
 ]

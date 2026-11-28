@@ -1,5 +1,19 @@
 [
   {
+    "id": "1XaOTbaYtZdD8_uRNMESujISOEsvzyMPN",
+    "name": "Clemdastraße 5",
+    "niche": "Строительные материалы и товары для дома",
+    "country": "Германия",
+    "city": "Eisenach",
+    "address": "Германия, Eisenach, Clemdastraße 5",
+    "website": "",
+    "logoUrl": "",
+    "rating": "N/A",
+    "score": 58,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:04:38.572Z"
+  },
+  {
     "id": "1YNAl_68eSrh443SLUrt4etLyobbz2rmV",
     "name": "Largs Pier Hotel",
     "niche": "Отель‑паб у пляжа",
@@ -703,20 +717,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:36:34.274Z"
-  },
-  {
-    "id": "1XWxTzXtNv_hRQ6sS5yRIBEqXg6wTIb0G",
-    "name": "Giebels Möbel-Innenausbau",
-    "niche": "Мебель и внутренний дизайн",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Steinstraße 38",
-    "website": "https://www.inneneinrichtung.com",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=inneneinrichtung.com",
-    "rating": "N/A",
-    "score": 60,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:31:49.677Z"
   }
 ]

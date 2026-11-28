@@ -1,5 +1,19 @@
 [
   {
+    "id": "1AIewVIQSBeMlSfSCcrw2HqEBMM9lp21k",
+    "name": "Pâtisserie Riviera",
+    "niche": "Кондитерская",
+    "country": "Монако",
+    "city": "Monaco",
+    "address": "Монако, Monaco, 27 Bd des Moulins",
+    "website": "https://www.riviera1955.com/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=riviera1955.com",
+    "rating": "4.4/5.0",
+    "score": 78,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:39:06.706Z"
+  },
+  {
     "id": "19ueLfPbZfEdN_19nIfPPoGd0jfAiVELh",
     "name": "Largs Pier Hotel",
     "niche": "Отель и паб",
@@ -54,20 +68,6 @@
     "score": 68,
     "schemaVersion": "10.5",
     "createdAt": "2026-11-28T08:27:55.104Z"
-  },
-  {
-    "id": "1AgNGy7jaI6609pi7dm5GhSw1nmuI01Tl",
-    "name": "Pâtisserie Riviera",
-    "niche": "Кондитерская",
-    "country": "",
-    "city": "Monaco",
-    "address": "Monaco, 27 Bd des Moulins, 98000 Monaco",
-    "website": "https://www.riviera1955.com/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=riviera1955.com",
-    "rating": "4.4/5.0",
-    "score": 68,
-    "schemaVersion": "10.5",
-    "createdAt": "2026-11-28T08:22:54.645Z"
   },
   {
     "id": "1Vr_3gKPQDZhO5ahmCUkvtAPuNCwV6Ab4",

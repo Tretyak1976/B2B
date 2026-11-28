@@ -1,5 +1,19 @@
 [
   {
+    "id": "1Teh-Ep6S5vC16F5QOir9Rllxt6hn65yx",
+    "name": "Sportbedarf Kleve Stefan Klümpen",
+    "niche": "Спортивные товары",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 91",
+    "website": "http://www.sportbedarf-kleve.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=sportbedarf-kleve.de",
+    "rating": "5.0/5.0",
+    "score": 68,
+    "schemaVersion": "11.4",
+    "createdAt": "2026-11-28T10:01:35.645Z"
+  },
+  {
     "id": "1hdoJaxTKNEogmIZGJZ5b3Zg3Azj0aCkw",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Мебель и кухни",
@@ -693,20 +707,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.8",
     "createdAt": "2026-11-27T07:52:58.133Z"
-  },
-  {
-    "id": "1iifPnoF7kXcDxGuykZLTL6Kh3BpnvJhj",
-    "name": "TotalEnergies",
-    "niche": "Автозаправочная станция с базовыми услугами топливозаправки",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 99",
-    "website": "https://totalenergies.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=totalenergies.de",
-    "rating": "4.3/5.0",
-    "score": 72,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.8",
-    "createdAt": "2026-11-26T16:48:05.710Z"
   }
 ]

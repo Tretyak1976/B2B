@@ -1,5 +1,19 @@
 [
   {
+    "id": "1z8UYq5CzF3DmgdnvsaITOmoD-8KNWLfR",
+    "name": "More Than Music, Kleve",
+    "niche": "Музыкальный магазин",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 126",
+    "website": "",
+    "logoUrl": "",
+    "rating": "4.6/5.0",
+    "score": 70,
+    "schemaVersion": "12.0",
+    "createdAt": "2026-11-28T10:11:56.274Z"
+  },
+  {
     "id": "1ZtGJnXhR_11FreEXd3mlODQ-S2PMlaw1",
     "name": "Daggis Hundesnacks & BARF-Shop",
     "niche": "Петшоп и товары для собак",
@@ -692,20 +706,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.8",
     "createdAt": "2026-11-27T08:04:47.393Z"
-  },
-  {
-    "id": "1NyqdfxL2oi4kJid84RHhqIlpr8ZGm5-A",
-    "name": "zahn & more - Dr. Georg Damen",
-    "niche": "Стоматологические услуги",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hoffmannallee 18",
-    "website": "https://www.zahn-and-more.com/",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=zahn-and-more.com",
-    "rating": "4.9/5.0",
-    "score": 78,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.8",
-    "createdAt": "2026-11-27T07:52:58.133Z"
   }
 ]

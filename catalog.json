@@ -1,5 +1,19 @@
 [
   {
+    "id": "1kE1FXE3milgmZ5BEZJ_84Ke7FU6TOjLU",
+    "name": "El Poncho",
+    "niche": "Стейкхаус",
+    "country": "Германия",
+    "city": "Kleve",
+    "address": "Германия, Kleve, Emmericher Str. 82",
+    "website": "https://elponcho.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=elponcho.de",
+    "rating": "4.7/5.0",
+    "score": 68,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T08:57:24.870Z"
+  },
+  {
     "id": "1GaAwIqO2Wyh5KPBYPMfjWvXiZ3AHVGkp",
     "name": "Küchen Studio Peter Boekesteijn",
     "niche": "Кухонные студии и мебельные шоу‑румы",
@@ -706,20 +720,5 @@
     "modelsUsed": 7,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:00:58.577Z"
-  },
-  {
-    "id": "1eBGaxA4z6j0V2BpYCHKG68zOc4xIyNMd",
-    "name": "Steakhaus El Poncho Inhaber Aleksandra Jovanovic",
-    "niche": "Ресторан стейков и гриль-бар",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Emmericher Straße 82",
-    "website": "https://elponcho.de",
-    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=elponcho.de",
-    "rating": "N/A",
-    "score": 54,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T13:57:56.886Z"
   }
 ]

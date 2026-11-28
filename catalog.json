@@ -1,5 +1,19 @@
 [
   {
+    "id": "1UZ1xwvB-U03uDtmoB-YYGp4DfDd5-wN5",
+    "name": "Bvlgari Resort Dubai",
+    "niche": "Роскошный отель",
+    "country": "ОАЭ",
+    "city": "دبي",
+    "address": "ОАЭ, Jumeirah Bay Island - Dubai - Vereinigte Arabische Emirate",
+    "website": "https://www.bulgarihotels.com/en_US/dubai?scid=f2ae0541-1279-4f24-b197-a979c79310b0",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=bulgarihotels.com",
+    "rating": "4.6/5.0",
+    "score": 78,
+    "schemaVersion": "10.6",
+    "createdAt": "2026-11-28T08:43:03.812Z"
+  },
+  {
     "id": "1ue7wP6CzU6l0Hr29Y7MTYtrWEz5Qvt9h",
     "name": "Bittan Market",
     "niche": "рынок продуктов и товаров повседневного спроса",
@@ -707,20 +721,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T13:57:56.886Z"
-  },
-  {
-    "id": "14YbbFFycbWjD11zVAyEZAESa35nB81jK",
-    "name": "Grill Hit UG",
-    "niche": "Ресторан гриль-кухни",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Hoher Weg 15",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 55,
-    "modelsUsed": 8,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T13:45:23.863Z"
   }
 ]

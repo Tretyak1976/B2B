@@ -1,5 +1,19 @@
 [
   {
+    "id": "1Th3oh9VjtoFMesDgIS6cqkD_Nv2HyNax",
+    "name": "Zucker & Zimt Café-Restaurant",
+    "niche": "кафе‑ресторан",
+    "country": "Германия",
+    "city": "Eisenach",
+    "address": "Германия, Eisenach, Markt 2",
+    "website": "http://www.zucker-und-zimt.de/",
+    "logoUrl": "https://www.google.com/s2/favicons?sz=128&domain=zucker-und-zimt.de",
+    "rating": "4.3/5.0",
+    "score": 60,
+    "schemaVersion": "11.0",
+    "createdAt": "2026-11-28T09:03:12.668Z"
+  },
+  {
     "id": "1nwoqspLTlR9M8EUJ0Cvr8vchik6TwBkW",
     "name": "Jemy Kremy cukiernia, piekarnia i kawiarnia",
     "niche": "Веганская кондитерская и кафе",
@@ -704,20 +718,5 @@
     "modelsUsed": 8,
     "schemaVersion": "8.8.4",
     "createdAt": "2026-11-26T14:31:49.677Z"
-  },
-  {
-    "id": "1-U3akAXcOGmpXpBlBsgXq72Z3xYxHuB_",
-    "name": "Polsterei Boogaars",
-    "niche": "Реставрация и обивка мебели",
-    "country": "Германия",
-    "city": "Kleve",
-    "street": "Bongert",
-    "website": "",
-    "logoUrl": "",
-    "rating": "N/A",
-    "score": 56,
-    "modelsUsed": 7,
-    "schemaVersion": "8.8.4",
-    "createdAt": "2026-11-26T14:15:13.267Z"
   }
 ]
